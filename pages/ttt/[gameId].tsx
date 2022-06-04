@@ -2,7 +2,6 @@ import {ReactNode, useEffect, useState} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {v4} from 'uuid';
-import {symbol} from "prop-types";
 
 
 type TTTSymbol = '✕' | '◯' | '';
