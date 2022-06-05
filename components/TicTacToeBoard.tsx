@@ -83,7 +83,7 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
 
 // Checks a board for whether someone has won or the game has tied.
 // TODO: make this prettier
-function checkBoardStatus(boardState: TTTBoard) {
+export function checkBoardStatus(boardState: TTTBoard) {
     // Rows
     for (const row of TTTIndices) {
         const [left, middle, right] = row.map(i => boardState[i]);

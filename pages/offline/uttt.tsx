@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import Head from 'next/head';
-import {BoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
 import UltimateTicTacToeBoard, {
     defaultUTTTBoard,
     defaultUTTTBoardStatuses,
@@ -34,9 +34,31 @@ export default function OfflineUltimateTicTacToe() {
 
     // Handles a board status change by updating the statuses array.
     function handleBoardStatusChange(board: number, status: BoardStatus) {
-        console.log(BoardStatus[status.valueOf()]);
         gameStatuses[board] = status;
         setGameStatuses([...gameStatuses]);
+
+        // TODO: should we store board statuses as an array of symbols so that it's easier for
+        // board checking and symbol displaying? Is there anywhere where having a `BoardStatus`
+        // for each cell is *required*?
+        handleGameStatusChange(
+            checkBoardStatus(gameStatuses.map(status => (
+                status === BoardStatus.X_VICTORY ? '✕'
+                    : status === BoardStatus.O_VICTORY ? '◯'
+                    : ''
+            )) as TTTBoard)
+        )
+    }
+
+    // Handles a game status change by incrementing the player scores.
+    // TODO: this is a duplicated code fragment, but abstraction would be hard
+    function handleGameStatusChange(status: BoardStatus) {
+        // Wins are +1 for the winner, ties are +0.5 for both players
+        switch (status) {
+            case BoardStatus.TIED: setScores([scores[0] + 0.5, scores[1] + 0.5]); break;
+            case BoardStatus.X_VICTORY: setScores([scores[0] + 1, scores[1]]); break;
+            case BoardStatus.O_VICTORY: setScores([scores[0], scores[1] + 1]); break;
+        }
+        setGameStatus(status);
     }
 
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
