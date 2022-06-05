@@ -13,14 +13,20 @@ export const defaultBoard: TTSBoard = [
     '', '', ''
 ];
 
+export enum GameStatus {
+    PLAYING, TIED, X_VICTORY, O_VICTORY
+}
+
 type TicTacToeBoardProps = {
     gameState: TTSBoard,
     playerSymbol: TTTSymbol,
-    setSquare: (index: number, symbol: TTTSymbol) => void
+    setSquare: (index: number, symbol: TTTSymbol) => void,
+    setGameStatus: (status: GameStatus) => void,
+    disabled: boolean
 };
 export default function TicTacToeBoard(props: TicTacToeBoardProps) {
     return (
-        <div className="flex flex-col divide-y-8 divide-white/30">
+        <div className={'flex flex-col divide-y-8 divide-white/30 transition-opacity duration-500' + (props.disabled ? ' opacity-30' : '')}>
             <TicTacToeRow>
                 <TicTacToeCell {...props} id={0} />
                 <TicTacToeCell {...props} id={1} />
@@ -49,16 +55,24 @@ function TicTacToeRow(props: {children: ReactNode}) {
 }
 
 function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
-    const {gameState, playerSymbol, setSquare, id} = props;
+    const {gameState, playerSymbol, setSquare, setGameStatus, id} = props;
 
     const symbol = gameState[id]; // The actual state of the cell
     const displaySymbol = symbol || playerSymbol; // The symbol to display in the <span>
+
+    function handleClick() {
+        setSquare(id, playerSymbol)
+
+        // Check the status of the board to display whether someone has won or the game has tied.
+        // TODO: implement victory checks
+        if (gameState.every(x => x)) setGameStatus(GameStatus.TIED);
+    }
 
     return (
         <button
             className={'w-36 h-36 font-bold text-7xl text-center ' + (displaySymbol === '✕' ? 'text-red-400' : 'text-blue-400')}
             disabled={!!symbol} // TODO: disable the button if it's not the player's move
-            onClick={() => setSquare(id, playerSymbol)}
+            onClick={handleClick}
         >
             <span className={'p-8' + (!symbol ? ' opacity-0 hover:opacity-50' : '')}>
                 {displaySymbol}
