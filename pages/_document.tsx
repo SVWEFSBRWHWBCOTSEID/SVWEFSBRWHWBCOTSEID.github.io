@@ -13,7 +13,7 @@ class GDocument extends Document {
                 <Head>
                     <meta charSet="utf-8" />
                 </Head>
-                <body className="bg-zinc-800">
+                <body className="bg-zinc-800 text-white">
                     <Main />
                     <NextScript />
                 </body>
