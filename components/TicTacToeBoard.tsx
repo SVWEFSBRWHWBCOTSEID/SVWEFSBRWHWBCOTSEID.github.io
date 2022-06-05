@@ -1,4 +1,4 @@
-import {ReactNode} from 'react';
+import {ReactNode, useEffect} from 'react';
 
 
 export type TTTSymbol = '✕' | '◯' | '';
@@ -26,23 +26,21 @@ type TicTacToeBoardProps = {
     disabled: boolean
 };
 export default function TicTacToeBoard(props: TicTacToeBoardProps) {
+    const {boardState, setBoardStatus, small, disabled} = props;
+
+    useEffect(() => {
+        setBoardStatus(checkBoardStatus(boardState));
+    }, [boardState]);
+
     return (
-        <TicTacToeGrid disabled={props.disabled} small={props.small}>
-            <TicTacToeRow small={props.small}>
-                <TicTacToeCell {...props} id={0} />
-                <TicTacToeCell {...props} id={1} />
-                <TicTacToeCell {...props} id={2} />
-            </TicTacToeRow>
-            <TicTacToeRow small={props.small}>
-                <TicTacToeCell {...props} id={3} />
-                <TicTacToeCell {...props} id={4} />
-                <TicTacToeCell {...props} id={5} />
-            </TicTacToeRow>
-            <TicTacToeRow small={props.small}>
-                <TicTacToeCell {...props} id={6} />
-                <TicTacToeCell {...props} id={7} />
-                <TicTacToeCell {...props} id={8} />
-            </TicTacToeRow>
+        <TicTacToeGrid disabled={disabled} small={small}>
+            {TTTIndices.map(row => (
+                <TicTacToeRow small={small} key={row.join()}>
+                    {row.map(id => (
+                        <TicTacToeCell {...props} id={id} key={id} />
+                    ))}
+                </TicTacToeRow>
+            ))}
         </TicTacToeGrid>
     )
 }
@@ -69,19 +67,11 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
     const symbol = boardState[id]; // The actual state of the cell
     const displaySymbol = symbol || playerSymbol; // The symbol to display in the <span>
 
-    function handleClick() {
-        setSquare(id, playerSymbol)
-
-        // Check the status of the board to display whether someone has won or the game has tied.
-        // TODO: implement victory checks
-        if (boardState.every(x => x)) setBoardStatus(BoardStatus.TIED);
-    }
-
     return (
         <button
             className={'font-bold text-center box-content ' + (small ? 'w-16 h-16 text-3xl ' : 'w-36 h-36 text-7xl ') + (displaySymbol === '✕' ? 'text-red-400' : 'text-blue-400')}
             disabled={disabled || !!symbol} // TODO: disable the button if it's not the player's move
-            onClick={handleClick}
+            onClick={() => setSquare(id, playerSymbol)}
         >
             {/* TODO: don't display hover effect when disabled */}
             <span className={(small ? 'p-4' : 'p-8') + (!symbol ? ' opacity-0 hover:opacity-50' : '')}>
@@ -90,3 +80,38 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
         </button>
     )
 }
+
+// Checks a board for whether someone has won or the game has tied.
+// TODO: make this prettier
+function checkBoardStatus(boardState: TTTBoard) {
+    // Rows
+    for (const row of TTTIndices) {
+        const [left, middle, right] = row.map(i => boardState[i]);
+        if (left && left === middle && left === right)
+            return left === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    }
+
+    // Columns
+    for (const i in TTTIndices[0]) {
+        const [top, middle, bottom] = TTTIndices.map(row => row[i]).map(i => boardState[i]);
+        if (top && top === middle && top === bottom)
+            return top === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    }
+
+    // Diagonals
+    if (boardState[0] && boardState[0] === boardState[4] && boardState[0] === boardState[8])
+        return boardState[0] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    if (boardState[2] && boardState[2] === boardState[4] && boardState[2] === boardState[6])
+        return boardState[2] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+
+    // If the board is full and no one has won, it's a tie
+    if (boardState.every(x => x)) return BoardStatus.TIED;
+
+    return BoardStatus.PLAYING;
+}
+
+export const TTTIndices = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8]
+];

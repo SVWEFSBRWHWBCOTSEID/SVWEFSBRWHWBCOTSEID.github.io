@@ -4,13 +4,14 @@ import {BoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard'
 import UltimateTicTacToeBoard, {
     defaultUTTTBoard,
     defaultUTTTBoardStatuses,
-    UTTTBoard, UTTTBoardStatuses
+    UTTTBoard,
+    UTTTBoardStatuses
 } from '../../components/UltimateTicTacToeBoard';
 
 
 export default function OfflineUltimateTicTacToe() {
     const [gameState, setGameState] = useState<UTTTBoard>([...defaultUTTTBoard]);
-    const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING)
+    const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
     const [gameStatuses, setGameStatuses] = useState<UTTTBoardStatuses>([...defaultUTTTBoardStatuses]);
     const [activeBoard, setActiveBoard] = useState(4);
 
@@ -28,11 +29,12 @@ export default function OfflineUltimateTicTacToe() {
 
         setGameState([...gameState]);
         setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
-        setActiveBoard(square);
+        setActiveBoard(gameStatuses[square] !== BoardStatus.PLAYING ? 9 : square);
     }
 
     // Handles a board status change by updating the statuses array.
-    function handleGameStatusChange(board: number, status: BoardStatus) {
+    function handleBoardStatusChange(board: number, status: BoardStatus) {
+        console.log(BoardStatus[status.valueOf()]);
         gameStatuses[board] = status;
         setGameStatuses([...gameStatuses]);
     }
@@ -49,8 +51,8 @@ export default function OfflineUltimateTicTacToe() {
     return (
         <main className="h-screen flex flex-col gap-8 items-center justify-center">
             <Head>
-                <title>Offline Tic-Tac-Toe</title>
-                <meta name="description" content="Offline Tic-Tac-Toe for single-device games." />
+                <title>Offline Ultimate Tic-Tac-Toe</title>
+                <meta name="description" content="Offline Ultimate Tic-Tac-Toe for single-device games." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
@@ -66,7 +68,7 @@ export default function OfflineUltimateTicTacToe() {
                 playerSymbol={playerSymbol}
                 activeBoard={activeBoard}
                 setSquare={setSquare}
-                setBoardStatus={handleGameStatusChange}
+                setBoardStatus={handleBoardStatusChange}
                 disabled={gameStatus !== BoardStatus.PLAYING}
             />
 

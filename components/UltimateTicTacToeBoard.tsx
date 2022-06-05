@@ -3,7 +3,7 @@ import TicTacToeBoard, {
     defaultTTTBoard,
     TicTacToeGrid,
     TicTacToeRow,
-    TTTBoard,
+    TTTBoard, TTTIndices,
     TTTSymbol
 } from './TicTacToeBoard';
 
@@ -42,21 +42,13 @@ export type UltimateTicTacToeBoardProps = {
 export default function UltimateTicTacToeBoard(props: UltimateTicTacToeBoardProps) {
     return (
         <TicTacToeGrid disabled={props.disabled}>
-            <TicTacToeRow>
-                <UltimateTicTacToeCell {...props} id={0} />
-                <UltimateTicTacToeCell {...props} id={1} />
-                <UltimateTicTacToeCell {...props} id={2} />
-            </TicTacToeRow>
-            <TicTacToeRow>
-                <UltimateTicTacToeCell {...props} id={3} />
-                <UltimateTicTacToeCell {...props} id={4} />
-                <UltimateTicTacToeCell {...props} id={5} />
-            </TicTacToeRow>
-            <TicTacToeRow>
-                <UltimateTicTacToeCell {...props} id={6} />
-                <UltimateTicTacToeCell {...props} id={7} />
-                <UltimateTicTacToeCell {...props} id={8} />
-            </TicTacToeRow>
+            {TTTIndices.map(row => (
+                <TicTacToeRow key={row.join()}>
+                    {row.map(id => (
+                        <UltimateTicTacToeCell {...props} id={id} key={id} />
+                    ))}
+                </TicTacToeRow>
+            ))}
         </TicTacToeGrid>
     )
 }
@@ -67,17 +59,15 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
     const boardState = gameState[id];
     const boardStatus = gameStatuses[id];
 
+    const symbol = boardStatus === BoardStatus.X_VICTORY ? '✕'
+        : boardStatus === BoardStatus.O_VICTORY ? '◯'
+        : '';
+
     return (
-        <span className="p-4">
-            {boardStatus !== BoardStatus.PLAYING && (
-                <span className="absolute inset-0 text-7xl font-bold">
-                    {boardStatus === BoardStatus.X_VICTORY ? (
-                        '✕'
-                    ) : boardStatus === BoardStatus.O_VICTORY ? (
-                        '◯'
-                    ) : (
-                        ''
-                    )}
+        <div className="relative p-4">
+            {symbol && (
+                <span className={'absolute inset-0 flex items-center justify-center z-10 text-9xl font-bold' + (symbol === '✕' ? ' text-red-400' : ' text-blue-400')}>
+                    {symbol}
                 </span>
             )}
             <TicTacToeBoard
@@ -86,8 +76,8 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
                 playerSymbol={playerSymbol}
                 setSquare={(square, symbol) => setSquare(id, square, symbol)}
                 setBoardStatus={(status) => setBoardStatus(id, status)}
-                disabled={disabled || boardStatus !== BoardStatus.PLAYING || id !== activeBoard}
+                disabled={disabled || boardStatus !== BoardStatus.PLAYING || (activeBoard !== 9 && id !== activeBoard)}
             />
-        </span>
+        </div>
     )
 }
