@@ -69,12 +69,11 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
 
     return (
         <button
-            className={'font-bold text-center box-content ' + (small ? 'w-16 h-16 text-3xl ' : 'w-36 h-36 text-7xl ') + (displaySymbol === '✕' ? 'text-red-400' : 'text-blue-400')}
+            className={'group font-bold text-center box-content ' + (small ? 'w-16 h-16 text-3xl ' : 'w-36 h-36 text-7xl ') + (displaySymbol === '✕' ? 'text-red-400' : 'text-blue-400')}
             disabled={disabled || !!symbol} // TODO: disable the button if it's not the player's move
             onClick={() => setSquare(id, playerSymbol)}
         >
-            {/* TODO: don't display hover effect when disabled */}
-            <span className={(small ? 'p-4' : 'p-8') + (!symbol ? ' opacity-0 hover:opacity-50' : '')}>
+            <span className={(small ? 'p-4' : 'p-8') + (!symbol ? ' opacity-0 hover:opacity-50 group-disabled:opacity-0' : '')}>
                 {displaySymbol}
             </span>
         </button>
