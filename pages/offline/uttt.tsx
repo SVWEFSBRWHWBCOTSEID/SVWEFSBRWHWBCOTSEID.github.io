@@ -2,6 +2,7 @@ import {useState} from 'react';
 import Head from 'next/head';
 import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
 import UltimateTicTacToeBoard, {
+    ANY_BOARD,
     defaultUTTTBoard,
     defaultUTTTBoardStatuses,
     UTTTBoard,
@@ -29,7 +30,7 @@ export default function OfflineUltimateTicTacToe() {
 
         setGameState([...gameState]);
         setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
-        setActiveBoard(gameStatuses[square] !== BoardStatus.PLAYING ? 9 : square);
+        setActiveBoard(gameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
     }
 
     // Handles a board status change by updating the statuses array.

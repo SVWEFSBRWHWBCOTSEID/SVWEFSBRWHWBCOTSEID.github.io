@@ -8,6 +8,8 @@ import TicTacToeBoard, {
 } from './TicTacToeBoard';
 
 
+export const ANY_BOARD = -1;
+
 export type UTTTBoard = [
     TTTBoard, TTTBoard, TTTBoard,
     TTTBoard, TTTBoard, TTTBoard,
@@ -76,7 +78,7 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
                 playerSymbol={playerSymbol}
                 setSquare={(square, symbol) => setSquare(id, square, symbol)}
                 setBoardStatus={(status) => setBoardStatus(id, status)}
-                disabled={disabled || boardStatus !== BoardStatus.PLAYING || (activeBoard !== 9 && id !== activeBoard)}
+                disabled={disabled || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
             />
         </div>
     )
