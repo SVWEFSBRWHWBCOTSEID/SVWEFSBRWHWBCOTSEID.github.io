@@ -13,15 +13,15 @@ export const defaultBoard: TTTBoard = [
     '', '', ''
 ];
 
-export enum GameStatus {
+export enum BoardStatus {
     PLAYING, TIED, X_VICTORY, O_VICTORY
 }
 
 type TicTacToeBoardProps = {
-    gameState: TTTBoard,
+    boardState: TTTBoard,
     playerSymbol: TTTSymbol,
     setSquare: (index: number, symbol: TTTSymbol) => void,
-    setGameStatus: (status: GameStatus) => void,
+    setBoardStatus: (status: BoardStatus) => void,
     disabled: boolean
 };
 export default function TicTacToeBoard(props: TicTacToeBoardProps) {
@@ -55,9 +55,9 @@ function TicTacToeRow(props: {children: ReactNode}) {
 }
 
 function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
-    const {gameState, playerSymbol, setSquare, setGameStatus, disabled, id} = props;
+    const {boardState, playerSymbol, setSquare, setBoardStatus, disabled, id} = props;
 
-    const symbol = gameState[id]; // The actual state of the cell
+    const symbol = boardState[id]; // The actual state of the cell
     const displaySymbol = symbol || playerSymbol; // The symbol to display in the <span>
 
     function handleClick() {
@@ -65,7 +65,7 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
 
         // Check the status of the board to display whether someone has won or the game has tied.
         // TODO: implement victory checks
-        if (gameState.every(x => x)) setGameStatus(GameStatus.TIED);
+        if (boardState.every(x => x)) setBoardStatus(BoardStatus.TIED);
     }
 
     return (

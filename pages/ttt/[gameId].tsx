@@ -2,7 +2,7 @@ import {ReactNode, useEffect, useState} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {v4} from 'uuid';
-import TicTacToeBoard, {defaultBoard, GameStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
+import TicTacToeBoard, {defaultBoard, BoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
 
 
 export default function TicTacToe() {
@@ -10,7 +10,7 @@ export default function TicTacToe() {
     const {gameId} = router.query;
 
     const [gameState, setGameState] = useState<TTTBoard>([...defaultBoard]);
-    const [gameStatus, setGameStatus] = useState(GameStatus.PLAYING);
+    const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
     const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
 
     useEffect(() => {
@@ -45,17 +45,17 @@ export default function TicTacToe() {
             </Head>
 
             <TicTacToeBoard
-                gameState={gameState}
+                boardState={gameState}
                 playerSymbol={playerSymbol}
                 setSquare={setSquare}
-                setGameStatus={setGameStatus}
-                disabled={gameStatus !== GameStatus.PLAYING}
+                setBoardStatus={setGameStatus}
+                disabled={gameStatus !== BoardStatus.PLAYING}
             />
-            {gameStatus === GameStatus.PLAYING ? (
+            {gameStatus === BoardStatus.PLAYING ? (
                 <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
-            ) : gameStatus === GameStatus.TIED ? (
+            ) : gameStatus === BoardStatus.TIED ? (
                 <p className="font-light">The game has tied.</p>
-            ) : gameStatus === GameStatus.X_VICTORY ? (
+            ) : gameStatus === BoardStatus.X_VICTORY ? (
                 <p className="font-light"><strong>✕</strong> has won!</p>
             ) : (
                 <p className="font-light"><strong>◯</strong> has won!</p>
