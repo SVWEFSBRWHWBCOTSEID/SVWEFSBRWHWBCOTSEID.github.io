@@ -9,6 +9,7 @@ export default function OfflineTicTacToe() {
     const [scores, setScores] = useState([0, 0]);
 
     const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
+    const [nextStartSymbol, setNextStartSymbol] = useState<TTTSymbol>('◯');
 
     // Makes a move by checking the given square, alternating the player's symbol after each move.
     function setSquare(index: number, symbol: TTTSymbol) {
@@ -28,12 +29,13 @@ export default function OfflineTicTacToe() {
         setGameStatus(status);
     }
 
-    // Resets the board and game when a new game starts.
-    // TODO: make this alternate between X and O depending on who started the last game
+    // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
+    // if X started the last game, O starts the next game.
     function resetBoard() {
         setGameState([...defaultBoard]);
         setGameStatus(GameStatus.PLAYING);
-        setPlayerSymbol('✕')
+        setPlayerSymbol(nextStartSymbol);
+        setNextStartSymbol(nextStartSymbol === '✕' ? '◯' : '✕');
     }
 
     return (
