@@ -2,14 +2,14 @@ import {ReactNode, useEffect, useState} from 'react';
 import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {v4} from 'uuid';
-import TicTacToeBoard, {defaultBoard, GameStatus, TTTSymbol} from '../../components/TicTacToeBoard';
+import TicTacToeBoard, {defaultBoard, GameStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
 
 
 export default function TicTacToe() {
     const router = useRouter();
     const {gameId} = router.query;
 
-    const [gameState, setGameState] = useState(defaultBoard);
+    const [gameState, setGameState] = useState<TTTBoard>([...defaultBoard]);
     const [gameStatus, setGameStatus] = useState(GameStatus.PLAYING);
     const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
 

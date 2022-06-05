@@ -2,12 +2,12 @@ import {ReactNode} from 'react';
 
 
 export type TTTSymbol = '✕' | '◯' | '';
-export type TTSBoard = [
+export type TTTBoard = [
     TTTSymbol, TTTSymbol, TTTSymbol,
     TTTSymbol, TTTSymbol, TTTSymbol,
     TTTSymbol, TTTSymbol, TTTSymbol
 ];
-export const defaultBoard: TTSBoard = [
+export const defaultBoard: TTTBoard = [
     '', '', '',
     '', '', '',
     '', '', ''
@@ -18,7 +18,7 @@ export enum GameStatus {
 }
 
 type TicTacToeBoardProps = {
-    gameState: TTSBoard,
+    gameState: TTTBoard,
     playerSymbol: TTTSymbol,
     setSquare: (index: number, symbol: TTTSymbol) => void,
     setGameStatus: (status: GameStatus) => void,
@@ -55,7 +55,7 @@ function TicTacToeRow(props: {children: ReactNode}) {
 }
 
 function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
-    const {gameState, playerSymbol, setSquare, setGameStatus, id} = props;
+    const {gameState, playerSymbol, setSquare, setGameStatus, disabled, id} = props;
 
     const symbol = gameState[id]; // The actual state of the cell
     const displaySymbol = symbol || playerSymbol; // The symbol to display in the <span>
@@ -70,10 +70,11 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
 
     return (
         <button
-            className={'w-36 h-36 font-bold text-7xl text-center ' + (displaySymbol === '✕' ? 'text-red-400' : 'text-blue-400')}
-            disabled={!!symbol} // TODO: disable the button if it's not the player's move
+            className={'w-36 h-36 font-bold text-7xl text-center box-content ' + (displaySymbol === '✕' ? 'text-red-400' : 'text-blue-400')}
+            disabled={disabled || !!symbol} // TODO: disable the button if it's not the player's move
             onClick={handleClick}
         >
+            {/* TODO: don't display hover effect when disabled */}
             <span className={'p-8' + (!symbol ? ' opacity-0 hover:opacity-50' : '')}>
                 {displaySymbol}
             </span>
