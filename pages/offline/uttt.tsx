@@ -1,40 +1,47 @@
 import {useState} from 'react';
 import Head from 'next/head';
-import TicTacToeBoard, {defaultTTTBoard, BoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
+import {BoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
+import UltimateTicTacToeBoard, {
+    defaultUTTTBoard,
+    defaultUTTTBoardStatuses,
+    UTTTBoard, UTTTBoardStatuses
+} from '../../components/UltimateTicTacToeBoard';
 
 
-export default function OfflineTicTacToe() {
-    const [gameState, setGameState] = useState<TTTBoard>([...defaultTTTBoard]);
-    const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
+export default function OfflineUltimateTicTacToe() {
+    const [gameState, setGameState] = useState<UTTTBoard>([...defaultUTTTBoard]);
+    const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING)
+    const [gameStatuses, setGameStatuses] = useState<UTTTBoardStatuses>([...defaultUTTTBoardStatuses]);
+    const [activeBoard, setActiveBoard] = useState(4);
 
     const [scores, setScores] = useState([0, 0]);
 
     const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
     const [nextStartSymbol, setNextStartSymbol] = useState<TTTSymbol>('◯');
 
-    // Makes a move by checking the given square, alternating the player's symbol after each move.
-    function setSquare(square: number, symbol: TTTSymbol) {
-        gameState[square] = symbol;
+    // Makes a move by checking the given square in the given board,
+    // alternating the player's symbol and setting the new active square after each move.
+    function setSquare(board: number, square: number, symbol: TTTSymbol) {
+        const newBoard: TTTBoard = [...gameState[board]];
+        newBoard[square] = symbol;
+        gameState[board] = newBoard;
+
         setGameState([...gameState]);
         setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
+        setActiveBoard(square);
     }
 
-    // Handles a game status change by incrementing the player scores.
-    function handleGameStatusChange(status: BoardStatus) {
-        // Wins are +1 for the winner, ties are +0.5 for both players
-        switch (status) {
-            case BoardStatus.TIED: setScores([scores[0] + 0.5, scores[1] + 0.5]); break;
-            case BoardStatus.X_VICTORY: setScores([scores[0] + 1, scores[1]]); break;
-            case BoardStatus.O_VICTORY: setScores([scores[0], scores[1] + 1]); break;
-        }
-        setGameStatus(status);
+    // Handles a board status change by updating the statuses array.
+    function handleGameStatusChange(board: number, status: BoardStatus) {
+        gameStatuses[board] = status;
+        setGameStatuses([...gameStatuses]);
     }
 
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
     // if X started the last game, O starts the next game.
     function resetBoard() {
-        setGameState([...defaultTTTBoard]);
-        setGameStatus(BoardStatus.PLAYING);
+        setGameState([...defaultUTTTBoard]);
+        setGameStatuses([...defaultUTTTBoardStatuses]);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(nextStartSymbol === '✕' ? '◯' : '✕');
     }
@@ -53,9 +60,11 @@ export default function OfflineTicTacToe() {
                 <div className="h-6 w-6 rounded-full bg-blue-400" />
             </section>
 
-            <TicTacToeBoard
-                boardState={gameState}
+            <UltimateTicTacToeBoard
+                gameState={gameState}
+                gameStatuses={gameStatuses}
                 playerSymbol={playerSymbol}
+                activeBoard={activeBoard}
                 setSquare={setSquare}
                 setBoardStatus={handleGameStatusChange}
                 disabled={gameStatus !== BoardStatus.PLAYING}
