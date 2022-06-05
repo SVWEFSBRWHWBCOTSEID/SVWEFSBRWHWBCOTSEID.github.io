@@ -37,31 +37,29 @@ export default function TicTacToe() {
     }
 
     return (
-        <div>
+        <main className="h-screen flex flex-col gap-8 items-center justify-center">
             <Head>
                 <title>Tic-Tac-Toe</title>
                 <meta name="description" content="Online Tic-Tac-Toe." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className="h-screen flex flex-col gap-8 items-center justify-center">
-                <TicTacToeBoard
-                    gameState={gameState}
-                    playerSymbol={playerSymbol}
-                    setSquare={setSquare}
-                    setGameStatus={setGameStatus}
-                    disabled={gameStatus !== GameStatus.PLAYING}
-                />
-                {gameStatus === GameStatus.PLAYING ? (
-                    <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
-                ) : gameStatus === GameStatus.TIED ? (
-                    <p className="font-light">The game has tied.</p>
-                ) : gameStatus === GameStatus.X_VICTORY ? (
-                    <p className="font-light"><strong>✕</strong> has won!</p>
-                ) : (
-                    <p className="font-light"><strong>◯</strong> has won!</p>
-                )}
-            </main>
-        </div>
+            <TicTacToeBoard
+                gameState={gameState}
+                playerSymbol={playerSymbol}
+                setSquare={setSquare}
+                setGameStatus={setGameStatus}
+                disabled={gameStatus !== GameStatus.PLAYING}
+            />
+            {gameStatus === GameStatus.PLAYING ? (
+                <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
+            ) : gameStatus === GameStatus.TIED ? (
+                <p className="font-light">The game has tied.</p>
+            ) : gameStatus === GameStatus.X_VICTORY ? (
+                <p className="font-light"><strong>✕</strong> has won!</p>
+            ) : (
+                <p className="font-light"><strong>◯</strong> has won!</p>
+            )}
+        </main>
     )
 }

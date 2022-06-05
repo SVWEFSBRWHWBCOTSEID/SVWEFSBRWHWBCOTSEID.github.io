@@ -37,7 +37,7 @@ export default function OfflineTicTacToe() {
     }
 
     return (
-        <div className="h-screen flex flex-col gap-8 items-center justify-center">
+        <main className="h-screen flex flex-col gap-8 items-center justify-center">
             <Head>
                 <title>Offline Tic-Tac-Toe</title>
                 <meta name="description" content="Offline Tic-Tac-Toe for single-device games." />
@@ -74,6 +74,6 @@ export default function OfflineTicTacToe() {
                     </button>
                 )}
             </section>
-        </div>
+        </main>
     )
 }
