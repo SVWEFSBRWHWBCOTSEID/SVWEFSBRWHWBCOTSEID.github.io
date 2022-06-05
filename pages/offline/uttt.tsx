@@ -68,6 +68,7 @@ export default function OfflineUltimateTicTacToe() {
         setGameStatuses([...defaultUTTTBoardStatuses]);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(nextStartSymbol === '✕' ? '◯' : '✕');
+        setActiveBoard(4);
     }
 
     return (
