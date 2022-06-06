@@ -62,7 +62,7 @@ export function TicTacToeRow(props: {children: ReactNode, small?: boolean,}) {
 }
 
 function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
-    const {boardState, playerSymbol, setSquare, setBoardStatus, small, disabled, id} = props;
+    const {boardState, playerSymbol, setSquare, small, disabled, id} = props;
 
     const symbol = boardState[id]; // The actual state of the cell
     const displaySymbol = symbol || playerSymbol; // The symbol to display in the <span>

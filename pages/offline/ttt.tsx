@@ -1,21 +1,25 @@
 import {useState} from 'react';
 import Head from 'next/head';
+
+// Components
 import TicTacToeBoard, {defaultTTTBoard, BoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
+import TicTacToeScoreIndicator, {TTTScores} from '../../components/TicTacToeScoreIndicator';
 
 
 export default function OfflineTicTacToe() {
-    const [gameState, setGameState] = useState<TTTBoard>([...defaultTTTBoard]);
+    const [gameState, setGameState] = useState<TTTBoard>(defaultTTTBoard);
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
 
-    const [scores, setScores] = useState([0, 0]);
+    const [scores, setScores] = useState<TTTScores>([0, 0]);
 
     const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
     const [nextStartSymbol, setNextStartSymbol] = useState<TTTSymbol>('◯');
 
     // Makes a move by checking the given square, alternating the player's symbol after each move.
     function setSquare(square: number, symbol: TTTSymbol) {
-        gameState[square] = symbol;
-        setGameState([...gameState]);
+        const newGameState: TTTBoard = [...gameState]
+        newGameState[square] = symbol;
+        setGameState(newGameState);
         setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
     }
 
@@ -33,7 +37,7 @@ export default function OfflineTicTacToe() {
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
     // if X started the last game, O starts the next game.
     function resetBoard() {
-        setGameState([...defaultTTTBoard]);
+        setGameState(defaultTTTBoard);
         setGameStatus(BoardStatus.PLAYING);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(nextStartSymbol === '✕' ? '◯' : '✕');
@@ -47,11 +51,7 @@ export default function OfflineTicTacToe() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <section className="flex gap-3 items-center text-3xl font-medium">
-                <div className="h-6 w-6 rounded-full bg-red-400" />
-                <span className="pb-0.5">{scores.join(' - ')}</span>
-                <div className="h-6 w-6 rounded-full bg-blue-400" />
-            </section>
+            <TicTacToeScoreIndicator scores={scores} />
 
             <TicTacToeBoard
                 boardState={gameState}

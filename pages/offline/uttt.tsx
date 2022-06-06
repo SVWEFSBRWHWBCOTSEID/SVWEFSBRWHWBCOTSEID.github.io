@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import Head from 'next/head';
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
+
+// Components
 import UltimateTicTacToeBoard, {
     ANY_BOARD,
     defaultUTTTBoard,
@@ -8,15 +9,19 @@ import UltimateTicTacToeBoard, {
     UTTTBoard,
     UTTTBoardStatuses
 } from '../../components/UltimateTicTacToeBoard';
+import TicTacToeScoreIndicator, {TTTScores} from '../../components/TicTacToeScoreIndicator';
+
+// Utilities
+import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../components/TicTacToeBoard';
 
 
 export default function OfflineUltimateTicTacToe() {
-    const [gameState, setGameState] = useState<UTTTBoard>([...defaultUTTTBoard]);
+    const [gameState, setGameState] = useState(defaultUTTTBoard);
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
-    const [gameStatuses, setGameStatuses] = useState<UTTTBoardStatuses>([...defaultUTTTBoardStatuses]);
+    const [gameStatuses, setGameStatuses] = useState(defaultUTTTBoardStatuses);
     const [activeBoard, setActiveBoard] = useState(4);
 
-    const [scores, setScores] = useState([0, 0]);
+    const [scores, setScores] = useState<TTTScores>([0, 0]);
 
     const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
     const [nextStartSymbol, setNextStartSymbol] = useState<TTTSymbol>('◯');
@@ -24,25 +29,27 @@ export default function OfflineUltimateTicTacToe() {
     // Makes a move by checking the given square in the given board,
     // alternating the player's symbol and setting the new active square after each move.
     function setSquare(board: number, square: number, symbol: TTTSymbol) {
-        const newBoard: TTTBoard = [...gameState[board]];
+        const newGameState: UTTTBoard = [...gameState];
+        const newBoard: TTTBoard = [...newGameState[board]];
         newBoard[square] = symbol;
-        gameState[board] = newBoard;
+        newGameState[board] = newBoard;
 
-        setGameState([...gameState]);
+        setGameState(newGameState);
         setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
         setActiveBoard(gameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
     }
 
     // Handles a board status change by updating the statuses array.
     function handleBoardStatusChange(board: number, status: BoardStatus) {
-        gameStatuses[board] = status;
-        setGameStatuses([...gameStatuses]);
+        const newGameStatuses: UTTTBoardStatuses = [...gameStatuses];
+        newGameStatuses[board] = status;
+        setGameStatuses(newGameStatuses);
 
         // TODO: should we store board statuses as an array of symbols so that it's easier for
         // board checking and symbol displaying? Is there anywhere where having a `BoardStatus`
         // for each cell is *required*?
         handleGameStatusChange(
-            checkBoardStatus(gameStatuses.map(status => (
+            checkBoardStatus(newGameStatuses.map(status => (
                 status === BoardStatus.X_VICTORY ? '✕'
                     : status === BoardStatus.O_VICTORY ? '◯'
                     : ''
@@ -65,8 +72,8 @@ export default function OfflineUltimateTicTacToe() {
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
     // if X started the last game, O starts the next game.
     function resetBoard() {
-        setGameState([...defaultUTTTBoard]);
-        setGameStatuses([...defaultUTTTBoardStatuses]);
+        setGameState(defaultUTTTBoard);
+        setGameStatuses(defaultUTTTBoardStatuses);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(nextStartSymbol === '✕' ? '◯' : '✕');
         setActiveBoard(4);
@@ -80,11 +87,7 @@ export default function OfflineUltimateTicTacToe() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <section className="flex gap-3 items-center text-3xl font-medium">
-                <div className="h-6 w-6 rounded-full bg-red-400" />
-                <span className="pb-0.5">{scores.join(' - ')}</span>
-                <div className="h-6 w-6 rounded-full bg-blue-400" />
-            </section>
+            <TicTacToeScoreIndicator scores={scores} />
 
             <UltimateTicTacToeBoard
                 gameState={gameState}
