@@ -99,7 +99,7 @@ export default function OfflineUltimateTicTacToe() {
                 disabled={gameStatus !== BoardStatus.PLAYING}
             />
 
-            <section className="relative">
+            <section className="relative mb-8">
                 {gameStatus === BoardStatus.PLAYING ? (
                     <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
                 ) : gameStatus === BoardStatus.TIED ? (
