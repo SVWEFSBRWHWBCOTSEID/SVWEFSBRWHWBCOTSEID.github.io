@@ -23,13 +23,13 @@ export default function Home() {
                 <section className="flex flex-wrap justify-center gap-6">
                     <GameCard href="/offline/ttt">
                         <GameCardHeading>Tic-Tac-Toe</GameCardHeading>
-                        <img src="./ttt.png" alt="ttt" className="w-72" />
+                        <img src="/ttt.png" alt="ttt" className="w-72" />
                         <p>...</p>
                     </GameCard>
 
                     <GameCard href="/offline/uttt">
                         <GameCardHeading>Ultimate Tic-Tac-Toe</GameCardHeading>
-                        <img src="./uttt.png" alt="uttt" className="w-72" />
+                        <img src="/uttt.png" alt="uttt" className="w-72" />
                         <p>...</p>
                     </GameCard>
                 </section>
