@@ -9,6 +9,7 @@ export default function Header() {
             <nav className="flex gap-2 items-center">
                 <Link href="/" className="text-xl pb-0.5 mr-4">[game website]</Link>
 
+                <HeaderLink href="/">Play</HeaderLink>
                 <HeaderLink href="/offline">Offline</HeaderLink>
                 <HeaderLink href="/rules">Rules</HeaderLink>
             </nav>
@@ -26,7 +27,7 @@ export default function Header() {
 
 function HeaderLink(props: {href: string, children: ReactNode}) {
     return (
-        <Link href={props.href} className="uppercase text-secondary px-2">
+        <Link href={props.href} className="uppercase text-sm text-secondary px-2">
             {props.children}
         </Link>
     )

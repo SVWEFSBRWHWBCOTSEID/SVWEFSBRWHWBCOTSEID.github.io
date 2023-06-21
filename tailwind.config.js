@@ -11,6 +11,7 @@ module.exports = {
     extend: {
       colors: {
         secondary: '#999999',
+        tertiary: '#404040',
         background: colors.neutral['900'] // '#302e2c' // '#312e2b' // '#262421' //'#161512'
       },
       container: {
