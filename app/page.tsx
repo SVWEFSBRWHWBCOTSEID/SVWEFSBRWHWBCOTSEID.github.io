@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
     return (
-        <main className="px-16 pt-16 flex gap-8">
+        <main className="container pt-16 flex gap-8">
             <div className="flex-grow">
                 <h3 className="text-lg font-semibold text-center mb-2">Lobbies</h3>
                 <Lobby />
