@@ -14,12 +14,27 @@ export default function ProfileContent() {
             <Tab.Panels className="flex-grow bg-content rounded-t-lg overflow-clip">
                 <ProfileUserPanel />
 
-                {/* TODO: map this */}
-                <ProfileGamePanel />
-                <ProfileGamePanel />
-                <ProfileGamePanel />
-                <ProfileGamePanel />
+                {Object.entries(ratings).map(([key, value]) => (
+                    <ProfileGamePanel key={key} />
+                ))}
             </Tab.Panels>
         </Tab.Group>
     )
+}
+
+export const ratings = {
+    ttt: {rating: 1881, games: 117, provisional: false},
+    uttt: {rating: 1537, games: 177, provisional: false},
+    connectFour: {rating: 1224, games: 12, provisional: true},
+    pokemonChess: {rating: 1537, games: 177, provisional: false}
+}
+
+export function keyToName(key: string) {
+    switch (key) {
+        case 'ttt': return 'Tic-tac-toe';
+        case 'uttt': return 'Ultimate tic-tac-toe';
+        case 'connectFour': return 'Connect 4';
+        case 'pokemonChess': return 'Pokemon chess';
+    }
+    return 'Unknown game';
 }
