@@ -1,8 +1,13 @@
+import {Metadata} from 'next';
 import ProfileSidebar from './ProfileSidebar';
 import ProfileHeader from './ProfileHeader';
 import ProfileEloChart from './ProfileEloChart';
 import ProfileGames from './ProfileGames';
 
+
+export const metadata: Metadata = {
+    title: 'kepler'
+}
 
 export default function Profile() {
     return (
