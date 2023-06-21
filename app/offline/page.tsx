@@ -1,6 +1,5 @@
-import {ReactNode} from 'react';
 import {Metadata} from 'next';
-import Link from 'next/link';
+import GameCard from './GameCard';
 
 
 export const metadata: Metadata = {
@@ -19,37 +18,10 @@ export default function Home() {
             </p>
 
             <section className="flex flex-wrap justify-center gap-6">
-                <GameCard href="/offline/ttt">
-                    <GameCardHeading>Tic-Tac-Toe</GameCardHeading>
-                    <img src="/ttt.png" alt="ttt" className="w-72" />
-                    <p>...</p>
-                </GameCard>
-
-                <GameCard href="/offline/uttt">
-                    <GameCardHeading>Ultimate Tic-Tac-Toe</GameCardHeading>
-                    <img src="/uttt.png" alt="uttt" className="w-72" />
-                    <p>...</p>
-                </GameCard>
+                {/* TODO: update images after UI changes */}
+                <GameCard href="/offline/ttt" name="Tic-Tac-Toe" src="/ttt.png" />
+                <GameCard href="/offline/uttt" name="Ultimate Tic-Tac-Toe" src="/uttt.png" />
             </section>
         </div>
-    )
-}
-
-// TODO: restyle these
-function GameCard(props: {href: string, children: ReactNode}) {
-    return (
-        <Link href={props.href} className="flex">
-            <div className="group px-6 py-4 rounded-lg shadow-lg bg-black/30 hover:bg-black/50 transition duration-150">
-                {props.children}
-            </div>
-        </Link>
-    )
-}
-
-function GameCardHeading(props: {children: ReactNode}) {
-    return (
-        <h3 className="text-lg font-medium mb-2 group-hover:underline">
-            {props.children}
-        </h3>
     )
 }

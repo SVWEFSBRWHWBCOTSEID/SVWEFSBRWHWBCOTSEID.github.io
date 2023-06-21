@@ -1,3 +1,5 @@
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx}",
@@ -7,6 +9,10 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      colors: {
+        secondary: '#999999',
+        background: colors.neutral['900'] // '#302e2c' // '#312e2b' // '#262421' //'#161512'
+      },
       container: {
         center: true,
         padding: {
