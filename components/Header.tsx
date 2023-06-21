@@ -18,7 +18,7 @@ export default function Header() {
                     <BsGearFill className="text-secondary" />
                 </Link>
                 <Link href="/profile" className="text-secondary px-2">
-                    qpwoeirut
+                    kepler
                 </Link>
             </nav>
         </header>

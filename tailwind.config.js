@@ -12,16 +12,18 @@ module.exports = {
       colors: {
         secondary: '#999999',
         tertiary: '#404040',
-        background: colors.neutral['900'] // '#302e2c' // '#312e2b' // '#262421' //'#161512'
+        content: '#262421',
+        'content-secondary': '#302e2c',
+        background: colors.neutral['900'] // '#312e2b' // '#262421' //'#161512'
       },
       container: {
         center: true,
         padding: {
-          DEFAULT: '2rem',
-          sm: '4rem',
-          lg: '6rem',
-          xl: '12rem',
-          '2xl': '16rem',
+          DEFAULT: '0.75rem',
+          sm: '2rem',
+          lg: '4rem',
+          xl: '5rem',
+          '2xl': '6rem',
         }
       }
     },
