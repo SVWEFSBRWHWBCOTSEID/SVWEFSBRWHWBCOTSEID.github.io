@@ -8,7 +8,7 @@ import {ratings, keyToName} from './ProfileContent';
 
 export default function ProfileSidebar() {
     return (
-        <Tab.List as="aside" className="flex flex-col">
+        <Tab.List as="aside" className="flex flex-col pt-1">
             {/* TODO: styling? */}
             <Tab className="group text-secondary flex gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-l pl-4 pr-8 py-3 transition duration-150">
                 <h5 className="uppercase font-light text-left">Profile</h5>

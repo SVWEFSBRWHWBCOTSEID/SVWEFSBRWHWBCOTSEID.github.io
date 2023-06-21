@@ -8,7 +8,7 @@ import {AiFillCaretRight} from 'react-icons/ai';
 type ProfileSidebarItemProps = {name: string, rating: number, games: number, provisional?: boolean}
 export default function ProfileSidebarItem(props: ProfileSidebarItemProps) {
     return (
-        <Tab className="group text-secondary flex gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-l pl-4 pr-8 py-3 transition duration-150">
+        <Tab className={'group flex gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-l pl-4 pr-8 py-3 transition duration-150 ' + (props.games ? 'text-secondary' : 'text-tertiary')}>
             {/* TODO: icon */}
             <GiPotato className="text-4xl group-hover:text-blue-500" />
             <div>

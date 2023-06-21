@@ -23,7 +23,7 @@ export default function ProfileContent() {
 }
 
 export const ratings = {
-    ttt: {rating: 1881, games: 117, provisional: false},
+    ttt: {rating: 1500, games: 0, provisional: true},
     uttt: {rating: 1537, games: 177, provisional: false},
     connectFour: {rating: 1224, games: 12, provisional: true},
     pokemonChess: {rating: 1537, games: 177, provisional: false}
