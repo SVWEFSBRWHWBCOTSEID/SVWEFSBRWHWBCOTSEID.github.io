@@ -13,6 +13,9 @@ export default function ProfileContent() {
             <ProfileSidebar />
             <Tab.Panels className="flex-grow bg-content rounded-t-lg overflow-clip">
                 <ProfileUserPanel />
+
+                {/* TODO: map this */}
+                <ProfileGamePanel />
                 <ProfileGamePanel />
                 <ProfileGamePanel />
                 <ProfileGamePanel />
