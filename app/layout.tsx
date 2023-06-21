@@ -22,7 +22,7 @@ const inter = Inter({
 
 export default function Layout(props: {children: ReactNode}) {
     return (
-        <html className="dark h-full">
+        <html className="dark h-full scroll-smooth">
             <head>
                 <meta charSet="utf-8" />
                 <link rel="icon" href="/favicon.ico" />

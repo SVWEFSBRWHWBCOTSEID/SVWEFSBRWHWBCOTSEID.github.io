@@ -36,6 +36,8 @@ export default function ProfileGamePanel(props: ProfileGamePanelProps) {
                 </p>
             </section>
 
+            {/* TODO: stats tables? */}
+
             {/* TODO: filter these by game */}
             <ProfileGames />
         </Tab.Panel>
