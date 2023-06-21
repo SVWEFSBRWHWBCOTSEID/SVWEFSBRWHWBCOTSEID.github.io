@@ -27,15 +27,30 @@ export default function Rules() {
                     </li>
                 </ul>
             </StickySidebar>
-            <div className="py-4">
+            <div className="pl-10 border-l border-tertiary py-4">
                 <SectionHeader id="ttt">Tic-Tac-Toe</SectionHeader>
-                <p className="mb-10">[...]</p>
+                <p className="mb-16">[...]</p>
 
                 <SectionHeader id="uttt">Ultimate Tic-Tac-Toe</SectionHeader>
-                <p className="mb-10">[...]</p>
+                <p className="mb-4">
+                    Tic-Tac-Toe, except each square of the board contains an inner game of Tic-Tac-Toe.
+                </p>
+                <p className="mb-4">
+                    Players start in the middle square{/* TODO: was this a lie?? */}, and their move in the inner
+                    Tic-Tac-Toe board determines the square the next player must move in: eg. if X takes the top right
+                    square of the middle board, O must now make a move in the top right <em>Tic-Tac-Toe board</em>.
+                </p>
+                <p className="mb-6">
+                    When a player wins an inner Tic-Tac-Toe game, they take the corresponding square on the outer board.
+                    If a player is sent to a won or drawn square, they may instead move anywhere on the board. Winning
+                    the outer board wins the game.
+                </p>
+                <p className="text-sm text-secondary mb-16">
+                    See also: <a href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Wikipedia</a>
+                </p>
 
                 <SectionHeader id="connect-4">Connect 4</SectionHeader>
-                <p className="mb-10">[...]</p>
+                <p className="mb-16">[...]</p>
 
                 <SectionHeader id="pokemon-chess">Pokemon Chess</SectionHeader>
                 <p className="mb-4">Inspired by <a href="https://pokemonchess.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">pokemonchess.com</a>.</p>

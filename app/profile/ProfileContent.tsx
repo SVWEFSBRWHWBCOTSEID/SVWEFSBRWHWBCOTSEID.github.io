@@ -31,10 +31,10 @@ export const ratings = {
 
 export function keyToName(key: string) {
     switch (key) {
-        case 'ttt': return 'Tic-tac-toe';
-        case 'uttt': return 'Ultimate tic-tac-toe';
+        case 'ttt': return 'Tic-Tac-Toe';
+        case 'uttt': return 'Ultimate Tic-Tac-Toe';
         case 'connectFour': return 'Connect 4';
-        case 'pokemonChess': return 'Pokemon chess';
+        case 'pokemonChess': return 'Pokemon Chess';
     }
     return 'Unknown game';
 }
