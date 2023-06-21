@@ -9,13 +9,13 @@ import ProfileGamePanel from './ProfileGamePanel';
 // TODO: I wish that `use-client` didn't force this semi-hacky component wrapping, but alas
 export default function ProfileContent() {
     return (
-        <Tab.Group vertical as="div" className="container flex pt-4">
+        <Tab.Group vertical as="div" className="container flex pt-4 pb-12">
             <ProfileSidebar />
-            <Tab.Panels className="flex-grow bg-content rounded-t-lg overflow-clip">
+            <Tab.Panels className="flex-grow bg-content rounded-lg overflow-clip">
                 <ProfileUserPanel />
 
                 {Object.entries(ratings).map(([key, value]) => (
-                    <ProfileGamePanel key={key} />
+                    <ProfileGamePanel name={keyToName(key)} {...value} key={key} />
                 ))}
             </Tab.Panels>
         </Tab.Group>
