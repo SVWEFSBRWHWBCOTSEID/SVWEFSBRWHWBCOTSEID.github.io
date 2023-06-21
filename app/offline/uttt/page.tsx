@@ -82,7 +82,7 @@ export default function OfflineUltimateTicTacToe() {
     }
 
     return (
-        <main className="h-screen flex flex-col gap-8 items-center justify-center">
+        <main className="flex-grow flex flex-col gap-8 items-center justify-center">
             <Head>
                 <title>Offline Ultimate Tic-Tac-Toe</title>
                 <meta name="description" content="Offline Ultimate Tic-Tac-Toe for single-device games." />
