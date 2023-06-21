@@ -6,7 +6,18 @@ module.exports = {
   ],
   darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '2rem',
+          sm: '4rem',
+          lg: '6rem',
+          xl: '12rem',
+          '2xl': '16rem',
+        }
+      }
+    },
   },
   plugins: [],
 }
