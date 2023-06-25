@@ -1,16 +1,20 @@
 'use client'
 
+import {useContext} from 'react';
 import Link from 'next/link';
 import {Tab} from '@headlessui/react';
 import ProfileGames from './ProfileGames';
+import ProfileContext from '../../contexts/ProfileContext';
 
 
 type ProfileGamePanelProps = {name: string, rating: number, games: number, provisional?: boolean}
 export default function ProfileGamePanel(props: ProfileGamePanelProps) {
+    const {id} = useContext(ProfileContext);
+
     return (
         <Tab.Panel>
             <h1 className="px-8 py-6 text-4xl">
-                <Link href="/profile" className="text-blue-500 hover:underline">kepler</Link>'s {props.name} stats
+                <Link href={`/profile/${id}`} className="text-blue-500 hover:underline">{id}</Link>'s {props.name} stats
             </h1>
 
             <section className="border-y border-tertiary flex items-center justify-center text-secondary py-12">

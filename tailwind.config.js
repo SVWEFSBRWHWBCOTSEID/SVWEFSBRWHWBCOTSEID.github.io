@@ -14,7 +14,7 @@ module.exports = {
         tertiary: '#404040',
         content: '#262421',
         'content-secondary': '#302e2c',
-        background: colors.neutral['900'] // '#312e2b' // '#262421' //'#161512'
+        background: '#161512' // colors.neutral['900'] // '#312e2b' // '#262421'
       },
       container: {
         center: true,

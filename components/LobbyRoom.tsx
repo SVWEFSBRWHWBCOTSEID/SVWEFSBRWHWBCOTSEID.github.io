@@ -1,13 +1,15 @@
 import {ReactNode} from 'react';
+import Link from 'next/link';
+
 
 export default function LobbyRoom() {
     return (
-        <div className="px-4 table-row text-secondary">
+        <Link className="px-4 table-row text-secondary" href="/ttt/123">
             <LobbyCell>Gunstable</LobbyCell>
             <LobbyCell>1537</LobbyCell>
             <LobbyCell>5+5</LobbyCell>
             <LobbyCell>UTTT</LobbyCell>
-        </div>
+        </Link>
     )
 }
 
