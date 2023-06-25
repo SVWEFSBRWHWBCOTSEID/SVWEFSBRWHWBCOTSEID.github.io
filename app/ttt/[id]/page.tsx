@@ -7,9 +7,10 @@ import Head from 'next/head';
 import TicTacToeBoard, {defaultTTTBoard, BoardStatus, TTTBoard, TTTSymbol} from '../../../components/TicTacToeBoard';
 import Chat from '../../../components/Chat';
 import GameStateIndicator from '../../../components/GameStateIndicator';
+import GameHeader from '../../../components/GameHeader';
 
 
-export default function OfflineTicTacToe() {
+export default function TicTacToe() {
     const [gameState, setGameState] = useState<TTTBoard>(defaultTTTBoard);
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
 
@@ -24,14 +25,17 @@ export default function OfflineTicTacToe() {
     }
 
     return (
-        <main className="flex-grow flex gap-12 items-center justify-center">
+        <main className="flex gap-20 items-center justify-between px-12 pt-4">
             <Head>
-                <title>Offline Tic-Tac-Toe</title>
+                <title>Tic-Tac-Toe</title>
                 <meta name="description" content="Offline Tic-Tac-Toe for single-device games." />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Chat />
+            <div className="flex flex-col gap-5 w-[21rem]">
+                <GameHeader />
+                <Chat />
+            </div>
 
             <TicTacToeBoard
                 boardState={gameState}
