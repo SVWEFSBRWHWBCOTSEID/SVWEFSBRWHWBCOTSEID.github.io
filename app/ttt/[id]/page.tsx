@@ -6,8 +6,8 @@ import Head from 'next/head';
 // Components
 import TicTacToeBoard, {defaultTTTBoard, BoardStatus, TTTBoard, TTTSymbol} from '../../../components/TicTacToeBoard';
 import Chat from '../../../components/Chat';
-import GameStateIndicator from '../../../components/GameStateIndicator';
 import GameHeader from '../../../components/GameHeader';
+import GameStateIndicator from '../../../components/GameStateIndicator';
 
 
 export default function TicTacToe() {
@@ -25,7 +25,7 @@ export default function TicTacToe() {
     }
 
     return (
-        <main className="flex gap-20 items-center justify-between px-12 pt-4">
+        <main className="flex gap-8 items-center justify-between px-12 pt-4">
             <Head>
                 <title>Tic-Tac-Toe</title>
                 <meta name="description" content="Offline Tic-Tac-Toe for single-device games." />
