@@ -6,7 +6,8 @@ import ProfileContent from '../ProfileContent';
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
     // TODO: fetch user object from backend with id
     return {
-        title: params.id
+        title: `${params.id} (1337)`,
+        description: '...' // TODO: bio?
     }
 }
 
