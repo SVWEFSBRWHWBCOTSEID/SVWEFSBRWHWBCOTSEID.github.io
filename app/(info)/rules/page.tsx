@@ -1,6 +1,6 @@
-import StickySidebar from '../../components/StickySidebar';
 import {Metadata} from 'next';
-import SectionHeader from '../../components/SectionHeader';
+import StickySidebar from '../../../components/StickySidebar';
+import SectionHeader from '../../../components/SectionHeader';
 
 
 export const metadata: Metadata = {
