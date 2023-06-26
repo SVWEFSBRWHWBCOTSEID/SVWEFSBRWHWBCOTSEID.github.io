@@ -1,10 +1,10 @@
 'use client'
 
 import {useState} from 'react';
-import Chat from '../../../components/Chat';
-import GameHeader from '../../../components/GameHeader';
-import GameStateIndicator from '../../../components/GameStateIndicator';
-import TicTacToeBoard, {BoardStatus, defaultTTTBoard, TTTBoard, TTTSymbol} from '../../../components/TicTacToeBoard';
+import Chat from '../../Chat';
+import GameHeader from '../../GameHeader';
+import GameStateIndicator from '../../GameStateIndicator';
+import TicTacToeBoard, {BoardStatus, defaultTTTBoard, TTTBoard, TTTSymbol} from './TicTacToeBoard';
 
 
 export default function TicTacToeGame() {
@@ -22,7 +22,7 @@ export default function TicTacToeGame() {
     }
 
     return (
-        <main className="flex gap-8 items-center justify-between px-12 pt-4">
+        <>
             <div className="flex flex-col gap-5 w-[21rem]">
                 <GameHeader />
                 <Chat />
@@ -37,6 +37,6 @@ export default function TicTacToeGame() {
             />
 
             <GameStateIndicator />
-        </main>
+        </>
     )
 }

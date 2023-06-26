@@ -10,11 +10,11 @@ import UltimateTicTacToeBoard, {
     defaultUTTTBoardStatuses,
     UTTTBoard,
     UTTTBoardStatuses
-} from '../../../components/UltimateTicTacToeBoard';
-import TicTacToeScoreIndicator, {TTTScores} from '../../../components/TicTacToeScoreIndicator';
+} from '../../(games)/uttt/[id]/UltimateTicTacToeBoard';
+import TicTacToeScoreIndicator, {TTTScores} from '../../(games)/ttt/[id]/TicTacToeScoreIndicator';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../../components/TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../(games)/ttt/[id]/TicTacToeBoard';
 
 
 export default function OfflineUltimateTicTacToe() {

@@ -3,19 +3,19 @@
 import {useState} from 'react';
 
 // Components
-import Chat from '../../../components/Chat';
-import GameHeader from '../../../components/GameHeader';
-import GameStateIndicator from '../../../components/GameStateIndicator';
+import Chat from '../../Chat';
+import GameHeader from '../../GameHeader';
+import GameStateIndicator from '../../GameStateIndicator';
 import UltimateTicTacToeBoard, {
     ANY_BOARD,
     defaultUTTTBoard,
     defaultUTTTBoardStatuses,
     UTTTBoard,
     UTTTBoardStatuses
-} from '../../../components/UltimateTicTacToeBoard';
+} from './UltimateTicTacToeBoard';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../../components/TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../ttt/[id]/TicTacToeBoard';
 
 
 export default function UltimateTicTacToeGame() {
@@ -58,7 +58,7 @@ export default function UltimateTicTacToeGame() {
     }
 
     return (
-        <main className="flex gap-8 items-center justify-between px-12 pt-4">
+        <>
             <div className="flex flex-col gap-5 w-[21rem]">
                 <GameHeader />
                 <Chat />
@@ -75,6 +75,6 @@ export default function UltimateTicTacToeGame() {
             />
 
             <GameStateIndicator />
-        </main>
+        </>
     )
 }

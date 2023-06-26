@@ -1,4 +1,5 @@
 import {Metadata} from 'next';
+import {notFound} from 'next/navigation';
 import UltimateTicTacToeGame from './UltimateTicTacToeGame';
 
 
@@ -12,5 +13,6 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
 export default function UltimateTicTacToe({ params }: { params: { id: string } }) {
     // TODO: fetch API, not-found
+    if (params.id === 'test') notFound();
     return <UltimateTicTacToeGame />
 }
