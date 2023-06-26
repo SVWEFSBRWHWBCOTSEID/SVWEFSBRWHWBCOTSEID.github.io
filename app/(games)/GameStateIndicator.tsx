@@ -9,7 +9,7 @@ export default function GameStateIndicator() {
                 02<span className="text-secondary">:</span>38
             </div>
             <div className="bg-content rounded-r">
-                <div className="h-1 w-[72%] bg-[#629924]" />
+                <div className="h-1 w-[72%] bg-theme-green" />
                 <PlayerIndicator username="qpwoeirut" id="qpwoeirut" />
 
                 <div className="bg-content-secondary px-5 py-1.5 border-b border-tertiary">
@@ -30,13 +30,13 @@ export default function GameStateIndicator() {
 
                 <div className="px-4 py-1 text-secondary flex justify-center border-b border-tertiary text-2xl">
                     <button
-                        className="px-3.5 py-1.5 hover:bg-[#629924] hover:text-white"
+                        className="px-3.5 py-1.5 hover:bg-theme-green hover:text-white"
                         title="Offer draw"
                     >
                         ½
                     </button>
                     <button
-                        className="px-3.5 py-1.5 hover:bg-[#629924] hover:text-white"
+                        className="px-3.5 py-1.5 hover:bg-theme-green hover:text-white"
                         title="Resign"
                     >
                         <FaRegFlag />
@@ -44,7 +44,7 @@ export default function GameStateIndicator() {
                 </div>
 
                 <PlayerIndicator username="kepler" id="kepler" rating={1337} />
-                <div className="h-1 w-[68%] bg-[#629924]" />
+                <div className="h-1 w-[68%] bg-theme-green" />
             </div>
             <div className="bg-content w-max text-5xl px-5 py-2 rounded-b">
                 02<span className="text-secondary">:</span>57

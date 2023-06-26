@@ -1,6 +1,7 @@
-import {Metadata} from 'next';
-import Lobby from '../components/Lobby';
 import {ReactNode} from 'react';
+import {Metadata} from 'next';
+import QuickPairing from './QuickPairing';
+import Lobbies from './Lobbies';
 
 
 export const metadata: Metadata = {
@@ -12,10 +13,13 @@ export default function Home() {
     return (
         <main className="container pt-16 flex gap-8">
             <div className="flex-grow">
-                <h3 className="text-lg font-semibold text-center mb-2">Lobbies</h3>
-                <Lobby />
+                {/* <h3 className="text-lg text-center font-medium mb-4">Quick Pairing</h3> */}
+                <QuickPairing />
+
+                <h3 className="text-lg text-center font-medium mb-4">Lobbies</h3>
+                <Lobbies />
             </div>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-3.5">
                 <SecondaryButton>Create a game</SecondaryButton>
                 <SecondaryButton>Play with friend</SecondaryButton>
 
@@ -30,7 +34,7 @@ export default function Home() {
 
 function SecondaryButton(props: {children: ReactNode}) {
     return (
-        <button className="px-16 py-3 bg-[#302e2c] rounded uppercase text-secondary">
+        <button className="px-16 py-3 bg-[#302e2c] hover:bg-[hsl(37,_7%,_25%)] text-secondary hover:text-[#ccc] transition duration-200 rounded uppercase">
             {props.children}
         </button>
     )

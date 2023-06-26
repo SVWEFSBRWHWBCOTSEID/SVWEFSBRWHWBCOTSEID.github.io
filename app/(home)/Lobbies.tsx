@@ -1,7 +1,7 @@
 import LobbyRoom, {LobbyCell} from './LobbyRoom';
 
 
-export default function Lobby() {
+export default function Lobbies() {
     return (
         <div className="table w-full rounded overflow-clip bg-content/40">
             <div className="px-4 font-light table-header-group bg-content-secondary">

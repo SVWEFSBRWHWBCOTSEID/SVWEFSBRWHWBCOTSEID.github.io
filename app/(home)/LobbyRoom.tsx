@@ -15,7 +15,7 @@ export default function LobbyRoom() {
 
 export function LobbyCell(props: {children: ReactNode}) {
     return (
-        <span className="table-cell border-t border-tertiary px-4 py-1 group-hover:text-white group-hover:bg-[rgb(214_79_0_/_0.5)]">
+        <span className="table-cell border-t border-tertiary px-4 py-1 group-hover:text-white group-hover:bg-theme-orange/50">
             {props.children}
         </span>
     )
