@@ -1,29 +1,25 @@
-import {ReactNode} from 'react';
+'use client'
+
+import {Tab} from '@headlessui/react';
+import QuickPairingTab from './QuickPairingTab';
+import QuickPairingPanel from './QuickPairingPanel';
 
 
 export default function QuickPairing() {
+    const games = ['Tic-Tac-Toe', 'Ultimate Tic-Tac-Toe', 'Connect 4', 'Pokemon Chess']
+
     return (
-        <div className="grid grid-cols-3 gap-3 mb-8">
-            <QuickPairingButton game="Tic-Tac-Toe">1+0</QuickPairingButton>
-            <QuickPairingButton game="Tic-Tac-Toe">5+3</QuickPairingButton>
-            <QuickPairingButton game="Tic-Tac-Toe">10+5</QuickPairingButton>
-
-            <QuickPairingButton game="Ultimate Tic-Tac-Toe">1+0</QuickPairingButton>
-            <QuickPairingButton game="Ultimate Tic-Tac-Toe">3+2</QuickPairingButton>
-            <QuickPairingButton game="Ultimate Tic-Tac-Toe">5+3</QuickPairingButton>
-
-            <QuickPairingButton game="Ultimate Tic-Tac-Toe">10+5</QuickPairingButton>
-            <QuickPairingButton game="Ultimate Tic-Tac-Toe">30+0</QuickPairingButton>
-            <QuickPairingButton game="Custom" />
-        </div>
-    )
-}
-
-function QuickPairingButton(props: {children?: ReactNode, game: string}) {
-    return (
-        <div className="flex flex-col gap-1.5 items-center justify-center rounded font-light text-secondary hover:text-[#ccc] border border-tertiary p-6 bg-content-secondary/50 hover:bg-theme-orange/20 transition duration-200">
-            {props.children && <h3 className="text-4xl">{props.children}</h3>}
-            <h4 className="text-xl">{props.game}</h4>
-        </div>
+        <Tab.Group>
+            <Tab.List className="flex gap-2 mb-2">
+                {games.map(game => (
+                    <QuickPairingTab game={game} key={game} />
+                ))}
+            </Tab.List>
+            <Tab.Panels>
+                {games.map(game => (
+                    <QuickPairingPanel game={game} key={game} />
+                ))}
+            </Tab.Panels>
+        </Tab.Group>
     )
 }

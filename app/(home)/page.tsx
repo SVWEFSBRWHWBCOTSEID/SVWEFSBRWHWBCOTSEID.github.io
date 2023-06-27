@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 
 export default function Home() {
     return (
-        <main className="container pt-16 flex gap-8">
+        <main className="container pt-16 pb-20 flex gap-8">
             <div className="flex-grow">
                 {/* <h3 className="text-lg text-center font-medium mb-4">Quick Pairing</h3> */}
                 <QuickPairing />
 
-                <h3 className="text-lg text-center font-medium mb-4">Lobbies</h3>
+                <h3 className="text-lg text-center font-medium mb-2">Lobbies</h3>
                 <Lobbies />
             </div>
             <div className="flex flex-col gap-3.5">

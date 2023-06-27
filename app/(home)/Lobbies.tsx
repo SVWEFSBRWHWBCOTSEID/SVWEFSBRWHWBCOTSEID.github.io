@@ -20,6 +20,17 @@ export default function Lobbies() {
             <LobbyRoom />
             <LobbyRoom />
             <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
+            <LobbyRoom />
         </div>
     )
 }
