@@ -19,7 +19,7 @@ export default function Home() {
                 <h3 className="text-lg text-center font-medium mb-2">Lobbies</h3>
                 <Lobbies />
             </div>
-            <div className="flex flex-col gap-3.5">
+            <div className="flex flex-col gap-3.5 sticky top-6 h-max">
                 <SecondaryButton>Create a game</SecondaryButton>
                 <SecondaryButton>Play with friend</SecondaryButton>
 
