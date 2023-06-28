@@ -7,6 +7,7 @@ import {Listbox} from '@headlessui/react';
 import CenteredModal from '../../components/CenteredModal';
 import AnimatedListbox from '../../components/AnimatedListbox';
 import SecondarySlider from '../../components/SecondarySlider';
+import CloseButton from '../../components/CloseButton';
 
 // Util
 import {games} from './QuickPairing';
@@ -25,8 +26,10 @@ export default function CreateGameModal(props: CreateGameModalProps) {
         <CenteredModal
             isOpen={props.isOpen}
             setIsOpen={props.setIsOpen}
-            className="relative flex flex-col bg-content rounded-md w-[26rem] max-h-[90%] mx-2 shadow-xl overflow-clip"
+            className="relative flex flex-col bg-content rounded-md w-[26rem] max-h-[90%] mx-2 shadow-xl"
         >
+            <CloseButton className="absolute -top-3 -right-3" onClick={() => props.setIsOpen(false)} />
+
             <section className="px-8 pt-6 pb-4">
                 <h1 className="text-2xl text-center mb-6">Create a game</h1>
 
