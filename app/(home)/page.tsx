@@ -1,7 +1,7 @@
-import {ReactNode} from 'react';
 import {Metadata} from 'next';
 import QuickPairing from './QuickPairing';
 import Lobbies from './Lobbies';
+import CreateGameButton from './CreateGameButton';
 
 
 export const metadata: Metadata = {
@@ -20,8 +20,8 @@ export default function Home() {
                 <Lobbies />
             </div>
             <div className="flex flex-col gap-3.5 sticky top-6 h-max">
-                <SecondaryButton>Create a game</SecondaryButton>
-                <SecondaryButton>Play with friend</SecondaryButton>
+                <CreateGameButton>Create a game</CreateGameButton>
+                <CreateGameButton>Play with friend</CreateGameButton>
 
                 <div className="mt-3 text-sm text-secondary">
                     <p><strong>41,600</strong> players</p>
@@ -29,13 +29,5 @@ export default function Home() {
                 </div>
             </div>
         </main>
-    )
-}
-
-function SecondaryButton(props: {children: ReactNode}) {
-    return (
-        <button className="px-16 py-3 bg-[#302e2c] hover:bg-[hsl(37,_7%,_25%)] text-secondary hover:text-[#ccc] transition duration-200 rounded uppercase">
-            {props.children}
-        </button>
     )
 }
