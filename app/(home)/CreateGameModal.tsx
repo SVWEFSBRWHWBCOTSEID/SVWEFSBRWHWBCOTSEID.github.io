@@ -23,6 +23,9 @@ export default function CreateGameModal(props: CreateGameModalProps) {
     const [minutes, setMinutes] = useState(9);
     const [increment, setIncrement] = useState(5);
 
+    const [ratingOffsetMin, setRatingOffsetMin] = useState(-500);
+    const [ratingOffsetMax, setRatingOffsetMax] = useState(500);
+
     return (
         <CenteredModal
             isOpen={props.isOpen}
@@ -50,21 +53,23 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                 {timed && (
                     <div className="mt-2.5 text-center text-secondary">
                         {/* TODO: monospace */}
-                        <p className="mb-1">Minutes per side: <strong>{parseMinutes(minutes)}</strong></p>
+                        <p className="mb-1.5 text-sm">Minutes per side: <strong>{parseMinutes(minutes)}</strong></p>
                         <SecondarySlider
                             value={minutes}
                             onChange={setMinutes}
                             min={0}
                             max={38}
+                            className="h-5 slider-thumb:w-8 slider-thumb:h-5"
                         />
 
                         {/* TODO: monospace */}
-                        <p className="mt-2 mb-1">Increment in seconds: <strong>{parseIncrement(increment)}</strong></p>
+                        <p className="mt-1.5 mb-1.5 text-sm">Increment in seconds: <strong>{parseIncrement(increment)}</strong></p>
                         <SecondarySlider
                             value={increment}
                             onChange={setIncrement}
                             min={0}
                             max={30}
+                            className="h-5 slider-thumb:w-8 slider-thumb:h-5"
                         />
                     </div>
                 )}
@@ -80,8 +85,27 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             </section>
 
             <section className="bg-content-secondary border-y border-tertiary px-8 py-3 text-secondary text-sm text-center">
-                Rating range
-                {/* TODO: sliders */}
+                <p className="mb-0.5">Rating range</p>
+
+                <div className="flex items-center gap-2.5">
+                    <SecondarySlider
+                        value={ratingOffsetMin}
+                        onChange={setRatingOffsetMin}
+                        min={-500}
+                        max={0}
+                        step={50}
+                        className="h-3.5 slider-thumb:w-6 slider-thumb:h-3.5"
+                    />
+                    <span className="flex-none w-24">{ratingOffsetMin} / +{ratingOffsetMax}</span>
+                    <SecondarySlider
+                        value={ratingOffsetMax}
+                        onChange={setRatingOffsetMax}
+                        min={0}
+                        max={500}
+                        step={50}
+                        className="h-3.5 slider-thumb:w-6 slider-thumb:h-3.5"
+                    />
+                </div>
             </section>
 
             <section className="px-8 py-4 text-sm text-secondary text-center">
