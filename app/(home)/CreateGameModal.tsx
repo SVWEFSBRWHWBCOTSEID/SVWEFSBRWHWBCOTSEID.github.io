@@ -2,6 +2,7 @@
 
 import {ReactNode, useState} from 'react';
 import {Listbox} from '@headlessui/react';
+import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
 
 // Components
 import CenteredModal from '../../components/CenteredModal';
@@ -97,8 +98,9 @@ function ModalDropdown<T>(props: ModalDropdownProps<T>) {
             <Listbox.Label className="w-24 text-right">{props.title}</Listbox.Label>
 
             <div className="relative">
-                <Listbox.Button className="font-semibold text-left w-56 px-4 py-2 bg-content-tertiary rounded border border-tertiary">
+                <Listbox.Button className="relative font-semibold text-left w-56 px-4 py-2 bg-content-tertiary rounded border border-tertiary">
                     {props.selected}
+                    <MdOutlineKeyboardArrowDown className="absolute right-2.5 inset-y-0 my-auto text-xl" />
                 </Listbox.Button>
                 <AnimatedListbox className="absolute top-[calc(100%_+_6px)] w-48 flex flex-col py-1.5 bg-content-tertiary rounded shadow-lg z-10 focus:outline-none focus-visible:ring-1 focus-visible:ring-white/25">
                     {props.children}
