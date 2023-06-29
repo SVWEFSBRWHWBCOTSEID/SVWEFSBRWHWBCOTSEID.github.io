@@ -3,6 +3,7 @@
 import {ReactNode, useState} from 'react';
 import {Listbox} from '@headlessui/react';
 import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
+import {games} from './QuickPairing';
 
 // Components
 import CenteredModal from '../../components/CenteredModal';
@@ -10,8 +11,10 @@ import AnimatedListbox from '../../components/AnimatedListbox';
 import SecondarySlider from '../../components/SecondarySlider';
 import CloseButton from '../../components/CloseButton';
 
-// Util
-import {games} from './QuickPairing';
+// Icons
+import {IoDice} from 'react-icons/io5';
+import {PiNumberCircleOneFill, PiNumberCircleTwoFill} from 'react-icons/pi';
+import {GiPotato} from 'react-icons/gi';
 
 
 type CreateGameModalProps = {isOpen: boolean, setIsOpen: (open: boolean) => void, game?: typeof games[0]};
@@ -35,7 +38,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             <CloseButton className="absolute -top-3 -right-3" onClick={() => props.setIsOpen(false)} />
 
             <section className="px-8 pt-6 pb-4">
-                <h1 className="text-2xl text-center mb-6">Create a game</h1>
+                <h1 className="text-2xl text-center font-light mb-6">Create a game</h1>
 
                 <ModalDropdown title="Game" selected={game.name} value={game} onChange={setGame}>
                     {games.map((game) => (
@@ -108,8 +111,22 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                 </div>
             </section>
 
-            <section className="px-8 py-4 text-sm text-secondary text-center">
-                Rating: <strong>1337</strong> {game.name}
+            <section className="px-8 py-2 text-secondary flex items-center justify-center gap-1.5">
+                <button className="p-2 text-4xl hover:text-[#ccc]" title="Move first">
+                    <PiNumberCircleOneFill />
+                </button>
+
+                <button className="p-2 text-6xl hover:text-[#ccc]" title="Random side">
+                    <IoDice />
+                </button>
+
+                <button className="p-2 text-4xl hover:text-[#ccc]" title="Move second">
+                    <PiNumberCircleTwoFill />
+                </button>
+            </section>
+
+            <section className="px-8 py-3.5 text-sm text-secondary text-center border-t border-tertiary bg-[rgb(48_46_44)] rounded-b-lg">
+                Rating: <strong><GiPotato className="inline" /> 1337</strong> {game.name}
             </section>
         </CenteredModal>
     )
