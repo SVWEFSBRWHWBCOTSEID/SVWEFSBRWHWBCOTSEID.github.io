@@ -25,9 +25,15 @@ export default function CreateGameModal(props: CreateGameModalProps) {
     const [timed, setTimed] = useState(true);
     const [minutes, setMinutes] = useState(9);
     const [increment, setIncrement] = useState(5);
+    const invalidTime = minutes == 0 && increment == 0;
 
     const [ratingOffsetMin, setRatingOffsetMin] = useState(-500);
     const [ratingOffsetMax, setRatingOffsetMax] = useState(500);
+
+    function setTimeControl(timed: boolean) {
+        setTimed(timed);
+        if (!timed) setRated(false);
+    }
 
     return (
         <CenteredModal
@@ -48,7 +54,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             </section>
 
             <section className="bg-content-secondary border-y border-tertiary px-8 py-3">
-                <ModalDropdown title="Time control" selected={timed ? 'Real time' : 'Unlimited'} value={timed} onChange={setTimed}>
+                <ModalDropdown title="Time control" selected={timed ? 'Real time' : 'Unlimited'} value={timed} onChange={setTimeControl}>
                     <ModalDropdownItem value={true}>Real time</ModalDropdownItem>
                     <ModalDropdownItem value={false}>Unlimited</ModalDropdownItem>
                 </ModalDropdown>
@@ -62,7 +68,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                             onChange={setMinutes}
                             min={0}
                             max={38}
-                            className="h-5 slider-thumb:w-8 slider-thumb:h-5"
+                            className={'h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200' + (invalidTime ? ' ring ring-red-500/20' : '')}
                         />
 
                         {/* TODO: monospace */}
@@ -72,7 +78,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                             onChange={setIncrement}
                             min={0}
                             max={30}
-                            className="h-5 slider-thumb:w-8 slider-thumb:h-5"
+                            className={'h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200' + (invalidTime ? ' ring ring-red-500/20' : '')}
                         />
                     </div>
                 )}
@@ -82,7 +88,11 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                 <button onClick={() => setRated(false)} className={'px-12 py-2 rounded-l shadow-lg ' + (!rated ? 'bg-theme-green' : 'bg-content-secondary text-secondary')}>
                     Casual
                 </button>
-                <button onClick={() => setRated(true)} className={'px-12 py-2 rounded-r shadow-lg ' + (rated ? 'bg-theme-green' : 'bg-content-secondary text-secondary')}>
+                <button
+                    onClick={() => setRated(true)}
+                    className={'px-12 py-2 rounded-r shadow-lg ' + (rated ? 'bg-theme-green' : 'bg-content-secondary text-secondary disabled:opacity-50 transition-opacity duration-150')}
+                    disabled={!timed}
+                >
                     Rated
                 </button>
             </section>
@@ -95,7 +105,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                         value={ratingOffsetMin}
                         onChange={setRatingOffsetMin}
                         min={-500}
-                        max={0}
+                        max={-50}
                         step={50}
                         className="h-3.5 slider-thumb:w-6 slider-thumb:h-3.5"
                     />
@@ -103,7 +113,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     <SecondarySlider
                         value={ratingOffsetMax}
                         onChange={setRatingOffsetMax}
-                        min={0}
+                        min={50}
                         max={500}
                         step={50}
                         className="h-3.5 slider-thumb:w-6 slider-thumb:h-3.5"
@@ -112,15 +122,27 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             </section>
 
             <section className="px-8 py-2 text-secondary flex items-center justify-center gap-1.5">
-                <button className="p-2 text-4xl hover:text-[#ccc]" title="Move first">
+                <button
+                    className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
+                    title="Move first"
+                    disabled={invalidTime}
+                >
                     <PiNumberCircleOneFill />
                 </button>
 
-                <button className="p-2 text-6xl hover:text-[#ccc]" title="Random side">
+                <button
+                    className="p-2 text-6xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
+                    title="Random side"
+                    disabled={invalidTime}
+                >
                     <IoDice />
                 </button>
 
-                <button className="p-2 text-4xl hover:text-[#ccc]" title="Move second">
+                <button
+                    className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
+                    title="Move second"
+                    disabled={invalidTime}
+                >
                     <PiNumberCircleTwoFill />
                 </button>
             </section>
