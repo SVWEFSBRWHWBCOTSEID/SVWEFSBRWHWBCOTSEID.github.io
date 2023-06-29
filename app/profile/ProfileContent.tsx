@@ -31,16 +31,16 @@ export default function ProfileContent(props: User) {
 export const ratings = {
     ttt: {rating: 1500, games: 0, provisional: true},
     uttt: {rating: 1537, games: 177, provisional: false},
-    connectFour: {rating: 1224, games: 12, provisional: true},
-    pokemonChess: {rating: 1537, games: 177, provisional: false}
+    c4: {rating: 1224, games: 12, provisional: true},
+    pc: {rating: 1537, games: 177, provisional: false}
 }
 
 export function keyToName(key: string) {
     switch (key) {
         case 'ttt': return 'Tic-Tac-Toe';
         case 'uttt': return 'Ultimate Tic-Tac-Toe';
-        case 'connectFour': return 'Connect 4';
-        case 'pokemonChess': return 'Pokemon Chess';
+        case 'c4': return 'Connect 4';
+        case 'pc': return 'Pokemon Chess';
     }
     return 'Unknown game';
 }

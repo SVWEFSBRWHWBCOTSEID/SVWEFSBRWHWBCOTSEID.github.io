@@ -25,6 +25,6 @@ export default function QuickPairing() {
 export const games = [
     {name: 'Tic-Tac-Toe', key: 'ttt'},
     {name: 'Ultimate Tic-Tac-Toe', key: 'uttt'},
-    {name: 'Connect 4', key: 'connectFour'},
-    {name: 'Pokemon Chess', key: 'pokemonChess'}
+    {name: 'Connect 4', key: 'c4'},
+    {name: 'Pokemon Chess', key: 'pc'}
 ]

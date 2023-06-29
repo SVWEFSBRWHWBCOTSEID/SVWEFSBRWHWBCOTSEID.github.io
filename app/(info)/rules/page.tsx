@@ -20,10 +20,10 @@ export default function Rules() {
                         <a href="#uttt" className="hover:underline">Ultimate Tic-Tac-Toe</a>
                     </li>
                     <li>
-                        <a href="#connect-4" className="hover:underline">Connect 4</a>
+                        <a href="#c4" className="hover:underline">Connect 4</a>
                     </li>
                     <li>
-                        <a href="#pokemon-chess" className="hover:underline">Pokemon Chess</a>
+                        <a href="#pc" className="hover:underline">Pokemon Chess</a>
                     </li>
                 </ul>
             </StickySidebar>
@@ -49,10 +49,10 @@ export default function Rules() {
                     See also: <a href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Wikipedia</a>
                 </p>
 
-                <SectionHeader id="connect-4">Connect 4</SectionHeader>
+                <SectionHeader id="c4">Connect 4</SectionHeader>
                 <p className="mb-16">[...]</p>
 
-                <SectionHeader id="pokemon-chess">Pokemon Chess</SectionHeader>
+                <SectionHeader id="pc">Pokemon Chess</SectionHeader>
                 <p className="mb-4">Inspired by <a href="https://pokemonchess.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">pokemonchess.com</a>.</p>
                 <p className="mb-4">
                     Pokemon chess is like chess, except at the start of the game each player secretly assigns each piece
