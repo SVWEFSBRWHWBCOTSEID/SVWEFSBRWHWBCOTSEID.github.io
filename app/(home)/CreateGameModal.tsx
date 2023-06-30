@@ -3,7 +3,6 @@
 import {ReactNode, useState} from 'react';
 import {Listbox} from '@headlessui/react';
 import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
-import {games} from './QuickPairing';
 
 // Components
 import CenteredModal from '../../components/CenteredModal';
@@ -15,6 +14,10 @@ import CloseButton from '../../components/CloseButton';
 import {IoDice} from 'react-icons/io5';
 import {PiNumberCircleOneFill, PiNumberCircleTwoFill} from 'react-icons/pi';
 import {GiPotato} from 'react-icons/gi';
+
+// Util
+import {games} from './QuickPairing';
+import {createGame} from '../../util/games';
 
 
 type CreateGameModalProps = {isOpen: boolean, setIsOpen: (open: boolean) => void, game?: typeof games[0]};
@@ -126,6 +129,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Move first"
                     disabled={invalidTime}
+                    // TODO: username, rating
+                    onClick={() => createGame('kepler', 1337, minutes, increment, rated, timed, 'FIRST', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <PiNumberCircleOneFill />
                 </button>
@@ -134,6 +139,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-6xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Random side"
                     disabled={invalidTime}
+                    // TODO: username, rating
+                    onClick={() => createGame('kepler', 1337, minutes, increment, rated, timed, 'RANDOM', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <IoDice />
                 </button>
@@ -142,6 +149,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Move second"
                     disabled={invalidTime}
+                    // TODO: username, rating
+                    onClick={() => createGame('kepler', 1337, minutes, increment, rated, timed, 'SECOND', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <PiNumberCircleTwoFill />
                 </button>
