@@ -13,7 +13,8 @@ export const metadata: Metadata = {
     title: {
         template: '%s | [game website]',
         default: '[game website]'
-    }
+    },
+    description: 'Free online Tic-Tac-Toe, Ultimate Tic-Tac-Toe, Pokemon Chess, and other silly games server. Play with friends or random opponents!'
 }
 
 const inter = Inter({

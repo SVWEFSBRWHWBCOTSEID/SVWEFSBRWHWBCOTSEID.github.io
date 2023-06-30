@@ -17,9 +17,15 @@ export default function Header() {
                 <Link href="/preferences">
                     <BsGearFill className="text-secondary" />
                 </Link>
-                <Link href="/profile" className="text-secondary px-2">
-                    kepler
-                </Link>
+                {false ? (
+                    <Link href="/profile" className="text-secondary px-2">
+                        kepler
+                    </Link>
+                ) : (
+                    <Link href="/login" className="text-blue-500 uppercase px-2">
+                        Sign in
+                    </Link>
+                )}
             </nav>
         </header>
     )
