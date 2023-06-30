@@ -51,7 +51,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
 
                 <ModalDropdown title="Game" selected={game.name} value={game} onChange={setGame}>
                     {games.map((game) => (
-                        <ModalDropdownItem value={game}>{game.name}</ModalDropdownItem>
+                        <ModalDropdownItem value={game} key={game.key}>{game.name}</ModalDropdownItem>
                     ))}
                 </ModalDropdown>
             </section>
