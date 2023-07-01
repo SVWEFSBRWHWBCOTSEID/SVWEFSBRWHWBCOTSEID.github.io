@@ -1,11 +1,12 @@
 'use client'
 
 import {useContext} from 'react';
+import {DateTime} from 'luxon';
 import ProfileContext from '../../contexts/ProfileContext';
 
 
 export default function ProfileHeader() {
-    const {username} = useContext(ProfileContext);
+    const {username, createdAt} = useContext(ProfileContext);
 
     return (
         <section className="flex gap-6 px-8 py-6 bg-content-secondary">
@@ -15,8 +16,8 @@ export default function ProfileHeader() {
                     {username}
                     <img src="https://lichess1.org/assets/_zkgwWf/images/flags/US.png" alt="US flag" className="h-6" />
                 </h1>
-                <p className="text-secondary"><strong>Joined:</strong> 31 August 1984</p>
-                <p className="text-secondary"><strong>Followers:</strong> 69</p>
+                <p className="text-secondary"><strong>Joined:</strong> {DateTime.fromSQL(createdAt).toLocaleString()}</p>
+                <p className="text-secondary"><strong>Followers:</strong> 0</p>{/* TODO: followers */}
             </div>
         </section>
     )

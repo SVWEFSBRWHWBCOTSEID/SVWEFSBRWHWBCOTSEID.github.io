@@ -1,10 +1,11 @@
 import {createContext} from 'react';
+import {DateTime} from 'luxon';
 
 
 export type User = {
     username: string,
     perfs: { [P in GameKeys]: GamePerf },
-    createdAt: number,
+    createdAt: string, // SQL datetime
     profile: {
         country: Country,
         location: string,
@@ -44,7 +45,7 @@ export const defaultUser: User = {
         c4: defaultGamePerf,
         pc: defaultGamePerf
     },
-    createdAt: 0,
+    createdAt: DateTime.now().toSQLDate()!,
     profile: {
         country: 'US',
         location: '',
