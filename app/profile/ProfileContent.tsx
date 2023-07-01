@@ -8,18 +8,19 @@ import ProfileUserPanel from './ProfileUserPanel';
 import ProfileGamePanel from './ProfileGamePanel';
 
 // Util
-import ProfileContext, {User} from '../../contexts/ProfileContext';
+import ProfileContext, {defaultUser, User} from '../../contexts/ProfileContext';
 
 
-export default function ProfileContent(props: User) {
+export default function ProfileContent(props: {user?: User}) {
     return (
-        <ProfileContext.Provider value={props}>
+        // TODO: hacky defaultUser implementation here due to profile page shenanigans; eventually make props non-nullable
+        <ProfileContext.Provider value={props.user ?? defaultUser}>
             <Tab.Group vertical as="div" className="container flex pt-4 pb-12">
                 <ProfileSidebar />
                 <Tab.Panels className="flex-grow bg-content rounded-lg overflow-clip">
                     <ProfileUserPanel />
 
-                    {Object.entries(props.perfs).map(([key, value]) => (
+                    {Object.entries((props.user ?? defaultUser).perfs).map(([key, value]) => (
                         <ProfileGamePanel name={keyToName(key)} {...value} key={key} />
                     ))}
                 </Tab.Panels>

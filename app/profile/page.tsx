@@ -1,6 +1,5 @@
 import {Metadata} from 'next';
 import ProfileContent from './ProfileContent';
-import {defaultUser} from '../../contexts/ProfileContext';
 
 
 export const metadata: Metadata = {
@@ -9,5 +8,5 @@ export const metadata: Metadata = {
 
 export default function Profile() {
     // TODO
-    return <ProfileContent {...defaultUser} />
+    return <ProfileContent />
 }

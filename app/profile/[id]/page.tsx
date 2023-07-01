@@ -25,5 +25,5 @@ export default async function Profile({ params }: { params: { id: string } }) {
     const data: User | null = await (await fetch(`${process.env.API_BASE}/api/user/${params.id}`)).json();
     if (!data) notFound();
 
-    return <ProfileContent {...data} />
+    return <ProfileContent user={data} />
 }
