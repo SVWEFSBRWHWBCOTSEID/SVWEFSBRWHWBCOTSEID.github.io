@@ -1,12 +1,16 @@
 'use client'
 
+import {useContext} from 'react';
 import {Tab} from '@headlessui/react';
 import ProfileSidebarItem from './ProfileSidebarItem';
 import {AiFillCaretRight} from 'react-icons/ai';
-import {ratings, keyToName} from './ProfileContent';
+import {keyToName} from './ProfileContent';
+import ProfileContext from '../../contexts/ProfileContext';
 
 
 export default function ProfileSidebar() {
+    const {perfs} = useContext(ProfileContext);
+
     return (
         <Tab.List as="aside" className="flex flex-col flex-none pt-1">
             {/* TODO: styling? */}
@@ -17,7 +21,7 @@ export default function ProfileSidebar() {
 
             <hr className="my-4 mx-6 border-t border-tertiary" />
 
-            {Object.entries(ratings).map(([key, value]) => (
+            {Object.entries(perfs).map(([key, value]) => (
                 <ProfileSidebarItem name={keyToName(key)} {...value} key={key} />
             ))}
         </Tab.List>

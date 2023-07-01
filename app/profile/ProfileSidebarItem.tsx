@@ -3,10 +3,10 @@
 import {Tab} from '@headlessui/react';
 import {GiPotato} from 'react-icons/gi';
 import {AiFillCaretRight} from 'react-icons/ai';
+import {GamePerf} from '../../contexts/ProfileContext';
 
 
-type ProfileSidebarItemProps = {name: string, rating: number, games: number, provisional?: boolean}
-export default function ProfileSidebarItem(props: ProfileSidebarItemProps) {
+export default function ProfileSidebarItem(props: GamePerf & {name: string}) {
     return (
         <Tab className={'group flex gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-l pl-4 pr-8 py-3 transition duration-150 ' + (props.games ? 'text-secondary' : 'text-tertiary')}>
             {/* TODO: icon */}
@@ -14,7 +14,7 @@ export default function ProfileSidebarItem(props: ProfileSidebarItemProps) {
             <div>
                 <h5 className="uppercase font-light text-left">{props.name}</h5>
                 <p className="flex gap-2 text-sm items-center">
-                    <strong className="text-lg">{props.rating}{props.provisional && '?'}</strong>
+                    <strong className="text-lg">{props.rating}{props.prov && '?'}</strong>
                     {props.games} games
                 </p>
             </div>

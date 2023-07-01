@@ -4,17 +4,16 @@ import {useContext} from 'react';
 import Link from 'next/link';
 import {Tab} from '@headlessui/react';
 import ProfileGames from './ProfileGames';
-import ProfileContext from '../../contexts/ProfileContext';
+import ProfileContext, {GamePerf} from '../../contexts/ProfileContext';
 
 
-type ProfileGamePanelProps = {name: string, rating: number, games: number, provisional?: boolean}
-export default function ProfileGamePanel(props: ProfileGamePanelProps) {
-    const {id} = useContext(ProfileContext);
+export default function ProfileGamePanel(props: GamePerf & {name: string}) {
+    const {username} = useContext(ProfileContext);
 
     return (
         <Tab.Panel>
             <h1 className="px-8 py-6 text-4xl">
-                <Link href={`/profile/${id}`} className="text-blue-500 hover:underline">{id}</Link>'s {props.name} stats
+                <Link href={`/profile/${username}`} className="text-blue-500 hover:underline">{username}</Link>'s {props.name} stats
             </h1>
 
             <section className="border-y border-tertiary flex items-center justify-center text-secondary py-12">
@@ -24,7 +23,7 @@ export default function ProfileGamePanel(props: ProfileGamePanelProps) {
             <section className="px-8 py-6">
                 <p className="text-2xl mb-3 font-light">
                     Rating: <strong className="font-semibold">{props.rating}</strong>.{' '}
-                    {props.provisional ? (
+                    {props.prov ? (
                         <span
                             className="text-secondary cursor-help underline decoration-dashed decoration-blue-500 decoration-1 underline-offset-4"
                             title="Not enough rated games have been played to establish a reliable rating."
@@ -41,12 +40,12 @@ export default function ProfileGamePanel(props: ProfileGamePanelProps) {
 
                 {/* TODO: rating change arrow / color, tooltips */}
                 <p className="text-sm text-secondary">
-                    Progression over the last 12 games: -17. Rating deviation:{' '}
+                    Progression over the last 12 games: {props.prog}. Rating deviation:{' '}
                     <strong
                         className="cursor-help underline decoration-dashed decoration-blue-500 underline-offset-[3px]"
                         title="A lower value means the rating is more stable. ..."
                     >
-                        71.89
+                        {props.rd}
                     </strong>.
                 </p>
             </section>

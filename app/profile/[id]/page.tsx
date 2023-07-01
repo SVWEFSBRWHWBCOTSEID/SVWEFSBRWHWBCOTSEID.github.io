@@ -1,6 +1,7 @@
 import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import ProfileContent from '../ProfileContent';
+import {User} from '../../../contexts/ProfileContext';
 
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
@@ -11,8 +12,9 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     }
 }
 
-export default function Profile({ params }: { params: { id: string } }) {
-    // TODO: fetch user object from backend with id
-    if (params.id === 'test') notFound();
-    return <ProfileContent id={params.id} />
+export default async function Profile({ params }: { params: { id: string } }) {
+    const data: User | null = await (await fetch(`http://127.0.0.1:8080/api/user/${params.id}`)).json();
+    if (!data) notFound();
+
+    return <ProfileContent {...data} />
 }

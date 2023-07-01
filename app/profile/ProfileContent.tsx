@@ -19,20 +19,13 @@ export default function ProfileContent(props: User) {
                 <Tab.Panels className="flex-grow bg-content rounded-lg overflow-clip">
                     <ProfileUserPanel />
 
-                    {Object.entries(ratings).map(([key, value]) => (
+                    {Object.entries(props.perfs).map(([key, value]) => (
                         <ProfileGamePanel name={keyToName(key)} {...value} key={key} />
                     ))}
                 </Tab.Panels>
             </Tab.Group>
         </ProfileContext.Provider>
     )
-}
-
-export const ratings = {
-    ttt: {rating: 1500, games: 0, provisional: true},
-    uttt: {rating: 1537, games: 177, provisional: false},
-    c4: {rating: 1224, games: 12, provisional: true},
-    pc: {rating: 1537, games: 177, provisional: false}
 }
 
 export function keyToName(key: string) {
