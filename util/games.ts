@@ -32,7 +32,7 @@ export async function createGame(
         username
     }
 
-    const res = await fetch('http://localhost:8080/api/game/new', {
+    const res = await fetch(`${process.env.API_BASE}/api/game/new`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(body)

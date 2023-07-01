@@ -11,7 +11,7 @@ export default function SignupPanel() {
     const [error, setError] = useState(false);
 
     async function register() {
-        const res = await fetch('http://localhost:8080/api/user/new', {
+        const res = await fetch(`${process.env.API_BASE}/api/user/new`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({name: username, password})

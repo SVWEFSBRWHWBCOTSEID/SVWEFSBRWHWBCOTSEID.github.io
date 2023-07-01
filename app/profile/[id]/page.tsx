@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 }
 
 export default async function Profile({ params }: { params: { id: string } }) {
-    const data: User | null = await (await fetch(`http://127.0.0.1:8080/api/user/${params.id}`)).json();
+    const data: User | null = await (await fetch(`${process.env.API_BASE}/api/user/${params.id}`)).json();
     if (!data) notFound();
 
     return <ProfileContent {...data} />

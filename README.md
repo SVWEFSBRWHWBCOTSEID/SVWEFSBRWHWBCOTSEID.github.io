@@ -16,3 +16,6 @@ This website is built with TypeScript and [Next.js 13](https://nextjs.org/docs).
 npm run dev
 ```
 will start a development server on `localhost:3000`.
+
+Many parts of the website expect the backend server to be running on `localhost:8080`. See the [backend README](https://github.com/SVWEFSBRWHWBCOTSEID/game-website-backend)
+for how to set up and run the development server.
