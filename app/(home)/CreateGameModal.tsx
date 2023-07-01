@@ -130,7 +130,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     title="Move first"
                     disabled={invalidTime}
                     // TODO: username, rating
-                    onClick={() => createGame('kepler', 1337, minutes, increment, rated, timed, 'FIRST', ratingOffsetMin, ratingOffsetMax)}
+                    onClick={() => createGame('kepler', game.key, 1337, minutes, increment, rated, timed, 'FIRST', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <PiNumberCircleOneFill />
                 </button>
@@ -140,7 +140,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     title="Random side"
                     disabled={invalidTime}
                     // TODO: username, rating
-                    onClick={() => createGame('kepler', 1337, minutes, increment, rated, timed, 'RANDOM', ratingOffsetMin, ratingOffsetMax)}
+                    onClick={() => createGame('kepler', game.key, 1337, minutes, increment, rated, timed, 'RANDOM', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <IoDice />
                 </button>
@@ -150,7 +150,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     title="Move second"
                     disabled={invalidTime}
                     // TODO: username, rating
-                    onClick={() => createGame('kepler', 1337, minutes, increment, rated, timed, 'SECOND', ratingOffsetMin, ratingOffsetMax)}
+                    onClick={() => createGame('kepler', game.key, 1337, minutes, increment, rated, timed, 'SECOND', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <PiNumberCircleTwoFill />
                 </button>
