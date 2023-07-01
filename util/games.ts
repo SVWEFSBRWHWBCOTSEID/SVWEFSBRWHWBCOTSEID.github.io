@@ -1,3 +1,6 @@
+import type {GameKey} from '../contexts/ProfileContext';
+
+
 type Side = 'RANDOM' | 'FIRST' | 'SECOND';
 
 type CreateGameBody = {
@@ -13,6 +16,7 @@ type CreateGameBody = {
 
 export async function createGame(
     username: string,
+    game: GameKey,
     rating: number,
     minutes: number,
     increment: number,
@@ -32,7 +36,7 @@ export async function createGame(
         username
     }
 
-    const res = await fetch(`${process.env.API_BASE}/api/game/new`, {
+    const res = await fetch(`${process.env.API_BASE}/api/${game}/game/new`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(body)

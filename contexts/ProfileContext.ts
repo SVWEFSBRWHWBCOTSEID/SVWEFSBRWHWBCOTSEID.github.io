@@ -4,7 +4,7 @@ import {DateTime} from 'luxon';
 
 export type User = {
     username: string,
-    perfs: { [P in GameKeys]: GamePerf },
+    perfs: { [P in GameKey]: GamePerf },
     createdAt: string, // SQL datetime
     profile: {
         country: Country,
@@ -18,7 +18,7 @@ export type User = {
     // TODO: following stuff
 }
 
-type GameKeys = 'ttt' | 'uttt' | 'c4' | 'pc'
+export type GameKey = 'ttt' | 'uttt' | 'c4' | 'pc'
 export type GamePerf = {
     games: number,
     rating: number,

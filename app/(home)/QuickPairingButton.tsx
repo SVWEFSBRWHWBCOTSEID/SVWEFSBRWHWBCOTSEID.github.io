@@ -1,5 +1,6 @@
 import {MouseEventHandler, ReactNode} from 'react';
 import {createGame} from '../../util/games';
+import {GameKey} from '../../contexts/ProfileContext';
 
 
 type QuickPairingButtonProps = {game: string, children?: ReactNode, onClick?: MouseEventHandler<HTMLButtonElement>}
@@ -15,12 +16,12 @@ export default function QuickPairingButton(props: QuickPairingButtonProps) {
     )
 }
 
-type QuickPairingPresetButtonProps = {game: string, minutes: number, increment: number};
+type QuickPairingPresetButtonProps = {game: {name: string, key: GameKey}, minutes: number, increment: number};
 export function QuickPairingPresetButton(props: QuickPairingPresetButtonProps) {
     return (
         <QuickPairingButton
-            game={props.game}
-            onClick={() => createGame('kepler', 1337, props.minutes, props.increment)}
+            game={props.game.name}
+            onClick={() => createGame('kepler', props.game.key, 1337, props.minutes, props.increment)}
         >
             {props.minutes}+{props.increment}
         </QuickPairingButton>
