@@ -2,25 +2,28 @@
 
 import {useState} from 'react';
 import {revalidateTag} from 'next/cache';
-import Link from 'next/link';
 
 
-export default function LoginPanel() {
+export default function SignupPanel() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [rememberLogin, setRememberLogin] = useState(true);
 
     const [error, setError] = useState(false);
 
-    function signIn() {
-        // TODO: const res = await fetch(..., {...})
+    async function register() {
+        const res = await fetch('http://localhost:8080/api/user/new', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({name: username, password})
+        });
+        console.log(res)
         // TODO: if (!res.ok) return setError(true);
         // revalidateTag('user');
     }
 
     return (
         <main className="bg-content rounded py-10 px-12 w-96 flex flex-col">
-            <h1 className="text-4xl font-light mb-6">Sign in</h1>
+            <h1 className="text-4xl font-light mb-6">Register</h1>
 
             <label htmlFor="username" className="mb-1 text-secondary font-semibold text-sm">
                 Username
@@ -55,24 +58,10 @@ export default function LoginPanel() {
             <button
                 className="rounded bg-blue-500 uppercase px-4 py-2.5 font-medium mt-8 mb-2 disabled:opacity-50 hover:bg-[#56a3eb] disabled:hover:bg-blue-500 transition duration-100"
                 disabled={!username || !password}
-                onClick={signIn}
+                onClick={register}
             >
-                Sign in
+                Register
             </button>
-            <div className="flex gap-2 text-sm text-secondary">
-                <input
-                    type="checkbox"
-                    name="remember-login"
-                    id="remember-login"
-                    checked={rememberLogin}
-                    onChange={(e) => setRememberLogin(e.target.checked)}
-                />
-                <label htmlFor="remember-login">Keep me signed in</label>
-            </div>
-
-            <p className="mt-4 text-secondary text-sm">
-                Don't have an account? <Link href="/signup" className="text-blue-500 hover:underline">Create one.</Link>
-            </p>
         </main>
     )
 }
