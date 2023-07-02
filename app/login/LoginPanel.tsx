@@ -19,7 +19,7 @@ export default function LoginPanel() {
 
     async function attemptSignIn() {
         const res = await signIn('credentials', {redirect: false, username, password});
-        if (!res?.ok) return setError(true);
+        if (!res || res.error) return setError(true);
         replace(params.get('callbackUrl') ?? '/');
         // revalidateTag('user');
     }
