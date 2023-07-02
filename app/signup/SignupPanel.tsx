@@ -2,6 +2,7 @@
 
 import {useState} from 'react';
 import {revalidateTag} from 'next/cache';
+import {getUser} from '../../util/users';
 
 
 export default function SignupPanel() {
@@ -21,6 +22,12 @@ export default function SignupPanel() {
         // revalidateTag('user');
     }
 
+    // TODO: very inefficient with get requests; cache fetches on client somehow?
+    async function validateUsername() {
+        const user = await getUser(username);
+        setError(!!user);
+    }
+
     return (
         <main className="bg-content rounded py-10 px-12 w-96 flex flex-col">
             <h1 className="text-4xl font-light mb-6">Register</h1>
@@ -35,7 +42,8 @@ export default function SignupPanel() {
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="px-4 py-2 rounded bg-content-tertiary border border-tertiary mb-4 invalid:border-red-500 focus:outline-none focus:ring-[3px] transition duration-100"
+                onBlur={validateUsername}
+                className={'px-4 py-2 rounded bg-content-tertiary border border-tertiary mb-4 focus:outline-none focus:ring-[3px] transition duration-100 ' + (error ? 'border-red-500' : 'invalid:border-red-500')}
             />
 
             <label htmlFor="password" className="mb-1 text-secondary font-semibold text-sm">
@@ -52,7 +60,7 @@ export default function SignupPanel() {
             />
 
             {error && (
-                <p className="text-red-500 text-sm mt-4">Invalid username or password.</p>
+                <p className="text-red-500 text-sm mt-4">That username is already taken.</p>
             )}
 
             <button

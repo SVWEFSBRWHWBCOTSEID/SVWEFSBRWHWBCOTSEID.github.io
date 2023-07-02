@@ -11,11 +11,20 @@ required dependencies with
 ```shell
 npm install
 ```
-This website is built with TypeScript and [Next.js 13](https://nextjs.org/docs). To run the website locally,
+This website is built with TypeScript, [TailwindCSS](https://tailwindcss.com/docs/utility-first), and [Next.js 13](https://nextjs.org/docs).
+To run the website locally,
 ```shell
 npm run dev
 ```
-will start a development server on `localhost:3000`.
+will start the Next.js development server on `localhost:3000`.
 
 Many parts of the website expect the backend server to be running on `localhost:8080`. See the [backend README](https://github.com/SVWEFSBRWHWBCOTSEID/game-website-backend)
 for how to set up and run the development server.
+
+### Architecture
+<!-- ... -->
+Backend fetches are cached using [Next 13's data fetching API](https://nextjs.org/docs/app/building-your-application/data-fetching)
+to eliminate unnecessary queries. Specifically,
+
+- User objects from `/api/user/{id}` are cached under the `user-{id}` tag and revalidated on-demand when the user object 
+changes (when that user registers for an account, starts or finishes a game, edits their profile, etc.)

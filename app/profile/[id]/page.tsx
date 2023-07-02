@@ -2,17 +2,17 @@ import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {DateTime} from 'luxon';
 import ProfileContent from '../ProfileContent';
-import {User} from '../../../contexts/ProfileContext';
+import {getUser} from '../../../util/users';
 
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-    const data: User | null = await (await fetch(`${process.env.API_BASE}/api/user/${params.id}`)).json();
-    if (!data) return {
+    const user = await getUser(params.id)
+    if (!user) return {
         title: 'User not found'
     }
 
-    const joinedAtDate = DateTime.fromSQL(data.createdAt);
-    const games = Object.values(data.perfs).reduce((sum, perf) => sum + perf.games, 0);
+    const joinedAtDate = DateTime.fromSQL(user.createdAt);
+    const games = Object.values(user.perfs).reduce((sum, perf) => sum + perf.games, 0);
 
     // TODO: rating
     return {
@@ -22,8 +22,8 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 }
 
 export default async function Profile({ params }: { params: { id: string } }) {
-    const data: User | null = await (await fetch(`${process.env.API_BASE}/api/user/${params.id}`)).json();
-    if (!data) notFound();
+    const user = await getUser(params.id);
 
-    return <ProfileContent user={data} />
+    if (!user) notFound();
+    return <ProfileContent user={user} />
 }
