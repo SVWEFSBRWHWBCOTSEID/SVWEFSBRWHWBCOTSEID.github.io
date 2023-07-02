@@ -2,6 +2,7 @@ import {Metadata} from 'next';
 import QuickPairing from './QuickPairing';
 import Lobbies from './Lobbies';
 import CreateGameButton from './CreateGameButton';
+import SignOutButton from '../../components/SignOutButton';
 
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function Home() {
             <div className="flex flex-col gap-3.5 sticky top-6 h-max">
                 <CreateGameButton>Create a game</CreateGameButton>
                 <CreateGameButton>Play with friend</CreateGameButton>
+                <SignOutButton />
 
                 <div className="mt-3 text-sm text-secondary">
                     <p><strong>41,600</strong> players</p>
