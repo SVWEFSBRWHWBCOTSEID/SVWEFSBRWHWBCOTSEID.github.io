@@ -1,14 +1,7 @@
 import NextAuth, {NextAuthOptions} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import {getUser} from '../../../../util/users';
-import type {User} from '../../../../contexts/ProfileContext';
 
-
-declare module 'next-auth' {
-    interface Session {
-        data: User
-    }
-}
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -33,13 +26,6 @@ export const authOptions: NextAuthOptions = {
     },
     session: {
         strategy: "jwt",
-    },
-    callbacks: {
-        async session({session}) {
-            // TODO: better?
-            session.data = (await getUser(session.user?.name!))!;
-            return session
-        }
     }
 }
 

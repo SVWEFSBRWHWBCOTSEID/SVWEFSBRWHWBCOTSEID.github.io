@@ -10,7 +10,6 @@ import {authOptions} from '../app/api/auth/[...nextauth]/route';
 
 export default async function Header() {
     const session = await getServerSession(authOptions);
-    console.log(session)
 
     return (
         <header className="px-8 py-4 text-md flex justify-between">
@@ -27,7 +26,7 @@ export default async function Header() {
                 </Link>
                 {session ? (
                     <Link href="/profile" className="text-secondary px-2">
-                        {session.data.username}
+                        {session.user?.name}
                     </Link>
                 ) : (
                     <SignInButton />
