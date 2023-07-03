@@ -14,13 +14,14 @@ export default function LoginPanel() {
 
     const [error, setError] = useState(false);
 
-    const {replace} = useRouter();
+    const {replace, refresh} = useRouter();
     const params = useSearchParams();
 
     async function attemptSignIn() {
         const res = await signIn('credentials', {redirect: false, username, password});
         if (!res || res.error) return setError(true);
         replace(params.get('callbackUrl') ?? '/');
+        refresh();
         // revalidateTag('user');
     }
 
