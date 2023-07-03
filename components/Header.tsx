@@ -25,7 +25,7 @@ export default async function Header() {
                     <BsGearFill className="text-secondary" />
                 </Link>
                 {session ? (
-                    <Link href="/profile" className="text-secondary px-2">
+                    <Link href={`/profile/${session.user?.name}`} className="text-secondary px-2">
                         {session.user?.name}
                     </Link>
                 ) : (
