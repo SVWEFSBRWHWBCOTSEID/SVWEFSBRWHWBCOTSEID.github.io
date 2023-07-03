@@ -1,9 +1,16 @@
 import {ReactNode} from 'react';
 import Link from 'next/link';
 import {BsGear, BsGearFill} from 'react-icons/bs';
+import SignInButton from './SignInButton';
+
+// Auth
+import {getServerSession} from 'next-auth';
+import {authOptions} from '../app/api/auth/[...nextauth]/route';
 
 
-export default function Header() {
+export default async function Header() {
+    const session = await getServerSession(authOptions);
+
     return (
         <header className="px-8 py-4 text-md flex justify-between">
             <nav className="flex gap-2 items-center">
@@ -17,14 +24,12 @@ export default function Header() {
                 <Link href="/preferences">
                     <BsGearFill className="text-secondary" />
                 </Link>
-                {false ? (
-                    <Link href="/profile" className="text-secondary px-2">
-                        kepler
+                {session ? (
+                    <Link href={`/profile/${session.user?.name}`} className="text-secondary px-2">
+                        {session.user?.name}
                     </Link>
                 ) : (
-                    <Link href="/login" className="text-blue-500 uppercase px-2">
-                        Sign in
-                    </Link>
+                    <SignInButton />
                 )}
             </nav>
         </header>
