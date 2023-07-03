@@ -1,6 +1,6 @@
 import NextAuth, {NextAuthOptions} from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import {getUser} from '../../../../util/users';
+import type {User} from '../../../../contexts/ProfileContext';
 
 
 export const authOptions: NextAuthOptions = {
@@ -13,9 +13,14 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials) {
                 if (!credentials) return null;
 
-                const user = await getUser(credentials.username);
-                if (!user) return null;
+                const res = await fetch(`${process.env.API_BASE}/api/login`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({name: credentials.username, password: credentials.password})
+                });
+                if (!res.ok) return null;
 
+                const user: User = await res.json();
                 return {id: user.username, name: user.username};
             }
         })
@@ -25,7 +30,7 @@ export const authOptions: NextAuthOptions = {
         error: '/login'
     },
     session: {
-        strategy: "jwt",
+        strategy: 'jwt',
     }
 }
 
