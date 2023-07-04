@@ -10,12 +10,10 @@ type CreateGameBody = {
     // days: number,
     side: Side,
     ratingMin: number,
-    ratingMax: number,
-    username: string
+    ratingMax: number
 }
 
 export async function createGame(
-    username: string,
     game: GameKey,
     rating: number,
     minutes: number,
@@ -32,13 +30,13 @@ export async function createGame(
         increment: timed ? increment * 1000 : undefined,
         side,
         ratingMin: rating + ratingOffsetMin,
-        ratingMax: rating + ratingOffsetMax,
-        username
+        ratingMax: rating + ratingOffsetMax
     }
 
-    const res = await fetch(`${process.env.API_BASE}/api/${game}/game/new`, {
+    const res = await fetch(`${process.env.API_BASE}/api/game/new/${game}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
         body: JSON.stringify(body)
     });
 

@@ -21,7 +21,7 @@ export function QuickPairingPresetButton(props: QuickPairingPresetButtonProps) {
     return (
         <QuickPairingButton
             game={props.game.name}
-            onClick={() => createGame('kepler', props.game.key, 1337, props.minutes, props.increment)}
+            onClick={() => createGame(props.game.key, 1337, props.minutes, props.increment)}
         >
             {props.minutes}+{props.increment}
         </QuickPairingButton>
