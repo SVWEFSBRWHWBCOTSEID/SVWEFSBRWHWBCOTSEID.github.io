@@ -1,9 +1,12 @@
 import {ReactNode} from 'react';
 import Link from 'next/link';
 import {BsGear, BsGearFill} from 'react-icons/bs';
+import {cookies} from 'next/headers';
 
 
 export default function Header() {
+    const username = cookies().get('username')?.value;
+
     return (
         <header className="px-8 py-4 text-md flex justify-between">
             <nav className="flex gap-2 items-center">
@@ -17,9 +20,9 @@ export default function Header() {
                 <Link href="/preferences">
                     <BsGearFill className="text-secondary" />
                 </Link>
-                {false ? (
-                    <Link href="/profile" className="text-secondary px-2">
-                        kepler
+                {username ? (
+                    <Link href={`/profile/${username}`} className="text-secondary px-2">
+                        {username}
                     </Link>
                 ) : (
                     <Link href="/login" className="text-blue-500 uppercase px-2">

@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {revalidateTag} from 'next/cache';
 import Link from 'next/link';
 
@@ -12,9 +13,19 @@ export default function LoginPanel() {
 
     const [error, setError] = useState(false);
 
-    function signIn() {
-        // TODO: const res = await fetch(..., {...})
-        // TODO: if (!res.ok) return setError(true);
+    const {replace, refresh} = useRouter();
+
+    async function signIn() {
+        const res = await fetch('/api/auth', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            credentials: 'include',
+            body: JSON.stringify({username, password})
+        });
+        if (!res.ok) return setError(true);
+
+        replace('/');
+        refresh();
         // revalidateTag('user');
     }
 
