@@ -1,6 +1,7 @@
 'use client'
 
 import {useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {revalidateTag} from 'next/cache';
 import {getUser} from '../../util/users';
 
@@ -11,15 +12,19 @@ export default function SignupPanel() {
 
     const [error, setError] = useState(false);
 
+    const {replace, refresh} = useRouter();
+
     async function register() {
-        const res = await fetch(`${process.env.API_BASE}/api/user/new`, {
+        const res = await fetch('/api/next/signup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({name: username, password})
+            credentials: 'include',
+            body: JSON.stringify({username, password})
         });
-        console.log(res)
-        // TODO: if (!res.ok) return setError(true);
-        // revalidateTag('user');
+        if (!res.ok) return setError(true);
+
+        replace('/');
+        refresh();
     }
 
     // TODO: very inefficient with get requests; cache fetches on client somehow?

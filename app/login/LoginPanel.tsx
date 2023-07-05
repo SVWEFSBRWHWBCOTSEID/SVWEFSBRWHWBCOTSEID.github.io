@@ -2,7 +2,6 @@
 
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';
-import {revalidateTag} from 'next/cache';
 import Link from 'next/link';
 
 
@@ -16,7 +15,7 @@ export default function LoginPanel() {
     const {replace, refresh} = useRouter();
 
     async function signIn() {
-        const res = await fetch('/api/auth', {
+        const res = await fetch('/api/next/login', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
@@ -26,7 +25,6 @@ export default function LoginPanel() {
 
         replace('/');
         refresh();
-        // revalidateTag('user');
     }
 
     return (
