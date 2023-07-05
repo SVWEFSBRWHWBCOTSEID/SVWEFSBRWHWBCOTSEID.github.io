@@ -17,6 +17,7 @@ export async function POST(request: Request) {
 
     const user: User = await res.json();
     cookies().set('username', user.username);
+    cookies().set('id', res.headers.get('set-cookie')!.match(/id=(.+?);/)![1]); // TODO: didn't have to do this before
 
     return NextResponse.json(user);
 }

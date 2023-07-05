@@ -24,7 +24,7 @@ export default function Header() {
                 {username ? (
                     <ProfileDropdown username={username} />
                 ) : (
-                    <Link href="/login" className="text-blue-500 uppercase px-2">
+                    <Link href="/login" className="text-blue-500 uppercase px-3 py-4">
                         Sign in
                     </Link>
                 )}
