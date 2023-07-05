@@ -129,8 +129,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Move first"
                     disabled={invalidTime}
-                    // TODO: username, rating
-                    onClick={() => createGame('kepler', game.key, 1337, minutes, increment, rated, timed, 'FIRST', ratingOffsetMin, ratingOffsetMax)}
+                    // TODO: rating
+                    onClick={() => createGame(game.key, 1337, minutes, increment, rated, timed, 'FIRST', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <PiNumberCircleOneFill />
                 </button>
@@ -139,8 +139,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-6xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Random side"
                     disabled={invalidTime}
-                    // TODO: username, rating
-                    onClick={() => createGame('kepler', game.key, 1337, minutes, increment, rated, timed, 'RANDOM', ratingOffsetMin, ratingOffsetMax)}
+                    // TODO: rating
+                    onClick={() => createGame(game.key, 1337, minutes, increment, rated, timed, 'RANDOM', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <IoDice />
                 </button>
@@ -149,8 +149,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Move second"
                     disabled={invalidTime}
-                    // TODO: username, rating
-                    onClick={() => createGame('kepler', game.key, 1337, minutes, increment, rated, timed, 'SECOND', ratingOffsetMin, ratingOffsetMax)}
+                    // TODO: rating
+                    onClick={() => createGame(game.key, 1337, minutes, increment, rated, timed, 'SECOND', ratingOffsetMin, ratingOffsetMax)}
                 >
                     <PiNumberCircleTwoFill />
                 </button>
