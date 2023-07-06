@@ -24,7 +24,7 @@ export default function TicTacToeGame() {
     return (
         <>
             <div className="flex flex-col gap-5 w-[21rem]">
-                <GameHeader />
+                <GameHeader game="ttt" />
                 <Chat />
             </div>
 

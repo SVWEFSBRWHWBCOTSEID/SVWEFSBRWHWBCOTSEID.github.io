@@ -1,8 +1,10 @@
 import {GiPotato} from 'react-icons/gi';
 import Link from 'next/link';
+import {keyToName} from '../profile/ProfileContent';
+import type {GameKey} from '../../contexts/ProfileContext';
 
 
-export default function GameHeader() {
+export default function GameHeader(props: {game: GameKey}) {
     return (
         <div className="bg-content rounded p-6 shadow-lg">
             <div className="flex gap-4 mb-2">
@@ -11,12 +13,12 @@ export default function GameHeader() {
                     <p>
                         5+5 • Casual •{' '}
                         <a
-                            href="/rules#ttt"
+                            href={`/rules#${props.game}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-500 uppercase"
                         >
-                            Tic-Tac-Toe
+                            {keyToName(props.game)}
                         </a>
                     </p>
                     <p className="text-secondary text-sm">39 hours ago</p>
