@@ -23,18 +23,18 @@ export default function GameHeader() {
                 </div>
             </div>
 
-            <PlayerIndicator username="qpwoeirut" id="qpwoeirut" />
-            <PlayerIndicator username="kepler" id="kepler" rating={1337} />
+            <PlayerIndicator username="qpwoeirut" />
+            <PlayerIndicator username="kepler" rating={1337} />
         </div>
     )
 }
 
-function PlayerIndicator(props: {username: string, id: string, rating?: number}) {
+function PlayerIndicator(props: {username: string, rating?: number}) {
     return (
         <div className="flex gap-2 text-sm">
             <Link
                 className="flex-grow hover:text-blue-500"
-                href={`/profile/${props.id}`}
+                href={`/profile/${props.username}`}
             >
                 {props.username}{props.rating && ` (${props.rating})`}
             </Link>

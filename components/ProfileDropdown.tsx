@@ -4,6 +4,7 @@ import {MouseEventHandler, ReactNode} from 'react';
 import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import {Menu} from '@headlessui/react';
+import UserEventHandler from './UserEventHandler';
 
 
 export default function ProfileDropdown(props: {username: string}) {
@@ -28,6 +29,9 @@ export default function ProfileDropdown(props: {username: string}) {
                 </Link>
                 <ProfileDropdownItem onClick={signOut}>Sign out</ProfileDropdownItem>
             </Menu.Items>
+
+            {/* Handler for authenticated user SSE endpoint */}
+            <UserEventHandler />
         </Menu>
     )
 }

@@ -7,7 +7,7 @@ import type {User} from '../../../../contexts/ProfileContext';
 // for frontend convenience.
 // TODO: abstract this with `/api/login` handler?
 export async function POST(request: Request) {
-    const res = await fetch(`${process.env.API_BASE}/api/user/new`, {
+    const res = await fetch(`${process.env.API_BASE}/user/new`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',

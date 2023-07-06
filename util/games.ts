@@ -1,7 +1,7 @@
 import type {GameKey} from '../contexts/ProfileContext';
 
 
-type Side = 'RANDOM' | 'FIRST' | 'SECOND';
+export type Side = 'RANDOM' | 'FIRST' | 'SECOND';
 
 type CreateGameBody = {
     rated: boolean,
@@ -33,7 +33,7 @@ export async function createGame(
         ratingMax: rating + ratingOffsetMax
     }
 
-    const res = await fetch(`${process.env.API_BASE}/api/game/new/${game}`, {
+    const res = await fetch(`${process.env.API_BASE}/game/new/${game}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',

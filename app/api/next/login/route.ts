@@ -6,7 +6,7 @@ import type {User} from '../../../../contexts/ProfileContext';
 // POST handler to redirect cookies from `/api/login` and make them same-site, as well as add custom cookies
 // for frontend convenience.
 export async function POST(request: Request) {
-    const res = await fetch(`${process.env.API_BASE}/api/login`, {
+    const res = await fetch(`${process.env.API_BASE}/login`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
