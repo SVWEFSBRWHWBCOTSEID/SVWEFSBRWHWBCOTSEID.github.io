@@ -16,5 +16,5 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 export default function TicTacToe({ params }: { params: { id: string } }) {
     // TODO: fetch API, not-found
     if (params.id === 'test') notFound();
-    return <TicTacToeGame />
+    return <TicTacToeGame id={params.id} />
 }

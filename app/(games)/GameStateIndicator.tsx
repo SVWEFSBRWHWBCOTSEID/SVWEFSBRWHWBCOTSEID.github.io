@@ -1,15 +1,18 @@
 import Link from 'next/link';
+import {Duration} from 'luxon';
 import {FaRegFlag} from 'react-icons/fa';
+import GameTimeIndicator from './GameTimeIndicator';
+import GameTimeProgressBar from './GameTimeProgressBar';
 
 
-export default function GameStateIndicator() {
+type GameStateIndicatorProps = {ftime: Duration, stime: Duration}
+export default function GameStateIndicator(props: GameStateIndicatorProps) {
     return (
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
-            <div className="bg-content w-max text-5xl px-5 py-2 rounded-t">
-                02<span className="text-secondary">:</span>38
-            </div>
+            <GameTimeIndicator time={props.ftime} top />
+
             <div className="bg-content rounded-r">
-                <div className="h-1 w-[72%] bg-theme-green" />
+                <GameTimeProgressBar time={props.ftime} initial={300000} />
                 <PlayerIndicator username="qpwoeirut" id="qpwoeirut" />
 
                 <div className="bg-content-secondary px-5 py-1.5 border-b border-tertiary">
@@ -44,11 +47,10 @@ export default function GameStateIndicator() {
                 </div>
 
                 <PlayerIndicator username="kepler" id="kepler" rating={1337} />
-                <div className="h-1 w-[68%] bg-theme-green" />
+                <GameTimeProgressBar time={props.stime} initial={300000} />
             </div>
-            <div className="bg-content w-max text-5xl px-5 py-2 rounded-b">
-                02<span className="text-secondary">:</span>57
-            </div>
+
+            <GameTimeIndicator time={props.stime} />
         </div>
     )
 }
