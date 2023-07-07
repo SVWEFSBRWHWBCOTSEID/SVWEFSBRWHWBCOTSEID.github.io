@@ -27,7 +27,7 @@ export default function TicTacToeGame(props: {id: string}) {
 
     useEffect(() => {
         const intervalID = setInterval(() => {
-            const setActiveTime = playerSymbol === '✕' ? setFtime : setStime;
+            const setActiveTime = gameStates.length % 2 !== 0 ? setFtime : setStime;
 
             setActiveTime((time) => {
                 const decremented = time.minus(100).normalize();
@@ -36,10 +36,11 @@ export default function TicTacToeGame(props: {id: string}) {
         }, 100)
 
         return () => clearInterval(intervalID);
-    }, [playerSymbol])
+    }, [gameStates])
 
     useEffect(() => {
         const eventSource = new EventSource(`${process.env.API_BASE}/game/${props.id}/events`);
+
         eventSource.onmessage = (m) => {
             const event: GameEvent = JSON.parse(m.data);
             switch (event.type) {
@@ -52,6 +53,8 @@ export default function TicTacToeGame(props: {id: string}) {
                     break;
             }
         }
+
+        return () => eventSource.close();
     }, [])
 
     // Handles a game state event by updating the times and board states.
@@ -59,28 +62,31 @@ export default function TicTacToeGame(props: {id: string}) {
         setFtime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
         setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
 
-        setMoves(event.moves);
+        setMoves((moves) => moves.concat(event.moves));
         updateGameStatesFromMoves(event.moves);
         // ...
     }
 
     function updateGameStatesFromMoves(moves: string[]) {
-        const arr = gameStates.slice();
-        let symbol = playerSymbol;
+        setGameStates((gameStates) => {
+            const arr = gameStates.slice();
+            let symbol: TTTSymbol = arr.length % 2 === 0 ? '◯' : '✕';
 
-        for (let i = 0; i < moves.length; i++) {
-            const [, col, row] = moves[i].match(/(\w)(\d)/)!;
-            const state = arr.at(-1)!.slice() as TTTBoard;
+            for (let i = 0; i < moves.length; i++) {
+                const [, col, row] = moves[i].match(/(\w)(\d)/)!;
+                const state = arr.at(-1)!.slice() as TTTBoard;
 
-            state[rowToIndex(row) + colToIndex(col)] = symbol;
-            arr.push(state);
+                state[rowToIndex(row) + colToIndex(col)] = symbol;
+                arr.push(state);
 
-            symbol = symbol === '✕' ? '✕' : '◯'
-        }
+                symbol = symbol === '✕' ? '◯' : '✕';
+            }
 
-        // If the player is viewing the last move, keep them on the last move when new moves are added
-        if (gameStateIndex === gameStates.length - 1) setGameStateIndex(arr.length - 1);
-        setGameStates(arr);
+            // If the player is viewing the last move, keep them on the last move when new moves are added
+            setGameStateIndex((gameStateIndex) => gameStateIndex === gameStates.length - 1 ? arr.length - 1 : gameStateIndex);
+
+            return arr;
+        });
     }
 
     // Makes a move by checking the given square, alternating the player's symbol after each move.
@@ -88,11 +94,10 @@ export default function TicTacToeGame(props: {id: string}) {
         const col = square % 3;
         const row = (square - col) / 3
 
-        await fetch(`${process.env.API_BASE}/game/${props.id}/move/${indexToCol(col)}${row}`, {
+        await fetch(`${process.env.API_BASE}/game/${props.id}/move/${indexToCol(col)}${row + 1}`, {
             method: 'POST',
             credentials: 'include'
         });
-        setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
     }
 
     if (!gameInfo) return null; // TODO: loading UI
