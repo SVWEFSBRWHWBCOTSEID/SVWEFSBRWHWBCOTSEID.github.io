@@ -1,4 +1,4 @@
-import {User} from '../contexts/ProfileContext';
+import type {User} from '../contexts/ProfileContext';
 
 
 export async function getUser(username: string): Promise<User | null> {

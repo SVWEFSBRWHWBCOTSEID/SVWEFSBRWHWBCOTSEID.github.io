@@ -1,11 +1,15 @@
-export default function Chat() {
+import type {ChatMessageEvent} from './ttt/[id]/page';
+
+
+export type ChatMessage = Omit<ChatMessageEvent, 'type'>
+
+export default function Chat(props: {chat: ChatMessage[]}) {
     return (
         <div className="flex-none text-sm rounded flex flex-col overflow-clip shadow-lg">
             <div className="px-3 py-2 bg-content h-[30rem] x flex-col gap-2">
-                <ChatMessage username="lol" text="lmao" />
-                <ChatMessage username="lol" text="lmao" />
-                <ChatMessage username="lol" text="lmao" />
-                <ChatMessage username="lol" text="lmao" />
+                {props.chat.map((message) => (
+                    <ChatMessage {...message} />
+                ))}
             </div>
             <input
                 placeholder="pls be nice in chat :pleading:"
@@ -15,7 +19,7 @@ export default function Chat() {
     )
 }
 
-function ChatMessage(props: {username: string, text: string}) {
+function ChatMessage(props: ChatMessage) {
     return (
         <div className="flex gap-2">
             <strong className="font-medium text-secondary">{props.username}:</strong>

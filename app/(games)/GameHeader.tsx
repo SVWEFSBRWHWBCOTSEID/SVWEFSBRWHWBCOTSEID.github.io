@@ -1,17 +1,21 @@
-import {GiPotato} from 'react-icons/gi';
 import Link from 'next/link';
+import {GiPotato} from 'react-icons/gi';
 import {keyToName} from '../profile/ProfileContent';
 import type {GameKey} from '../../contexts/ProfileContext';
+import type {GameFullEvent, GameUser} from './ttt/[id]/page';
 
 
-export default function GameHeader(props: {game: GameKey}) {
+export type GameInfo = Omit<GameFullEvent, 'type' | 'chat' | 'state'>;
+
+export default function GameHeader(props: {game: GameKey} & GameInfo) {
     return (
         <div className="bg-content rounded p-6 shadow-lg">
             <div className="flex gap-4 mb-2">
                 <GiPotato className="text-4xl" />
                 <div>
                     <p>
-                        5+5 • Casual •{' '}
+                        {props.timeControl.initial / 60000}+{props.timeControl.increment / 1000} •
+                        {props.rated ? 'Rated' : 'Casual'} •{' '}
                         <a
                             href={`/rules#${props.game}`}
                             target="_blank"
@@ -21,26 +25,26 @@ export default function GameHeader(props: {game: GameKey}) {
                             {keyToName(props.game)}
                         </a>
                     </p>
+                    {/* TODO: parse createdAt timestamp, countdown clock */}
                     <p className="text-secondary text-sm">39 hours ago</p>
                 </div>
             </div>
 
-            <PlayerIndicator username="qpwoeirut" />
-            <PlayerIndicator username="kepler" rating={1337} />
+            <PlayerIndicator user={props.first} />
+            <PlayerIndicator user={props.second} />
         </div>
     )
 }
 
-function PlayerIndicator(props: {username: string, rating?: number}) {
+function PlayerIndicator(props: { user: GameUser }) {
     return (
         <div className="flex gap-2 text-sm">
             <Link
                 className="flex-grow hover:text-blue-500"
-                href={`/profile/${props.username}`}
+                href={`/profile/${props.user.username}`}
             >
-                {props.username}{props.rating && ` (${props.rating})`}
+                {props.user.username}{props.user.rating && ` (${props.user.rating})`} {/* TODO */}
             </Link>
-
         </div>
     )
 }

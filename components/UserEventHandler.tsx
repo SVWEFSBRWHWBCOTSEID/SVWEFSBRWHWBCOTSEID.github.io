@@ -6,7 +6,7 @@ import type {GameKey} from '../contexts/ProfileContext';
 
 
 type GameStartEvent = {
-    type: 'gameStart',
+    type: 'GAME_START',
     game: GameKey,
     id: string,
 }
@@ -22,7 +22,7 @@ export default function UserEventHandler() {
             const message: UserEvent = JSON.parse(m.data);
 
             switch (message.type) {
-                case 'gameStart': push(`/${message.game}/${message.id}`)
+                case 'GAME_START': push(`/${message.game}/${message.id}`)
             }
         }
     }, [])
