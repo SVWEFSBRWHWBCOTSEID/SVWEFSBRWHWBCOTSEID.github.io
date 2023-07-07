@@ -13,10 +13,12 @@ import TicTacToeBoard, {BoardStatus, defaultTTTBoard, TTTBoard, TTTSymbol} from 
 
 export default function TicTacToeGame(props: {id: string}) {
     const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
-    const [gameStates, setGameStates] = useState([defaultTTTBoard]);
-
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
     const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
+
+    const [gameStates, setGameStates] = useState([defaultTTTBoard]);
+    const [moves, setMoves] = useState<string[]>([]); // TODO: derived state?
+    const [gameStateIndex, setGameStateIndex] = useState(0);
 
     const [ftime, setFtime] = useState(Duration.fromObject({minutes: 3, seconds: 23, milliseconds: 200}));
     const [stime, setStime] = useState(Duration.fromObject({minutes: 1, seconds: 20, milliseconds: 200}));
@@ -42,9 +44,7 @@ export default function TicTacToeGame(props: {id: string}) {
             const event: GameEvent = JSON.parse(m.data);
             switch (event.type) {
                 case 'CHAT_MESSAGE': setChat([...chat, event]); break;
-                case 'GAME_STATE':
-                    handleGameState(event);
-                    break;
+                case 'GAME_STATE': handleGameState(event); break;
                 case 'GAME_FULL':
                     setGameInfo(event); // TODO: possibly hacky?
                     setChat(event.chat);
@@ -56,8 +56,9 @@ export default function TicTacToeGame(props: {id: string}) {
 
     // Handles a game state event by updating the times and board states.
     function handleGameState(event: Omit<GameStateEvent, 'type'>) {
-        setFtime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize())
-        setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize())
+        setFtime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
+        setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
+        setMoves(event.moves);
         updateGameStatesFromMoves(event.moves);
         // ...
     }
@@ -91,7 +92,7 @@ export default function TicTacToeGame(props: {id: string}) {
         setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
     }
 
-    if (!gameInfo) return null; // TODO
+    if (!gameInfo) return null; // TODO: loading UI
 
     return (
         <>
@@ -108,7 +109,14 @@ export default function TicTacToeGame(props: {id: string}) {
                 disabled={gameStatus !== BoardStatus.PLAYING}
             />
 
-            <GameStateIndicator ftime={ftime} stime={stime} {...gameInfo} />
+            <GameStateIndicator
+                ftime={ftime}
+                stime={stime}
+                moves={moves}
+                index={gameStateIndex}
+                setIndex={setGameStateIndex}
+                {...gameInfo}
+            />
         </>
     )
 }
