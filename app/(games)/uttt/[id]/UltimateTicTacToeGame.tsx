@@ -1,6 +1,7 @@
 'use client'
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
+import {Duration} from 'luxon';
 
 // Components
 import Chat from '../../Chat';
@@ -25,6 +26,22 @@ export default function UltimateTicTacToeGame() {
     const [activeBoard, setActiveBoard] = useState(4);
 
     const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
+
+    const [ftime, setFtime] = useState(Duration.fromObject({minutes: 3, seconds: 23, milliseconds: 200}));
+    const [stime, setStime] = useState(Duration.fromObject({minutes: 1, seconds: 20, milliseconds: 200}));
+
+    useEffect(() => {
+        const intervalID = setInterval(() => {
+            const setActiveTime = playerSymbol === '✕' ? setFtime : setStime;
+
+            setActiveTime((time) => {
+                const decremented = time.minus(100).normalize();
+                return decremented.toMillis() > 0 ? decremented : Duration.fromMillis(0)
+            });
+        }, 100)
+
+        return () => clearInterval(intervalID);
+    }, [playerSymbol])
 
     // Makes a move by checking the given square in the given board,
     // alternating the player's symbol and setting the new active square after each move.
@@ -60,7 +77,7 @@ export default function UltimateTicTacToeGame() {
     return (
         <>
             <div className="flex flex-col gap-5 w-[21rem]">
-                <GameHeader />
+                <GameHeader game="uttt" />
                 <Chat />
             </div>
 
@@ -74,7 +91,7 @@ export default function UltimateTicTacToeGame() {
                 disabled={gameStatus !== BoardStatus.PLAYING}
             />
 
-            <GameStateIndicator />
+            <GameStateIndicator ftime={ftime} stime={stime} />
         </>
     )
 }
