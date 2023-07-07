@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from 'react';
 import {Duration} from 'luxon';
-import type {GameEvent, GameFullEvent, GameStateEvent} from './page';
+import type {GameEvent, GameStateEvent} from './page';
 
 // Components
 import Chat, {ChatMessage} from '../../Chat';
@@ -58,6 +58,7 @@ export default function TicTacToeGame(props: {id: string}) {
     function handleGameState(event: Omit<GameStateEvent, 'type'>) {
         setFtime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
         setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
+
         setMoves(event.moves);
         updateGameStatesFromMoves(event.moves);
         // ...
@@ -77,6 +78,8 @@ export default function TicTacToeGame(props: {id: string}) {
             symbol = symbol === '✕' ? '✕' : '◯'
         }
 
+        // If the player is viewing the last move, keep them on the last move when new moves are added
+        if (gameStateIndex === gameStates.length - 1) setGameStateIndex(arr.length - 1);
         setGameStates(arr);
     }
 
@@ -102,11 +105,11 @@ export default function TicTacToeGame(props: {id: string}) {
             </div>
 
             <TicTacToeBoard
-                boardState={gameStates.at(-1)!}
+                boardState={gameStates[gameStateIndex]}
                 playerSymbol={playerSymbol}
                 setSquare={setSquare}
                 setBoardStatus={setGameStatus}
-                disabled={gameStatus !== BoardStatus.PLAYING}
+                disabled={gameStatus !== BoardStatus.PLAYING || gameStateIndex !== gameStates.length - 1} // TODO
             />
 
             <GameStateIndicator

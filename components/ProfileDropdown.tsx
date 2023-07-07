@@ -11,7 +11,7 @@ export default function ProfileDropdown(props: {username: string}) {
     const {refresh} = useRouter();
 
     async function signOut() {
-        await fetch('/api/next/logout', {
+        await fetch(`${process.env.API_BASE}/logout`, {
             method: 'POST',
             credentials: 'include'
         });

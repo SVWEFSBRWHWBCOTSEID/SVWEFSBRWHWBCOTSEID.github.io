@@ -15,7 +15,7 @@ export default function LoginPanel() {
     const {replace, refresh} = useRouter();
 
     async function signIn() {
-        const res = await fetch('/api/next/login', {
+        const res = await fetch(`${process.env.API_BASE}/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',

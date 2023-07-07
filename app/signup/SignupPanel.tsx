@@ -15,7 +15,7 @@ export default function SignupPanel() {
     const {replace, refresh} = useRouter();
 
     async function register() {
-        const res = await fetch('/api/next/signup', {
+        const res = await fetch(`${process.env.API_BASE}/user/new`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',

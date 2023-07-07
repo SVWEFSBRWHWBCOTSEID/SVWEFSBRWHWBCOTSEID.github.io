@@ -26,9 +26,9 @@ export default function CreateGameModal(props: CreateGameModalProps) {
     const [rated, setRated] = useState(true);
 
     const [timed, setTimed] = useState(true);
-    const [minutes, setMinutes] = useState(9);
-    const [increment, setIncrement] = useState(5);
-    const invalidTime = minutes == 0 && increment == 0;
+    const [minutesSlider, setMinutesSlider] = useState(9);
+    const [incrementSlider, setIncrementSlider] = useState(5);
+    const invalidTime = minutesSlider == 0 && incrementSlider == 0;
 
     const [ratingOffsetMin, setRatingOffsetMin] = useState(-500);
     const [ratingOffsetMax, setRatingOffsetMax] = useState(500);
@@ -65,20 +65,20 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                 {timed && (
                     <div className="mt-2.5 text-center text-secondary">
                         {/* TODO: monospace */}
-                        <p className="mb-1.5 text-sm">Minutes per side: <strong>{parseMinutes(minutes)}</strong></p>
+                        <p className="mb-1.5 text-sm">Minutes per side: <strong>{parseMinutes(minutesSlider)}</strong></p>
                         <SecondarySlider
-                            value={minutes}
-                            onChange={setMinutes}
+                            value={minutesSlider}
+                            onChange={setMinutesSlider}
                             min={0}
                             max={38}
                             className={'h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200' + (invalidTime ? ' ring ring-red-500/20' : '')}
                         />
 
                         {/* TODO: monospace */}
-                        <p className="mt-1.5 mb-1.5 text-sm">Increment in seconds: <strong>{parseIncrement(increment)}</strong></p>
+                        <p className="mt-1.5 mb-1.5 text-sm">Increment in seconds: <strong>{parseIncrement(incrementSlider)}</strong></p>
                         <SecondarySlider
-                            value={increment}
-                            onChange={setIncrement}
+                            value={incrementSlider}
+                            onChange={setIncrementSlider}
                             min={0}
                             max={30}
                             className={'h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200' + (invalidTime ? ' ring ring-red-500/20' : '')}
@@ -130,7 +130,17 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     title="Move first"
                     disabled={invalidTime}
                     // TODO: rating
-                    onClick={() => createGame(game.key, 1337, minutes, increment, rated, timed, 'FIRST', ratingOffsetMin, ratingOffsetMax)}
+                    onClick={() => createGame(
+                        game.key,
+                        1337,
+                        parseMinutes(minutesSlider),
+                        parseIncrement(incrementSlider),
+                        rated,
+                        timed,
+                        'FIRST',
+                        ratingOffsetMin,
+                        ratingOffsetMax
+                    )}
                 >
                     <PiNumberCircleOneFill />
                 </button>
@@ -140,7 +150,17 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     title="Random side"
                     disabled={invalidTime}
                     // TODO: rating
-                    onClick={() => createGame(game.key, 1337, minutes, increment, rated, timed, 'RANDOM', ratingOffsetMin, ratingOffsetMax)}
+                    onClick={() => createGame(
+                        game.key,
+                        1337,
+                        parseMinutes(minutesSlider),
+                        parseIncrement(incrementSlider),
+                        rated,
+                        timed,
+                        'RANDOM',
+                        ratingOffsetMin,
+                        ratingOffsetMax
+                    )}
                 >
                     <IoDice />
                 </button>
@@ -150,7 +170,17 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     title="Move second"
                     disabled={invalidTime}
                     // TODO: rating
-                    onClick={() => createGame(game.key, 1337, minutes, increment, rated, timed, 'SECOND', ratingOffsetMin, ratingOffsetMax)}
+                    onClick={() => createGame(
+                        game.key,
+                        1337,
+                        parseMinutes(minutesSlider),
+                        parseIncrement(incrementSlider),
+                        rated,
+                        timed,
+                        'SECOND',
+                        ratingOffsetMin,
+                        ratingOffsetMax
+                    )}
                 >
                     <PiNumberCircleTwoFill />
                 </button>
