@@ -9,7 +9,7 @@ import GameMoveHistory, {GameMoveHistoryProps} from './GameMoveHistory';
 
 // Types
 import type {GameInfo} from './GameHeader';
-import type {GameUser} from './ttt/[id]/page';
+import type {Player} from './[id]/page';
 
 
 type GameStateIndicatorProps = {ftime: Duration, stime: Duration}
@@ -48,7 +48,7 @@ export default function GameStateIndicator(props: GameStateIndicatorProps & Game
     )
 }
 
-function PlayerIndicator(props: { user: GameUser }) {
+function PlayerIndicator(props: { user: Player }) {
     return (
         <div className="px-4 py-2 text-lg flex justify-between">
             <Link

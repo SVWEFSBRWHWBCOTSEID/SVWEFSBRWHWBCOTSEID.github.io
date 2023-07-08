@@ -1,28 +1,27 @@
 import Link from 'next/link';
+import {BiCircle, BiSolidCircle} from 'react-icons/bi';
 import {GiPotato} from 'react-icons/gi';
-import {keyToName} from '../profile/ProfileContent';
-import type {GameKey} from '../../contexts/ProfileContext';
-import type {GameFullEvent, GameUser} from './ttt/[id]/page';
+import type {GameInfo, Player} from './[id]/page';
 
 
-export type GameInfo = Omit<GameFullEvent, 'type' | 'chat' | 'state'>;
+export default function GameHeader(props: {info: GameInfo}) {
+    const {info} = props;
 
-export default function GameHeader(props: {game: GameKey} & GameInfo) {
     return (
         <div className="bg-content rounded p-6 shadow-lg">
             <div className="flex gap-4 mb-2">
                 <GiPotato className="text-4xl" />
                 <div>
                     <p>
-                        {props.timeControl.initial / 60000}+{props.timeControl.increment / 1000} •
-                        {props.rated ? 'Rated' : 'Casual'} •{' '}
+                        {info.timeControl.initial / 60000}+{info.timeControl.increment / 1000} •
+                        {info.rated ? 'Rated' : 'Casual'} •{' '}
                         <a
-                            href={`/rules#${props.game}`}
+                            href={`/rules#${info.game.key}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-500 uppercase"
                         >
-                            {keyToName(props.game)}
+                            {info.game.name}
                         </a>
                     </p>
                     {/* TODO: parse createdAt timestamp, countdown clock */}
@@ -30,15 +29,16 @@ export default function GameHeader(props: {game: GameKey} & GameInfo) {
                 </div>
             </div>
 
-            <PlayerIndicator user={props.first} />
-            <PlayerIndicator user={props.second} />
+            <PlayerIndicator user={info.first} first />
+            <PlayerIndicator user={info.second} />
         </div>
     )
 }
 
-function PlayerIndicator(props: { user: GameUser }) {
+function PlayerIndicator(props: { user: Player, first?: boolean }) {
     return (
-        <div className="flex gap-2 text-sm">
+        <div className="flex gap-2 text-sm text-secondary">
+            {props.first ? <BiSolidCircle /> : <BiCircle />}
             <Link
                 className="flex-grow hover:text-blue-500"
                 href={`/profile/${props.user.username}`}

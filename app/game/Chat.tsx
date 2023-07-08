@@ -1,4 +1,4 @@
-import type {ChatMessageEvent} from './ttt/[id]/page';
+import type {ChatMessageEvent} from './[id]/page';
 
 
 export type ChatMessage = Omit<ChatMessageEvent, 'type'>

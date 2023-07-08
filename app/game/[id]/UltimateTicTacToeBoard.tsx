@@ -5,7 +5,7 @@ import TicTacToeBoard, {
     TicTacToeRow,
     TTTBoard, TTTIndices,
     TTTSymbol
-} from '../../ttt/[id]/TicTacToeBoard';
+} from './TicTacToeBoard';
 
 
 export const ANY_BOARD = -1;

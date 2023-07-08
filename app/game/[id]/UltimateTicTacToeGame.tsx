@@ -4,9 +4,9 @@ import {useEffect, useState} from 'react';
 import {Duration} from 'luxon';
 
 // Components
-import Chat from '../../Chat';
-import GameHeader from '../../GameHeader';
-import GameStateIndicator from '../../GameStateIndicator';
+import Chat from '../Chat';
+import GameHeader from '../GameHeader';
+import GameStateIndicator from '../GameStateIndicator';
 import UltimateTicTacToeBoard, {
     ANY_BOARD,
     defaultUTTTBoard,
@@ -16,10 +16,11 @@ import UltimateTicTacToeBoard, {
 } from './UltimateTicTacToeBoard';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../ttt/[id]/TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
+import type {GameInfo} from './page';
 
 
-export default function UltimateTicTacToeGame() {
+export default function UltimateTicTacToeGame(props: {info: GameInfo}) {
     const [gameState, setGameState] = useState(defaultUTTTBoard);
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
     const [gameStatuses, setGameStatuses] = useState(defaultUTTTBoardStatuses);
@@ -77,7 +78,7 @@ export default function UltimateTicTacToeGame() {
     return (
         <>
             <div className="flex flex-col gap-5 w-[21rem]">
-                <GameHeader game="uttt" />
+                <GameHeader info={props.info} />
                 <Chat />
             </div>
 
@@ -91,7 +92,11 @@ export default function UltimateTicTacToeGame() {
                 disabled={gameStatus !== BoardStatus.PLAYING}
             />
 
-            <GameStateIndicator ftime={ftime} stime={stime} />
+            <GameStateIndicator
+                ftime={ftime}
+                stime={stime}
+                {...props.info}
+            />
         </>
     )
 }

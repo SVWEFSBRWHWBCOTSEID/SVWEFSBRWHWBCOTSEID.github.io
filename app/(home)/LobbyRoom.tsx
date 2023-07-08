@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function LobbyRoom() {
     return (
-        <Link className="px-4 table-row text-secondary group" href="/ttt/123">
+        <Link className="px-4 table-row text-secondary group" href="/game/123456">
             <LobbyCell>Gunstable</LobbyCell>
             <LobbyCell>1537</LobbyCell>
             <LobbyCell>5+5</LobbyCell>

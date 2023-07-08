@@ -2,19 +2,18 @@
 
 import {useEffect, useState} from 'react';
 import {Duration} from 'luxon';
-import type {GameEvent, GameStateEvent} from './page';
+import type {GameEvent, GameInfo, GameStateEvent} from './page';
 
 // Components
-import Chat, {ChatMessage} from '../../Chat';
-import GameHeader, {GameInfo} from '../../GameHeader';
-import GameStateIndicator from '../../GameStateIndicator';
+import Chat, {ChatMessage} from '../Chat';
+import GameHeader from '../GameHeader';
+import GameStateIndicator from '../GameStateIndicator';
 import TicTacToeBoard, {BoardStatus, defaultTTTBoard, TTTBoard, TTTSymbol} from './TicTacToeBoard';
 
 
-export default function TicTacToeGame(props: {id: string}) {
-    const [gameInfo, setGameInfo] = useState<GameInfo | null>(null);
+export default function TicTacToeGame(props: {id: string, info: GameInfo}) {
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
-    const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
+    const playerSymbol: TTTSymbol = '✕'; // TODO: parse this from game info
 
     const [gameStates, setGameStates] = useState([defaultTTTBoard]);
     const [moves, setMoves] = useState<string[]>([]); // TODO: derived state?
@@ -25,6 +24,7 @@ export default function TicTacToeGame(props: {id: string}) {
 
     const [chat, setChat] = useState<ChatMessage[]>([]);
 
+    // Update the active timer on client-side on a 100ms interval
     useEffect(() => {
         const intervalID = setInterval(() => {
             const setActiveTime = gameStates.length % 2 !== 0 ? setFtime : setStime;
@@ -38,16 +38,17 @@ export default function TicTacToeGame(props: {id: string}) {
         return () => clearInterval(intervalID);
     }, [gameStates])
 
+    // Subscribe to game event stream on mount and update states on messages
     useEffect(() => {
         const eventSource = new EventSource(`${process.env.API_BASE}/game/${props.id}/events`);
 
         eventSource.onmessage = (m) => {
             const event: GameEvent = JSON.parse(m.data);
+            console.log(event)
             switch (event.type) {
                 case 'CHAT_MESSAGE': setChat([...chat, event]); break;
                 case 'GAME_STATE': handleGameState(event); break;
                 case 'GAME_FULL':
-                    setGameInfo(event); // TODO: possibly hacky?
                     setChat(event.chat);
                     handleGameState(event.state);
                     break;
@@ -85,6 +86,7 @@ export default function TicTacToeGame(props: {id: string}) {
             // If the player is viewing the last move, keep them on the last move when new moves are added
             setGameStateIndex((gameStateIndex) => gameStateIndex === gameStates.length - 1 ? arr.length - 1 : gameStateIndex);
 
+            console.log(arr);
             return arr;
         });
     }
@@ -100,12 +102,10 @@ export default function TicTacToeGame(props: {id: string}) {
         });
     }
 
-    if (!gameInfo) return null; // TODO: loading UI
-
     return (
         <>
             <div className="flex flex-col gap-5 w-[21rem]">
-                <GameHeader game="ttt" {...gameInfo} />
+                <GameHeader info={props.info} />
                 <Chat chat={chat} />
             </div>
 
@@ -123,7 +123,7 @@ export default function TicTacToeGame(props: {id: string}) {
                 moves={moves}
                 index={gameStateIndex}
                 setIndex={setGameStateIndex}
-                {...gameInfo}
+                {...props.info}
             />
         </>
     )

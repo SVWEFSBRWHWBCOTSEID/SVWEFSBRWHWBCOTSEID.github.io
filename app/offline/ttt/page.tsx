@@ -4,8 +4,8 @@ import {useState} from 'react';
 import Head from 'next/head';
 
 // Components
-import TicTacToeBoard, {defaultTTTBoard, BoardStatus, TTTBoard, TTTSymbol} from '../../(games)/ttt/[id]/TicTacToeBoard';
-import TicTacToeScoreIndicator, {TTTScores} from '../../(games)/ttt/[id]/TicTacToeScoreIndicator';
+import TicTacToeBoard, {defaultTTTBoard, BoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
+import TicTacToeScoreIndicator, {TTTScores} from './TicTacToeScoreIndicator';
 
 
 export default function OfflineTicTacToe() {
