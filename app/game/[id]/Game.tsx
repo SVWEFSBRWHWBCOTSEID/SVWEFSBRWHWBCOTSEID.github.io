@@ -53,7 +53,7 @@ export default function Game<T>(props: GameProps<T>) {
             const event: GameEvent = JSON.parse(m.data);
             console.log(event)
             switch (event.type) {
-                case 'CHAT_MESSAGE': setChat([...chat, event]); break;
+                case 'CHAT_MESSAGE': setChat((chat) => [...chat, event]); break;
                 case 'GAME_STATE': handleGameState(event); break;
                 case 'GAME_FULL':
                     setChat(event.chat);
@@ -79,7 +79,7 @@ export default function Game<T>(props: GameProps<T>) {
         <>
             <div className="flex flex-col gap-5 w-[21rem]">
                 <GameHeader info={props.info} />
-                <Chat chat={chat} />
+                <Chat id={props.id} chat={chat} />
             </div>
 
             {props.children(gameStates, gameStateIndex)}
