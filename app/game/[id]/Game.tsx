@@ -26,13 +26,16 @@ export default function Game<T>(props: GameProps<T>) {
     const [moves, setMoves] = useState<string[]>([]); // TODO: derived state?
     const [gameStateIndex, setGameStateIndex] = useState(0);
 
-    const [ftime, setFtime] = useState(Duration.fromObject({minutes: 3, seconds: 23, milliseconds: 200}));
-    const [stime, setStime] = useState(Duration.fromObject({minutes: 1, seconds: 20, milliseconds: 200}));
+    const [ftime, setFtime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
+    const [stime, setStime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
 
     const [chat, setChat] = useState<ChatMessage[]>([]);
 
     // Update the active timer on client-side on a 100ms interval
     useEffect(() => {
+        // Don't start the timer until the 3rd move
+        if (gameStates.length <= 3) return;
+
         const intervalID = setInterval(() => {
             const setActiveTime = gameStates.length % 2 !== 0 ? setFtime : setStime;
 
