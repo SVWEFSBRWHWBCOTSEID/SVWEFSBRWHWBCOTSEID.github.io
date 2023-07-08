@@ -85,6 +85,7 @@ export default function Game<T>(props: GameProps<T>) {
             {props.children(gameStates, gameStateIndex)}
 
             <GameStateIndicator
+                id={props.id}
                 ftime={ftime}
                 stime={stime}
                 moves={moves}

@@ -1,18 +1,17 @@
 import Link from 'next/link';
 import {Duration} from 'luxon';
-import {FaRegFlag} from 'react-icons/fa';
 
 // Components
 import GameTimeIndicator from './GameTimeIndicator';
 import GameTimeProgressBar from './GameTimeProgressBar';
 import GameMoveHistory, {GameMoveHistoryProps} from './GameMoveHistory';
+import GameControls from './GameControls';
 
 // Types
-import type {GameInfo} from './GameHeader';
-import type {Player} from './[id]/page';
+import type {Player, GameInfo} from './[id]/page';
 
 
-type GameStateIndicatorProps = {ftime: Duration, stime: Duration}
+type GameStateIndicatorProps = {id: string, ftime: Duration, stime: Duration}
 export default function GameStateIndicator(props: GameStateIndicatorProps & GameMoveHistoryProps & GameInfo) {
     return (
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
@@ -24,20 +23,7 @@ export default function GameStateIndicator(props: GameStateIndicatorProps & Game
 
                 <GameMoveHistory moves={props.moves} index={props.index} setIndex={props.setIndex} />
 
-                <div className="px-4 py-1 text-secondary flex justify-center border-b border-tertiary text-2xl">
-                    <button
-                        className="px-3.5 py-1.5 hover:bg-theme-green hover:text-white"
-                        title="Offer draw"
-                    >
-                        ½
-                    </button>
-                    <button
-                        className="px-3.5 py-1.5 hover:bg-theme-green hover:text-white"
-                        title="Resign"
-                    >
-                        <FaRegFlag />
-                    </button>
-                </div>
+                <GameControls id={props.id} />
 
                 <PlayerIndicator user={props.second} />
                 <GameTimeProgressBar time={props.stime} initial={props.timeControl.initial} />

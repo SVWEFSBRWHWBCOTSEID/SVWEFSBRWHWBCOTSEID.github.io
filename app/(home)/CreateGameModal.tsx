@@ -44,7 +44,10 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             setIsOpen={props.setIsOpen}
             className="relative flex flex-col bg-content rounded-md w-[26rem] max-h-[90%] mx-2 shadow-xl"
         >
-            <CloseButton className="absolute -top-3 -right-3" onClick={() => props.setIsOpen(false)} />
+            <CloseButton
+                className="absolute -top-3 -right-3 bg-[#3c3934] rounded-full shadow-sm"
+                onClick={() => props.setIsOpen(false)}
+            />
 
             <section className="px-8 pt-6 pb-4">
                 <h1 className="text-2xl text-center font-light mb-6">Create a game</h1>
