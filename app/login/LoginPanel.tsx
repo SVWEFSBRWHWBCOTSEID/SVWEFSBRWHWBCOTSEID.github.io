@@ -1,7 +1,7 @@
 'use client'
 
 import {useState} from 'react';
-import {useRouter} from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 import Link from 'next/link';
 
 
@@ -13,6 +13,7 @@ export default function LoginPanel() {
     const [error, setError] = useState(false);
 
     const {replace, refresh} = useRouter();
+    const params = useSearchParams();
 
     async function signIn() {
         const res = await fetch(`${process.env.API_BASE}/login`, {
@@ -23,7 +24,7 @@ export default function LoginPanel() {
         });
         if (!res.ok) return setError(true);
 
-        replace('/');
+        replace(params.get('callbackUrl') ?? '/');
         refresh();
     }
 

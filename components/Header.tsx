@@ -2,7 +2,10 @@ import {ReactNode} from 'react';
 import Link from 'next/link';
 import {BsGear, BsGearFill} from 'react-icons/bs';
 import {cookies} from 'next/headers';
+
+// Components
 import ProfileDropdown from './ProfileDropdown';
+import SignInLink from './SignInLink';
 
 
 export default function Header() {
@@ -24,9 +27,7 @@ export default function Header() {
                 {username ? (
                     <ProfileDropdown username={username} />
                 ) : (
-                    <Link href="/login" className="text-blue-500 uppercase px-3 py-4">
-                        Sign in
-                    </Link>
+                    <SignInLink />
                 )}
             </nav>
         </header>
