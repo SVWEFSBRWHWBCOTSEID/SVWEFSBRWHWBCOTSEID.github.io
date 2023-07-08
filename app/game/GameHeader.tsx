@@ -13,7 +13,7 @@ export default function GameHeader(props: {info: GameInfo}) {
                 <GiPotato className="text-4xl" />
                 <div>
                     <p>
-                        {info.timeControl.initial / 60000}+{info.timeControl.increment / 1000} •
+                        {info.timeControl.initial / 60000}+{info.timeControl.increment / 1000} •{' '}
                         {info.rated ? 'Rated' : 'Casual'} •{' '}
                         <a
                             href={`/rules#${info.game.key}`}

@@ -1,12 +1,9 @@
 'use client'
 
-import {useEffect, useState} from 'react';
-import {Duration} from 'luxon';
+import {useState} from 'react';
 
 // Components
-import Chat from '../Chat';
-import GameHeader from '../GameHeader';
-import GameStateIndicator from '../GameStateIndicator';
+import Game, {UpdateGameStatesCallbacks} from './Game';
 import UltimateTicTacToeBoard, {
     ANY_BOARD,
     defaultUTTTBoard,
@@ -16,48 +13,39 @@ import UltimateTicTacToeBoard, {
 } from './UltimateTicTacToeBoard';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
 import type {GameInfo} from './page';
+import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
+import {colToIndex, indexToCol, rowToIndex} from './TicTacToeGame';
 
 
-export default function UltimateTicTacToeGame(props: {info: GameInfo}) {
-    const [gameState, setGameState] = useState(defaultUTTTBoard);
+export default function UltimateTicTacToeGame(props: {id: string, info: GameInfo}) {
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
     const [gameStatuses, setGameStatuses] = useState(defaultUTTTBoardStatuses);
     const [activeBoard, setActiveBoard] = useState(4);
 
-    const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
+    const playerSymbol: TTTSymbol = '✕'; // TODO: parse this from game info
 
-    const [ftime, setFtime] = useState(Duration.fromObject({minutes: 3, seconds: 23, milliseconds: 200}));
-    const [stime, setStime] = useState(Duration.fromObject({minutes: 1, seconds: 20, milliseconds: 200}));
+    // Makes a move by checking the given square in the given board.
+    async function setSquare(board: number, square: number) {
+        const boardCol = board % 3;
+        const boardRow = (board - boardCol) / 3;
+        const boardCell = `${indexToCol(boardCol)}${boardRow + 1}`;
 
-    useEffect(() => {
-        const intervalID = setInterval(() => {
-            const setActiveTime = playerSymbol === '✕' ? setFtime : setStime;
+        const squareCol = square % 3;
+        const squareRow = (square - squareCol) / 3;
+        const squareCell = `${indexToCol(squareCol)}${squareRow + 1}`;
 
-            setActiveTime((time) => {
-                const decremented = time.minus(100).normalize();
-                return decremented.toMillis() > 0 ? decremented : Duration.fromMillis(0)
-            });
-        }, 100)
+        await fetch(`${process.env.API_BASE}/game/${props.id}/move/${boardCell}${squareCell}`, {
+            method: 'POST',
+            credentials: 'include'
+        });
 
-        return () => clearInterval(intervalID);
-    }, [playerSymbol])
-
-    // Makes a move by checking the given square in the given board,
-    // alternating the player's symbol and setting the new active square after each move.
-    function setSquare(board: number, square: number, symbol: TTTSymbol) {
-        const newGameState: UTTTBoard = [...gameState];
-        const newBoard: TTTBoard = [...newGameState[board]];
-        newBoard[square] = symbol;
-        newGameState[board] = newBoard;
-
-        setGameState(newGameState);
-        setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
+        // TODO
         setActiveBoard(gameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
     }
 
     // Handles a board status change by updating the statuses array.
+    // TODO
     function handleBoardStatusChange(board: number, status: BoardStatus) {
         const newGameStatuses: UTTTBoardStatuses = [...gameStatuses];
         newGameStatuses[board] = status;
@@ -75,28 +63,42 @@ export default function UltimateTicTacToeGame(props: {info: GameInfo}) {
         )
     }
 
+    function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<UTTTBoard>) {
+        setGameStates((gameStates) => {
+            const arr = gameStates.slice();
+            let symbol: TTTSymbol = arr.length % 2 === 0 ? '◯' : '✕';
+
+            for (let i = 0; i < moves.length; i++) {
+                const [, boardCol, boardRow, squareCol, squareRow] = moves[i].match(/(\w)(\d)(\w)(\d)/)!;
+                const state = arr.at(-1)!.slice() as UTTTBoard;
+
+                state[rowToIndex(boardRow) + colToIndex(boardCol)][rowToIndex(squareRow) + colToIndex(squareCol)] = symbol;
+                arr.push(state);
+
+                symbol = symbol === '✕' ? '◯' : '✕';
+            }
+
+            // If the player is viewing the last move, keep them on the last move when new moves are added
+            setGameStateIndex((gameStateIndex) => gameStateIndex === gameStates.length - 1 ? arr.length - 1 : gameStateIndex);
+
+            console.log(arr);
+            return arr;
+        });
+    }
+
     return (
-        <>
-            <div className="flex flex-col gap-5 w-[21rem]">
-                <GameHeader info={props.info} />
-                <Chat />
-            </div>
-
-            <UltimateTicTacToeBoard
-                gameState={gameState}
-                gameStatuses={gameStatuses}
-                playerSymbol={playerSymbol}
-                activeBoard={activeBoard}
-                setSquare={setSquare}
-                setBoardStatus={handleBoardStatusChange}
-                disabled={gameStatus !== BoardStatus.PLAYING}
-            />
-
-            <GameStateIndicator
-                ftime={ftime}
-                stime={stime}
-                {...props.info}
-            />
-        </>
+        <Game {...props} defaultBoard={defaultUTTTBoard} updateGameStatesFromMoves={updateGameStatesFromMoves}>
+            {(gameStates, gameStateIndex) => (
+                <UltimateTicTacToeBoard
+                    gameState={gameStates[gameStateIndex]}
+                    gameStatuses={gameStatuses}
+                    playerSymbol={playerSymbol}
+                    activeBoard={activeBoard}
+                    setSquare={setSquare}
+                    setBoardStatus={handleBoardStatusChange}
+                    disabled={gameStatus !== BoardStatus.PLAYING || gameStateIndex !== gameStates.length - 1} // TODO
+                />
+            )}
+        </Game>
     )
 }

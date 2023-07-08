@@ -1,7 +1,10 @@
 import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
-import TicTacToeGame from './TicTacToeGame';
 import type {GameKey} from '../../../contexts/ProfileContext';
+
+// Components
+import TicTacToeGame from './TicTacToeGame';
+import UltimateTicTacToeGame from './UltimateTicTacToeGame';
 
 
 export type ChatMessageEvent = {
@@ -74,6 +77,9 @@ export default async function GamePage({ params }: { params: { id: string } }) {
 
     const gameInfo: GameInfo = await res.json();
 
-    // TODO: switch on game key
-    return <TicTacToeGame id={params.id} info={gameInfo} />
+    switch (gameInfo.game.key) {
+        case 'ttt': return <TicTacToeGame id={params.id} info={gameInfo} />
+        case 'uttt': return <UltimateTicTacToeGame id={params.id} info={gameInfo} />
+        default: return null; // TODO: hacky?
+    }
 }

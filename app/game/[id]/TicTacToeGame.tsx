@@ -35,7 +35,7 @@ export default function TicTacToeGame(props: {id: string, info: GameInfo}) {
         });
     }
 
-    // Makes a move by checking the given square, alternating the player's symbol after each move.
+    // Makes a move by checking the given square.
     async function setSquare(square: number) {
         const col = square % 3;
         const row = (square - col) / 3
@@ -61,14 +61,14 @@ export default function TicTacToeGame(props: {id: string, info: GameInfo}) {
     )
 }
 
-function rowToIndex(row: string) {
+export function rowToIndex(row: string) {
     return (Number(row) - 1) * 3;
 }
 
-function colToIndex(col: string) {
+export function colToIndex(col: string) {
     return col.charCodeAt(0) - 97;
 }
 
-function indexToCol(index: number) {
+export function indexToCol(index: number) {
     return String.fromCodePoint(index + 97);
 }
