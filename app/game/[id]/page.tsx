@@ -73,5 +73,7 @@ export default async function GamePage({ params }: { params: { id: string } }) {
     if (!res.ok) notFound();
 
     const gameInfo: GameInfo = await res.json();
+
+    // TODO: switch on game key
     return <TicTacToeGame id={params.id} info={gameInfo} />
 }

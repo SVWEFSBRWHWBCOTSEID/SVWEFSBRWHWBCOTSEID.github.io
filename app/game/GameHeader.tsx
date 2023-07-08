@@ -37,7 +37,7 @@ export default function GameHeader(props: {info: GameInfo}) {
 
 function PlayerIndicator(props: { user: Player, first?: boolean }) {
     return (
-        <div className="flex gap-2 text-sm text-secondary">
+        <div className="flex gap-2 items-center text-sm text-secondary">
             {props.first ? <BiSolidCircle /> : <BiCircle />}
             <Link
                 className="flex-grow hover:text-blue-500"
