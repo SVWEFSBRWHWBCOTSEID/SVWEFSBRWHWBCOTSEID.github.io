@@ -1,5 +1,5 @@
 import {MouseEventHandler, ReactNode} from 'react';
-import {createGame} from '../../util/games';
+import {createGame} from '../../util/game';
 import {GameKey} from '../../contexts/ProfileContext';
 
 

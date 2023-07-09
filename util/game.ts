@@ -1,3 +1,5 @@
+import {startTransition} from 'react';
+import {revalidate} from './actions';
 import type {GameKey} from '../contexts/ProfileContext';
 import type {GameFullEvent} from '../app/game/[id]/page';
 
@@ -44,6 +46,8 @@ export async function createGame(
     })).json();
 
     // Revalidate cached game object
-    await fetch(`/api/next/revalidate/game-${res.id}`);
+    // TODO: proper?
+    startTransition(() => void revalidate(`game-${res.id}`));
+
     return res;
 }

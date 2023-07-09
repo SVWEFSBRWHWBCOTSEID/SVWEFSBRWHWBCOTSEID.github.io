@@ -1,9 +1,9 @@
 'use client'
 
-import {useState} from 'react';
+import {startTransition, useState} from 'react';
 import {useRouter} from 'next/navigation';
-import {revalidateTag} from 'next/cache';
 import {getUser} from '../../util/user';
+import {revalidate} from '../../util/actions';
 
 
 export default function SignupPanel() {
@@ -24,7 +24,7 @@ export default function SignupPanel() {
         if (!res.ok) return setError(true);
 
         // Revalidate cached user object
-        await fetch(`/api/next/revalidate/user-${username}`);
+        startTransition(() => void revalidate(`user-${username}`));
 
         replace('/');
         refresh();

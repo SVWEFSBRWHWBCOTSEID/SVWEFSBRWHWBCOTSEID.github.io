@@ -17,7 +17,7 @@ import {GiPotato} from 'react-icons/gi';
 
 // Util
 import {games} from './QuickPairing';
-import {createGame} from '../../util/games';
+import {createGame} from '../../util/game';
 
 
 type CreateGameModalProps = {isOpen: boolean, setIsOpen: (open: boolean) => void, game?: typeof games[0]};
