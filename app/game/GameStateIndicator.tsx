@@ -6,20 +6,19 @@ import GameTimeIndicator from './GameTimeIndicator';
 import GameTimeProgressBar from './GameTimeProgressBar';
 import GameMoveHistory, {GameMoveHistoryProps} from './GameMoveHistory';
 import GameControls from './GameControls';
-import GameOverMessage from './GameOverMessage';
+import GameOverMessage, {GameOverMessageProps} from './GameOverMessage';
 
 // Types
 import type {Player, GameInfo, Status} from './[id]/page';
 
 
-type GameStateIndicatorProps = {
+type GameStateIndicatorProps = GameMoveHistoryProps & GameOverMessageProps & {
     id: string,
     ftime: Duration,
     stime: Duration,
-    status: Status,
     info: GameInfo
 }
-export default function GameStateIndicator(props: GameStateIndicatorProps & GameMoveHistoryProps) {
+export default function GameStateIndicator(props: GameStateIndicatorProps) {
     return (
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
             <GameTimeIndicator time={props.ftime} top />
@@ -32,7 +31,7 @@ export default function GameStateIndicator(props: GameStateIndicatorProps & Game
                     <GameMoveHistory moves={props.moves} index={props.index} setIndex={props.setIndex} />
 
                     {props.status !== 'WAITING' && props.status !== 'STARTED' ? (
-                        <GameOverMessage />
+                        <GameOverMessage status={props.status} type={props.type} />
                     ) : (
                         <GameControls id={props.id} />
                     )}

@@ -2,7 +2,7 @@
 
 import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react';
 import {Duration} from 'luxon';
-import type {GameEvent, GameInfo, GameStateEvent, Status} from './page';
+import type {GameEvent, GameInfo, GameStateEvent, Status, WinType} from './page';
 
 // Components
 import Chat, {ChatMessage} from '../Chat';
@@ -27,6 +27,7 @@ export default function Game<T>(props: GameProps<T>) {
     const [gameStateIndex, setGameStateIndex] = useState(0);
 
     const [gameStatus, setGameStatus] = useState<Status>('WAITING');
+    const [winType, setWinType] = useState<WinType | null>(null);
 
     const [ftime, setFtime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
     const [stime, setStime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
@@ -77,9 +78,10 @@ export default function Game<T>(props: GameProps<T>) {
         setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.stime}).normalize());
 
         setGameStatus(event.status);
+        setWinType(event.winType);
+
         setMoves((moves) => moves.concat(event.moves));
         props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex});
-        // ...
     }
 
     return (
@@ -96,6 +98,7 @@ export default function Game<T>(props: GameProps<T>) {
                 ftime={ftime}
                 stime={stime}
                 status={gameStatus}
+                type={winType}
                 info={props.info}
                 moves={moves}
                 index={gameStateIndex}

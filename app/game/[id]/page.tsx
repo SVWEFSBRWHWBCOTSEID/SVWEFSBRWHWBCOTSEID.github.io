@@ -15,12 +15,16 @@ export type ChatMessageEvent = {
 }
 
 export type Status = 'WAITING' | 'STARTED' | 'FIRST_WON' | 'SECOND_WON' | 'DRAW';
+export type WinType = 'NORMAL' | 'RESIGN' | 'TIMEOUT' | 'DISCONNECT';
+export type DrawOffer = 'NONE' | 'FIRST' | 'SECOND';
 export type GameStateEvent = {
     type: 'GAME_STATE',
     ftime: number, // ms
     stime: number, // ms
     moves: string[],
-    status: Status
+    status: Status,
+    winType: WinType | null,
+    drawOffer: DrawOffer,
 }
 
 export type GameFullEvent = {
