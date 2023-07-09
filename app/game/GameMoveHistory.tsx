@@ -1,8 +1,14 @@
 import {Fragment, ReactNode} from 'react';
+import {useHotkeys} from 'react-hotkeys-hook'
 
 
 export type GameMoveHistoryProps = {moves: string[], index: number, setIndex: (i: number) => void}
 export default function GameMoveHistory(props: GameMoveHistoryProps) {
+    const {moves, index, setIndex} = props;
+
+    useHotkeys('left', () => setIndex(Math.max(index - 1, 1)), [index]);
+    useHotkeys('right', () => setIndex(Math.min(index + 1, moves.length)), [index]);
+
     return (
         <>
             <div className="bg-content-secondary px-5 py-1.5 border-b border-tertiary">
