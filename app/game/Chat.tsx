@@ -1,6 +1,6 @@
 'use client'
 
-import {useState} from 'react';
+import {useLayoutEffect, useRef, useState} from 'react';
 import type {ChatMessageEvent} from './[id]/page';
 
 
@@ -8,6 +8,22 @@ export type ChatMessage = Omit<ChatMessageEvent, 'type'>
 
 export default function Chat(props: {id: string, chat: ChatMessage[]}) {
     const [message, setMessage] = useState('');
+
+    const chatRef = useRef<HTMLDivElement>(null);
+    const prevScrollHeight = useRef(0);
+
+    // Automatically scroll the chat to bottom if a new message is received and the chat was previously
+    // scrolled to bottom
+    useLayoutEffect(() => {
+        if (!chatRef.current) return;
+
+        const prevMaxScrollHeight = prevScrollHeight.current - chatRef.current.offsetHeight;
+        if (chatRef.current.scrollTop === prevMaxScrollHeight) {
+            chatRef.current.scrollTop = chatRef.current.scrollHeight - chatRef.current.offsetHeight
+        }
+
+        prevScrollHeight.current = chatRef.current.scrollHeight;
+    }, [props.chat])
 
     async function sendChatMessage() {
         await fetch(`${process.env.API_BASE}/game/${props.id}/chat/PLAYER`, {
@@ -21,7 +37,7 @@ export default function Chat(props: {id: string, chat: ChatMessage[]}) {
 
     return (
         <div className="flex-none text-sm rounded flex flex-col overflow-clip shadow-lg">
-            <div className="px-3 py-2 bg-content h-[30rem] x flex-col gap-2">
+            <div ref={chatRef} className="px-3 py-2 bg-content h-[30rem] x flex-col gap-2 overflow-auto">
                 {props.chat.map((message, i) => (
                     <ChatMessage {...message} key={message.text + message.username + i} />
                 ))}
