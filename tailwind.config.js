@@ -35,7 +35,9 @@ module.exports = {
   plugins: [
     require('@headlessui/tailwindcss'),
     plugin(({addVariant}) => {
-      addVariant('slider-thumb', ['&::-webkit-slider-thumb', '&::-moz-range-thumb'])
+      addVariant('slider-thumb', ['&::-webkit-slider-thumb', '&::-moz-range-thumb']);
+      addVariant('scrollbar', ['&::-webkit-scrollbar']);
+      addVariant('scrollbar-thumb', ['&::-webkit-scrollbar-thumb']);
     })
   ]
 }

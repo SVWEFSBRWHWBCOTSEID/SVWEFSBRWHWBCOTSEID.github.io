@@ -37,7 +37,7 @@ export default function Chat(props: {id: string, chat: ChatMessage[]}) {
 
     return (
         <div className="flex-none text-sm rounded flex flex-col overflow-clip shadow-lg">
-            <div ref={chatRef} className="px-3 py-2 bg-content h-[30rem] x flex-col gap-2 overflow-auto">
+            <div ref={chatRef} className="px-3 py-2 bg-content h-[30rem] x flex-col gap-2 overflow-auto scrollbar:w-1.5 scrollbar:bg-black/10 scrollbar-thumb:bg-tertiary">
                 {props.chat.map((message, i) => (
                     <ChatMessage {...message} key={message.text + message.username + i} />
                 ))}
