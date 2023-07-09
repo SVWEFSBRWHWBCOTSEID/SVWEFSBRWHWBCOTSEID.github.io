@@ -1,4 +1,5 @@
 import type {GameKey} from '../contexts/ProfileContext';
+import type {GameFullEvent} from '../app/game/[id]/page';
 
 
 export type Side = 'RANDOM' | 'FIRST' | 'SECOND';
@@ -12,6 +13,8 @@ type CreateGameBody = {
     ratingMin: number,
     ratingMax: number
 }
+
+type CreateGameResponse = Omit<GameFullEvent, 'type' | 'chat'> & {id: string} // TODO: remove cross-type reliance?
 
 export async function createGame(
     game: GameKey,
@@ -33,12 +36,14 @@ export async function createGame(
         ratingMax: rating + ratingOffsetMax
     }
 
-    const res = await fetch(`${process.env.API_BASE}/game/new/${game}`, {
+    const res: CreateGameResponse = await (await fetch(`${process.env.API_BASE}/game/new/${game}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',
         body: JSON.stringify(body)
-    });
+    })).json();
 
-    return res.json();
+    // Revalidate cached game object
+    await fetch(`/api/next/revalidate/game-${res.id}`);
+    return res;
 }

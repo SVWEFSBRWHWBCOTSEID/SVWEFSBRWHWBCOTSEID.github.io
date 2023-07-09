@@ -23,6 +23,9 @@ export default function SignupPanel() {
         });
         if (!res.ok) return setError(true);
 
+        // Revalidate cached user object
+        await fetch(`/api/next/revalidate/user-${username}`);
+
         replace('/');
         refresh();
     }

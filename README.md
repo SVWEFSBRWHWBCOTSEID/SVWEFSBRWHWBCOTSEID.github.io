@@ -26,5 +26,8 @@ for how to set up and run the development server.
 Backend fetches are cached using [Next 13's data fetching API](https://nextjs.org/docs/app/building-your-application/data-fetching)
 to eliminate unnecessary queries. Specifically,
 
-- User objects from `/api/user/{id}` are cached under the `user-{id}` tag and revalidated on-demand when the user object 
-changes (when that user registers for an account, starts or finishes a game, edits their profile, etc.)
+- User objects from `/api/user/{username}` are cached under the `user-{username}` tag and revalidated on-demand when the
+user object changes (when that user registers for an account, starts or finishes a game, edits their profile, etc.)
+
+- Game info from `/api/game/{id}` is cached under the `game-{id}` tag and revalidated on-demand when a new game under that
+id is created.

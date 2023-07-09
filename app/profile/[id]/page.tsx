@@ -2,7 +2,7 @@ import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {DateTime} from 'luxon';
 import ProfileContent from '../ProfileContent';
-import {getUser} from '../../../util/users';
+import {getUser} from '../../../util/user';
 
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
