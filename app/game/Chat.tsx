@@ -1,6 +1,7 @@
 'use client'
 
 import {useLayoutEffect, useRef, useState} from 'react';
+import Link from 'next/link';
 import type {ChatMessageEvent} from './[id]/page';
 
 
@@ -56,7 +57,12 @@ export default function Chat(props: {id: string, chat: ChatMessage[]}) {
 function ChatMessage(props: ChatMessage) {
     return (
         <div className="flex gap-2">
-            <strong className="font-medium text-secondary">{props.username}:</strong>
+            <Link
+                href={`/profile/${props.username}`}
+                className="font-medium text-secondary hover:text-blue-500"
+            >
+                {props.username}:
+            </Link>
             {props.text}
         </div>
     )
