@@ -24,32 +24,36 @@ export default function GameControls(props: {id: string}) {
 
     return (
         <div className="px-4 py-1 text-secondary flex justify-center border-b border-tertiary text-2xl">
-            <button
-                className={'relative px-3.5 py-1.5 ' + (confirming === 'draw' ? 'bg-theme-orange text-white rounded-lg' : confirming ? 'invisible' : 'hover:bg-theme-green hover:text-white')}
-                title="Offer draw"
-                onClick={(e) => confirming ? drawOffer() : setConfirming('draw')}
-            >
-                ½
+            <div className={'relative flex items-stretch' + (confirming && confirming !== 'draw' ? ' invisible' : '')}>
+                <button
+                    className={'px-3.5 py-1.5 ' + (confirming === 'draw' ? 'bg-theme-orange text-white rounded-lg' : 'hover:bg-theme-green hover:text-white')}
+                    title="Offer draw"
+                    onClick={(e) => confirming ? drawOffer() : setConfirming('draw')}
+                >
+                    ½
+                </button>
                 {confirming === 'draw' && (
                     <CloseButton
                         onClick={() => setConfirming('')}
                         className="absolute inset-y-0 my-auto -right-8"
                     />
                 )}
-            </button>
-            <button
-                className={'relative px-3.5 py-1.5 ' + (confirming === 'resign' ? 'bg-theme-orange text-white rounded-lg' : confirming ? 'invisible' : 'hover:bg-theme-green hover:text-white')}
-                title="Resign"
-                onClick={(e) => confirming ? resign() : setConfirming('resign')}
-            >
-                <FaRegFlag />
+            </div>
+            <div className={'relative flex items-stretch' + (confirming && confirming !== 'resign' ? ' invisible' : '')}>
+                <button
+                    className={'px-3.5 py-1.5 ' + (confirming === 'resign' ? 'bg-theme-orange text-white rounded-lg' : 'hover:bg-theme-green hover:text-white')}
+                    title="Resign"
+                    onClick={(e) => confirming ? resign() : setConfirming('resign')}
+                >
+                    <FaRegFlag />
+                </button>
                 {confirming === 'resign' && (
                     <CloseButton
                         onClick={() => setConfirming('')}
                         className="absolute inset-y-0 my-auto -right-8"
                     />
                 )}
-            </button>
+            </div>
         </div>
     )
 }

@@ -43,7 +43,12 @@ function PlayerIndicator(props: { user: Player }) {
             >
                 {props.user.username}
             </Link>
-            {props.user.rating && <span className="text-secondary">{props.user.rating}</span>} {/* TODO */}
+            {props.user.rating && (
+                // TODO
+                <span className="text-secondary">
+                    {props.user.rating}{props.user.provisional && '?'}
+                </span>
+            )}
         </div>
     )
 }
