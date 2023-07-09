@@ -3,7 +3,7 @@
 import {useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {revalidateTag} from 'next/cache';
-import {getUser} from '../../util/users';
+import {getUser} from '../../util/user';
 
 
 export default function SignupPanel() {
