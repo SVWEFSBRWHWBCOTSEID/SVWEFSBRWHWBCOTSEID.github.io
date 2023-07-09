@@ -14,12 +14,13 @@ export type ChatMessageEvent = {
     visibility: 'PLAYER' | 'SPECTATOR'
 }
 
+export type Status = 'WAITING' | 'STARTED' | 'FIRST_WON' | 'SECOND_WON' | 'DRAW';
 export type GameStateEvent = {
     type: 'GAME_STATE',
     ftime: number, // ms
     stime: number, // ms
     moves: string[],
-    status: 'WAITING' | 'STARTED' | 'FIRST_RESIGNED' | 'SECOND_RESIGNED' | 'FIRST_WON' | 'SECOND_WON' | 'FIRST_DRAW_OFFER' | 'SECOND_DRAW_OFFER' | 'DRAW'
+    status: Status
 }
 
 export type GameFullEvent = {

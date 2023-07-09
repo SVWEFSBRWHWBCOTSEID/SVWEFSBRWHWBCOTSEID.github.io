@@ -6,27 +6,40 @@ import GameTimeIndicator from './GameTimeIndicator';
 import GameTimeProgressBar from './GameTimeProgressBar';
 import GameMoveHistory, {GameMoveHistoryProps} from './GameMoveHistory';
 import GameControls from './GameControls';
+import GameOverMessage from './GameOverMessage';
 
 // Types
-import type {Player, GameInfo} from './[id]/page';
+import type {Player, GameInfo, Status} from './[id]/page';
 
 
-type GameStateIndicatorProps = {id: string, ftime: Duration, stime: Duration}
-export default function GameStateIndicator(props: GameStateIndicatorProps & GameMoveHistoryProps & GameInfo) {
+type GameStateIndicatorProps = {
+    id: string,
+    ftime: Duration,
+    stime: Duration,
+    status: Status,
+    info: GameInfo
+}
+export default function GameStateIndicator(props: GameStateIndicatorProps & GameMoveHistoryProps) {
     return (
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
             <GameTimeIndicator time={props.ftime} top />
 
             <div className="bg-content rounded-r">
-                <GameTimeProgressBar time={props.ftime} initial={props.timeControl.initial} />
-                <PlayerIndicator user={props.first} />
+                <GameTimeProgressBar time={props.ftime} initial={props.info.timeControl.initial} />
+                <PlayerIndicator user={props.info.first} />
 
-                <GameMoveHistory moves={props.moves} index={props.index} setIndex={props.setIndex} />
+                <div className="h-56 flex flex-col">
+                    <GameMoveHistory moves={props.moves} index={props.index} setIndex={props.setIndex} />
 
-                <GameControls id={props.id} />
+                    {props.status !== 'WAITING' && props.status !== 'STARTED' ? (
+                        <GameOverMessage />
+                    ) : (
+                        <GameControls id={props.id} />
+                    )}
+                </div>
 
-                <PlayerIndicator user={props.second} />
-                <GameTimeProgressBar time={props.stime} initial={props.timeControl.initial} />
+                <PlayerIndicator user={props.info.second} />
+                <GameTimeProgressBar time={props.stime} initial={props.info.timeControl.initial} />
             </div>
 
             <GameTimeIndicator time={props.stime} />

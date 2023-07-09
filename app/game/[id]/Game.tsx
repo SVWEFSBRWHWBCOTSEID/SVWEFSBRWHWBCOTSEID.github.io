@@ -2,7 +2,7 @@
 
 import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react';
 import {Duration} from 'luxon';
-import type {GameEvent, GameInfo, GameStateEvent} from './page';
+import type {GameEvent, GameInfo, GameStateEvent, Status} from './page';
 
 // Components
 import Chat, {ChatMessage} from '../Chat';
@@ -26,6 +26,8 @@ export default function Game<T>(props: GameProps<T>) {
     const [moves, setMoves] = useState<string[]>([]); // TODO: derived state?
     const [gameStateIndex, setGameStateIndex] = useState(0);
 
+    const [gameStatus, setGameStatus] = useState<Status>('WAITING');
+
     const [ftime, setFtime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
     const [stime, setStime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
 
@@ -33,8 +35,9 @@ export default function Game<T>(props: GameProps<T>) {
 
     // Update the active timer on client-side on a 100ms interval
     useEffect(() => {
-        // Don't start the timer until the 3rd move
+        // Don't start the timer until the 3rd move, or if the game is over
         if (gameStates.length <= 3) return;
+        if (gameStatus !== 'STARTED') return;
 
         const intervalID = setInterval(() => {
             const setActiveTime = gameStates.length % 2 !== 0 ? setFtime : setStime;
@@ -46,7 +49,7 @@ export default function Game<T>(props: GameProps<T>) {
         }, 100)
 
         return () => clearInterval(intervalID);
-    }, [gameStates])
+    }, [gameStates, gameStatus])
 
     // Subscribe to game event stream on mount and update states on messages
     useEffect(() => {
@@ -71,8 +74,9 @@ export default function Game<T>(props: GameProps<T>) {
     // Handles a game state event by updating the times and board states.
     function handleGameState(event: Omit<GameStateEvent, 'type'>) {
         setFtime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
-        setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
+        setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.stime}).normalize());
 
+        setGameStatus(event.status);
         setMoves((moves) => moves.concat(event.moves));
         props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex});
         // ...
@@ -91,10 +95,11 @@ export default function Game<T>(props: GameProps<T>) {
                 id={props.id}
                 ftime={ftime}
                 stime={stime}
+                status={gameStatus}
+                info={props.info}
                 moves={moves}
                 index={gameStateIndex}
                 setIndex={setGameStateIndex}
-                {...props.info}
             />
         </>
     )

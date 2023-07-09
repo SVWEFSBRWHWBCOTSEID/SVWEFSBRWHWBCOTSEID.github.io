@@ -14,7 +14,7 @@ export default function GameMoveHistory(props: GameMoveHistoryProps) {
             <div className="bg-content-secondary px-5 py-1.5 border-b border-tertiary">
                 aaa
             </div>
-            <div className="h-36 overflow-auto">
+            <div className="flex-shrink overflow-auto mb-auto">
                 <div className="grid grid-cols-[4rem_1fr_1fr] h-max">
                     {Array(Math.ceil(props.moves.length / 2)).fill(0).map((_, index) => index * 2).map(begin => props.moves.slice(begin, begin + 2)).map((chunk, i) => (
                         <Fragment key={i}>
