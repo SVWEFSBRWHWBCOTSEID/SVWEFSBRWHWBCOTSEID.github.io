@@ -22,7 +22,7 @@ export default function UserEventHandler() {
             const message: UserEvent = JSON.parse(m.data);
 
             switch (message.type) {
-                case 'GAME_START': push(`/${message.game}/${message.id}`)
+                case 'GAME_START': push(`/game/${message.id}`)
             }
         }
     }, [])
