@@ -11,7 +11,7 @@ export type Lobby = {
 }
 
 export default async function Lobbies() {
-    const games: Lobby[] = await (await fetch(`${process.env.API_BASE}/lobbies`)).json()
+    const games: Lobby[] = await (await fetch(`${process.env.API_BASE}/lobbies`, {cache: 'no-store'})).json()
 
     return (
         <div className="table w-full rounded overflow-clip bg-content/40">
