@@ -50,7 +50,6 @@ export default function OfflineTicTacToe() {
             <Head>
                 <title>Offline Tic-Tac-Toe</title>
                 <meta name="description" content="Offline Tic-Tac-Toe for single-device games." />
-                <link rel="icon" href="/favicon.ico" />
             </Head>
 
             <TicTacToeScoreIndicator scores={scores} />
@@ -61,6 +60,7 @@ export default function OfflineTicTacToe() {
                 setSquare={setSquare}
                 setBoardStatus={handleGameStatusChange}
                 disabled={gameStatus !== BoardStatus.PLAYING}
+                over={gameStatus !== BoardStatus.PLAYING}
             />
 
             <section className="relative">
