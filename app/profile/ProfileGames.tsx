@@ -1,7 +1,8 @@
 import ProfileGame from './ProfileGame';
+import type {GameInfo} from '../game/[id]/page';
 
 
-export default function ProfileGames() {
+export default function ProfileGames(props: {games: GameInfo[]}) {
     return (
         <section>
             <h3 className="text-lg font-semibold px-6 pt-4 pb-2">Games</h3>
@@ -16,13 +17,16 @@ export default function ProfileGames() {
                     </div>
                 </div>
 
-                <ProfileGame />
-                <ProfileGame />
-                <ProfileGame />
-                <ProfileGame />
-                <ProfileGame />
-                <ProfileGame />
-                <ProfileGame />
+                {props.games.length === 0 && (
+                    <div className="px-4 table-row text-secondary relative h-20">
+                        <span className="absolute inset-0 m-auto w-max h-max">
+                            No games played.
+                        </span>
+                    </div>
+                )}
+                {props.games.length > 0 && props.games.map((game) => (
+                    <ProfileGame {...game} key={game.createdAt + game.first.username} />
+                ))}
             </div>
         </section>
     )

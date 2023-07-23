@@ -4,16 +4,18 @@ import {useContext} from 'react';
 import Link from 'next/link';
 import {Tab} from '@headlessui/react';
 import ProfileGames from './ProfileGames';
-import ProfileContext, {GamePerf} from '../../contexts/ProfileContext';
+import ProfileContext, {GameKey, GamePerf} from '../../contexts/ProfileContext';
+import {keyToName} from './ProfileContent';
 
 
-export default function ProfileGamePanel(props: GamePerf & {name: string}) {
-    const {username} = useContext(ProfileContext);
+export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
+    const {username, games} = useContext(ProfileContext);
 
     return (
         <Tab.Panel>
             <h1 className="px-8 py-6 text-4xl">
-                <Link href={`/profile/${username}`} className="text-blue-500 hover:underline">{username}</Link>'s {props.name} stats
+                <Link href={`/profile/${username}`} className="text-blue-500 hover:underline">{username}</Link>'s
+                {keyToName(props.game)} stats
             </h1>
 
             <section className="border-y border-tertiary flex items-center justify-center text-secondary py-12">
@@ -33,7 +35,7 @@ export default function ProfileGamePanel(props: GamePerf & {name: string}) {
                     ) : (
                         // TODO: links
                         <span className="text-secondary">
-                            You are better than 58.7% of {props.name} players.
+                            You are better than 58.7% of {keyToName(props.game)} players.
                         </span>
                     )}
                 </p>
@@ -52,8 +54,9 @@ export default function ProfileGamePanel(props: GamePerf & {name: string}) {
 
             {/* TODO: stats tables? */}
 
-            {/* TODO: filter these by game */}
-            <ProfileGames />
+            <ProfileGames
+                games={games.filter((info) => info.game.key === props.game)}
+            />
         </Tab.Panel>
     )
 }

@@ -1,9 +1,14 @@
 import {ReactNode} from 'react';
+import {DateTime} from 'luxon';
+import type {GameInfo} from '../game/[id]/page';
+
+// Util
 import {keyToIcon} from './ProfileSidebarItem';
+import {timeControlToString} from '../../util/game';
 
 
-export default function ProfileGame() {
-    const Icon = keyToIcon('uttt'); // TODO
+export default function ProfileGame(props: GameInfo) {
+    const Icon = keyToIcon(props.game.key);
 
     return (
         <div className="table-row text-sm">
@@ -11,13 +16,17 @@ export default function ProfileGame() {
                 <Icon className="text-4xl" />
             </ProfileGameCell>
             <ProfileGameCell>
-                <strong className="font-medium">kepler</strong> (1537)
+                <strong className="font-medium">{props.first.username}</strong> ({props.first.rating})
                 <br />
-                <strong className="font-medium">qpwoeirut</strong> (2768)
+                <strong className="font-medium">{props.second.username}</strong> ({props.second.rating})
             </ProfileGameCell>
-            <ProfileGameCell>5+5 | UTTT</ProfileGameCell>
-            <ProfileGameCell>1-0</ProfileGameCell>
-            <ProfileGameCell className="text-right">Jun 12 2023</ProfileGameCell>
+            <ProfileGameCell>
+                {timeControlToString(props.timeControl)} | {props.game.key.toUpperCase()}
+            </ProfileGameCell>
+            <ProfileGameCell>1-0</ProfileGameCell> {/* TODO */}
+            <ProfileGameCell className="text-right">
+                {DateTime.fromSQL(props.createdAt).toLocaleString()}
+            </ProfileGameCell>
         </div>
     )
 }

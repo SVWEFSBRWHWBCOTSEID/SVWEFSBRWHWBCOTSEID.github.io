@@ -1,5 +1,6 @@
 import {createContext} from 'react';
 import {DateTime} from 'luxon';
+import type {GameInfo} from '../app/game/[id]/page';
 
 
 export type User = {
@@ -15,6 +16,7 @@ export type User = {
     },
     url: string,
     playing?: string,
+    games: GameInfo[]
     // TODO: following stuff
 }
 
@@ -53,7 +55,8 @@ export const defaultUser: User = {
         firstName: '',
         lastName: ''
     },
-    url: '...'
+    url: '...',
+    games: []
 }
 
 const ProfileContext = createContext<User>(defaultUser);

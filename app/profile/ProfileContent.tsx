@@ -8,7 +8,7 @@ import ProfileUserPanel from './ProfileUserPanel';
 import ProfileGamePanel from './ProfileGamePanel';
 
 // Util
-import ProfileContext, {defaultUser, User} from '../../contexts/ProfileContext';
+import ProfileContext, {defaultUser, GameKey, User} from '../../contexts/ProfileContext';
 
 
 export default function ProfileContent(props: {user?: User}) {
@@ -21,7 +21,7 @@ export default function ProfileContent(props: {user?: User}) {
                     <ProfileUserPanel />
 
                     {Object.entries((props.user ?? defaultUser).perfs).map(([key, value]) => (
-                        <ProfileGamePanel name={keyToName(key)} {...value} key={key} />
+                        <ProfileGamePanel game={key as GameKey} {...value} key={key} />
                     ))}
                 </Tab.Panels>
             </Tab.Group>
@@ -35,6 +35,6 @@ export function keyToName(key: string) {
         case 'uttt': return 'Ultimate Tic-Tac-Toe';
         case 'c4': return 'Connect 4';
         case 'pc': return 'Pokemon Chess';
+        default: return 'Unknown game';
     }
-    return 'Unknown game';
 }
