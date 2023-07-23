@@ -175,8 +175,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                 </button>
             </section>
 
-            <section className="px-8 py-3.5 text-sm text-secondary text-center border-t border-tertiary bg-[rgb(48_46_44)] rounded-b-lg">
-                Rating: <strong><Icon className="inline" /> 1337</strong> {game.name}
+            <section className="px-8 py-3.5 text-sm text-secondary flex justify-center gap-1 border-t border-tertiary bg-[rgb(48_46_44)] rounded-b-lg">
+                Rating: <strong className="flex items-center gap-0.5"><Icon className="inline text-lg" /> 1337</strong> {game.name}
             </section>
         </CenteredModal>
     )
