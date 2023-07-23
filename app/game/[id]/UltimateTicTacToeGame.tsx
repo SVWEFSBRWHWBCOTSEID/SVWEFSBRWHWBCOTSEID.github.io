@@ -13,13 +13,12 @@ import UltimateTicTacToeBoard, {
 } from './UltimateTicTacToeBoard';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
+import {BoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
 import {colToIndex, getTTTSymbolFromUsername, indexToCol, isSpectator, rowToIndex} from './TicTacToeGame';
 import type {GameInfo} from './page';
 
 
 export default function UltimateTicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
-    const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
     const [gameStatuses, setGameStatuses] = useState(defaultUTTTBoardStatuses);
     const [activeBoard, setActiveBoard] = useState(4);
 
@@ -40,27 +39,8 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
             credentials: 'include'
         });
 
-        // TODO
+        // TODO: handle active board
         setActiveBoard(gameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
-    }
-
-    // Handles a board status change by updating the statuses array.
-    // TODO
-    function handleBoardStatusChange(board: number, status: BoardStatus) {
-        const newGameStatuses: UTTTBoardStatuses = [...gameStatuses];
-        newGameStatuses[board] = status;
-        setGameStatuses(newGameStatuses);
-
-        // TODO: should we store board statuses as an array of symbols so that it's easier for
-        // board checking and symbol displaying? Is there anywhere where having a `BoardStatus`
-        // for each cell is *required*?
-        setGameStatus(
-            checkBoardStatus(newGameStatuses.map(status => (
-                status === BoardStatus.X_VICTORY ? '✕'
-                    : status === BoardStatus.O_VICTORY ? '◯'
-                        : ''
-            )) as TTTBoard)
-        )
     }
 
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<UTTTBoard>) {
@@ -88,16 +68,15 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
 
     return (
         <Game {...props} defaultBoard={defaultUTTTBoard} updateGameStatesFromMoves={updateGameStatesFromMoves}>
-            {(gameStates, gameStateIndex) => (
+            {(gameStates, gameStateIndex, gameStatus) => (
                 <UltimateTicTacToeBoard
                     gameState={gameStates[gameStateIndex]}
                     gameStatuses={gameStatuses}
                     playerSymbol={playerSymbol}
                     activeBoard={activeBoard}
                     setSquare={setSquare}
-                    setBoardStatus={handleBoardStatusChange}
-                    disabled={gameStatus !== BoardStatus.PLAYING || gameStateIndex !== gameStates.length - 1 || isSpectator(props.username, props.info)}
-                    over={gameStatus !== BoardStatus.PLAYING && gameStateIndex === gameStates.length - 1}
+                    disabled={gameStatus !== 'STARTED' || gameStateIndex !== gameStates.length - 1 || isSpectator(props.username, props.info)}
+                    over={gameStatus !== 'STARTED' && gameStateIndex === gameStates.length - 1}
                 />
             )}
         </Game>

@@ -14,8 +14,8 @@ export default function Header() {
     return (
         <header className="px-8 text-md flex justify-between">
             <nav className="flex gap-2 items-center">
-                <Link href="/" className="text-xl pb-0.5 mr-4">
-                    gulpin<span className="text-secondary">.games</span>
+                <Link href="/" className="text-2xl pb-1 mr-4 group hover:text-blue-500">
+                    gulpin<span className="text-secondary group-hover:text-blue-600">.games</span>
                 </Link>
 
                 <HeaderLink href="/">Play</HeaderLink>

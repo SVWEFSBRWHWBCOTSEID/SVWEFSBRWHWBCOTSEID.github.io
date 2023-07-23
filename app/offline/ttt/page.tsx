@@ -4,7 +4,13 @@ import {useState} from 'react';
 import Head from 'next/head';
 
 // Components
-import TicTacToeBoard, {defaultTTTBoard, BoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
+import TicTacToeBoard, {
+    defaultTTTBoard,
+    BoardStatus,
+    TTTBoard,
+    TTTSymbol,
+    TTTIndices
+} from '../../game/[id]/TicTacToeBoard';
 import TicTacToeScoreIndicator, {TTTScores} from './TicTacToeScoreIndicator';
 
 
@@ -21,19 +27,20 @@ export default function OfflineTicTacToe() {
     function setSquare(square: number, symbol: TTTSymbol) {
         const newGameState: TTTBoard = [...gameState]
         newGameState[square] = symbol;
+
         setGameState(newGameState);
         setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
-    }
 
-    // Handles a game status change by incrementing the player scores.
-    function handleGameStatusChange(status: BoardStatus) {
+        // Check board status and handle accordingly
+        const status = checkBoardStatus(newGameState);
+        setGameStatus(status);
+
         // Wins are +1 for the winner, ties are +0.5 for both players
         switch (status) {
             case BoardStatus.TIED: setScores([scores[0] + 0.5, scores[1] + 0.5]); break;
             case BoardStatus.X_VICTORY: setScores([scores[0] + 1, scores[1]]); break;
             case BoardStatus.O_VICTORY: setScores([scores[0], scores[1] + 1]); break;
         }
-        setGameStatus(status);
     }
 
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
@@ -58,7 +65,6 @@ export default function OfflineTicTacToe() {
                 boardState={gameState}
                 playerSymbol={playerSymbol}
                 setSquare={setSquare}
-                setBoardStatus={handleGameStatusChange}
                 disabled={gameStatus !== BoardStatus.PLAYING}
                 over={gameStatus !== BoardStatus.PLAYING}
             />
@@ -81,4 +87,33 @@ export default function OfflineTicTacToe() {
             </section>
         </main>
     )
+}
+
+// Checks a board for whether someone has won or the game has tied.
+// TODO: make this prettier
+export function checkBoardStatus(boardState: TTTBoard) {
+    // Rows
+    for (const row of TTTIndices) {
+        const [left, middle, right] = row.map(i => boardState[i]);
+        if (left && left === middle && left === right)
+            return left === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    }
+
+    // Columns
+    for (const i in TTTIndices[0]) {
+        const [top, middle, bottom] = TTTIndices.map(row => row[i]).map(i => boardState[i]);
+        if (top && top === middle && top === bottom)
+            return top === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    }
+
+    // Diagonals
+    if (boardState[0] && boardState[0] === boardState[4] && boardState[0] === boardState[8])
+        return boardState[0] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    if (boardState[2] && boardState[2] === boardState[4] && boardState[2] === boardState[6])
+        return boardState[2] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+
+    // If the board is full and no one has won, it's a tie
+    if (boardState.every(x => x)) return BoardStatus.TIED;
+
+    return BoardStatus.PLAYING;
 }

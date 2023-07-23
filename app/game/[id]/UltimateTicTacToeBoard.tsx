@@ -38,7 +38,6 @@ export type UltimateTicTacToeBoardProps = {
     playerSymbol: TTTSymbol,
     activeBoard: number,
     setSquare: (board: number, square: number, symbol: TTTSymbol) => void,
-    setBoardStatus: (board: number, status: BoardStatus) => void,
     disabled: boolean,
     over: boolean
 };
@@ -57,7 +56,7 @@ export default function UltimateTicTacToeBoard(props: UltimateTicTacToeBoardProp
 }
 
 function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}) {
-    const {gameState, gameStatuses, playerSymbol, activeBoard, setSquare, setBoardStatus, disabled, id} = props;
+    const {gameState, gameStatuses, playerSymbol, activeBoard, setSquare, disabled, id} = props;
 
     const boardState = gameState[id];
     const boardStatus = gameStatuses[id];
@@ -78,9 +77,8 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
                 boardState={boardState}
                 playerSymbol={playerSymbol}
                 setSquare={(square, symbol) => setSquare(id, square, symbol)}
-                setBoardStatus={(status) => setBoardStatus(id, status)}
                 disabled={disabled || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
-                over={props.over}
+                over={props.over || (activeBoard !== ANY_BOARD && id !== activeBoard)}
             />
         </div>
     )

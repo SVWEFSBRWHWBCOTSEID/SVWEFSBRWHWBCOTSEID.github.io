@@ -4,8 +4,7 @@ import {useContext} from 'react';
 import {Tab} from '@headlessui/react';
 import ProfileSidebarItem from './ProfileSidebarItem';
 import {AiFillCaretRight} from 'react-icons/ai';
-import {keyToName} from './ProfileContent';
-import ProfileContext from '../../contexts/ProfileContext';
+import ProfileContext, {GameKey} from '../../contexts/ProfileContext';
 
 
 export default function ProfileSidebar() {
@@ -22,7 +21,7 @@ export default function ProfileSidebar() {
             <hr className="my-4 mx-6 border-t border-tertiary" />
 
             {Object.entries(perfs).map(([key, value]) => (
-                <ProfileSidebarItem name={keyToName(key)} {...value} key={key} />
+                <ProfileSidebarItem game={key as GameKey} {...value} key={key} />
             ))}
         </Tab.List>
     )

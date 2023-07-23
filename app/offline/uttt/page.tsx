@@ -14,7 +14,8 @@ import UltimateTicTacToeBoard, {
 import TicTacToeScoreIndicator, {TTTScores} from '../ttt/TicTacToeScoreIndicator';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
+import {BoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
+import {checkBoardStatus} from '../ttt/page';
 
 
 export default function OfflineUltimateTicTacToe() {
@@ -36,39 +37,30 @@ export default function OfflineUltimateTicTacToe() {
         newBoard[square] = symbol;
         newGameState[board] = newBoard;
 
-        setGameState(newGameState);
-        setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
-        setActiveBoard(gameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
-    }
-
-    // Handles a board status change by updating the statuses array.
-    function handleBoardStatusChange(board: number, status: BoardStatus) {
+        // Check inner board status and update if won
+        const status = checkBoardStatus(newBoard);
         const newGameStatuses: UTTTBoardStatuses = [...gameStatuses];
         newGameStatuses[board] = status;
         setGameStatuses(newGameStatuses);
 
-        // TODO: should we store board statuses as an array of symbols so that it's easier for
-        // board checking and symbol displaying? Is there anywhere where having a `BoardStatus`
-        // for each cell is *required*?
-        handleGameStatusChange(
-            checkBoardStatus(newGameStatuses.map(status => (
-                status === BoardStatus.X_VICTORY ? '✕'
-                    : status === BoardStatus.O_VICTORY ? '◯'
-                    : ''
-            )) as TTTBoard)
-        )
-    }
+        setGameState(newGameState);
+        setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
+        setActiveBoard(newGameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
 
-    // Handles a game status change by incrementing the player scores.
-    // TODO: this is a duplicated code fragment, but abstraction would be hard
-    function handleGameStatusChange(status: BoardStatus) {
+        // Check outer board status and handle accordingly
+        const newGameStatus = checkBoardStatus(newGameStatuses.map(status => (
+            status === BoardStatus.X_VICTORY ? '✕'
+                : status === BoardStatus.O_VICTORY ? '◯'
+                    : ''
+        )) as TTTBoard)
+        setGameStatus(newGameStatus);
+
         // Wins are +1 for the winner, ties are +0.5 for both players
-        switch (status) {
+        switch (newGameStatus) {
             case BoardStatus.TIED: setScores([scores[0] + 0.5, scores[1] + 0.5]); break;
             case BoardStatus.X_VICTORY: setScores([scores[0] + 1, scores[1]]); break;
             case BoardStatus.O_VICTORY: setScores([scores[0], scores[1] + 1]); break;
         }
-        setGameStatus(status);
     }
 
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
@@ -96,7 +88,6 @@ export default function OfflineUltimateTicTacToe() {
                 playerSymbol={playerSymbol}
                 activeBoard={activeBoard}
                 setSquare={setSquare}
-                setBoardStatus={handleBoardStatusChange}
                 disabled={gameStatus !== BoardStatus.PLAYING}
                 over={gameStatus !== BoardStatus.PLAYING}
             />

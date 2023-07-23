@@ -23,17 +23,12 @@ type TicTacToeBoardProps = {
     boardState: TTTBoard,
     playerSymbol: TTTSymbol,
     setSquare: (square: number, symbol: TTTSymbol) => void,
-    setBoardStatus: (status: BoardStatus) => void,
     small?: boolean,
     disabled: boolean,
     over: boolean
 };
 export default function TicTacToeBoard(props: TicTacToeBoardProps) {
-    const {boardState, setBoardStatus, small, disabled, over} = props;
-
-    useEffect(() => {
-        setBoardStatus(checkBoardStatus(boardState));
-    }, [boardState]);
+    const {small, disabled, over} = props;
 
     return (
         <TicTacToeGrid disabled={disabled} over={over} small={small}>
@@ -81,35 +76,6 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
             </span>
         </button>
     )
-}
-
-// Checks a board for whether someone has won or the game has tied.
-// TODO: make this prettier
-export function checkBoardStatus(boardState: TTTBoard) {
-    // Rows
-    for (const row of TTTIndices) {
-        const [left, middle, right] = row.map(i => boardState[i]);
-        if (left && left === middle && left === right)
-            return left === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
-    }
-
-    // Columns
-    for (const i in TTTIndices[0]) {
-        const [top, middle, bottom] = TTTIndices.map(row => row[i]).map(i => boardState[i]);
-        if (top && top === middle && top === bottom)
-            return top === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
-    }
-
-    // Diagonals
-    if (boardState[0] && boardState[0] === boardState[4] && boardState[0] === boardState[8])
-        return boardState[0] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
-    if (boardState[2] && boardState[2] === boardState[4] && boardState[2] === boardState[6])
-        return boardState[2] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
-
-    // If the board is full and no one has won, it's a tie
-    if (boardState.every(x => x)) return BoardStatus.TIED;
-
-    return BoardStatus.PLAYING;
 }
 
 export const TTTIndices = [

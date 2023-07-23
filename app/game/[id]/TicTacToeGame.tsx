@@ -1,15 +1,13 @@
 'use client'
 
-import {useState} from 'react';
 import type {GameInfo} from './page';
 
 // Components
 import Game, {UpdateGameStatesCallbacks} from './Game';
-import TicTacToeBoard, {BoardStatus, defaultTTTBoard, TTTBoard, TTTSymbol} from './TicTacToeBoard';
+import TicTacToeBoard, {defaultTTTBoard, TTTBoard, TTTSymbol} from './TicTacToeBoard';
 
 
 export default function TicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
-    const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
     const playerSymbol: TTTSymbol = getTTTSymbolFromUsername(props.username, props.info);
 
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<TTTBoard>) {
@@ -48,14 +46,13 @@ export default function TicTacToeGame(props: {id: string, username?: string, inf
 
     return (
         <Game {...props} defaultBoard={defaultTTTBoard} updateGameStatesFromMoves={updateGameStatesFromMoves}>
-            {(gameStates, gameStateIndex) => (
+            {(gameStates, gameStateIndex, gameStatus) => (
                 <TicTacToeBoard
                     boardState={gameStates[gameStateIndex]}
                     playerSymbol={playerSymbol}
                     setSquare={setSquare}
-                    setBoardStatus={setGameStatus}
-                    disabled={gameStatus !== BoardStatus.PLAYING || gameStateIndex !== gameStates.length - 1 || isSpectator(props.username, props.info)}
-                    over={gameStatus !== BoardStatus.PLAYING && gameStateIndex === gameStates.length - 1}
+                    disabled={gameStatus !== 'STARTED' || gameStateIndex !== gameStates.length - 1 || isSpectator(props.username, props.info)}
+                    over={gameStatus !== 'STARTED' && gameStateIndex === gameStates.length - 1}
                 />
             )}
         </Game>

@@ -1,12 +1,14 @@
 import {ReactNode} from 'react';
-import {GiPotato} from 'react-icons/gi';
+import {keyToIcon} from './ProfileSidebarItem';
 
 
 export default function ProfileGame() {
+    const Icon = keyToIcon('uttt'); // TODO
+
     return (
         <div className="table-row text-sm">
             <ProfileGameCell>
-                <GiPotato className="text-4xl" />
+                <Icon className="text-4xl" />
             </ProfileGameCell>
             <ProfileGameCell>
                 <strong className="font-medium">kepler</strong> (1537)

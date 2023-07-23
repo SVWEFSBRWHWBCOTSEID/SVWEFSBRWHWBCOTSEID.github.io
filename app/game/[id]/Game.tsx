@@ -20,7 +20,7 @@ type GameProps<T> = {
     username?: string,
     defaultBoard: T,
     updateGameStatesFromMoves: (moves: string[], callbacks: UpdateGameStatesCallbacks<T>) => void,
-    children: (gameStates: T[], gameStateIndex: number) => ReactNode
+    children: (gameStates: T[], gameStateIndex: number, gameStatus: Status) => ReactNode
 }
 export default function Game<T>(props: GameProps<T>) {
     const [gameStates, setGameStates] = useState([props.defaultBoard]);
@@ -92,7 +92,7 @@ export default function Game<T>(props: GameProps<T>) {
                 <Chat id={props.id} info={props.info} username={props.username} chat={chat} />
             </div>
 
-            {props.children(gameStates, gameStateIndex)}
+            {props.children(gameStates, gameStateIndex, gameStatus)}
 
             <GameStateIndicator
                 id={props.id}
