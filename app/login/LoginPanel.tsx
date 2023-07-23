@@ -10,19 +10,25 @@ export default function LoginPanel() {
     const [password, setPassword] = useState('');
     const [rememberLogin, setRememberLogin] = useState(true);
 
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
     const {replace, refresh} = useRouter();
     const params = useSearchParams();
 
     async function signIn() {
+        setLoading(true);
+
         const res = await fetch(`${process.env.API_BASE}/login`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
             body: JSON.stringify({username, password})
         });
-        if (!res.ok) return setError(true);
+        if (!res.ok) {
+            setLoading(false);
+            return setError(true);
+        }
 
         replace(params.get('callbackUrl') ?? '/');
         refresh();
@@ -64,7 +70,7 @@ export default function LoginPanel() {
 
             <button
                 className="rounded bg-blue-500 uppercase px-4 py-2.5 font-medium mt-8 mb-2 disabled:opacity-50 hover:bg-[#56a3eb] disabled:hover:bg-blue-500 transition duration-100"
-                disabled={!username || !password}
+                disabled={!username || !password || loading}
                 onClick={signIn}
             >
                 Sign in

@@ -10,18 +10,24 @@ export default function SignupPanel() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
     const {replace, refresh} = useRouter();
 
     async function register() {
+        setLoading(true);
+
         const res = await fetch(`${process.env.API_BASE}/user/new`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
             body: JSON.stringify({username, password})
         });
-        if (!res.ok) return setError(true);
+        if (!res.ok) {
+            setLoading(false);
+            return setError(true);
+        }
 
         // Revalidate cached user object
         startTransition(() => void revalidate(`user-${username}`));
@@ -73,7 +79,7 @@ export default function SignupPanel() {
 
             <button
                 className="rounded bg-blue-500 uppercase px-4 py-2.5 font-medium mt-8 mb-2 disabled:opacity-50 hover:bg-[#56a3eb] disabled:hover:bg-blue-500 transition duration-100"
-                disabled={!username || !password}
+                disabled={!username || !password || loading}
                 onClick={register}
             >
                 Register
