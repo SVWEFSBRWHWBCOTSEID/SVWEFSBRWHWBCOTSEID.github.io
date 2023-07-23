@@ -14,7 +14,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
     return (
         <Tab.Panel>
             <h1 className="px-8 py-6 text-4xl">
-                <Link href={`/profile/${username}`} className="text-blue-500 hover:underline">{username}</Link>'s
+                <Link href={`/profile/${username}`} className="text-blue-500 hover:underline">{username}</Link>'s{' '}
                 {keyToName(props.game)} stats
             </h1>
 
