@@ -1,7 +1,7 @@
 import {startTransition} from 'react';
 import {revalidate} from './actions';
 import type {GameKey} from '../contexts/ProfileContext';
-import type {GameFullEvent, GameInfo} from '../app/game/[id]/page';
+import type {GameFullEvent, TimeControl} from '../app/game/[id]/page';
 
 
 export type Side = 'RANDOM' | 'FIRST' | 'SECOND';
@@ -52,9 +52,9 @@ export async function createGame(
     return res;
 }
 
-export function timeControlToString(times: GameInfo['timeControl']) {
+export function timeControlToString(times: TimeControl) {
     const minutes = times.initial / 60000;
-    const increment = times.initial / 1000;
+    const increment = times.increment / 1000;
 
     return `${minutes}+${increment}`;
 }
