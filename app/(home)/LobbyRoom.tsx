@@ -10,7 +10,7 @@ export default function LobbyRoom(props: Lobby) {
             <LobbyCell>{props.user.provisional}</LobbyCell>
             <LobbyCell>{props.user.rating}</LobbyCell>
             <LobbyCell>{timeControlToString(props.timeControl)}</LobbyCell>
-            <LobbyCell>{props.game.key}</LobbyCell>
+            <LobbyCell>{props.game.key} {props.rated ? 'Rated' : 'Casual'}</LobbyCell>
         </Link>
     )
 }
