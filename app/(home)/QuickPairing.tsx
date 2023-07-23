@@ -3,7 +3,7 @@
 import {Tab} from '@headlessui/react';
 import QuickPairingTab from './QuickPairingTab';
 import QuickPairingPanel from './QuickPairingPanel';
-import {GameKey} from '../../contexts/ProfileContext';
+import type {GameNameInfo} from '../game/[id]/page';
 
 
 export default function QuickPairing() {
@@ -23,7 +23,8 @@ export default function QuickPairing() {
     )
 }
 
-export const games: {name: string, key: GameKey}[] = [
+// TODO: remove entirely
+export const games: GameNameInfo[] = [
     {name: 'Tic-Tac-Toe', key: 'ttt'},
     {name: 'Ultimate Tic-Tac-Toe', key: 'uttt'},
     {name: 'Connect 4', key: 'c4'},

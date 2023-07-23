@@ -1,6 +1,6 @@
 import {MouseEventHandler, ReactNode} from 'react';
 import {createGame} from '../../util/game';
-import {GameKey} from '../../contexts/ProfileContext';
+import type {GameNameInfo} from '../game/[id]/page';
 
 
 type QuickPairingButtonProps = {game: string, children?: ReactNode, onClick?: MouseEventHandler<HTMLButtonElement>}
@@ -16,7 +16,7 @@ export default function QuickPairingButton(props: QuickPairingButtonProps) {
     )
 }
 
-type QuickPairingPresetButtonProps = {game: {name: string, key: GameKey}, minutes: number, increment: number};
+type QuickPairingPresetButtonProps = {game: GameNameInfo, minutes: number, increment: number};
 export function QuickPairingPresetButton(props: QuickPairingPresetButtonProps) {
     return (
         <QuickPairingButton

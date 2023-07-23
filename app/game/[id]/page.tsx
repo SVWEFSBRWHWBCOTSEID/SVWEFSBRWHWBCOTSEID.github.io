@@ -1,10 +1,13 @@
 import {Metadata} from 'next';
 import {notFound} from 'next/navigation';
-import type {GameKey} from '../../../contexts/ProfileContext';
 
 // Components
 import TicTacToeGame from './TicTacToeGame';
 import UltimateTicTacToeGame from './UltimateTicTacToeGame';
+
+// Util
+import {timeControlToString} from '../../../util/game';
+import type {GameKey} from '../../../contexts/ProfileContext';
 
 
 export type ChatMessageEvent = {
@@ -27,17 +30,19 @@ export type GameStateEvent = {
     drawOffer: DrawOffer,
 }
 
+export type GameNameInfo = {
+    key: GameKey,
+    name: string
+}
+export type TimeControl = {
+    initial: number, // ms
+    increment: number // ms
+}
 export type GameFullEvent = {
     type: 'GAME_FULL',
-    game: {
-        key: GameKey,
-        name: string
-    },
+    game: GameNameInfo,
     rated: boolean,
-    timeControl: {
-        initial: number, // ms
-        increment: number // ms
-    },
+    timeControl: TimeControl,
     createdAt: string, // SQL date
     first: Player,
     second: Player,
@@ -63,8 +68,6 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     }
 
     const gameInfo: Omit<GameFullEvent, 'type' | 'chat' | 'state'> = await res.json();
-    const minutes = gameInfo.timeControl.initial / 60000;
-    const increment = gameInfo.timeControl.initial / 1000;
 
     // TODO: fetch API
     return {
@@ -72,7 +75,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
             // TODO
             absolute: `Correspondence ${gameInfo.game.name} • ${gameInfo.first.username} vs ${gameInfo.second.username}`
         },
-        description: `${gameInfo.first.username} (${gameInfo.first.rating}) vs ${gameInfo.second.username} (${gameInfo.second.rating}) in ${gameInfo.rated ? 'Rated' : 'Casual'} ${minutes}+${increment} ${gameInfo.game.name}.`
+        description: `${gameInfo.first.username} (${gameInfo.first.rating}) vs ${gameInfo.second.username} (${gameInfo.second.rating}) in ${gameInfo.rated ? 'Rated' : 'Casual'} ${timeControlToString(gameInfo.timeControl)} ${gameInfo.game.name}.`
     }
 }
 

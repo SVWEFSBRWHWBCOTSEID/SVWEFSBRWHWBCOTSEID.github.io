@@ -2,14 +2,14 @@
 
 import {useState} from 'react';
 import {Tab} from '@headlessui/react';
-import {GameKey} from '../../contexts/ProfileContext';
+import type {GameNameInfo} from '../game/[id]/page';
 
 // Components
 import QuickPairingButton, {QuickPairingPresetButton} from './QuickPairingButton';
 import CreateGameModal from './CreateGameModal';
 
 
-export default function QuickPairingPanel(props: {game: {name: string, key: GameKey}}) {
+export default function QuickPairingPanel(props: {game: GameNameInfo}) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (

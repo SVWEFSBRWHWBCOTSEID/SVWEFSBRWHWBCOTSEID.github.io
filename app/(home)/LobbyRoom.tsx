@@ -1,14 +1,16 @@
 import {ReactNode} from 'react';
 import Link from 'next/link';
+import {timeControlToString} from '../../util/game';
+import type {Lobby} from './Lobbies';
 
 
-export default function LobbyRoom() {
+export default function LobbyRoom(props: Lobby) {
     return (
-        <Link className="px-4 table-row text-secondary group" href="/game/123456">
-            <LobbyCell>Gunstable</LobbyCell>
-            <LobbyCell>1537</LobbyCell>
-            <LobbyCell>5+5</LobbyCell>
-            <LobbyCell>UTTT</LobbyCell>
+        <Link className="px-4 table-row text-secondary group" href={`/game/${props.id}`}>
+            <LobbyCell>{props.user.provisional}</LobbyCell>
+            <LobbyCell>{props.user.rating}</LobbyCell>
+            <LobbyCell>{timeControlToString(props.timeControl)}</LobbyCell>
+            <LobbyCell>{props.game.key}</LobbyCell>
         </Link>
     )
 }

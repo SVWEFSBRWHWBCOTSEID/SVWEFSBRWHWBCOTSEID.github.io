@@ -1,7 +1,7 @@
 import {startTransition} from 'react';
 import {revalidate} from './actions';
 import type {GameKey} from '../contexts/ProfileContext';
-import type {GameFullEvent} from '../app/game/[id]/page';
+import type {GameFullEvent, GameInfo} from '../app/game/[id]/page';
 
 
 export type Side = 'RANDOM' | 'FIRST' | 'SECOND';
@@ -50,4 +50,11 @@ export async function createGame(
     startTransition(() => void revalidate(`game-${res.id}`));
 
     return res;
+}
+
+export function timeControlToString(times: GameInfo['timeControl']) {
+    const minutes = times.initial / 60000;
+    const increment = times.initial / 1000;
+
+    return `${minutes}+${increment}`;
 }
