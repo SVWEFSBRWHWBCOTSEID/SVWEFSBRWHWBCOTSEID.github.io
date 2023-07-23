@@ -13,11 +13,11 @@ import CloseButton from '../../components/CloseButton';
 // Icons
 import {IoDice} from 'react-icons/io5';
 import {PiNumberCircleOneFill, PiNumberCircleTwoFill} from 'react-icons/pi';
-import {GiPotato} from 'react-icons/gi';
 
 // Util
 import {games} from './QuickPairing';
 import {createGame, Side} from '../../util/game';
+import {keyToIcon} from '../profile/ProfileSidebarItem';
 
 
 type CreateGameModalProps = {isOpen: boolean, setIsOpen: (open: boolean) => void, game?: typeof games[0]};
@@ -32,6 +32,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
 
     const [ratingOffsetMin, setRatingOffsetMin] = useState(-500);
     const [ratingOffsetMax, setRatingOffsetMax] = useState(500);
+
+    const Icon = keyToIcon(game.key);
 
     function setTimeControl(timed: boolean) {
         setTimed(timed);
@@ -174,7 +176,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             </section>
 
             <section className="px-8 py-3.5 text-sm text-secondary text-center border-t border-tertiary bg-[rgb(48_46_44)] rounded-b-lg">
-                Rating: <strong><GiPotato className="inline" /> 1337</strong> {game.name}
+                Rating: <strong><Icon className="inline" /> 1337</strong> {game.name}
             </section>
         </CenteredModal>
     )
