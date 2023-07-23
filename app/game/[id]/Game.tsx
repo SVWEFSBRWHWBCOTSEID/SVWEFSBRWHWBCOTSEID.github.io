@@ -1,6 +1,6 @@
 'use client'
 
-import {Dispatch, ReactNode, SetStateAction, useEffect, useState} from 'react';
+import {Dispatch, ReactNode, SetStateAction, startTransition, useEffect, useState} from 'react';
 import {Duration} from 'luxon';
 import type {GameEvent, GameInfo, GameStateEvent, Status, WinType} from './page';
 
@@ -8,6 +8,7 @@ import type {GameEvent, GameInfo, GameStateEvent, Status, WinType} from './page'
 import Chat, {ChatMessage} from '../Chat';
 import GameHeader from '../GameHeader';
 import GameStateIndicator from '../GameStateIndicator';
+import {revalidate} from '../../../util/actions';
 
 
 export type UpdateGameStatesCallbacks<T> = {
@@ -62,7 +63,14 @@ export default function Game<T>(props: GameProps<T>) {
             console.log(event)
             switch (event.type) {
                 case 'CHAT_MESSAGE': setChat((chat) => [...chat, event]); break;
-                case 'GAME_STATE': handleGameState(event); break;
+                case 'GAME_STATE':
+                    handleGameState(event);
+                    if (winType) startTransition(() => {
+                        // TODO: incredibly hacky; backend revalidate on demand?
+                        void revalidate(`user-${props.info.first.username}`);
+                        void revalidate(`user-${props.info.second.username}`);
+                    })
+                    break;
                 case 'GAME_FULL':
                     setChat(event.chat);
                     handleGameState(event.state);
