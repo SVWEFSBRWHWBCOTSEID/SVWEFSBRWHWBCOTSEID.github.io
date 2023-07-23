@@ -14,7 +14,7 @@ export default function Header() {
     return (
         <header className="px-8 text-md flex justify-between">
             <nav className="flex gap-2 items-center">
-                <Link href="/" className="text-xl pb-0.5 mr-4">[game website]</Link>
+                <Link href="/" className="text-xl pb-0.5 mr-4">gulpin.games</Link>
 
                 <HeaderLink href="/">Play</HeaderLink>
                 <HeaderLink href="/offline">Offline</HeaderLink>

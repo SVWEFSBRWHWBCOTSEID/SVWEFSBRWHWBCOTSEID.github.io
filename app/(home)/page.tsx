@@ -5,7 +5,6 @@ import CreateGameButton from './CreateGameButton';
 
 
 export const metadata: Metadata = {
-    title: '[game website]',
     description: 'todo'
 }
 
