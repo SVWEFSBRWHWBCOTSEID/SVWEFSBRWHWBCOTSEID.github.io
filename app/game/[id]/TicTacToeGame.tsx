@@ -54,11 +54,16 @@ export default function TicTacToeGame(props: {id: string, username?: string, inf
                     playerSymbol={playerSymbol}
                     setSquare={setSquare}
                     setBoardStatus={setGameStatus}
-                    disabled={gameStatus !== BoardStatus.PLAYING || gameStateIndex !== gameStates.length - 1} // TODO
+                    disabled={gameStatus !== BoardStatus.PLAYING || gameStateIndex !== gameStates.length - 1 || isSpectator(props.username, props.info)}
+                    over={gameStatus !== BoardStatus.PLAYING && gameStateIndex === gameStates.length - 1}
                 />
             )}
         </Game>
     )
+}
+
+export function isSpectator(username: string | undefined, info: GameInfo) {
+    return !username || (username !== info.first.username && username !== info.second.username);
 }
 
 export function getTTTSymbolFromUsername(username: string | undefined, info: GameInfo): TTTSymbol {

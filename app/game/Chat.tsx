@@ -2,12 +2,13 @@
 
 import {useLayoutEffect, useRef, useState} from 'react';
 import Link from 'next/link';
-import type {ChatMessageEvent} from './[id]/page';
+import {isSpectator} from './[id]/TicTacToeGame';
+import type {ChatMessageEvent, GameInfo} from './[id]/page';
 
 
 export type ChatMessage = Omit<ChatMessageEvent, 'type'>
 
-export default function Chat(props: {id: string, chat: ChatMessage[]}) {
+export default function Chat(props: {id: string, username?: string, info: GameInfo, chat: ChatMessage[]}) {
     const [message, setMessage] = useState('');
 
     const chatRef = useRef<HTMLDivElement>(null);
@@ -27,8 +28,9 @@ export default function Chat(props: {id: string, chat: ChatMessage[]}) {
     }, [props.chat])
 
     async function sendChatMessage() {
-        // TODO: spectator?
-        await fetch(`${process.env.API_BASE}/game/${props.id}/chat/PLAYER`, {
+        const visibility = isSpectator(props.username, props.info) ? 'SPECTATOR' : 'PLAYER';
+
+        await fetch(`${process.env.API_BASE}/game/${props.id}/chat/${visibility}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',

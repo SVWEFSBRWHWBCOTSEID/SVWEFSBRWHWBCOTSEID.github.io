@@ -17,6 +17,7 @@ export type UpdateGameStatesCallbacks<T> = {
 type GameProps<T> = {
     id: string,
     info: GameInfo,
+    username?: string,
     defaultBoard: T,
     updateGameStatesFromMoves: (moves: string[], callbacks: UpdateGameStatesCallbacks<T>) => void,
     children: (gameStates: T[], gameStateIndex: number) => ReactNode
@@ -88,7 +89,7 @@ export default function Game<T>(props: GameProps<T>) {
         <>
             <div className="flex flex-col gap-5 w-[21rem]">
                 <GameHeader info={props.info} />
-                <Chat id={props.id} chat={chat} />
+                <Chat id={props.id} info={props.info} username={props.username} chat={chat} />
             </div>
 
             {props.children(gameStates, gameStateIndex)}

@@ -39,11 +39,12 @@ export type UltimateTicTacToeBoardProps = {
     activeBoard: number,
     setSquare: (board: number, square: number, symbol: TTTSymbol) => void,
     setBoardStatus: (board: number, status: BoardStatus) => void,
-    disabled: boolean
+    disabled: boolean,
+    over: boolean
 };
 export default function UltimateTicTacToeBoard(props: UltimateTicTacToeBoardProps) {
     return (
-        <TicTacToeGrid disabled={props.disabled}>
+        <TicTacToeGrid disabled={props.disabled} over={props.over}>
             {TTTIndices.map(row => (
                 <TicTacToeRow key={row.join()}>
                     {row.map(id => (
@@ -79,6 +80,7 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
                 setSquare={(square, symbol) => setSquare(id, square, symbol)}
                 setBoardStatus={(status) => setBoardStatus(id, status)}
                 disabled={disabled || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
+                over={props.over}
             />
         </div>
     )

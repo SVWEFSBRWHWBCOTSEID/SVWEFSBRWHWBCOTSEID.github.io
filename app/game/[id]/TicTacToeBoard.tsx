@@ -25,17 +25,18 @@ type TicTacToeBoardProps = {
     setSquare: (square: number, symbol: TTTSymbol) => void,
     setBoardStatus: (status: BoardStatus) => void,
     small?: boolean,
-    disabled: boolean
+    disabled: boolean,
+    over: boolean
 };
 export default function TicTacToeBoard(props: TicTacToeBoardProps) {
-    const {boardState, setBoardStatus, small, disabled} = props;
+    const {boardState, setBoardStatus, small, disabled, over} = props;
 
     useEffect(() => {
         setBoardStatus(checkBoardStatus(boardState));
     }, [boardState]);
 
     return (
-        <TicTacToeGrid disabled={disabled} small={small}>
+        <TicTacToeGrid disabled={disabled} over={over} small={small}>
             {TTTIndices.map(row => (
                 <TicTacToeRow small={small} key={row.join()}>
                     {row.map(id => (
@@ -47,9 +48,9 @@ export default function TicTacToeBoard(props: TicTacToeBoardProps) {
     )
 }
 
-export function TicTacToeGrid(props: {children: ReactNode, small?: boolean, disabled: boolean}) {
+export function TicTacToeGrid(props: {children: ReactNode, small?: boolean, disabled: boolean, over: boolean}) {
     return (
-        <div className={'flex flex-col divide-white/30 transition-opacity duration-500 ' + (props.small ? 'divide-y-4' : 'divide-y-8') + (props.disabled ? ' opacity-30' : '')}>
+        <div className={'flex flex-col divide-white/30 transition-opacity duration-500 ' + (props.small ? 'divide-y-4' : 'divide-y-8') + (props.over ? ' opacity-30' : '')}>
             {props.children}
         </div>
     )

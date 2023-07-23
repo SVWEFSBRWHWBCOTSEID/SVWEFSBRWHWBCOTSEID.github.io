@@ -14,7 +14,7 @@ import UltimateTicTacToeBoard, {
 
 // Utilities
 import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
-import {colToIndex, getTTTSymbolFromUsername, indexToCol, rowToIndex} from './TicTacToeGame';
+import {colToIndex, getTTTSymbolFromUsername, indexToCol, isSpectator, rowToIndex} from './TicTacToeGame';
 import type {GameInfo} from './page';
 
 
@@ -96,7 +96,8 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
                     activeBoard={activeBoard}
                     setSquare={setSquare}
                     setBoardStatus={handleBoardStatusChange}
-                    disabled={gameStatus !== BoardStatus.PLAYING || gameStateIndex !== gameStates.length - 1} // TODO
+                    disabled={gameStatus !== BoardStatus.PLAYING || gameStateIndex !== gameStates.length - 1 || isSpectator(props.username, props.info)}
+                    over={gameStatus !== BoardStatus.PLAYING && gameStateIndex === gameStates.length - 1}
                 />
             )}
         </Game>
