@@ -17,7 +17,7 @@ import {GiPotato} from 'react-icons/gi';
 
 // Util
 import {games} from './QuickPairing';
-import {createGame} from '../../util/game';
+import {createGame, Side} from '../../util/game';
 
 
 type CreateGameModalProps = {isOpen: boolean, setIsOpen: (open: boolean) => void, game?: typeof games[0]};
@@ -36,6 +36,22 @@ export default function CreateGameModal(props: CreateGameModalProps) {
     function setTimeControl(timed: boolean) {
         setTimed(timed);
         if (!timed) setRated(false);
+    }
+
+    function submitModal(side: Side) {
+        // TODO: rating
+        void createGame(
+            game.key,
+            1337,
+            parseMinutes(minutesSlider),
+            parseIncrement(incrementSlider),
+            rated,
+            timed,
+            side,
+            ratingOffsetMin,
+            ratingOffsetMax
+        );
+        props.setIsOpen(false);
     }
 
     return (
@@ -132,18 +148,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Move first"
                     disabled={invalidTime}
-                    // TODO: rating
-                    onClick={() => createGame(
-                        game.key,
-                        1337,
-                        parseMinutes(minutesSlider),
-                        parseIncrement(incrementSlider),
-                        rated,
-                        timed,
-                        'FIRST',
-                        ratingOffsetMin,
-                        ratingOffsetMax
-                    )}
+                    onClick={() => submitModal('FIRST')}
                 >
                     <PiNumberCircleOneFill />
                 </button>
@@ -152,18 +157,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-6xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Random side"
                     disabled={invalidTime}
-                    // TODO: rating
-                    onClick={() => createGame(
-                        game.key,
-                        1337,
-                        parseMinutes(minutesSlider),
-                        parseIncrement(incrementSlider),
-                        rated,
-                        timed,
-                        'RANDOM',
-                        ratingOffsetMin,
-                        ratingOffsetMax
-                    )}
+                    onClick={() => submitModal('RANDOM')}
                 >
                     <IoDice />
                 </button>
@@ -173,17 +167,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     title="Move second"
                     disabled={invalidTime}
                     // TODO: rating
-                    onClick={() => createGame(
-                        game.key,
-                        1337,
-                        parseMinutes(minutesSlider),
-                        parseIncrement(incrementSlider),
-                        rated,
-                        timed,
-                        'SECOND',
-                        ratingOffsetMin,
-                        ratingOffsetMax
-                    )}
+                    onClick={() => submitModal('SECOND')}
                 >
                     <PiNumberCircleTwoFill />
                 </button>
