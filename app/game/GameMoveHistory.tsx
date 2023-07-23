@@ -15,13 +15,13 @@ export default function GameMoveHistory(props: GameMoveHistoryProps) {
             <div className="bg-content-secondary border-b border-tertiary flex justify-center text-secondary text-2xl shadow-xl">
                 <HeaderButton
                     onClick={() => setIndex(1)}
-                    disabled={index === 1}
+                    disabled={index <= 1}
                 >
                     <MdFastRewind />
                 </HeaderButton>
                 <HeaderButton
                     onClick={() => setIndex(Math.max(index - 1, 1))}
-                    disabled={index === 1}
+                    disabled={index <= 1}
                 >
                     <MdSkipPrevious />
                 </HeaderButton>
