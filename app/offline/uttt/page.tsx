@@ -14,8 +14,7 @@ import UltimateTicTacToeBoard, {
 import TicTacToeScoreIndicator, {TTTScores} from '../ttt/TicTacToeScoreIndicator';
 
 // Utilities
-import {BoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
-import {checkBoardStatus} from '../ttt/page';
+import {checkBoardStatus, BoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
 
 
 export default function OfflineUltimateTicTacToe() {
