@@ -27,6 +27,7 @@ export default function Chat(props: {id: string, chat: ChatMessage[]}) {
     }, [props.chat])
 
     async function sendChatMessage() {
+        // TODO: spectator?
         await fetch(`${process.env.API_BASE}/game/${props.id}/chat/PLAYER`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

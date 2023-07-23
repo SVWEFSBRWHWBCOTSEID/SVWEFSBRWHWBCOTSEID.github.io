@@ -1,4 +1,5 @@
 import {Metadata} from 'next';
+import {cookies} from 'next/headers';
 import {notFound} from 'next/navigation';
 
 // Components
@@ -69,7 +70,6 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
     const gameInfo: Omit<GameFullEvent, 'type' | 'chat' | 'state'> = await res.json();
 
-    // TODO: fetch API
     return {
         title: {
             // TODO
@@ -84,10 +84,11 @@ export default async function GamePage({ params }: { params: { id: string } }) {
     if (!res.ok) notFound();
 
     const gameInfo: GameInfo = await res.json();
+    const username = cookies().get('username')?.value; // TODO: caching is now disabled
 
     switch (gameInfo.game.key) {
-        case 'ttt': return <TicTacToeGame id={params.id} info={gameInfo} />
-        case 'uttt': return <UltimateTicTacToeGame id={params.id} info={gameInfo} />
+        case 'ttt': return <TicTacToeGame id={params.id} username={username} info={gameInfo} />
+        case 'uttt': return <UltimateTicTacToeGame id={params.id} username={username} info={gameInfo} />
         default: return null; // TODO: hacky?
     }
 }

@@ -13,17 +13,17 @@ import UltimateTicTacToeBoard, {
 } from './UltimateTicTacToeBoard';
 
 // Utilities
-import type {GameInfo} from './page';
 import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
-import {colToIndex, indexToCol, rowToIndex} from './TicTacToeGame';
+import {colToIndex, getTTTSymbolFromUsername, indexToCol, rowToIndex} from './TicTacToeGame';
+import type {GameInfo} from './page';
 
 
-export default function UltimateTicTacToeGame(props: {id: string, info: GameInfo}) {
+export default function UltimateTicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
     const [gameStatuses, setGameStatuses] = useState(defaultUTTTBoardStatuses);
     const [activeBoard, setActiveBoard] = useState(4);
 
-    const playerSymbol: TTTSymbol = '✕'; // TODO: parse this from game info
+    const playerSymbol: TTTSymbol = getTTTSymbolFromUsername(props.username, props.info);
 
     // Makes a move by checking the given square in the given board.
     async function setSquare(board: number, square: number) {

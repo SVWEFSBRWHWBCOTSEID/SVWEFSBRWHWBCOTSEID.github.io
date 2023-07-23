@@ -8,9 +8,9 @@ import Game, {UpdateGameStatesCallbacks} from './Game';
 import TicTacToeBoard, {BoardStatus, defaultTTTBoard, TTTBoard, TTTSymbol} from './TicTacToeBoard';
 
 
-export default function TicTacToeGame(props: {id: string, info: GameInfo}) {
+export default function TicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
-    const playerSymbol: TTTSymbol = '✕'; // TODO: parse this from game info
+    const playerSymbol: TTTSymbol = getTTTSymbolFromUsername(props.username, props.info);
 
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<TTTBoard>) {
         setGameStates((gameStates) => {
@@ -59,6 +59,12 @@ export default function TicTacToeGame(props: {id: string, info: GameInfo}) {
             )}
         </Game>
     )
+}
+
+export function getTTTSymbolFromUsername(username: string | undefined, info: GameInfo): TTTSymbol {
+    if (username === info.first.username) return '✕';
+    if (username === info.second.username) return '◯';
+    return '';
 }
 
 export function rowToIndex(row: string) {
