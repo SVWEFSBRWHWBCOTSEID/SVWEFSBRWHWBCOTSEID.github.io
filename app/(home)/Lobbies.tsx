@@ -1,3 +1,6 @@
+'use client'
+
+import {useEffect, useState} from 'react';
 import LobbyRoom, {LobbyCell} from './LobbyRoom';
 import type {GameNameInfo, Player, TimeControl} from '../game/[id]/page';
 
@@ -10,8 +13,23 @@ export type Lobby = {
     timeControl: TimeControl
 }
 
-export default async function Lobbies() {
-    const lobbies: Lobby[] = await (await fetch(`${process.env.API_BASE}/lobbies`, {cache: 'no-store'})).json()
+type LobbyEvent = {
+    type: 'NEW_LOBBY',
+    lobbies: Lobby[]
+}
+
+export default function Lobbies() {
+    const [lobbies, setLobbies] = useState<Lobby[]>([]);
+
+    useEffect(() => {
+        const eventSource = new EventSource(`${process.env.API_BASE}/lobbies/events`);
+        eventSource.onmessage = (m) => {
+            const event: LobbyEvent = JSON.parse(m.data);
+
+            console.log(event)
+            setLobbies(event.lobbies)
+        };
+    }, [])
 
     return (
         <div className="table w-full rounded overflow-clip bg-content/40">
@@ -32,7 +50,8 @@ export default async function Lobbies() {
                 </div>
             )}
             {lobbies.length > 0 && lobbies.map((game) => (
-                <LobbyRoom {...game} />
+                // TODO: filter by rating
+                <LobbyRoom {...game} key={game.id} />
             ))}
         </div>
     )

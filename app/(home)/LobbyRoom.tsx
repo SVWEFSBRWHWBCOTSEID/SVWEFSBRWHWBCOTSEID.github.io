@@ -7,10 +7,10 @@ import type {Lobby} from './Lobbies';
 export default function LobbyRoom(props: Lobby) {
     return (
         <Link className="px-4 table-row text-secondary group" href={`/game/${props.id}`}>
-            <LobbyCell>{props.user.provisional}</LobbyCell>
+            <LobbyCell>{props.user.username}</LobbyCell>
             <LobbyCell>{props.user.rating}</LobbyCell>
             <LobbyCell>{timeControlToString(props.timeControl)}</LobbyCell>
-            <LobbyCell>{props.game.key} {props.rated ? 'Rated' : 'Casual'}</LobbyCell>
+            <LobbyCell>{props.game.key.toUpperCase()} {props.rated ? 'Rated' : 'Casual'}</LobbyCell>
         </Link>
     )
 }
