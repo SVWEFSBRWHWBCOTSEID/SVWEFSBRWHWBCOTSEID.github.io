@@ -65,7 +65,7 @@ export default function Game<T>(props: GameProps<T>) {
                 case 'CHAT_MESSAGE': setChat((chat) => [...chat, event]); break;
                 case 'GAME_STATE':
                     handleGameState(event);
-                    if (winType) startTransition(() => {
+                    if (event.winType) startTransition(() => {
                         // TODO: incredibly hacky; backend revalidate on demand?
                         void revalidate(`user-${props.info.first.username}`);
                         void revalidate(`user-${props.info.second.username}`);
