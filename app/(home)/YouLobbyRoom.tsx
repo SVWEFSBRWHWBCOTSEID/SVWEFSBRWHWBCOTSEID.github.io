@@ -3,8 +3,10 @@
 import {ReactNode, useState} from 'react';
 import {timeControlToString} from '../../util/game';
 import type {Lobby} from './Lobbies';
+import {BiCircle, BiSolidCircle, BiSolidCircleHalf} from 'react-icons/bi';
 
 
+// TODO: abstract with `LobbyRoom.tsx`?
 export default function YouLobbyRoom(props: Lobby) {
     const [loading, setLoading] = useState(false)
 
@@ -24,6 +26,15 @@ export default function YouLobbyRoom(props: Lobby) {
             className={'px-4 table-row text-[#ccc] cursor-pointer transition duration-75 ' + (loading ? 'opacity-50' : 'group')}
             onClick={cancelGame}
         >
+            <YouLobbyCell>
+                {props.side === 'FIRST' ? (
+                    <BiSolidCircle />
+                ) : props.side === 'SECOND' ? (
+                    <BiCircle />
+                ) : (
+                    <BiSolidCircleHalf />
+                )}
+            </YouLobbyCell>
             <YouLobbyCell>{props.user.username}</YouLobbyCell>
             <YouLobbyCell>{props.user.rating}</YouLobbyCell>
             <YouLobbyCell>{timeControlToString(props.timeControl)}</YouLobbyCell>
@@ -34,7 +45,7 @@ export default function YouLobbyRoom(props: Lobby) {
 
 function YouLobbyCell(props: {children: ReactNode}) {
     return (
-        <span className="table-cell border-t border-tertiary px-4 py-1 group-hover:text-white bg-theme-green/50">
+        <span className="table-cell align-middle border-t border-tertiary px-4 py-1 group-hover:text-white bg-theme-green/50">
             {props.children}
         </span>
     )

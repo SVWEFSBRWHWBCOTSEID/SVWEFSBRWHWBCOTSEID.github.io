@@ -3,6 +3,7 @@
 import {ReactNode, useState} from 'react';
 import {timeControlToString} from '../../util/game';
 import type {Lobby} from './Lobbies';
+import {BiCircle, BiSolidCircle, BiSolidCircleHalf} from 'react-icons/bi';
 
 
 export default function LobbyRoom(props: Lobby) {
@@ -24,6 +25,15 @@ export default function LobbyRoom(props: Lobby) {
             className={'px-4 table-row text-secondary group' + (loading ? ' opacity-50' : '')}
             onClick={joinGame}
         >
+            <LobbyCell>
+                {props.side === 'FIRST' ? (
+                    <BiSolidCircle />
+                ) : props.side === 'SECOND' ? (
+                    <BiCircle />
+                ) : (
+                    <BiSolidCircleHalf />
+                )}
+            </LobbyCell>
             <LobbyCell>{props.user.username}</LobbyCell>
             <LobbyCell>{props.user.rating}</LobbyCell>
             <LobbyCell>{timeControlToString(props.timeControl)}</LobbyCell>
@@ -32,9 +42,9 @@ export default function LobbyRoom(props: Lobby) {
     )
 }
 
-export function LobbyCell(props: {children: ReactNode}) {
+export function LobbyCell(props: {className?: string, children?: ReactNode}) {
     return (
-        <span className="table-cell border-t border-tertiary px-4 py-1 group-hover:text-white group-hover:bg-theme-orange/50">
+        <span className={'table-cell align-middle border-t border-tertiary px-4 py-1 group-hover:text-white group-hover:bg-theme-orange/50' + (props.className ? ` ${props.className}` : '')}>
             {props.children}
         </span>
     )

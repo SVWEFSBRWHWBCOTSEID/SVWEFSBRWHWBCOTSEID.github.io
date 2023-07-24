@@ -1,19 +1,23 @@
 import Link from 'next/link';
 import {BiCircle, BiSolidCircle} from 'react-icons/bi';
-import {GiPotato} from 'react-icons/gi';
+
+// Util
+import {keyToIcon} from '../profile/ProfileSidebarItem';
+import {timeControlToString} from '../../util/game';
 import type {GameInfo, Player} from './[id]/page';
 
 
 export default function GameHeader(props: {info: GameInfo}) {
     const {info} = props;
+    const Icon = keyToIcon(info.game.key);
 
     return (
         <div className="bg-content rounded p-6 shadow-lg">
             <div className="flex gap-4 mb-2">
-                <GiPotato className="text-4xl" />
+                <Icon className="text-4xl" />
                 <div>
                     <p>
-                        {info.timeControl.initial / 60000}+{info.timeControl.increment / 1000} •{' '}
+                        {timeControlToString(props.info.timeControl)} •{' '}
                         {info.rated ? 'Rated' : 'Casual'} •{' '}
                         <a
                             href={`/rules#${info.game.key}`}

@@ -39,14 +39,15 @@ const defaultGamePerf: GamePerf = {
     prog: 0,
     prov: true
 }
+export const defaultGamePerfs = {
+    ttt: defaultGamePerf,
+    uttt: defaultGamePerf,
+    c4: defaultGamePerf,
+    pc: defaultGamePerf
+}
 export const defaultUser: User = {
     username: '...',
-    perfs: {
-        ttt: defaultGamePerf,
-        uttt: defaultGamePerf,
-        c4: defaultGamePerf,
-        pc: defaultGamePerf
-    },
+    perfs: defaultGamePerfs,
     createdAt: DateTime.now().toSQLDate()!,
     profile: {
         country: 'US',

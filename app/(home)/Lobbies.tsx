@@ -1,9 +1,14 @@
 'use client'
 
-import {useEffect, useState} from 'react';
+import {startTransition, useEffect, useLayoutEffect, useState} from 'react';
 import LobbyRoom, {LobbyCell} from './LobbyRoom';
 import YouLobbyRoom from './YouLobbyRoom';
+
+// Util
+import {getUser} from '../../util/user';
+import {defaultGamePerfs} from '../../contexts/ProfileContext';
 import type {GameNameInfo, Player, TimeControl} from '../game/[id]/page';
+import type {Side} from '../../util/game';
 
 
 export type Lobby = {
@@ -11,6 +16,9 @@ export type Lobby = {
     user: Player,
     game: GameNameInfo,
     rated: boolean,
+    minRating: number,
+    maxRating: number,
+    side: Side,
     timeControl: TimeControl
 }
 
@@ -21,6 +29,15 @@ type LobbyEvent = {
 
 export default function Lobbies(props: {username?: string}) {
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
+
+    // TODO: hacky?
+    const [perfs, setPerfs] = useState(defaultGamePerfs);
+    useLayoutEffect(() => {
+        startTransition(() => {
+            if (!props.username) return;
+            void getUser(props.username).then(user => user && setPerfs(user.perfs));
+        })
+    }, [])
 
     useEffect(() => {
         const eventSource = new EventSource(`${process.env.API_BASE}/lobbies/events`);
@@ -35,12 +52,16 @@ export default function Lobbies(props: {username?: string}) {
     const youLobby = lobbies.find((lobby) => lobby.user.username === props.username);
     const filteredLobbies = lobbies
         .filter((lobby) => lobby.user.username !== props.username)
-    // TODO: filter rating range
+        .filter((lobby) => {
+            const rating = perfs[lobby.game.key].rating;
+            return !lobby.rated || (lobby.minRating <= rating && lobby.maxRating >= rating)
+        })
 
     return (
         <div className="table w-full rounded overflow-clip bg-content/40">
             <div className="px-4 font-light table-header-group bg-content-secondary">
                 <div className="table-row">
+                    <LobbyCell className="w-12" />
                     <LobbyCell>Player</LobbyCell>
                     <LobbyCell>Rating</LobbyCell>
                     <LobbyCell>Time</LobbyCell>
