@@ -36,10 +36,8 @@ export default function SignupPanel() {
         refresh();
     }
 
-    // TODO: very inefficient with get requests; cache fetches on client somehow?
     async function validateUsername() {
-        const user = await getUser(username);
-        setError(!!user);
+        startTransition(() => void getUser(username).then((user) => setError(!!user)));
     }
 
     return (
