@@ -54,7 +54,6 @@ export default function Lobbies(props: {username?: string}) {
         .filter((lobby) => lobby.user.username !== props.username)
         .filter((lobby) => {
             const rating = perfs[lobby.game.key].rating;
-            return !lobby.rated || (lobby.minRating <= rating && lobby.maxRating >= rating)
             return !lobby.rated || (lobby.ratingMin <= rating && lobby.ratingMax >= rating)
         })
 
