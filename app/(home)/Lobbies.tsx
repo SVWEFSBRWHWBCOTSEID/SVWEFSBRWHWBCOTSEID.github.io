@@ -16,8 +16,8 @@ export type Lobby = {
     user: Player,
     game: GameNameInfo,
     rated: boolean,
-    minRating: number,
-    maxRating: number,
+    ratingMin: number,
+    ratingMax: number,
     side: Side,
     timeControl: TimeControl
 }
@@ -55,6 +55,7 @@ export default function Lobbies(props: {username?: string}) {
         .filter((lobby) => {
             const rating = perfs[lobby.game.key].rating;
             return !lobby.rated || (lobby.minRating <= rating && lobby.maxRating >= rating)
+            return !lobby.rated || (lobby.ratingMin <= rating && lobby.ratingMax >= rating)
         })
 
     return (
@@ -69,7 +70,7 @@ export default function Lobbies(props: {username?: string}) {
                 </div>
             </div>
 
-            {lobbies.length === 0 && !youLobby && (
+            {filteredLobbies.length === 0 && !youLobby && (
                 <div className="px-4 table-row text-secondary relative h-20">
                     <span className="absolute inset-0 m-auto w-max h-max">
                         No games found.
