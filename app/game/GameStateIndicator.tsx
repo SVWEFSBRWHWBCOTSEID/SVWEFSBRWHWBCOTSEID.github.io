@@ -10,18 +10,20 @@ import GameOverMessage, {GameOverMessageProps} from './GameOverMessage';
 
 // Types
 import type {Player, GameInfo, Status} from './[id]/page';
+import type {PlayerSide} from './[id]/Game';
 
 
 type GameStateIndicatorProps = GameMoveHistoryProps & GameOverMessageProps & {
     id: string,
     ftime: Duration,
     stime: Duration,
-    info: GameInfo
+    info: GameInfo,
+    side: PlayerSide
 }
 export default function GameStateIndicator(props: GameStateIndicatorProps) {
     return (
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
-            <GameTimeIndicator time={props.ftime} top />
+            <GameTimeIndicator time={props.ftime} top playAlert={props.side === 'FIRST'} />
 
             <div className="bg-content rounded-r">
                 <GameTimeProgressBar time={props.ftime} initial={props.info.timeControl.initial} />
@@ -41,7 +43,7 @@ export default function GameStateIndicator(props: GameStateIndicatorProps) {
                 <GameTimeProgressBar time={props.stime} initial={props.info.timeControl.initial} />
             </div>
 
-            <GameTimeIndicator time={props.stime} />
+            <GameTimeIndicator time={props.stime} playAlert={props.side === 'SECOND'} />
         </div>
     )
 }

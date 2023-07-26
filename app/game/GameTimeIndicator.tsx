@@ -1,9 +1,21 @@
+'use client'
+
+import {useEffect, useRef} from 'react';
 import {Duration} from 'luxon';
 
 
-type GameTimeIndicatorProps = {time: Duration, top?: boolean}
+type GameTimeIndicatorProps = {time: Duration, top?: boolean, playAlert: boolean}
 export default function GameTimeIndicator(props: GameTimeIndicatorProps) {
     const emergency = props.time.toMillis() < 21000;
+
+    const played = useRef(false);
+
+    // Play low time alert when first low on time
+    useEffect(() => {
+        if (!props.playAlert || !emergency || played.current) return;
+        void new Audio('/sound/LowTime.mp3').play();
+        played.current = true;
+    }, [emergency])
 
     return (
         <div className={'w-max text-5xl px-5 py-2 ' + (props.top ? 'rounded-t ' : 'rounded-b ') + (emergency ? 'bg-[#502826]' : 'bg-content')}>

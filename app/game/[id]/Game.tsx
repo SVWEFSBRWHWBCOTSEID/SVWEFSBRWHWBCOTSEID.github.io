@@ -115,6 +115,7 @@ export default function Game<T>(props: GameProps<T>) {
                 id={props.id}
                 ftime={ftime}
                 stime={stime}
+                side={side}
                 status={gameStatus}
                 type={winType}
                 info={props.info}
