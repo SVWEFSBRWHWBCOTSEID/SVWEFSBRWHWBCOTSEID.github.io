@@ -75,6 +75,10 @@ export default function Game<T>(props: GameProps<T>) {
                         void revalidate(`user-${props.info.first.username}`);
                         void revalidate(`user-${props.info.second.username}`);
                     })
+
+                    // If the game just ended, play the game end sound.
+                    if (event.status === 'FIRST_WON' || event.status === 'SECOND_WON')
+                        void new Audio('/sound/GenericNotify.mp3').play();
                     break;
                 case 'GAME_FULL':
                     setChat(event.chat);
