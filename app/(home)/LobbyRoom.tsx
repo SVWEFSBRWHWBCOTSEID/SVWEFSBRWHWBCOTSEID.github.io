@@ -22,7 +22,7 @@ export default function LobbyRoom(props: Lobby) {
     return (
         // TODO: button is not a legal table row element, but using a div is kinda hacky
         <div
-            className={'px-4 table-row text-secondary group' + (loading ? ' opacity-50' : '')}
+            className={'px-4 table-row text-secondary group cursor-pointer' + (loading ? ' opacity-50' : '')}
             onClick={joinGame}
         >
             <LobbyCell>

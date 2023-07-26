@@ -3,13 +3,11 @@
 import type {GameInfo} from './page';
 
 // Components
-import Game, {UpdateGameStatesCallbacks} from './Game';
+import Game, {PlayerSide, UpdateGameStatesCallbacks} from './Game';
 import TicTacToeBoard, {defaultTTTBoard, TTTBoard, TTTSymbol} from './TicTacToeBoard';
 
 
 export default function TicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
-    const playerSymbol: TTTSymbol = getTTTSymbolFromUsername(props.username, props.info);
-
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<TTTBoard>) {
         setGameStates((gameStates) => {
             const arr = gameStates.slice();
@@ -46,10 +44,10 @@ export default function TicTacToeGame(props: {id: string, username?: string, inf
 
     return (
         <Game {...props} defaultBoard={defaultTTTBoard} updateGameStatesFromMoves={updateGameStatesFromMoves}>
-            {(gameStates, gameStateIndex, gameStatus) => (
+            {(gameStates, gameStateIndex, gameStatus, side) => (
                 <TicTacToeBoard
                     boardState={gameStates[gameStateIndex]}
-                    playerSymbol={playerSymbol}
+                    playerSymbol={getTTTSymbolFromSide(side)}
                     setSquare={setSquare}
                     disabled={gameStatus !== 'STARTED' || gameStateIndex !== gameStates.length - 1 || isSpectator(props.username, props.info)}
                     over={gameStatus !== 'STARTED' && gameStateIndex === gameStates.length - 1}
@@ -63,10 +61,12 @@ export function isSpectator(username: string | undefined, info: GameInfo) {
     return !username || (username !== info.first.username && username !== info.second.username);
 }
 
-export function getTTTSymbolFromUsername(username: string | undefined, info: GameInfo): TTTSymbol {
-    if (username === info.first.username) return '✕';
-    if (username === info.second.username) return '◯';
-    return '';
+export function getTTTSymbolFromSide(side: PlayerSide): TTTSymbol {
+    switch (side) {
+        case 'FIRST': return '✕';
+        case 'SECOND': return '◯';
+        default: return '';
+    }
 }
 
 export function rowToIndex(row: string) {

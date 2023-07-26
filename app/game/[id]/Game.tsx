@@ -2,13 +2,16 @@
 
 import {Dispatch, ReactNode, SetStateAction, startTransition, useEffect, useState} from 'react';
 import {Duration} from 'luxon';
-import type {GameEvent, GameInfo, GameStateEvent, Status, WinType} from './page';
 
 // Components
 import Chat, {ChatMessage} from '../Chat';
 import GameHeader from '../GameHeader';
 import GameStateIndicator from '../GameStateIndicator';
+
+// Util
 import {revalidate} from '../../../util/actions';
+import type {GameEvent, GameInfo, GameStateEvent, Status, WinType} from './page';
+import type {Side} from '../../../util/game';
 
 
 export type UpdateGameStatesCallbacks<T> = {
@@ -21,7 +24,7 @@ type GameProps<T> = {
     username?: string,
     defaultBoard: T,
     updateGameStatesFromMoves: (moves: string[], callbacks: UpdateGameStatesCallbacks<T>) => void,
-    children: (gameStates: T[], gameStateIndex: number, gameStatus: Status) => ReactNode
+    children: (gameStates: T[], gameStateIndex: number, gameStatus: Status, side: PlayerSide) => ReactNode
 }
 export default function Game<T>(props: GameProps<T>) {
     const [gameStates, setGameStates] = useState([props.defaultBoard]);
@@ -35,6 +38,8 @@ export default function Game<T>(props: GameProps<T>) {
     const [stime, setStime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
 
     const [chat, setChat] = useState<ChatMessage[]>([]);
+
+    const side = getSide(props.username, props.info);
 
     // Update the active timer on client-side on a 100ms interval
     useEffect(() => {
@@ -100,7 +105,7 @@ export default function Game<T>(props: GameProps<T>) {
                 <Chat id={props.id} info={props.info} username={props.username} chat={chat} />
             </div>
 
-            {props.children(gameStates, gameStateIndex, gameStatus)}
+            {props.children(gameStates, gameStateIndex, gameStatus, side)}
 
             <GameStateIndicator
                 id={props.id}
@@ -115,4 +120,11 @@ export default function Game<T>(props: GameProps<T>) {
             />
         </>
     )
+}
+
+export type PlayerSide = Exclude<Side, 'RANDOM'> | 'SPECTATOR'
+function getSide(username: string | undefined, info: GameInfo): PlayerSide {
+    if (username === info.first.username) return 'FIRST';
+    if (username === info.second.username) return 'SECOND';
+    return 'SPECTATOR'
 }

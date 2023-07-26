@@ -14,15 +14,13 @@ import UltimateTicTacToeBoard, {
 
 // Utilities
 import {BoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
-import {colToIndex, getTTTSymbolFromUsername, indexToCol, isSpectator, rowToIndex} from './TicTacToeGame';
+import {colToIndex, getTTTSymbolFromSide, indexToCol, isSpectator, rowToIndex} from './TicTacToeGame';
 import type {GameInfo} from './page';
 
 
 export default function UltimateTicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
     const [gameStatuses, setGameStatuses] = useState(defaultUTTTBoardStatuses);
     const [activeBoard, setActiveBoard] = useState(4);
-
-    const playerSymbol: TTTSymbol = getTTTSymbolFromUsername(props.username, props.info);
 
     // Makes a move by checking the given square in the given board.
     async function setSquare(board: number, square: number) {
@@ -68,11 +66,11 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
 
     return (
         <Game {...props} defaultBoard={defaultUTTTBoard} updateGameStatesFromMoves={updateGameStatesFromMoves}>
-            {(gameStates, gameStateIndex, gameStatus) => (
+            {(gameStates, gameStateIndex, gameStatus, side) => (
                 <UltimateTicTacToeBoard
                     gameState={gameStates[gameStateIndex]}
                     gameStatuses={gameStatuses}
-                    playerSymbol={playerSymbol}
+                    playerSymbol={getTTTSymbolFromSide(side)}
                     activeBoard={activeBoard}
                     setSquare={setSquare}
                     disabled={gameStatus !== 'STARTED' || gameStateIndex !== gameStates.length - 1 || isSpectator(props.username, props.info)}
