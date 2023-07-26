@@ -18,12 +18,19 @@ import {ImCheckmark} from 'react-icons/im';
 export default function ProfileHeader() {
     const {username, profile, createdAt} = useContext(ProfileContext);
 
+    // TODO: check to see if this is you (ie. if the profile can be edited)
     const [editing, setEditing] = useState(false);
 
     const [firstName, setFirstName] = useState(profile.firstName);
     const [lastName, setLastName] = useState(profile.lastName);
     const [location, setLocation] = useState(profile.location);
     const [bio, setBio] = useState(profile.bio);
+
+    async function updateProfile() {
+        // TODO: fetch backend
+        // refresh();
+        setEditing(false);
+    }
 
     return (
         <section className="flex gap-6 px-8 py-6 bg-content-secondary">
@@ -79,8 +86,7 @@ export default function ProfileHeader() {
                                 placeholder="Bio (talk about yourself, your interests, games, ...)"
                             />
 
-                            {/* TODO: fetch backend */}
-                            <BlueButton className="mt-4 ml-auto">
+                            <BlueButton className="mt-4 ml-auto" onClick={updateProfile}>
                                 <ImCheckmark className="inline" /> Submit
                             </BlueButton>
                         </>
