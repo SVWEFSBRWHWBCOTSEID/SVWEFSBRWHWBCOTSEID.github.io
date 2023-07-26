@@ -41,6 +41,19 @@ export default function Game<T>(props: GameProps<T>) {
 
     const side = getSide(props.username, props.info);
 
+    // Update the game state index, playing the move sound if the index was incremented.
+    // TODO: hacky?
+    function updateGameStateIndex(arg: number | ((old: number) => number)) {
+        setGameStateIndex((index) => {
+            const newIndex = typeof arg === 'number' ? arg : arg(index);
+            if (newIndex > index) {
+                console.log(newIndex) // TODO: called twice?
+                void new Audio('/sound/Move.mp3').play();
+            }
+            return newIndex;
+        })
+    }
+
     // Update the active timer on client-side on a 100ms interval
     useEffect(() => {
         // Don't start the timer until the 3rd move, or if the game is over
@@ -99,7 +112,7 @@ export default function Game<T>(props: GameProps<T>) {
         setWinType(event.winType);
 
         setMoves((moves) => moves.concat(event.moves));
-        props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex});
+        props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex: updateGameStateIndex});
     }
 
     return (
@@ -121,7 +134,7 @@ export default function Game<T>(props: GameProps<T>) {
                 info={props.info}
                 moves={moves}
                 index={gameStateIndex}
-                setIndex={setGameStateIndex}
+                setIndex={updateGameStateIndex}
             />
         </>
     )
