@@ -5,6 +5,10 @@ import {useRouter} from 'next/navigation';
 import {getUser} from '../../util/user';
 import {revalidate} from '../../util/actions';
 
+// Components
+import BlueButton from '../../components/BlueButton';
+import Input from '../../components/Input';
+
 
 export default function SignupPanel() {
     const [username, setUsername] = useState('');
@@ -47,7 +51,7 @@ export default function SignupPanel() {
             <label htmlFor="username" className="mb-1 text-secondary font-semibold text-sm">
                 Username
             </label>
-            <input
+            <Input
                 required
                 type="text"
                 name="username"
@@ -55,33 +59,33 @@ export default function SignupPanel() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 onBlur={validateUsername}
-                className={'px-4 py-2 rounded bg-content-tertiary border border-tertiary mb-4 focus:outline-none focus:ring-[3px] transition duration-100 ' + (error ? 'border-red-500' : 'invalid:border-red-500')}
+                className={'mb-4 ' + (error ? 'border-red-500' : 'invalid:border-red-500')}
             />
 
             <label htmlFor="password" className="mb-1 text-secondary font-semibold text-sm">
                 Password
             </label>
-            <input
+            <Input
                 required
                 type="password"
                 name="password"
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="px-4 py-2 rounded bg-content-tertiary border border-tertiary invalid:border-red-500 focus:outline-none focus:ring-[3px] transition duration-100"
+                className="invalid:border-red-500"
             />
 
             {error && (
                 <p className="text-red-500 text-sm mt-4">That username is already taken.</p>
             )}
 
-            <button
-                className="rounded bg-blue-500 uppercase px-4 py-2.5 font-medium mt-8 mb-2 disabled:opacity-50 hover:bg-[#56a3eb] disabled:hover:bg-blue-500 transition duration-100"
+            <BlueButton
+                className="mt-8 mb-2"
                 disabled={!username || !password || loading}
                 onClick={register}
             >
                 Register
-            </button>
+            </BlueButton>
         </main>
     )
 }

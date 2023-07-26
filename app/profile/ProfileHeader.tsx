@@ -1,13 +1,27 @@
 'use client'
 
-import {useContext} from 'react';
+import {useContext, useState} from 'react';
 import {DateTime} from 'luxon';
 import ProfileContext, {User} from '../../contexts/ProfileContext';
+
+// Components
+import Input from '../../components/Input';
+import BlueButton from '../../components/BlueButton';
+
+// Icons
 import {FaLocationDot, FaUser} from 'react-icons/fa6';
+import {BsGearFill} from 'react-icons/bs';
+import {ImCheckmark} from 'react-icons/im';
 
 
 export default function ProfileHeader() {
     const {username, profile, createdAt} = useContext(ProfileContext);
+
+    const [editing, setEditing] = useState(false);
+
+    const [firstName, setFirstName] = useState(profile.firstName);
+    const [lastName, setLastName] = useState(profile.lastName);
+    const [location, setLocation] = useState(profile.location);
 
     return (
         <section className="flex gap-6 px-8 py-6 bg-content-secondary">
@@ -19,28 +33,71 @@ export default function ProfileHeader() {
                     alt={username}
                 />
             ) : (
-                <div className="w-16 h-16 rounded-full bg-background flex items-center justify-center text-secondary/50 text-3xl font-medium">
+                <div className="w-16 h-16 rounded-full flex-none bg-background flex items-center justify-center text-secondary/50 text-3xl font-medium">
                     {username[0].toUpperCase()}
                 </div>
             )}
-            <div className="pt-3 flex flex-grow justify-between">
-                <div>
+            <div className="pt-3 flex flex-grow gap-3">
+                <div className="flex-grow flex flex-col">
                     <h1 className="text-4xl flex gap-3 items-center mb-2">
                         {username}
                         <img src="https://lichess1.org/assets/_zkgwWf/images/flags/US.png" alt="US flag" className="h-6" />
                     </h1>
 
-                    {getName(profile) && (
-                        <p className="text-secondary">
-                            <FaUser className="inline" /> {getName(profile)}
-                        </p>
-                    )}
-                    {profile.location && (
-                        <p className="text-secondary">
-                            <FaLocationDot className="inline" /> Your mother's house
-                        </p>
+                    {editing ? (
+                        <>
+                            <p className="flex gap-2 text-secondary mb-1.5 items-center">
+                                <FaUser className="inline" />
+                                <Input
+                                    className="flex-grow"
+                                    value={firstName}
+                                    onChange={(e) => setFirstName(e.target.value)}
+                                    placeholder="First name"
+                                />
+                                <Input
+                                    className="flex-grow"
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    placeholder="Last name"
+                                />
+                            </p>
+                            <p className="flex gap-2 text-secondary items-center">
+                                <FaLocationDot className="inline" />
+                                <Input
+                                    className="flex-grow"
+                                    value={location}
+                                    onChange={(e) => setLocation(e.target.value)}
+                                    placeholder="Location"
+                                />
+                            </p>
+
+                            {/* TODO: fetch backend */}
+                            <BlueButton className="mt-4 ml-auto">
+                                <ImCheckmark className="inline" /> Submit
+                            </BlueButton>
+                        </>
+                    ) : (
+                        <>
+                            {getName(profile) && (
+                                <p className="text-secondary">
+                                    <FaUser className="inline" /> {getName(profile)}
+                                </p>
+                            )}
+                            {profile.location && (
+                                <p className="text-secondary">
+                                    <FaLocationDot className="inline" /> {profile.location}
+                                </p>
+                            )}
+                        </>
                     )}
                 </div>
+
+                <button
+                    className="text-secondary h-max p-1.5 rounded hover:bg-theme-green hover:text-white transition duration-100"
+                    onClick={() => setEditing(!editing)}
+                >
+                    <BsGearFill />
+                </button>
 
                 <div className="pr-6">
                     <p className="text-secondary">
