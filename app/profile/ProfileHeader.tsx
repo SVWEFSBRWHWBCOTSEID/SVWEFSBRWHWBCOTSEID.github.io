@@ -6,6 +6,7 @@ import ProfileContext, {User} from '../../contexts/ProfileContext';
 
 // Components
 import Input from '../../components/Input';
+import AutoResizingTextArea from '../../components/AutoResizingTextbox';
 import BlueButton from '../../components/BlueButton';
 
 // Icons
@@ -22,6 +23,7 @@ export default function ProfileHeader() {
     const [firstName, setFirstName] = useState(profile.firstName);
     const [lastName, setLastName] = useState(profile.lastName);
     const [location, setLocation] = useState(profile.location);
+    const [bio, setBio] = useState(profile.bio);
 
     return (
         <section className="flex gap-6 px-8 py-6 bg-content-secondary">
@@ -46,7 +48,7 @@ export default function ProfileHeader() {
 
                     {editing ? (
                         <>
-                            <p className="flex gap-2 text-secondary mb-1.5 items-center">
+                            <p className="flex gap-2 items-center text-secondary mb-1.5">
                                 <FaUser className="inline" />
                                 <Input
                                     className="flex-grow"
@@ -61,7 +63,7 @@ export default function ProfileHeader() {
                                     placeholder="Last name"
                                 />
                             </p>
-                            <p className="flex gap-2 text-secondary items-center">
+                            <p className="flex gap-2 items-center text-secondary mb-1.5">
                                 <FaLocationDot className="inline" />
                                 <Input
                                     className="flex-grow"
@@ -70,6 +72,12 @@ export default function ProfileHeader() {
                                     placeholder="Location"
                                 />
                             </p>
+                            <AutoResizingTextArea
+                                className="flex-grow ml-6"
+                                value={bio}
+                                onChange={(e) => setBio(e.target.value)}
+                                placeholder="Bio (talk about yourself, your interests, games, ...)"
+                            />
 
                             {/* TODO: fetch backend */}
                             <BlueButton className="mt-4 ml-auto">
