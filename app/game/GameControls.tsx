@@ -11,8 +11,8 @@ export default function GameControls() {
 
     const [confirming, setConfirming] = useState<'' | 'draw' | 'resign'>('');
 
-    async function drawOffer(accept: boolean = true) {
-        await fetch(`${process.env.API_BASE}/game/${id}/draw/${accept}`, {
+    async function offerDraw() {
+        await fetch(`${process.env.API_BASE}/game/${id}/draw/true`, {
             method: 'POST',
             credentials: 'include'
         });
@@ -31,7 +31,7 @@ export default function GameControls() {
                 <button
                     className={'px-3.5 py-1.5 ' + (confirming === 'draw' ? 'bg-theme-orange text-white rounded-lg' : 'hover:bg-theme-green hover:text-white')}
                     title="Offer draw"
-                    onClick={(e) => confirming ? drawOffer() : setConfirming('draw')}
+                    onClick={(e) => confirming ? offerDraw() : setConfirming('draw')}
                 >
                     ½
                 </button>

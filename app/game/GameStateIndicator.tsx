@@ -9,6 +9,7 @@ import GameTimeIndicator from './GameTimeIndicator';
 import GameTimeProgressBar from './GameTimeProgressBar';
 import GameMoveHistory from './GameMoveHistory';
 import GameControls from './GameControls';
+import GameDrawOffer from './GameDrawOffer';
 import GameOverMessage from './GameOverMessage';
 
 // Types
@@ -16,7 +17,7 @@ import type {Player} from './[id]/page';
 
 
 export default function GameStateIndicator() {
-    const {info, side, gameStatus, ftime, stime} = useContext(GameContext);
+    const {info, side, gameStatus, drawOffer, ftime, stime} = useContext(GameContext);
 
     return (
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
@@ -31,6 +32,8 @@ export default function GameStateIndicator() {
 
                     {gameStatus !== 'WAITING' && gameStatus !== 'STARTED' ? (
                         <GameOverMessage />
+                    ) : drawOffer !== 'NONE' ? (
+                        <GameDrawOffer />
                     ) : (
                         <GameControls />
                     )}

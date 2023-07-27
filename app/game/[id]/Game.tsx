@@ -2,6 +2,7 @@
 
 import {Dispatch, ReactNode, SetStateAction, startTransition, useEffect, useState} from 'react';
 import {Duration} from 'luxon';
+import GameContext from '../../../contexts/GameContext';
 
 // Components
 import Chat, {ChatMessage} from '../Chat';
@@ -10,9 +11,8 @@ import GameStateIndicator from '../GameStateIndicator';
 
 // Util
 import {revalidate} from '../../../util/actions';
-import type {GameEvent, GameInfo, GameStateEvent, Status, WinType} from './page';
+import type {GameEvent, GameInfo, GameStateEvent, Status, WinType, Offer} from './page';
 import type {Side} from '../../../util/game';
-import GameContext from '../../../contexts/GameContext';
 
 
 export type UpdateGameStatesCallbacks<T> = {
@@ -33,6 +33,7 @@ export default function Game<T>(props: GameProps<T>) {
     const [gameStateIndex, setGameStateIndex] = useState(0);
 
     const [gameStatus, setGameStatus] = useState<Status>('WAITING');
+    const [drawOffer, setDrawOffer] = useState<Offer>('NONE');
     const [winType, setWinType] = useState<WinType | null>(null);
 
     const [ftime, setFtime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
@@ -91,7 +92,7 @@ export default function Game<T>(props: GameProps<T>) {
                     })
 
                     // If the game just ended, play the game end sound.
-                    if (event.status === 'FIRST_WON' || event.status === 'SECOND_WON')
+                    if (event.status === 'FIRST_WON' || event.status === 'SECOND_WON' || event.status === 'DRAW')
                         void new Audio('/sound/GenericNotify.mp3').play();
                     break;
                 case 'GAME_FULL':
@@ -110,6 +111,7 @@ export default function Game<T>(props: GameProps<T>) {
         setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.stime}).normalize());
 
         setGameStatus(event.status);
+        setDrawOffer(event.drawOffer);
         setWinType(event.winType);
 
         setMoves((moves) => moves.concat(event.moves));
@@ -117,7 +119,7 @@ export default function Game<T>(props: GameProps<T>) {
     }
 
     return (
-        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, winType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime}}>
+        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, winType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime}}>
             <div className="flex flex-col gap-5 w-[21rem]">
                 <GameHeader />
                 <Chat />

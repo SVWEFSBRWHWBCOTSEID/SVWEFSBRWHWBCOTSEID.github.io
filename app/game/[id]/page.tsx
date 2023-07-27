@@ -20,7 +20,7 @@ export type ChatMessageEvent = {
 
 export type Status = 'WAITING' | 'STARTED' | 'FIRST_WON' | 'SECOND_WON' | 'DRAW';
 export type WinType = 'NORMAL' | 'RESIGN' | 'TIMEOUT' | 'DISCONNECT';
-export type DrawOffer = 'NONE' | 'FIRST' | 'SECOND';
+export type Offer = 'NONE' | 'FIRST' | 'SECOND';
 export type GameStateEvent = {
     type: 'GAME_STATE',
     ftime: number, // ms
@@ -28,7 +28,7 @@ export type GameStateEvent = {
     moves: string[],
     status: Status,
     winType: WinType | null,
-    drawOffer: DrawOffer,
+    drawOffer: Offer
 }
 
 export type GameNameInfo = {
