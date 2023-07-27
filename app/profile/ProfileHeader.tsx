@@ -1,6 +1,7 @@
 'use client'
 
 import {useContext, useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {DateTime} from 'luxon';
 import ProfileContext, {User} from '../../contexts/ProfileContext';
 
@@ -26,9 +27,17 @@ export default function ProfileHeader() {
     const [location, setLocation] = useState(profile.location);
     const [bio, setBio] = useState(profile.bio);
 
+    const {refresh} = useRouter();
+
     async function updateProfile() {
-        // TODO: fetch backend
-        // refresh();
+        const res = await fetch(`${process.env.API_BASE}/profile/update`, {
+            method: 'POST',
+            credentials: 'include',
+            body: JSON.stringify({country: profile.country, firstName, lastName, location, bio}) // TODO: country
+        });
+        if (!res.ok) return;
+
+        refresh();
         setEditing(false);
     }
 
@@ -80,7 +89,7 @@ export default function ProfileHeader() {
                                 />
                             </p>
                             <AutoResizingTextArea
-                                className="flex-grow ml-6"
+                                className="flex-grow ml-6 text-secondary"
                                 value={bio}
                                 onChange={(e) => setBio(e.target.value)}
                                 placeholder="Bio (talk about yourself, your interests, games, ...)"
