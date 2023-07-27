@@ -29,7 +29,7 @@ export type GamePerf = {
     prov: boolean // provisional or not
 }
 
-type Country = 'US' | 'MN' | 'UK'
+export type Country = 'EMPTY' | 'US' | 'UK' | 'MN'
 
 // TODO: needed?
 const defaultGamePerf: GamePerf = {

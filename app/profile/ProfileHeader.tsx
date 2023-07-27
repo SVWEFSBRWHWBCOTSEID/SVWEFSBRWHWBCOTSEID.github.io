@@ -2,18 +2,21 @@
 
 import {useContext, useState} from 'react';
 import {useRouter} from 'next/navigation';
+import {Listbox} from '@headlessui/react';
 import {DateTime} from 'luxon';
-import ProfileContext, {User} from '../../contexts/ProfileContext';
+import ProfileContext, {Country, User} from '../../contexts/ProfileContext';
 
 // Components
 import Input from '../../components/Input';
 import AutoResizingTextArea from '../../components/AutoResizingTextbox';
 import BlueButton from '../../components/BlueButton';
+import AnimatedListbox from '../../components/AnimatedListbox';
 
 // Icons
 import {FaLocationDot, FaUser} from 'react-icons/fa6';
 import {BsGearFill} from 'react-icons/bs';
 import {ImCheckmark} from 'react-icons/im';
+import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
 
 
 export default function ProfileHeader() {
@@ -26,6 +29,7 @@ export default function ProfileHeader() {
     const [lastName, setLastName] = useState(profile.lastName);
     const [location, setLocation] = useState(profile.location);
     const [bio, setBio] = useState(profile.bio);
+    const [country, setCountry] = useState(profile.country);
 
     const {refresh} = useRouter();
 
@@ -33,7 +37,7 @@ export default function ProfileHeader() {
         const res = await fetch(`${process.env.API_BASE}/profile/update`, {
             method: 'POST',
             credentials: 'include',
-            body: JSON.stringify({country: profile.country, firstName, lastName, location, bio}) // TODO: country
+            body: JSON.stringify({country, firstName, lastName, location, bio})
         });
         if (!res.ok) return;
 
@@ -59,7 +63,29 @@ export default function ProfileHeader() {
                 <div className="flex-grow flex flex-col">
                     <h1 className="text-4xl flex gap-3 items-center mb-2">
                         {username}
-                        <img src="https://lichess1.org/assets/_zkgwWf/images/flags/US.png" alt="US flag" className="h-6" />
+
+                        {editing ? (
+                            <Listbox as="div" className="relative text-base font-normal" value={country} onChange={setCountry}>
+                                <Listbox.Button className="relative text-left w-36 px-3.5 py-1.5 bg-content-tertiary rounded border border-tertiary">
+                                    {country}
+                                    <MdOutlineKeyboardArrowDown className="absolute right-2.5 inset-y-0 my-auto text-xl" />
+                                </Listbox.Button>
+                                <AnimatedListbox className="absolute top-[calc(100%_+_6px)] w-48 flex flex-col py-1.5 bg-content-tertiary rounded shadow-lg z-10 focus:outline-none focus-visible:ring-1 focus-visible:ring-white/25">
+                                    {flags.map(({name, key}) => (
+                                        // https://github.com/tailwindlabs/headlessui/discussions/2366
+                                        <Listbox.Option key={key} value={key} className="cursor-pointer px-4 py-1 hover:!bg-blue-500 hover:text-white ui-open:ui-selected:bg-background">
+                                            {name}
+                                        </Listbox.Option>
+                                    ))}
+                                </AnimatedListbox>
+                            </Listbox>
+                        ) : profile.country !== 'EMPTY' && (
+                            <img
+                                src={`/flags/${profile.country}`}
+                                alt={`${profile.country} flag`}
+                                className="h-6"
+                            />
+                        )}
                     </h1>
 
                     {editing ? (
@@ -139,3 +165,10 @@ function getName(profile: User['profile']) {
     if (profile.firstName && profile.lastName) return `${profile.firstName} ${profile.lastName}`
     return profile.firstName || profile.lastName;
 }
+
+const flags: {name: string, key: Country}[] = [
+    {name: 'No flag', key: 'EMPTY'},
+    {name: 'United States', key: 'US'},
+    {name: 'United Kingdom', key: 'UK'},
+    {name: 'Mongolia', key: 'MN'}
+]
