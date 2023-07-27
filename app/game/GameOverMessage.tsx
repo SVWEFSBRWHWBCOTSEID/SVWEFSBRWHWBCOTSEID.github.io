@@ -14,7 +14,7 @@ export default function GameOverMessage() {
     }
 
     return (
-        <div className="px-4 py-2 text-[#ccc] border-t border-tertiary text-center" ref={scrollToBottom}>
+        <div className="px-4 py-2 mt-auto text-[#ccc] border-t border-tertiary text-center" ref={scrollToBottom}>
             <strong className="text-lg mb-1">
                 {gameStatus === 'FIRST_WON' ? (
                     '1-0'

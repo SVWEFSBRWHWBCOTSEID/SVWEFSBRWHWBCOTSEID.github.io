@@ -29,10 +29,10 @@ export default function GameStateIndicator() {
                 <GameTimeProgressBar time={ftime} initial={info.timeControl.initial} />
                 <PlayerIndicator user={info.first} />
 
-                <div className="h-56 flex flex-col">
+                <div className="h-64 flex flex-col">
                     <GameMoveHistoryHeader />
 
-                    <div className="flex-shrink overflow-auto mb-auto scrollbar:hidden">
+                    <div className="flex flex-col flex-shrink flex-grow overflow-auto scrollbar:hidden">
                         <GameMoveHistory />
 
                         {gameStatus !== 'WAITING' && gameStatus !== 'STARTED' && (
