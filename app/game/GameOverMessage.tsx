@@ -8,8 +8,13 @@ import type {WinType} from './[id]/page';
 export default function GameOverMessage() {
     const {gameStatus, winType} = useContext(GameContext);
 
+    // Scroll the moves panel to bottom when the game ends
+    function scrollToBottom(ref: HTMLDivElement | null) {
+        ref?.scrollIntoView();
+    }
+
     return (
-        <div className="px-4 py-2 text-[#ccc] border-t border-tertiary text-center">
+        <div className="px-4 py-2 text-[#ccc] border-t border-tertiary text-center" ref={scrollToBottom}>
             <strong className="text-lg mb-1">
                 {gameStatus === 'FIRST_WON' ? (
                     '1-0'

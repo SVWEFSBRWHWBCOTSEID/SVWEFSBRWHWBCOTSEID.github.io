@@ -7,10 +7,12 @@ import GameContext from '../../contexts/GameContext';
 // Components
 import GameTimeIndicator from './GameTimeIndicator';
 import GameTimeProgressBar from './GameTimeProgressBar';
+import GameMoveHistoryHeader from './GameMoveHistoryHeader';
 import GameMoveHistory from './GameMoveHistory';
 import GameControls from './GameControls';
 import GameDrawOffer from './GameDrawOffer';
 import GameOverMessage from './GameOverMessage';
+import RematchButton from './RematchButton';
 
 // Types
 import type {Player} from './[id]/page';
@@ -28,14 +30,27 @@ export default function GameStateIndicator() {
                 <PlayerIndicator user={info.first} />
 
                 <div className="h-56 flex flex-col">
-                    <GameMoveHistory />
+                    <GameMoveHistoryHeader />
 
-                    {gameStatus !== 'WAITING' && gameStatus !== 'STARTED' ? (
-                        <GameOverMessage />
-                    ) : drawOffer !== 'NONE' ? (
-                        <GameDrawOffer />
+                    <div className="flex-shrink overflow-auto mb-auto scrollbar:hidden">
+                        <GameMoveHistory />
+
+                        {gameStatus !== 'WAITING' && gameStatus !== 'STARTED' && (
+                            <GameOverMessage />
+                        )}
+                    </div>
+
+                    {gameStatus === 'WAITING' || gameStatus === 'STARTED' ? (
+                        // TODO: better way to express this?
+                        <>
+                            {drawOffer !== 'NONE' ? (
+                                <GameDrawOffer />
+                            ) : (
+                                <GameControls />
+                            )}
+                        </>
                     ) : (
-                        <GameControls />
+                        <RematchButton />
                     )}
                 </div>
 
