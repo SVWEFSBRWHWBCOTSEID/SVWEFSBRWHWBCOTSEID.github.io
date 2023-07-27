@@ -3,16 +3,13 @@
 import {useContext, useLayoutEffect, useRef, useState} from 'react';
 import Link from 'next/link';
 import GameContext from '../../contexts/GameContext';
-
-// Util
-import {isSpectator} from './[id]/TicTacToeGame';
 import type {ChatMessageEvent} from './[id]/page';
 
 
 export type ChatMessage = Omit<ChatMessageEvent, 'type'>
 
 export default function Chat() {
-    const {id, username, info, chat} = useContext(GameContext);
+    const {id, username, info, chat, side} = useContext(GameContext);
 
     const [message, setMessage] = useState('');
 
@@ -33,7 +30,7 @@ export default function Chat() {
     }, [chat])
 
     async function sendChatMessage() {
-        const visibility = isSpectator(username, info) ? 'SPECTATOR' : 'PLAYER';
+        const visibility = side === 'SPECTATOR' ? 'SPECTATOR' : 'PLAYER';
 
         await fetch(`${process.env.API_BASE}/game/${id}/chat/${visibility}`, {
             method: 'POST',
