@@ -1,22 +1,25 @@
 'use client'
 
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import CloseButton from '../../components/CloseButton';
 import {FaRegFlag} from 'react-icons/fa';
+import GameContext from '../../contexts/GameContext';
 
 
-export default function GameControls(props: {id: string}) {
+export default function GameControls() {
+    const {id} = useContext(GameContext);
+
     const [confirming, setConfirming] = useState<'' | 'draw' | 'resign'>('');
 
     async function drawOffer(accept: boolean = true) {
-        await fetch(`${process.env.API_BASE}/game/${props.id}/draw/${accept}`, {
+        await fetch(`${process.env.API_BASE}/game/${id}/draw/${accept}`, {
             method: 'POST',
             credentials: 'include'
         });
     }
 
     async function resign() {
-        await fetch(`${process.env.API_BASE}/game/${props.id}/resign`, {
+        await fetch(`${process.env.API_BASE}/game/${id}/resign`, {
             method: 'POST',
             credentials: 'include'
         });

@@ -1,49 +1,46 @@
+'use client'
+
+import {useContext} from 'react';
 import Link from 'next/link';
-import {Duration} from 'luxon';
+import GameContext from '../../contexts/GameContext';
 
 // Components
 import GameTimeIndicator from './GameTimeIndicator';
 import GameTimeProgressBar from './GameTimeProgressBar';
-import GameMoveHistory, {GameMoveHistoryProps} from './GameMoveHistory';
+import GameMoveHistory from './GameMoveHistory';
 import GameControls from './GameControls';
-import GameOverMessage, {GameOverMessageProps} from './GameOverMessage';
+import GameOverMessage from './GameOverMessage';
 
 // Types
-import type {Player, GameInfo, Status} from './[id]/page';
-import type {PlayerSide} from './[id]/Game';
+import type {Player} from './[id]/page';
 
 
-type GameStateIndicatorProps = GameMoveHistoryProps & GameOverMessageProps & {
-    id: string,
-    ftime: Duration,
-    stime: Duration,
-    info: GameInfo,
-    side: PlayerSide
-}
-export default function GameStateIndicator(props: GameStateIndicatorProps) {
+export default function GameStateIndicator() {
+    const {info, side, gameStatus, ftime, stime} = useContext(GameContext);
+
     return (
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
-            <GameTimeIndicator time={props.ftime} top playAlert={props.side === 'FIRST'} />
+            <GameTimeIndicator time={ftime} top playAlert={side === 'FIRST'} />
 
-            <div className="bg-content rounded-r">
-                <GameTimeProgressBar time={props.ftime} initial={props.info.timeControl.initial} />
-                <PlayerIndicator user={props.info.first} />
+            <div className="bg-content rounded-r overflow-clip">
+                <GameTimeProgressBar time={ftime} initial={info.timeControl.initial} />
+                <PlayerIndicator user={info.first} />
 
                 <div className="h-56 flex flex-col">
-                    <GameMoveHistory moves={props.moves} index={props.index} setIndex={props.setIndex} />
+                    <GameMoveHistory />
 
-                    {props.status !== 'WAITING' && props.status !== 'STARTED' ? (
-                        <GameOverMessage status={props.status} type={props.type} />
+                    {gameStatus !== 'WAITING' && gameStatus !== 'STARTED' ? (
+                        <GameOverMessage />
                     ) : (
-                        <GameControls id={props.id} />
+                        <GameControls />
                     )}
                 </div>
 
-                <PlayerIndicator user={props.info.second} />
-                <GameTimeProgressBar time={props.stime} initial={props.info.timeControl.initial} />
+                <PlayerIndicator user={info.second} />
+                <GameTimeProgressBar time={stime} initial={info.timeControl.initial} />
             </div>
 
-            <GameTimeIndicator time={props.stime} playAlert={props.side === 'SECOND'} />
+            <GameTimeIndicator time={stime} playAlert={side === 'SECOND'} />
         </div>
     )
 }

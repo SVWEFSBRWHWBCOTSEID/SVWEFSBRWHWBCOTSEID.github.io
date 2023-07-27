@@ -1,50 +1,50 @@
-import {Fragment, MouseEventHandler, ReactNode} from 'react';
+import {Fragment, MouseEventHandler, ReactNode, useContext} from 'react';
 import {useHotkeys} from 'react-hotkeys-hook'
 import {MdFastForward, MdFastRewind, MdSkipNext, MdSkipPrevious} from 'react-icons/md';
+import GameContext from '../../contexts/GameContext';
 
 
-export type GameMoveHistoryProps = {moves: string[], index: number, setIndex: (i: number) => void}
-export default function GameMoveHistory(props: GameMoveHistoryProps) {
-    const {moves, index, setIndex} = props;
+export default function GameMoveHistory() {
+    const {moves, gameStateIndex, setGameStateIndex} = useContext(GameContext);
 
-    useHotkeys('left', () => setIndex(Math.max(index - 1, 1)), [index]);
-    useHotkeys('right', () => setIndex(Math.min(index + 1, moves.length)), [index]);
+    useHotkeys('left', () => setGameStateIndex(Math.max(gameStateIndex - 1, 1)), [gameStateIndex]);
+    useHotkeys('right', () => setGameStateIndex(Math.min(gameStateIndex + 1, moves.length)), [gameStateIndex]);
 
     return (
         <>
             <div className="bg-content-secondary border-b border-tertiary flex justify-center text-secondary text-2xl shadow-xl">
                 <HeaderButton
-                    onClick={() => setIndex(1)}
-                    disabled={index <= 1}
+                    onClick={() => setGameStateIndex(1)}
+                    disabled={gameStateIndex <= 1}
                 >
                     <MdFastRewind />
                 </HeaderButton>
                 <HeaderButton
-                    onClick={() => setIndex(Math.max(index - 1, 1))}
-                    disabled={index <= 1}
+                    onClick={() => setGameStateIndex(Math.max(gameStateIndex - 1, 1))}
+                    disabled={gameStateIndex <= 1}
                 >
                     <MdSkipPrevious />
                 </HeaderButton>
                 <HeaderButton
-                    onClick={() => setIndex(Math.min(index + 1, moves.length))}
-                    disabled={index === moves.length}
+                    onClick={() => setGameStateIndex(Math.min(gameStateIndex + 1, moves.length))}
+                    disabled={gameStateIndex === moves.length}
                 >
                     <MdSkipNext />
                 </HeaderButton>
                 <HeaderButton
-                    onClick={() => setIndex(moves.length)}
-                    disabled={index === moves.length}
+                    onClick={() => setGameStateIndex(moves.length)}
+                    disabled={gameStateIndex === moves.length}
                 >
                     <MdFastForward />
                 </HeaderButton>
             </div>
             <div className="flex-shrink overflow-auto mb-auto">
                 <div className="grid grid-cols-[4rem_1fr_1fr] h-max">
-                    {Array(Math.ceil(props.moves.length / 2)).fill(0).map((_, index) => index * 2).map(begin => props.moves.slice(begin, begin + 2)).map((chunk, i) => (
+                    {Array(Math.ceil(moves.length / 2)).fill(0).map((_, index) => index * 2).map(begin => moves.slice(begin, begin + 2)).map((chunk, i) => (
                         <Fragment key={i}>
                             <div className="text-secondary bg-content-secondary flex items-center justify-center font-light">{i + 1}</div>
                             {chunk.map((move, j) => (
-                                <GameMove index={i * 2 + j + 1} currentIndex={props.index} setIndex={props.setIndex} key={i * 2 + j + 1}>
+                                <GameMove index={i * 2 + j + 1} currentIndex={gameStateIndex} setIndex={setGameStateIndex} key={i * 2 + j + 1}>
                                     {move}
                                 </GameMove>
                             ))}

@@ -1,25 +1,30 @@
-import type {Status, WinType} from './[id]/page';
+'use client'
+
+import {useContext} from 'react';
+import GameContext from '../../contexts/GameContext';
+import type {WinType} from './[id]/page';
 
 
-export type GameOverMessageProps = {status: Status, type: WinType | null}
-export default function GameOverMessage(props: GameOverMessageProps) {
+export default function GameOverMessage() {
+    const {gameStatus, winType} = useContext(GameContext);
+
     return (
         <div className="px-4 py-2 text-[#ccc] border-t border-tertiary text-center">
             <strong className="text-lg mb-1">
-                {props.status === 'FIRST_WON' ? (
+                {gameStatus === 'FIRST_WON' ? (
                     '1-0'
-                ) : props.status === 'SECOND_WON' ? (
+                ) : gameStatus === 'SECOND_WON' ? (
                     '0-1'
                 ) : (
                     '0.5-0.5'
                 )}
             </strong>
             <p className="italic">
-                {props.status === 'DRAW' ? (
+                {gameStatus === 'DRAW' ? (
                     // TODO: stalemate, insufficient material
                     'Draw by mutual agreement'
                 ) : (
-                    `${props.status === 'FIRST_WON' ? 'O' : 'X'} ${winTypeToStr(props.type)} • ${props.status === 'FIRST_WON' ? 'X' : 'O'} is victorious`
+                    `${gameStatus === 'FIRST_WON' ? 'O' : 'X'} ${winTypeToStr(winType)} • ${gameStatus === 'FIRST_WON' ? 'X' : 'O'} is victorious`
                 )}
             </p>
         </div>

@@ -12,6 +12,7 @@ import GameStateIndicator from '../GameStateIndicator';
 import {revalidate} from '../../../util/actions';
 import type {GameEvent, GameInfo, GameStateEvent, Status, WinType} from './page';
 import type {Side} from '../../../util/game';
+import GameContext from '../../../contexts/GameContext';
 
 
 export type UpdateGameStatesCallbacks<T> = {
@@ -116,27 +117,16 @@ export default function Game<T>(props: GameProps<T>) {
     }
 
     return (
-        <>
+        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, winType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime}}>
             <div className="flex flex-col gap-5 w-[21rem]">
-                <GameHeader info={props.info} />
-                <Chat id={props.id} info={props.info} username={props.username} chat={chat} />
+                <GameHeader />
+                <Chat />
             </div>
 
             {props.children(gameStates, gameStateIndex, gameStatus, side)}
 
-            <GameStateIndicator
-                id={props.id}
-                ftime={ftime}
-                stime={stime}
-                side={side}
-                status={gameStatus}
-                type={winType}
-                info={props.info}
-                moves={moves}
-                index={gameStateIndex}
-                setIndex={updateGameStateIndex}
-            />
-        </>
+            <GameStateIndicator />
+        </GameContext.Provider>
     )
 }
 

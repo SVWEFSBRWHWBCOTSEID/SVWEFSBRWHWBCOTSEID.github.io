@@ -1,14 +1,19 @@
 'use client'
 
-import {useLayoutEffect, useRef, useState} from 'react';
+import {useContext, useLayoutEffect, useRef, useState} from 'react';
 import Link from 'next/link';
+import GameContext from '../../contexts/GameContext';
+
+// Util
 import {isSpectator} from './[id]/TicTacToeGame';
-import type {ChatMessageEvent, GameInfo} from './[id]/page';
+import type {ChatMessageEvent} from './[id]/page';
 
 
 export type ChatMessage = Omit<ChatMessageEvent, 'type'>
 
-export default function Chat(props: {id: string, username?: string, info: GameInfo, chat: ChatMessage[]}) {
+export default function Chat() {
+    const {id, username, info, chat} = useContext(GameContext);
+
     const [message, setMessage] = useState('');
 
     const chatRef = useRef<HTMLDivElement>(null);
@@ -25,12 +30,12 @@ export default function Chat(props: {id: string, username?: string, info: GameIn
         }
 
         prevScrollHeight.current = chatRef.current.scrollHeight;
-    }, [props.chat])
+    }, [chat])
 
     async function sendChatMessage() {
-        const visibility = isSpectator(props.username, props.info) ? 'SPECTATOR' : 'PLAYER';
+        const visibility = isSpectator(username, info) ? 'SPECTATOR' : 'PLAYER';
 
-        await fetch(`${process.env.API_BASE}/game/${props.id}/chat/${visibility}`, {
+        await fetch(`${process.env.API_BASE}/game/${id}/chat/${visibility}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
@@ -42,7 +47,7 @@ export default function Chat(props: {id: string, username?: string, info: GameIn
     return (
         <div className="flex-none text-sm rounded flex flex-col overflow-clip shadow-lg">
             <div ref={chatRef} className="px-3 py-2 break-words bg-content h-[30rem] x flex-col gap-2 overflow-auto scrollbar:w-1.5 scrollbar:bg-black/10 scrollbar-thumb:bg-tertiary">
-                {props.chat.map((message, i) => (
+                {chat.map((message, i) => (
                     <ChatMessage {...message} key={message.text + message.username + i} />
                 ))}
             </div>

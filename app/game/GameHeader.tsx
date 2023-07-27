@@ -1,14 +1,18 @@
+'use client'
+
+import {useContext} from 'react';
 import Link from 'next/link';
+import GameContext from '../../contexts/GameContext';
 import {BiCircle, BiSolidCircle} from 'react-icons/bi';
 
 // Util
 import {keyToIcon} from '../profile/ProfileSidebarItem';
 import {timeControlToString} from '../../util/game';
-import type {GameInfo, Player} from './[id]/page';
+import type {Player} from './[id]/page';
 
 
-export default function GameHeader(props: {info: GameInfo}) {
-    const {info} = props;
+export default function GameHeader() {
+    const {info} = useContext(GameContext);
     const Icon = keyToIcon(info.game.key);
 
     return (
@@ -17,7 +21,7 @@ export default function GameHeader(props: {info: GameInfo}) {
                 <Icon className="text-4xl" />
                 <div>
                     <p>
-                        {timeControlToString(props.info.timeControl)} •{' '}
+                        {timeControlToString(info.timeControl)} •{' '}
                         {info.rated ? 'Rated' : 'Casual'} •{' '}
                         <a
                             href={`/rules#${info.game.key}`}
