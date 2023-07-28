@@ -11,11 +11,11 @@ export default function ProfileSidebar() {
     const {perfs} = useContext(ProfileContext);
 
     return (
-        <Tab.List as="aside" className="flex flex-col flex-none pt-1">
+        <Tab.List as="aside" className="flex flex-col flex-none pt-1 w-32 lg:w-64 xl:w-72 transition-[width] duration-200">
             {/* TODO: styling? */}
             <Tab className="group text-secondary flex gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-l pl-4 pr-8 py-3 transition duration-150">
                 <h5 className="uppercase font-light text-left">Profile</h5>
-                <AiFillCaretRight className="text-lg text-secondary group-hover:text-blue-500 ml-auto" />
+                <AiFillCaretRight className="hidden lg:block text-lg text-secondary group-hover:text-blue-500 ml-auto" />
             </Tab>
 
             <hr className="my-4 mx-6 border-t border-tertiary" />

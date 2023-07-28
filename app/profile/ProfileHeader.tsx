@@ -1,10 +1,11 @@
 'use client'
 
-import {useContext, useState} from 'react';
+import {startTransition, useContext, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Listbox} from '@headlessui/react';
 import {DateTime} from 'luxon';
 import ProfileContext, {Country, User} from '../../contexts/ProfileContext';
+import {revalidate} from '../../util/actions';
 
 // Components
 import Input from '../../components/Input';
@@ -36,11 +37,13 @@ export default function ProfileHeader() {
     async function updateProfile() {
         const res = await fetch(`${process.env.API_BASE}/profile/update`, {
             method: 'POST',
+            headers: {'Content-Type': 'application/json'},
             credentials: 'include',
             body: JSON.stringify({country, firstName, lastName, location, bio})
         });
         if (!res.ok) return;
 
+        startTransition(() => void revalidate(`user-${username}`));
         refresh();
         setEditing(false);
     }
@@ -81,7 +84,7 @@ export default function ProfileHeader() {
                             </Listbox>
                         ) : profile.country !== 'EMPTY' && (
                             <img
-                                src={`/flags/${profile.country}`}
+                                src={`/flags/${profile.country}.png`}
                                 alt={`${profile.country} flag`}
                                 className="h-6"
                             />
@@ -93,13 +96,13 @@ export default function ProfileHeader() {
                             <p className="flex gap-2 items-center text-secondary mb-1.5">
                                 <FaUser className="inline" />
                                 <Input
-                                    className="flex-grow"
+                                    className="flex-grow w-[50%]"
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
                                     placeholder="First name"
                                 />
                                 <Input
-                                    className="flex-grow"
+                                    className="flex-grow w-[50%]"
                                     value={lastName}
                                     onChange={(e) => setLastName(e.target.value)}
                                     placeholder="Last name"
@@ -148,7 +151,7 @@ export default function ProfileHeader() {
                     <BsGearFill />
                 </button>
 
-                <div className="pr-6">
+                <div className="xl:pr-6">
                     <p className="text-secondary">
                         <strong>Joined:</strong> {DateTime.fromSQL(createdAt).toLocaleString()}
                     </p>
