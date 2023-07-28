@@ -147,7 +147,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
 
             <section className="px-8 py-2 text-secondary flex items-center justify-center gap-1.5">
                 <button
-                    className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
+                    className="p-2 text-4xl hover:text-primary disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Move first"
                     disabled={invalidTime}
                     onClick={() => submitModal('FIRST')}
@@ -156,7 +156,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                 </button>
 
                 <button
-                    className="p-2 text-6xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
+                    className="p-2 text-6xl hover:text-primary disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Random side"
                     disabled={invalidTime}
                     onClick={() => submitModal('RANDOM')}
@@ -165,7 +165,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                 </button>
 
                 <button
-                    className="p-2 text-4xl hover:text-[#ccc] disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
+                    className="p-2 text-4xl hover:text-primary disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Move second"
                     disabled={invalidTime}
                     // TODO: rating

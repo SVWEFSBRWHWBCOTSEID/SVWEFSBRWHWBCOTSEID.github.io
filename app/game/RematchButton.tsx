@@ -18,7 +18,7 @@ export default function RematchButton() {
 
     return (
         <button
-            className="py-8 mt-2.5 text-lg font-medium w-full bg-[rgb(60_57_52)] text-[#ccc] uppercase hover:text-white hover:bg-blue-500 disabled:opacity-50 disabled:hover:text-[#ccc] disabled:hover:bg-[rgb(60_57_52)] transition duration-100"
+            className="py-8 mt-2.5 text-lg font-medium w-full bg-[rgb(60_57_52)] text-primary uppercase hover:text-white hover:bg-blue-500 disabled:opacity-50 disabled:hover:text-primary disabled:hover:bg-[rgb(60_57_52)] transition duration-100"
             disabled={offered}
             onClick={offerRematch}
         >

@@ -62,14 +62,14 @@ export default function ProfileHeader() {
                     {username[0].toUpperCase()}
                 </div>
             )}
-            <div className="pt-3 flex flex-grow gap-3">
-                <div className="flex-grow flex flex-col">
+            <div className="pt-3 flex flex-grow gap-4 flex-wrap sm:flex-nowrap">
+                <div className="w-full flex-grow flex flex-col relative">
                     <h1 className="text-4xl flex gap-3 items-center mb-2">
                         {username}
 
                         {editing ? (
                             <Listbox as="div" className="relative text-base font-normal" value={country} onChange={setCountry}>
-                                <Listbox.Button className="relative text-left w-36 px-3.5 py-1.5 bg-content-tertiary rounded border border-tertiary">
+                                <Listbox.Button className="relative text-left w-36 px-3.5 py-1.5 bg-content-tertiary rounded border border-tertiary text-primary">
                                     {country}
                                     <MdOutlineKeyboardArrowDown className="absolute right-2.5 inset-y-0 my-auto text-xl" />
                                 </Listbox.Button>
@@ -96,13 +96,13 @@ export default function ProfileHeader() {
                             <p className="flex gap-2 items-center text-secondary mb-1.5">
                                 <FaUser className="inline" />
                                 <Input
-                                    className="flex-grow w-[50%]"
+                                    className="flex-grow w-[50%] text-primary"
                                     value={firstName}
                                     onChange={(e) => setFirstName(e.target.value)}
                                     placeholder="First name"
                                 />
                                 <Input
-                                    className="flex-grow w-[50%]"
+                                    className="flex-grow w-[50%] text-primary"
                                     value={lastName}
                                     onChange={(e) => setLastName(e.target.value)}
                                     placeholder="Last name"
@@ -111,14 +111,14 @@ export default function ProfileHeader() {
                             <p className="flex gap-2 items-center text-secondary mb-1.5">
                                 <FaLocationDot className="inline" />
                                 <Input
-                                    className="flex-grow"
+                                    className="flex-grow text-primary"
                                     value={location}
                                     onChange={(e) => setLocation(e.target.value)}
                                     placeholder="Location"
                                 />
                             </p>
                             <AutoResizingTextArea
-                                className="flex-grow ml-6 text-secondary"
+                                className="flex-grow ml-6 text-primary"
                                 value={bio}
                                 onChange={(e) => setBio(e.target.value)}
                                 placeholder="Bio (talk about yourself, your interests, games, ...)"
@@ -147,16 +147,16 @@ export default function ProfileHeader() {
                             )}
                         </>
                     )}
+
+                    <button
+                        className="absolute right-0 top-0 text-secondary h-max p-1.5 rounded hover:bg-theme-green hover:text-white transition duration-100"
+                        onClick={() => setEditing(!editing)}
+                    >
+                        <BsGearFill />
+                    </button>
                 </div>
 
-                <button
-                    className="text-secondary h-max p-1.5 rounded hover:bg-theme-green hover:text-white transition duration-100"
-                    onClick={() => setEditing(!editing)}
-                >
-                    <BsGearFill />
-                </button>
-
-                <div className="xl:pr-6">
+                <div className="flex-none xl:pr-6">
                     <p className="text-secondary">
                         <strong>Joined:</strong> {DateTime.fromSQL(createdAt).toLocaleString()}
                     </p>

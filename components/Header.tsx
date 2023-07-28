@@ -38,7 +38,7 @@ export default function Header() {
 
 function HeaderLink(props: {href: string, children: ReactNode}) {
     return (
-        <Link href={props.href} className="hidden sm:block uppercase text-sm text-secondary px-2 py-4 hover:text-[#ccc]">
+        <Link href={props.href} className="hidden sm:block uppercase text-sm text-secondary px-2 py-4 hover:text-primary">
             {props.children}
         </Link>
     )

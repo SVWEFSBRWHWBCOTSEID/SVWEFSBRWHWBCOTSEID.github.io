@@ -23,7 +23,7 @@ export default function YouLobbyRoom(props: Lobby) {
     return (
         // TODO: button is not a legal table row element, but using a div is kinda hacky
         <div
-            className={'px-4 table-row text-[#ccc] cursor-pointer transition duration-75 ' + (loading ? 'opacity-50' : 'group')}
+            className={'px-4 table-row text-primary cursor-pointer transition duration-75 ' + (loading ? 'opacity-50' : 'group')}
             onClick={cancelGame}
         >
             <YouLobbyCell>
