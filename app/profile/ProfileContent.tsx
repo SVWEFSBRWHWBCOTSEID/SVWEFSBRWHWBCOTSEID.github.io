@@ -13,11 +13,12 @@ import ProfileContext, {defaultUser, GameKey, User} from '../../contexts/Profile
 
 export default function ProfileContent(props: {user?: User}) {
     return (
+        // TODO: vertical tab group on mobile?
         // TODO: hacky defaultUser implementation here due to profile page shenanigans; eventually make props non-nullable
         <ProfileContext.Provider value={props.user ?? defaultUser}>
-            <Tab.Group vertical as="div" className="container flex pt-4 pb-12">
+            <Tab.Group vertical as="div" className="md:container flex flex-col md:flex-row pt-4 pb-12">
                 <ProfileSidebar />
-                <Tab.Panels className="flex-grow bg-content rounded-lg overflow-clip">
+                <Tab.Panels className="md:flex-grow bg-content md:rounded-lg overflow-clip">
                     <ProfileUserPanel />
 
                     {Object.entries((props.user ?? defaultUser).perfs).map(([key, value]) => (

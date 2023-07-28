@@ -15,14 +15,14 @@ export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
     const Icon = keyToIcon(props.game);
 
     return (
-        <Tab className={'group flex gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-l pl-2.5 lg:pl-4 pr-4 lg:pr-8 py-3 transition duration-150 ' + (props.games ? 'text-secondary' : 'text-tertiary')}>
-            <Icon className="text-4xl group-hover:text-blue-500 flex-none" />
+        <Tab className={'group flex gap-1.5 md:gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-t md:rounded-r-none md:rounded-l pl-2.5 lg:pl-4 pr-4 lg:pr-8 py-3 transition duration-150 ' + (props.games ? 'text-secondary' : 'text-tertiary')}>
+            <Icon className="text-2xl md:text-4xl group-hover:text-blue-500 flex-none" />
             <div>
                 <h5 className="hidden lg:block uppercase font-light text-left">
                     {keyToName(props.game)}
                 </h5>
                 <p className="flex gap-2 text-sm items-center">
-                    <strong className="text-lg">{props.rating}{props.prov && '?'}</strong>
+                    <strong className="md:text-lg">{props.rating}{props.prov && '?'}</strong>
                     <span className="hidden lg:block">{props.games} games</span>
                 </p>
             </div>
