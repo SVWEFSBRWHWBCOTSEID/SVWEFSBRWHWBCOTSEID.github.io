@@ -15,7 +15,7 @@ export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
     const Icon = keyToIcon(props.game);
 
     return (
-        <Tab className={'group flex gap-1.5 md:gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-t md:rounded-r-none md:rounded-l pl-2.5 lg:pl-4 pr-4 lg:pr-8 py-3 transition duration-150 ' + (props.games ? 'text-secondary' : 'text-tertiary')}>
+        <Tab className={'group flex gap-1.5 md:gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-t md:rounded-r-none md:rounded-l pl-2.5 lg:pl-4 pr-4 lg:pr-8 py-2 md:py-3 transition duration-150 ' + (props.games ? 'text-secondary' : 'text-tertiary')}>
             <Icon className="text-2xl md:text-4xl group-hover:text-blue-500 flex-none" />
             <div>
                 <h5 className="hidden lg:block uppercase font-light text-left">

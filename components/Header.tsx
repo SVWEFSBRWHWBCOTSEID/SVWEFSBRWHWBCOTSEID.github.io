@@ -12,7 +12,7 @@ export default function Header() {
     const username = cookies().get('username')?.value;
 
     return (
-        <header className="px-8 text-md flex justify-between">
+        <header className="px-4 md:px-6 lg:px-8 text-md flex justify-between">
             <nav className="flex gap-2 items-center">
                 <Link href="/" className="text-2xl pb-1 mr-4 group hover:text-blue-500">
                     gulpin<span className="text-secondary group-hover:text-blue-600">.games</span>
@@ -38,7 +38,7 @@ export default function Header() {
 
 function HeaderLink(props: {href: string, children: ReactNode}) {
     return (
-        <Link href={props.href} className="uppercase text-sm text-secondary px-2 py-4 hover:text-[#ccc]">
+        <Link href={props.href} className="hidden sm:block uppercase text-sm text-secondary px-2 py-4 hover:text-[#ccc]">
             {props.children}
         </Link>
     )
