@@ -12,7 +12,7 @@ export default function Rules() {
         <div className="container flex gap-10 pt-4 pb-12">
             <StickySidebar>
                 <h3 className="font-medium text-lg mb-3">Table of contents</h3>
-                <ul className="list-disc list-outside pl-8 flex flex-col gap-1 mb-3">
+                <ul className="list-disc list-outside pl-8 flex flex-col gap-1 mb-3 text-secondary">
                     <li>
                         <a href="#ttt" className="hover:underline">Tic-Tac-Toe</a>
                     </li>
@@ -29,9 +29,18 @@ export default function Rules() {
             </StickySidebar>
             <div className="md:pl-10 md:border-l border-tertiary py-4">
                 <SectionHeader id="ttt">Tic-Tac-Toe</SectionHeader>
-                <p className="mb-16">[...]</p>
+                <img src="/examples/ttt.png" alt="Tic-Tac-Toe game" className="max-w-lg mx-auto mb-4" />
+                <p className="mb-6">
+                    A game played by marking squares in a 3x3 grid. X goes first, and the first player to connect 3
+                    squares in a row, column, or diagonal wins the game. If all squares are filled and neither player has won,
+                    the game ends in a tie.
+                </p>
+                <p className="text-sm text-secondary mb-16">
+                    See also: <a href="https://en.wikipedia.org/wiki/Tic-tac-toe" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Wikipedia</a>
+                </p>
 
                 <SectionHeader id="uttt">Ultimate Tic-Tac-Toe</SectionHeader>
+                <img src="/examples/uttt.png" alt="Ultimate Tic-Tac-Toe game" className="max-w-2xl mx-auto mb-4" />
                 <p className="mb-4">
                     Tic-Tac-Toe, except each square of the board contains an inner game of Tic-Tac-Toe.
                 </p>
