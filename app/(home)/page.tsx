@@ -15,7 +15,7 @@ export default function Home() {
     const username = cookies().get('username')?.value;
 
     return (
-        <main className="container pt-16 pb-20 flex gap-8">
+        <main className="container pt-16 pb-20 flex flex-wrap md:flex-nowrap gap-x-8 gap-y-16">
             <div className="flex-grow">
                 {/* <h3 className="text-lg text-center font-medium mb-4">Quick Pairing</h3> */}
                 <QuickPairing />
@@ -23,7 +23,7 @@ export default function Home() {
                 <h3 className="text-lg text-center font-medium mb-2">Lobbies</h3>
                 <Lobbies username={username} />
             </div>
-            <div className="flex flex-col gap-3.5 sticky top-6 h-max">
+            <div className="flex flex-col gap-3.5 sticky top-6 h-max w-full md:w-auto ">
                 <CreateGameButton>Create a game</CreateGameButton>
                 <CreateGameButton>Play with friend</CreateGameButton>
 

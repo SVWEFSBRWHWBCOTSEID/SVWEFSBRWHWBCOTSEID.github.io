@@ -130,14 +130,19 @@ export default function ProfileHeader() {
                         </>
                     ) : (
                         <>
+                            {profile.bio && (
+                                <div className="bg-content text-secondary border-l-[3px] border-tertiary px-4 py-2 mb-2 -ml-2 rounded-sm whitespace-pre-wrap">
+                                    {profile.bio}
+                                </div>
+                            )}
                             {getName(profile) && (
-                                <p className="text-secondary">
-                                    <FaUser className="inline" /> {getName(profile)}
+                                <p className="flex gap-2.5 items-center text-secondary">
+                                    <FaUser /> {getName(profile)}
                                 </p>
                             )}
                             {profile.location && (
-                                <p className="text-secondary">
-                                    <FaLocationDot className="inline" /> {profile.location}
+                                <p className="flex gap-2.5 items-center text-secondary mt-0.5">
+                                    <FaLocationDot /> {profile.location}
                                 </p>
                             )}
                         </>
