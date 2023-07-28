@@ -27,7 +27,7 @@ export default function Rules() {
                     </li>
                 </ul>
             </StickySidebar>
-            <div className="pl-10 border-l border-tertiary py-4">
+            <div className="md:pl-10 md:border-l border-tertiary py-4">
                 <SectionHeader id="ttt">Tic-Tac-Toe</SectionHeader>
                 <p className="mb-16">[...]</p>
 

@@ -6,14 +6,17 @@ import {cookies} from 'next/headers';
 // Components
 import ProfileDropdown from './ProfileDropdown';
 import SignInLink from './SignInLink';
+import HeaderMenu from './HeaderMenu';
 
 
 export default function Header() {
     const username = cookies().get('username')?.value;
 
     return (
-        <header className="px-4 md:px-6 lg:px-8 text-md flex justify-between">
+        <header className="relative pr-4 sm:px-4 md:px-6 lg:px-8 text-md flex justify-between">
             <nav className="flex gap-2 items-center">
+                <HeaderMenu />
+
                 <Link href="/" className="text-2xl pb-1 mr-4 group hover:text-blue-500">
                     gulpin<span className="text-secondary group-hover:text-blue-600">.games</span>
                 </Link>
