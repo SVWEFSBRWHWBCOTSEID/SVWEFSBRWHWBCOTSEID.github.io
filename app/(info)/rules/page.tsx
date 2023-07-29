@@ -29,7 +29,7 @@ export default function Rules() {
             </StickySidebar>
             <div className="md:pl-10 md:border-l border-tertiary py-4">
                 <SectionHeader id="ttt">Tic-Tac-Toe</SectionHeader>
-                <img src="/examples/ttt.png" alt="Tic-Tac-Toe game" className="max-w-lg mx-auto mb-4" />
+                <img src="/examples/ttt.png" alt="Tic-Tac-Toe game" className="w-full max-w-lg mx-auto mb-4" />
                 <p className="mb-6">
                     A game played by marking squares in a 3x3 grid. X goes first, and the first player to connect 3
                     squares in a row, column, or diagonal wins the game. If all squares are filled and neither player has won,
@@ -40,7 +40,7 @@ export default function Rules() {
                 </p>
 
                 <SectionHeader id="uttt">Ultimate Tic-Tac-Toe</SectionHeader>
-                <img src="/examples/uttt.png" alt="Ultimate Tic-Tac-Toe game" className="max-w-2xl mx-auto mb-4" />
+                <img src="/examples/uttt.png" alt="Ultimate Tic-Tac-Toe game" className="w-full max-w-2xl mx-auto mb-4" />
                 <p className="mb-4">
                     Tic-Tac-Toe, except each square of the board contains an inner game of Tic-Tac-Toe.
                 </p>
