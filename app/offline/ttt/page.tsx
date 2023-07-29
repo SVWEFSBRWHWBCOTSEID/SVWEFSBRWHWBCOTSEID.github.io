@@ -32,7 +32,7 @@ export default function OfflineTicTacToe() {
         setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
 
         // Check board status and handle accordingly
-        const status = checkBoardStatus(newGameState);
+        const status = checkBoardStatus(square, newGameState);
         setGameStatus(status);
 
         // Wins are +1 for the winner, ties are +0.5 for both players

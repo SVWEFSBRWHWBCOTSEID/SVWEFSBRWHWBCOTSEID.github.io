@@ -14,7 +14,7 @@ import UltimateTicTacToeBoard, {
 import TicTacToeScoreIndicator, {TTTScores} from '../ttt/TicTacToeScoreIndicator';
 
 // Utilities
-import {checkBoardStatus, BoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
 
 
 export default function OfflineUltimateTicTacToe() {
@@ -37,7 +37,7 @@ export default function OfflineUltimateTicTacToe() {
         newGameState[board] = newBoard;
 
         // Check inner board status and update if won
-        const status = checkBoardStatus(newBoard);
+        const status = checkBoardStatus(square, newBoard);
         const newGameStatuses: UTTTBoardStatuses = [...gameStatuses];
         newGameStatuses[board] = status;
         setGameStatuses(newGameStatuses);
@@ -47,7 +47,7 @@ export default function OfflineUltimateTicTacToe() {
         setActiveBoard(newGameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
 
         // Check outer board status and handle accordingly
-        const newGameStatus = checkBoardStatus(newGameStatuses.map(status => (
+        const newGameStatus = checkBoardStatus(board, newGameStatuses.map(status => (
             status === BoardStatus.X_VICTORY ? '✕'
                 : status === BoardStatus.O_VICTORY ? '◯'
                     : ''
@@ -66,6 +66,7 @@ export default function OfflineUltimateTicTacToe() {
     // if X started the last game, O starts the next game.
     function resetBoard() {
         setGameState(defaultUTTTBoard);
+        setGameStatus(BoardStatus.PLAYING);
         setGameStatuses(defaultUTTTBoardStatuses);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(nextStartSymbol === '✕' ? '◯' : '✕');

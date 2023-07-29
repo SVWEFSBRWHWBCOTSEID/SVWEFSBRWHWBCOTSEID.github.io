@@ -79,30 +79,75 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
 }
 
 // Checks a board for whether someone has won or the game has tied.
-// TODO: make this prettier
-export function checkBoardStatus(boardState: TTTBoard) {
-    // Rows
-    for (const row of TTTIndices) {
-        const [left, middle, right] = row.map(i => boardState[i]);
-        if (left && left === middle && left === right)
-            return left === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+export function checkBoardStatus(move: number, board: TTTBoard, rows = 3, columns = 3, needed = 3) {
+    // Row
+    const rowStart = move - (move % columns)
+    for (
+        let i = Math.max(move - needed, rowStart);
+        i < Math.min(move + needed, rowStart + columns);
+        i++
+    ) {
+        let cond = !!board[i];
+        for (let j = 1; j < needed; j++)
+            cond = cond && board[i] === board[i + j];
+
+        if (cond) return board[i] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
     }
 
-    // Columns
-    for (const i in TTTIndices[0]) {
-        const [top, middle, bottom] = TTTIndices.map(row => row[i]).map(i => boardState[i]);
-        if (top && top === middle && top === bottom)
-            return top === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    // Column
+    const colStart = move % columns;
+    for (
+        let i = Math.max(move - (needed * columns), colStart);
+        i < Math.min(move + (needed * columns) + 1, board.length);
+        i += columns
+    ) {
+        let cond = !!board[i];
+        for (let j = 1; j < needed; j++)
+            cond = cond && board[i] === board[i + (j * columns)];
+
+        if (cond) return board[i] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
     }
 
-    // Diagonals
-    if (boardState[0] && boardState[0] === boardState[4] && boardState[0] === boardState[8])
-        return boardState[0] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
-    if (boardState[2] && boardState[2] === boardState[4] && boardState[2] === boardState[6])
-        return boardState[2] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    // Diagonal
+    const rowNum = rowStart / columns;
+    const diagStart = rowNum > colStart
+        ? (rowNum - colStart) * columns
+        : colStart - rowNum
+
+    if (Math.min(rows, columns) - Math.abs(rowNum - colStart) >= needed) for (
+        let i = diagStart;
+        i < Math.min(move + (needed * (columns + 1)) + 1, board.length);
+        i += columns + 1
+    ) {
+        let cond = !!board[i];
+        for (let j = 1; j < needed; j++)
+            cond = cond && board[i] === board[i + (j * (columns + 1))];
+
+        if (cond) return board[i] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    }
+
+    // Anti-diagonal
+    const antiDiagStart = rowNum + colStart >= columns
+        ? ((rowNum + colStart) - (columns - 1)) * columns + (columns - 1)
+        : rowNum + colStart
+
+    // TODO: condition for checking antidiag?
+    // if (Math.abs(rowNum + colStart) >= needed)
+    for (
+        let i = antiDiagStart;
+        i < Math.min(move + (needed * (columns - 1)) + 1, board.length);
+        i += columns - 1
+    ) {
+        let cond = !!board[i];
+        for (let j = 1; j < needed; j++)
+            cond = cond && board[i] === board[i + (j * (columns - 1))];
+
+        if (cond) return board[i] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+    }
 
     // If the board is full and no one has won, it's a tie
-    if (boardState.every(x => x)) return BoardStatus.TIED;
+    // TODO: replace with move number?
+    if (board.every(x => x)) return BoardStatus.TIED;
 
     return BoardStatus.PLAYING;
 }
