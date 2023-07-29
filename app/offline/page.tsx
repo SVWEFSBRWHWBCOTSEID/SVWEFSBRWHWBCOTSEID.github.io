@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
     return (
-        <div className="mt-24">
+        <div className="container py-16">
             <h1 className="text-6xl text-center font-bold mb-4">
                 Offline games
             </h1>
@@ -17,13 +17,13 @@ export default function Home() {
                 Locally hosted games that don't require an account or internet connection to play.
             </p>
             <p className="text-center mb-8">
-                In an offline game, all players take turns making moves on one computer.
+                In an offline game, all players take turns making moves on the same computer.
             </p>
 
             <section className="flex flex-wrap justify-center gap-6">
                 {/* TODO: update images after UI changes */}
-                <GameCard href="/offline/ttt" name="Tic-Tac-Toe" src="/ttt.png" />
-                <GameCard href="/offline/uttt" name="Ultimate Tic-Tac-Toe" src="/uttt.png" />
+                <GameCard href="/offline/ttt" name="Tic-Tac-Toe" src="/examples/ttt.png" />
+                <GameCard href="/offline/uttt" name="Ultimate Tic-Tac-Toe" src="/examples/uttt.png" />
             </section>
         </div>
     )
