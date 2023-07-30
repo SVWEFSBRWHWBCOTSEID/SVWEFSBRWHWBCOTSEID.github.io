@@ -3,7 +3,12 @@
 import {useContext} from 'react';
 import Link from 'next/link';
 import {Tab} from '@headlessui/react';
+
+// Components
 import ProfileGames from './ProfileGames';
+import ProfileEloChart from './ProfileEloChart';
+
+// Util
 import ProfileContext, {GameKey, GamePerf} from '../../contexts/ProfileContext';
 import {keyToName} from './ProfileContent';
 
@@ -18,9 +23,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
                 {keyToName(props.game)} stats
             </h1>
 
-            <section className="border-y border-tertiary flex items-center justify-center text-secondary py-12">
-                [todo: lichess elo chart thing]
-            </section>
+            <ProfileEloChart />
 
             <section className="px-8 py-6">
                 <p className="text-2xl mb-3 font-light">
