@@ -1,6 +1,7 @@
 'use client'
 
 import {Dispatch, ReactNode, SetStateAction, startTransition, useEffect, useState} from 'react';
+import {useRouter} from 'next/navigation';
 import {Duration} from 'luxon';
 import GameContext from '../../../contexts/GameContext';
 
@@ -34,12 +35,15 @@ export default function Game<T>(props: GameProps<T>) {
 
     const [gameStatus, setGameStatus] = useState<Status>('WAITING');
     const [drawOffer, setDrawOffer] = useState<Offer>('NONE');
+    const [rematchOffer, setRematchOffer] = useState<Offer>('NONE');
     const [endType, setEndType] = useState<EndType | null>(null);
 
     const [ftime, setFtime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
     const [stime, setStime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
 
     const [chat, setChat] = useState<ChatData[]>([]);
+
+    const {push} = useRouter();
 
     const side = getSide(props.username, props.info);
 
@@ -102,6 +106,10 @@ export default function Game<T>(props: GameProps<T>) {
                     setChat(event.chat);
                     handleGameState(event.state);
                     break;
+                case 'REMATCH':
+                    setRematchOffer(event.rematchOffer);
+                    if (event.id) push(`/game/${event.id}`);
+                    break;
             }
         }
 
@@ -122,7 +130,7 @@ export default function Game<T>(props: GameProps<T>) {
     }
 
     return (
-        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime}}>
+        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, rematchOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime}}>
             <div className="flex flex-col gap-5 w-[21rem]">
                 <GameHeader />
                 <Chat />

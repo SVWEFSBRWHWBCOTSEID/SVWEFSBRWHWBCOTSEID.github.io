@@ -25,7 +25,8 @@ export default function GameStateIndicator() {
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
             <GameTimeIndicator time={ftime} top playAlert={side === 'FIRST'} />
 
-            <div className="bg-content rounded-r overflow-clip">
+            {/* TODO: support overflow-clip for time indicator bars without hiding rematch cancel button? */}
+            <div className="bg-content rounded-r">
                 <GameTimeProgressBar time={ftime} initial={info.timeControl.initial} />
                 <PlayerIndicator user={info.first} />
 

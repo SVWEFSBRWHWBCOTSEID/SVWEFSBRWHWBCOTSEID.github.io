@@ -19,6 +19,7 @@ type GameContextData = {
 
     gameStatus: Status,
     drawOffer: Offer,
+    rematchOffer: Offer,
     endType: EndType | null,
 
     ftime: Duration,

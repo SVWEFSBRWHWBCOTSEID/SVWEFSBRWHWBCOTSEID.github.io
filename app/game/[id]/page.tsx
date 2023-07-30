@@ -22,6 +22,12 @@ export type ChatAlertEvent = {
     message: string
 }
 
+type RematchEvent = {
+    type: 'REMATCH',
+    id: string | null,
+    rematchOffer: Offer
+}
+
 export type Status = 'WAITING' | 'STARTED' | 'FIRST_WON' | 'SECOND_WON' | 'DRAW';
 export type EndType = 'NORMAL' | 'RESIGN' | 'TIMEOUT' | 'DISCONNECT' | 'STALEMATE';
 export type Offer = 'NONE' | 'FIRST' | 'SECOND';
@@ -56,7 +62,7 @@ export type GameFullEvent = {
     state: Omit<GameStateEvent, 'type'>
 }
 
-export type GameEvent = GameFullEvent | GameStateEvent | ChatMessageEvent | ChatAlertEvent;
+export type GameEvent = GameFullEvent | GameStateEvent | ChatMessageEvent | ChatAlertEvent | RematchEvent;
 
 export type Player = {
     username: string,
