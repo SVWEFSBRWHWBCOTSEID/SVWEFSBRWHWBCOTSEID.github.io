@@ -11,7 +11,7 @@ import GameStateIndicator from '../GameStateIndicator';
 
 // Util
 import {revalidate} from '../../../util/actions';
-import type {GameEvent, GameInfo, GameStateEvent, Status, WinType, Offer} from './page';
+import type {GameEvent, GameInfo, GameStateEvent, Status, EndType, Offer} from './page';
 import type {Side} from '../../../util/game';
 
 
@@ -34,7 +34,7 @@ export default function Game<T>(props: GameProps<T>) {
 
     const [gameStatus, setGameStatus] = useState<Status>('WAITING');
     const [drawOffer, setDrawOffer] = useState<Offer>('NONE');
-    const [winType, setWinType] = useState<WinType | null>(null);
+    const [endType, setEndType] = useState<EndType | null>(null);
 
     const [ftime, setFtime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
     const [stime, setStime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
@@ -85,7 +85,7 @@ export default function Game<T>(props: GameProps<T>) {
                 case 'CHAT_MESSAGE': setChat((chat) => [...chat, event]); break;
                 case 'GAME_STATE':
                     handleGameState(event);
-                    if (event.winType) startTransition(() => {
+                    if (event.endType) startTransition(() => {
                         // TODO: incredibly hacky; backend revalidate on demand?
                         void revalidate(`user-${props.info.first.username}`);
                         void revalidate(`user-${props.info.second.username}`);
@@ -112,14 +112,14 @@ export default function Game<T>(props: GameProps<T>) {
 
         setGameStatus(event.status);
         setDrawOffer(event.drawOffer);
-        setWinType(event.winType);
+        setEndType(event.endType);
 
         setMoves((moves) => moves.concat(event.moves));
         props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex: updateGameStateIndex});
     }
 
     return (
-        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, winType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime}}>
+        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime}}>
             <div className="flex flex-col gap-5 w-[21rem]">
                 <GameHeader />
                 <Chat />

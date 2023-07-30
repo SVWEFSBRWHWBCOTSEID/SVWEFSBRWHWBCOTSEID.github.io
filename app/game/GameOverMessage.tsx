@@ -2,11 +2,11 @@
 
 import {useContext} from 'react';
 import GameContext from '../../contexts/GameContext';
-import type {WinType} from './[id]/page';
+import type {EndType} from './[id]/page';
 
 
 export default function GameOverMessage() {
-    const {gameStatus, winType} = useContext(GameContext);
+    const {gameStatus, endType} = useContext(GameContext);
 
     // Scroll the moves panel to bottom when the game ends
     function scrollToBottom(ref: HTMLDivElement | null) {
@@ -26,17 +26,16 @@ export default function GameOverMessage() {
             </strong>
             <p className="italic">
                 {gameStatus === 'DRAW' ? (
-                    // TODO: stalemate, insufficient material
-                    'Draw by mutual agreement'
+                    endType === 'STALEMATE' ? 'Stalemate' : 'Draw by mutual agreement'
                 ) : (
-                    `${gameStatus === 'FIRST_WON' ? 'O' : 'X'} ${winTypeToStr(winType)} • ${gameStatus === 'FIRST_WON' ? 'X' : 'O'} is victorious`
+                    `${gameStatus === 'FIRST_WON' ? 'O' : 'X'} ${winTypeToStr(endType)} • ${gameStatus === 'FIRST_WON' ? 'X' : 'O'} is victorious`
                 )}
             </p>
         </div>
     )
 }
 
-function winTypeToStr(type: WinType | null) {
+function winTypeToStr(type: EndType | null) {
     switch (type) {
         case 'RESIGN': return 'resigned';
         case 'TIMEOUT': return 'timed out';
