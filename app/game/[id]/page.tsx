@@ -17,6 +17,10 @@ export type ChatMessageEvent = {
     text: string,
     visibility: 'PLAYER' | 'SPECTATOR'
 }
+export type ChatAlertEvent = {
+    type: 'CHAT_ALERT',
+    message: string
+}
 
 export type Status = 'WAITING' | 'STARTED' | 'FIRST_WON' | 'SECOND_WON' | 'DRAW';
 export type EndType = 'NORMAL' | 'RESIGN' | 'TIMEOUT' | 'DISCONNECT' | 'STALEMATE';
@@ -52,7 +56,7 @@ export type GameFullEvent = {
     state: Omit<GameStateEvent, 'type'>
 }
 
-export type GameEvent = GameFullEvent | GameStateEvent | ChatMessageEvent;
+export type GameEvent = GameFullEvent | GameStateEvent | ChatMessageEvent | ChatAlertEvent;
 
 export type Player = {
     username: string,

@@ -5,7 +5,7 @@ import {Duration} from 'luxon';
 import GameContext from '../../../contexts/GameContext';
 
 // Components
-import Chat, {ChatMessage} from '../Chat';
+import Chat, {ChatData} from '../Chat';
 import GameHeader from '../GameHeader';
 import GameStateIndicator from '../GameStateIndicator';
 
@@ -39,7 +39,7 @@ export default function Game<T>(props: GameProps<T>) {
     const [ftime, setFtime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
     const [stime, setStime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
 
-    const [chat, setChat] = useState<ChatMessage[]>([]);
+    const [chat, setChat] = useState<ChatData[]>([]);
 
     const side = getSide(props.username, props.info);
 
@@ -82,7 +82,10 @@ export default function Game<T>(props: GameProps<T>) {
             const event: GameEvent = JSON.parse(m.data);
             console.log(event)
             switch (event.type) {
-                case 'CHAT_MESSAGE': setChat((chat) => [...chat, event]); break;
+                case 'CHAT_ALERT':
+                case 'CHAT_MESSAGE':
+                    setChat((chat) => [...chat, event]);
+                    break;
                 case 'GAME_STATE':
                     handleGameState(event);
                     if (event.endType) startTransition(() => {

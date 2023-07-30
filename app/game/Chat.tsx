@@ -3,10 +3,12 @@
 import {useContext, useLayoutEffect, useRef, useState} from 'react';
 import Link from 'next/link';
 import GameContext from '../../contexts/GameContext';
-import type {ChatMessageEvent} from './[id]/page';
+import type {ChatAlertEvent, ChatMessageEvent} from './[id]/page';
 
 
-export type ChatMessage = Omit<ChatMessageEvent, 'type'>
+type ChatMessage = Omit<ChatMessageEvent, 'type'>
+type ChatAlert = Omit<ChatAlertEvent, 'type'>
+export type ChatData = ChatMessage | ChatAlert
 
 export default function Chat() {
     const {id, username, info, chat, side} = useContext(GameContext);
@@ -44,8 +46,12 @@ export default function Chat() {
     return (
         <div className="flex-none text-sm rounded flex flex-col overflow-clip shadow-lg">
             <div ref={chatRef} className="px-3 py-2 break-words bg-content h-[30rem] x flex-col gap-2 overflow-auto scrollbar:w-1.5 scrollbar:bg-black/10 scrollbar-thumb:bg-tertiary">
-                {chat.map((message, i) => (
-                    <ChatMessage {...message} key={message.text + message.username + i} />
+                {chat.map((data, i) => 'username' in data ? (
+                    <ChatMessage {...data} key={data.text + data.username + i} />
+                ) : (
+                    <p className="text-xs text-secondary italic text-center my-1" key={data.message + i}>
+                        {data.message}
+                    </p>
                 ))}
             </div>
             <input

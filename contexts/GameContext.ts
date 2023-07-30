@@ -3,7 +3,7 @@ import {Duration} from 'luxon';
 
 // Types
 import type {GameInfo, Offer, Status, EndType} from '../app/game/[id]/page';
-import type {ChatMessage} from '../app/game/Chat';
+import type {ChatData} from '../app/game/Chat';
 import type {PlayerSide} from '../app/game/[id]/Game';
 
 
@@ -23,7 +23,7 @@ type GameContextData = {
 
     ftime: Duration,
     stime: Duration,
-    chat: ChatMessage[]
+    chat: ChatData[]
 }
 
 const GameContext = createContext<GameContextData>(null!); // TODO
