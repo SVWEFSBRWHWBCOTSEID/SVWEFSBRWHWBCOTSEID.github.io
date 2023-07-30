@@ -1,8 +1,10 @@
 'use client'
 
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {useRouter, useSearchParams} from 'next/navigation';
 import Link from 'next/link';
+import UserContext from '../../contexts/UserContext';
+import type {User} from '../../contexts/ProfileContext';
 
 // Components
 import BlueButton from '../../components/BlueButton';
@@ -10,6 +12,8 @@ import Input from '../../components/Input';
 
 
 export default function LoginPanel() {
+    const {setUser} = useContext(UserContext);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [rememberLogin, setRememberLogin] = useState(true);
@@ -34,8 +38,10 @@ export default function LoginPanel() {
             return setError(true);
         }
 
+        const user: User = await res.json();
+
+        setUser(user);
         replace(params.get('callbackUrl') ?? '/');
-        refresh();
     }
 
     return (

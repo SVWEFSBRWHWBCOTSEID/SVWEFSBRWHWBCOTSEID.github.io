@@ -1,7 +1,9 @@
-import {ReactNode} from 'react';
+'use client'
+
+import {ReactNode, useContext} from 'react';
 import Link from 'next/link';
+import UserContext from '../contexts/UserContext';
 import {BsGear, BsGearFill} from 'react-icons/bs';
-import {cookies} from 'next/headers';
 
 // Components
 import ProfileDropdown from './ProfileDropdown';
@@ -10,7 +12,7 @@ import HeaderMenu from './HeaderMenu';
 
 
 export default function Header() {
-    const username = cookies().get('username')?.value;
+    const {user} = useContext(UserContext);
 
     return (
         <header className="relative pr-4 sm:px-4 md:px-6 lg:px-8 text-md flex justify-between">
@@ -29,8 +31,8 @@ export default function Header() {
                 <Link href="/preferences">
                     <BsGearFill className="text-secondary" />
                 </Link>
-                {username ? (
-                    <ProfileDropdown username={username} />
+                {user ? (
+                    <ProfileDropdown />
                 ) : (
                     <SignInLink />
                 )}

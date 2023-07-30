@@ -1,9 +1,11 @@
 'use client'
 
-import {startTransition, useState} from 'react';
+import {startTransition, useContext, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {getUser} from '../../util/user';
 import {revalidate} from '../../util/actions';
+import UserContext from '../../contexts/UserContext';
+import type {User} from '../../contexts/ProfileContext';
 
 // Components
 import BlueButton from '../../components/BlueButton';
@@ -11,13 +13,15 @@ import Input from '../../components/Input';
 
 
 export default function SignupPanel() {
+    const {setUser} = useContext(UserContext);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const {replace, refresh} = useRouter();
+    const {replace} = useRouter();
 
     async function register() {
         setLoading(true);
@@ -33,11 +37,12 @@ export default function SignupPanel() {
             return setError(true);
         }
 
+        const user: User = await res.json();
+
         // Revalidate cached user object
         startTransition(() => void revalidate(`user-${username}`));
-
+        setUser(user);
         replace('/');
-        refresh();
     }
 
     async function validateUsername() {

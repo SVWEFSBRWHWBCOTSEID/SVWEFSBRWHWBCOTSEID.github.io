@@ -1,10 +1,8 @@
 'use client'
 
 import {startTransition, useContext, useState} from 'react';
-import {useRouter} from 'next/navigation';
 import {Listbox} from '@headlessui/react';
 import {DateTime} from 'luxon';
-import ProfileContext, {Country, User} from '../../contexts/ProfileContext';
 import {revalidate} from '../../util/actions';
 
 // Components
@@ -19,11 +17,15 @@ import {BsGearFill} from 'react-icons/bs';
 import {ImCheckmark} from 'react-icons/im';
 import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
 
+// Contexts
+import ProfileContext, {Country, User} from '../../contexts/ProfileContext';
+import UserContext from '../../contexts/UserContext';
+
 
 export default function ProfileHeader() {
     const {username, profile, createdAt} = useContext(ProfileContext);
+    const {user, setUser} = useContext(UserContext);
 
-    // TODO: check to see if this is you (ie. if the profile can be edited)
     const [editing, setEditing] = useState(false);
 
     const [firstName, setFirstName] = useState(profile.firstName);
@@ -31,8 +33,6 @@ export default function ProfileHeader() {
     const [location, setLocation] = useState(profile.location);
     const [bio, setBio] = useState(profile.bio);
     const [country, setCountry] = useState(profile.country);
-
-    const {refresh} = useRouter();
 
     async function updateProfile() {
         const res = await fetch(`${process.env.API_BASE}/profile/update`, {
@@ -43,8 +43,10 @@ export default function ProfileHeader() {
         });
         if (!res.ok) return;
 
+        const user: User = await res.json();
+
         startTransition(() => void revalidate(`user-${username}`));
-        refresh();
+        setUser(user);
         setEditing(false);
     }
 
@@ -148,12 +150,14 @@ export default function ProfileHeader() {
                         </>
                     )}
 
-                    <button
-                        className="absolute right-0 top-0 text-secondary h-max p-1.5 rounded hover:bg-theme-green hover:text-white transition duration-100"
-                        onClick={() => setEditing(!editing)}
-                    >
-                        <BsGearFill />
-                    </button>
+                    {user?.username === username && (
+                        <button
+                            className="absolute right-0 top-0 text-secondary h-max p-1.5 rounded hover:bg-theme-green hover:text-white transition duration-100"
+                            onClick={() => setEditing(!editing)}
+                        >
+                            <BsGearFill />
+                        </button>
+                    )}
                 </div>
 
                 <div className="flex-none xl:pr-6">

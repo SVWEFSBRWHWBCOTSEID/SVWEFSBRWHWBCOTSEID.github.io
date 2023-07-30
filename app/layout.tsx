@@ -4,7 +4,7 @@ import {Inter} from 'next/font/google';
 
 // Components
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+import UserProvider from '../components/UserProvider';
 
 import '../styles/styles.css'
 
@@ -29,8 +29,10 @@ export default function Layout(props: {children: ReactNode}) {
                 <link rel="icon" href="/favicon.png" />
             </head>
             <body className="text-white h-full flex flex-col bg-background bg-gradient-to-b from-[hsl(37,_12%,_16%)] to-[116px] to-[hsl(37,_10%,_8%)] bg-no-repeat" style={inter.style}>
-                <Header />
-                {props.children}
+                <UserProvider>
+                    <Header />
+                    {props.children}
+                </UserProvider>
             </body>
         </html>
     )
