@@ -1,8 +1,8 @@
 'use client'
 
-import {ReactNode, useState} from 'react';
+import {ReactNode, useContext, useState} from 'react';
 import {Listbox} from '@headlessui/react';
-import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
+import UserContext from '../../contexts/UserContext';
 
 // Components
 import CenteredModal from '../../components/CenteredModal';
@@ -13,15 +13,19 @@ import CloseButton from '../../components/CloseButton';
 // Icons
 import {IoDice} from 'react-icons/io5';
 import {PiNumberCircleOneFill, PiNumberCircleTwoFill} from 'react-icons/pi';
+import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
 
 // Util
 import {games} from './QuickPairing';
 import {createGame, Side} from '../../util/game';
 import {keyToIcon} from '../profile/ProfileSidebarItem';
+import type {GameNameInfo} from '../game/[id]/page';
 
 
-type CreateGameModalProps = {isOpen: boolean, setIsOpen: (open: boolean) => void, game?: typeof games[0]};
+type CreateGameModalProps = {isOpen: boolean, setIsOpen: (open: boolean) => void, game?: GameNameInfo};
 export default function CreateGameModal(props: CreateGameModalProps) {
+    const {user} = useContext(UserContext);
+
     const [game, setGame] = useState(props.game ?? games[0]);
     const [rated, setRated] = useState(true);
 
@@ -34,6 +38,8 @@ export default function CreateGameModal(props: CreateGameModalProps) {
     const [ratingOffsetMax, setRatingOffsetMax] = useState(500);
 
     const Icon = keyToIcon(game.key);
+    const rating = user?.perfs[game.key].rating ?? 1500;
+    const prov = user?.perfs[game.key].prov ?? true;
 
     function setTimeControl(timed: boolean) {
         setTimed(timed);
@@ -41,10 +47,9 @@ export default function CreateGameModal(props: CreateGameModalProps) {
     }
 
     function submitModal(side: Side) {
-        // TODO: rating
         void createGame(
             game.key,
-            1337,
+            rating,
             parseMinutes(minutesSlider),
             parseIncrement(incrementSlider),
             rated,
@@ -168,7 +173,6 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                     className="p-2 text-4xl hover:text-primary disabled:opacity-50 disabled:text-inherit transition-opacity duration-150"
                     title="Move second"
                     disabled={invalidTime}
-                    // TODO: rating
                     onClick={() => submitModal('SECOND')}
                 >
                     <PiNumberCircleTwoFill />
@@ -176,7 +180,11 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             </section>
 
             <section className="px-8 py-3.5 text-sm text-secondary flex justify-center gap-1 border-t border-tertiary bg-[rgb(48_46_44)] rounded-b-lg">
-                Rating: <strong className="flex items-center gap-0.5"><Icon className="inline text-lg" /> 1337</strong> {game.name}
+                Rating:
+                <strong className="flex items-center gap-0.5">
+                    <Icon className="inline text-lg" /> {rating}{prov && '?'}
+                </strong>
+                {game.name}
             </section>
         </CenteredModal>
     )
