@@ -12,7 +12,7 @@ import type {Player} from './[id]/page';
 
 
 export default function GameHeader() {
-    const {info} = useContext(GameContext);
+    const {info, fratingDiff, sratingDiff} = useContext(GameContext);
     const Icon = keyToIcon(info.game.key);
 
     return (
@@ -37,13 +37,13 @@ export default function GameHeader() {
                 </div>
             </div>
 
-            <PlayerIndicator user={info.first} first />
-            <PlayerIndicator user={info.second} />
+            <PlayerIndicator user={info.first} first ratingDiff={fratingDiff} />
+            <PlayerIndicator user={info.second} ratingDiff={sratingDiff} />
         </div>
     )
 }
 
-function PlayerIndicator(props: { user: Player, first?: boolean }) {
+function PlayerIndicator(props: { user: Player, first?: boolean, ratingDiff: number }) {
     return (
         <div className="flex gap-2 items-center text-sm text-secondary">
             {props.first ? <BiSolidCircle /> : <BiCircle />}
@@ -51,7 +51,13 @@ function PlayerIndicator(props: { user: Player, first?: boolean }) {
                 className="flex-grow hover:text-blue-500"
                 href={`/profile/${props.user.username}`}
             >
-                {props.user.username}{props.user.rating && ` (${props.user.rating})`} {/* TODO */}
+                {props.user.username}
+                {props.user.rating && ` (${props.user.rating})`} {/* TODO */}
+                {props.ratingDiff !== 0 && (
+                    <span className={props.ratingDiff > 0 ? 'text-theme-green' : 'text-red-600'}>
+                        {' '}{props.ratingDiff > 0 && '+'}{props.ratingDiff}
+                    </span>
+                )}
             </Link>
         </div>
     )
