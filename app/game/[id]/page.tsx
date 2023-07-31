@@ -82,8 +82,7 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
     return {
         title: {
-            // TODO
-            absolute: `Correspondence ${gameInfo.game.name} • ${gameInfo.first.username} vs ${gameInfo.second.username}`
+            absolute: `${timeControlToSpeed(gameInfo.timeControl)} ${gameInfo.game.name} • ${gameInfo.first.username} vs ${gameInfo.second.username}`
         },
         description: `${gameInfo.first.username} (${gameInfo.first.rating}) vs ${gameInfo.second.username} (${gameInfo.second.rating}) in ${gameInfo.rated ? 'Rated' : 'Casual'} ${timeControlToString(gameInfo.timeControl)} ${gameInfo.game.name}.`
     }
@@ -101,4 +100,12 @@ export default async function GamePage({ params }: { params: { id: string } }) {
         case 'uttt': return <UltimateTicTacToeGame id={params.id} username={username} info={gameInfo} />
         default: return null; // TODO: hacky?
     }
+}
+
+function timeControlToSpeed(times: TimeControl) {
+    if (times.initial < 3 * 60 * 1000) return 'Bullet';
+    if (times.initial < 8 * 60 * 1000) return 'Blitz';
+    if (times.initial < 25 * 60 * 1000) return 'Rapid';
+    return 'Classical';
+    // TODO: correspondence?
 }
