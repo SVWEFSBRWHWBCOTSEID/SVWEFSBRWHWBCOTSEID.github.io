@@ -24,6 +24,9 @@ type GameContextData = {
 
     ftime: Duration,
     stime: Duration,
+
+    fratingDiff: number,
+    sratingDiff: number,
     chat: ChatData[]
 }
 

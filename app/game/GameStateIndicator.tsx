@@ -19,7 +19,7 @@ import type {Player} from './[id]/page';
 
 
 export default function GameStateIndicator() {
-    const {info, side, gameStatus, drawOffer, ftime, stime} = useContext(GameContext);
+    const {info, side, gameStatus, drawOffer, ftime, stime, fratingDiff, sratingDiff} = useContext(GameContext);
 
     return (
         <div className="flex flex-col w-[25rem] drop-shadow-lg">
@@ -28,7 +28,7 @@ export default function GameStateIndicator() {
             {/* TODO: support overflow-clip for time indicator bars without hiding rematch cancel button? */}
             <div className="bg-content rounded-r">
                 <GameTimeProgressBar time={ftime} initial={info.timeControl.initial} />
-                <PlayerIndicator user={info.first} />
+                <PlayerIndicator user={info.first} ratingDiff={fratingDiff} />
 
                 <div className="h-64 flex flex-col">
                     <GameMoveHistoryHeader />
@@ -55,7 +55,7 @@ export default function GameStateIndicator() {
                     )}
                 </div>
 
-                <PlayerIndicator user={info.second} />
+                <PlayerIndicator user={info.second} ratingDiff={sratingDiff} />
                 <GameTimeProgressBar time={stime} initial={info.timeControl.initial} />
             </div>
 
@@ -64,7 +64,7 @@ export default function GameStateIndicator() {
     )
 }
 
-function PlayerIndicator(props: { user: Player }) {
+function PlayerIndicator(props: { user: Player, ratingDiff: number }) {
     return (
         <div className="px-4 py-2 text-lg flex justify-between">
             <Link
@@ -77,6 +77,11 @@ function PlayerIndicator(props: { user: Player }) {
                 // TODO
                 <span className="text-secondary">
                     {props.user.rating}{props.user.provisional && '?'}
+                    {props.ratingDiff !== 0 && (
+                        <span className={props.ratingDiff > 0 ? 'text-theme-green' : 'text-red-600'}>
+                            {' '}{props.ratingDiff > 0 && '+'}{props.ratingDiff}
+                        </span>
+                    )}
                 </span>
             )}
         </div>

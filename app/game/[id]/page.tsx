@@ -38,7 +38,9 @@ export type GameStateEvent = {
     moves: string[],
     status: Status,
     endType: EndType | null,
-    drawOffer: Offer
+    drawOffer: Offer,
+    fratingDiff: number,
+    sratingDiff: number
 }
 
 export type GameNameInfo = {

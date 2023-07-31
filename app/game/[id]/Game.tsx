@@ -41,6 +41,9 @@ export default function Game<T>(props: GameProps<T>) {
     const [ftime, setFtime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
     const [stime, setStime] = useState(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: props.info.timeControl.initial}).normalize());
 
+    const [fratingDiff, setFratingDiff] = useState(0);
+    const [sratingDiff, setSratingDiff] = useState(0);
+
     const [chat, setChat] = useState<ChatData[]>([]);
 
     const {push} = useRouter();
@@ -127,10 +130,13 @@ export default function Game<T>(props: GameProps<T>) {
 
         setMoves((moves) => moves.concat(event.moves));
         props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex: updateGameStateIndex});
+
+        setFratingDiff(event.fratingDiff);
+        setSratingDiff(event.sratingDiff);
     }
 
     return (
-        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, rematchOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime}}>
+        <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, rematchOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime, fratingDiff, sratingDiff}}>
             <div className="flex flex-col gap-5 w-[21rem]">
                 <GameHeader />
                 <Chat />
