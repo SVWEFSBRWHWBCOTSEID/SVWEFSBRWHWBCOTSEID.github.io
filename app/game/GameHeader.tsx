@@ -52,7 +52,15 @@ function PlayerIndicator(props: { user: Player, first?: boolean, ratingDiff: num
                 href={`/profile/${props.user.username}`}
             >
                 {props.user.username}
-                {props.user.rating && ` (${props.user.rating})`} {/* TODO */}
+                {props.user.provisional ? (
+                    <> (
+                        <span className="text-blue-400" title="Not enough rated games have been played to establish a reliable rating.">
+                            {props.user.rating}?
+                        </span>
+                    )</>
+                ) : (
+                    ` (${props.user.rating})`
+                )}
                 {props.ratingDiff !== 0 && (
                     <span className={props.ratingDiff > 0 ? 'text-theme-green' : 'text-red-600'}>
                         {' '}{props.ratingDiff > 0 && '+'}{props.ratingDiff}
