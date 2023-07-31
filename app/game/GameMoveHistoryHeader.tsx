@@ -7,7 +7,7 @@ import GameContext from '../../contexts/GameContext';
 export default function GameMoveHistoryHeader() {
     const {moves, gameStateIndex, setGameStateIndex} = useContext(GameContext);
 
-    useHotkeys('left', () => setGameStateIndex(Math.max(gameStateIndex - 1, 1)), [gameStateIndex]);
+    useHotkeys('left', () => gameStateIndex > 0 && setGameStateIndex(Math.max(gameStateIndex - 1, 1)), [gameStateIndex]);
     useHotkeys('right', () => setGameStateIndex(Math.min(gameStateIndex + 1, moves.length)), [gameStateIndex]);
 
     return (
