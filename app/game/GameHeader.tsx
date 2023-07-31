@@ -8,11 +8,12 @@ import {BiCircle, BiSolidCircle} from 'react-icons/bi';
 // Util
 import {keyToIcon} from '../profile/ProfileSidebarItem';
 import {timeControlToString} from '../../util/game';
+import {winTypeToStr} from './GameOverMessage';
 import type {Player} from './[id]/page';
 
 
 export default function GameHeader() {
-    const {info, fratingDiff, sratingDiff} = useContext(GameContext);
+    const {info, gameStatus, endType, fratingDiff, sratingDiff} = useContext(GameContext);
     const Icon = keyToIcon(info.game.key);
 
     return (
@@ -39,6 +40,19 @@ export default function GameHeader() {
 
             <PlayerIndicator user={info.first} first ratingDiff={fratingDiff} />
             <PlayerIndicator user={info.second} ratingDiff={sratingDiff} />
+
+            {gameStatus !== 'WAITING' && gameStatus !== 'STARTED' && (
+                <>
+                    <hr className="border-tertiary my-3.5" />
+                    <p className="text-secondary text-center">
+                        {gameStatus === 'DRAW' ? (
+                            endType === 'STALEMATE' ? 'Stalemate' : 'Draw by mutual agreement'
+                        ) : (
+                            `${gameStatus === 'FIRST_WON' ? 'O' : 'X'} ${winTypeToStr(endType)} • ${gameStatus === 'FIRST_WON' ? 'X' : 'O'} is victorious`
+                        )}
+                    </p>
+                </>
+            )}
         </div>
     )
 }

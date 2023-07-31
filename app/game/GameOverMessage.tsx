@@ -35,7 +35,7 @@ export default function GameOverMessage() {
     )
 }
 
-function winTypeToStr(type: EndType | null) {
+export function winTypeToStr(type: EndType | null) {
     switch (type) {
         case 'RESIGN': return 'resigned';
         case 'TIMEOUT': return 'timed out';
