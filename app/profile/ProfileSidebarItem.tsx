@@ -22,7 +22,7 @@ export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
                     {keyToName(props.game)}
                 </h5>
                 <p className="flex gap-2 text-sm items-center">
-                    <strong className="md:text-lg">{props.rating}{props.prov && '?'}</strong>
+                    <strong className="md:text-lg">{Math.floor(props.rating)}{props.prov && '?'}</strong>
                     <span className="hidden lg:block">{props.games} games</span>
                 </p>
             </div>

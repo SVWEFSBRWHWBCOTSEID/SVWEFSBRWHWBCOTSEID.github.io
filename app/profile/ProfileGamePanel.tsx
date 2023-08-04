@@ -3,6 +3,7 @@
 import {useContext} from 'react';
 import Link from 'next/link';
 import {Tab} from '@headlessui/react';
+import {ImArrowDownRight, ImArrowUpRight} from 'react-icons/im';
 
 // Components
 import ProfileGames from './ProfileGames';
@@ -27,7 +28,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
 
             <section className="px-8 py-6">
                 <p className="text-2xl mb-3 font-light">
-                    Rating: <strong className="font-semibold">{props.rating}</strong>.{' '}
+                    Rating: <strong className="font-semibold">{props.rating.toFixed(2)}</strong>.{' '}
                     {props.prov ? (
                         <span
                             className="text-secondary cursor-help underline decoration-dashed decoration-blue-500 decoration-1 underline-offset-4"
@@ -43,14 +44,25 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
                     )}
                 </p>
 
-                {/* TODO: rating change arrow / color, tooltips */}
                 <p className="text-sm text-secondary">
-                    Progression over the last 12 games: {props.prog}. Rating deviation:{' '}
+                    Progression over the last 12 games:{' '}
+                    {props.prog > 0 ? (
+                        <span className="text-theme-green">
+                            <ImArrowUpRight className="inline" /> {props.prog.toFixed()}
+                        </span>
+                    ) : props.prog < 0 ? (
+                        <span className="text-red-600">
+                            <ImArrowDownRight className="inline" /> {Math.abs(props.prog).toFixed()}
+                        </span>
+                    ) : (
+                        '-'
+                    )}
+                    . Rating deviation:{' '}
                     <strong
                         className="cursor-help underline decoration-dashed decoration-blue-500 underline-offset-[3px]"
-                        title="A lower value means the rating is more stable. ..."
+                        title="A lower value means the rating is more stable. Above 110, the rating is considered provisional."
                     >
-                        {props.rd}
+                        {props.rd.toFixed(2)}
                     </strong>.
                 </p>
             </section>
