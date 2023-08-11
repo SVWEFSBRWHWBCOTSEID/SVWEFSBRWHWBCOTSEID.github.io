@@ -1,5 +1,8 @@
-import {MouseEventHandler, ReactNode} from 'react';
+'use client'
+
+import {MouseEventHandler, ReactNode, useContext} from 'react';
 import {createGame} from '../../util/game';
+import UserContext from '../../contexts/UserContext';
 import type {GameNameInfo} from '../game/[id]/page';
 
 
@@ -18,10 +21,13 @@ export default function QuickPairingButton(props: QuickPairingButtonProps) {
 
 type QuickPairingPresetButtonProps = {game: GameNameInfo, minutes: number, increment: number};
 export function QuickPairingPresetButton(props: QuickPairingPresetButtonProps) {
+    const {user} = useContext(UserContext);
+    const rating = user?.perfs[props.game.key].rating ?? 1500;
+
     return (
         <QuickPairingButton
             game={props.game.name}
-            onClick={() => createGame(props.game.key, 1337, props.minutes, props.increment)}
+            onClick={() => createGame(props.game.key, rating, props.minutes, props.increment)}
         >
             {props.minutes}+{props.increment}
         </QuickPairingButton>
