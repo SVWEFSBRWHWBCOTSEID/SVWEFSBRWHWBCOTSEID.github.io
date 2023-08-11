@@ -34,8 +34,8 @@ export async function createGame(
         time: timed ? minutes * 60 * 1000 : undefined,
         increment: timed ? increment * 1000 : undefined,
         side,
-        ratingMin: rating + ratingOffsetMin,
-        ratingMax: rating + ratingOffsetMax
+        ratingMin: Math.round(rating + ratingOffsetMin),
+        ratingMax: Math.round(rating + ratingOffsetMax)
     }
 
     const res: CreateGameResponse = await (await fetch(`${process.env.API_BASE}/game/new/${game}`, {
