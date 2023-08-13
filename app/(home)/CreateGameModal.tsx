@@ -182,7 +182,7 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             <section className="px-8 py-3.5 text-sm text-secondary flex justify-center gap-1 border-t border-tertiary bg-[rgb(48_46_44)] rounded-b-lg">
                 Rating:
                 <strong className="flex items-center gap-0.5">
-                    <Icon className="inline text-lg" /> {rating}{prov && '?'}
+                    <Icon className="inline text-lg" /> {Math.floor(rating)}{prov && '?'}
                 </strong>
                 {game.name}
             </section>
