@@ -9,6 +9,7 @@ import {GiPotato} from 'react-icons/gi';
 import {MdCatchingPokemon, MdGrid3X3, MdGrid4X4} from 'react-icons/md';
 import {PiNumberCircleFourFill} from 'react-icons/pi';
 import {AiFillCaretRight} from 'react-icons/ai';
+import {ImArrowDownRight, ImArrowUpRight} from 'react-icons/im';
 
 
 export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
@@ -21,8 +22,17 @@ export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
                 <h5 className="hidden lg:block uppercase font-light text-left">
                     {keyToName(props.game)}
                 </h5>
-                <p className="flex gap-2 text-sm items-center">
+                <p className="flex flex-wrap gap-x-1.5 text-sm items-center">
                     <strong className="md:text-lg">{Math.floor(props.rating)}{props.prov && '?'}</strong>
+                    {props.prog > 0 ? (
+                        <span className="text-theme-green">
+                            <ImArrowUpRight className="inline" /> {props.prog.toFixed()}
+                        </span>
+                    ) : props.prog < 0 ? (
+                        <span className="text-red-600">
+                            <ImArrowDownRight className="inline" /> {Math.abs(props.prog).toFixed()}
+                        </span>
+                    ) : null}
                     <span className="hidden lg:block">{props.games} games</span>
                 </p>
             </div>
