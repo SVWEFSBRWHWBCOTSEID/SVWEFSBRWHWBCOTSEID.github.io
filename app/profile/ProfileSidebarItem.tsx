@@ -25,11 +25,11 @@ export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
                 <p className="flex flex-wrap gap-x-1.5 text-sm items-center">
                     <strong className="md:text-lg">{Math.floor(props.rating)}{props.prov && '?'}</strong>
                     {props.prog > 0 ? (
-                        <span className="text-theme-green">
+                        <span className="text-theme-green hidden lg:block">
                             <ImArrowUpRight className="inline" /> {props.prog.toFixed()}
                         </span>
                     ) : props.prog < 0 ? (
-                        <span className="text-red-600">
+                        <span className="text-red-600 hidden lg:block">
                             <ImArrowDownRight className="inline" /> {Math.abs(props.prog).toFixed()}
                         </span>
                     ) : null}
