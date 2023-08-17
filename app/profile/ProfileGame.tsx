@@ -1,5 +1,6 @@
 import {ReactNode} from 'react';
 import {DateTime} from 'luxon';
+import {BiSolidPlusSquare, BiSolidMinusSquare} from 'react-icons/bi';
 import type {GameInfo} from '../game/[id]/page';
 
 // Util
@@ -11,7 +12,7 @@ export default function ProfileGame(props: GameInfo) {
     const Icon = keyToIcon(props.game.key);
 
     return (
-        <div className="table-row text-sm">
+        <div className="table-row text-sm text-primary">
             <ProfileGameCell>
                 <Icon className="text-4xl" />
             </ProfileGameCell>
@@ -23,7 +24,11 @@ export default function ProfileGame(props: GameInfo) {
             <ProfileGameCell>
                 {timeControlToString(props.timeControl)} | {props.game.key.toUpperCase()}
             </ProfileGameCell>
-            <ProfileGameCell>1-0</ProfileGameCell> {/* TODO */}
+            <ProfileGameCell>
+                {/* TODO */}
+                <BiSolidPlusSquare className="inline text-theme-green text-lg mr-1.5" />
+                1-0
+            </ProfileGameCell>
             <ProfileGameCell className="text-right">
                 {DateTime.fromSQL(props.createdAt).toLocaleString()}
             </ProfileGameCell>

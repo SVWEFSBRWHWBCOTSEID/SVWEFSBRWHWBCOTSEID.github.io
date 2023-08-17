@@ -25,7 +25,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
                 {keyToName(props.game)} stats
             </h1>
 
-            {filtered.length && (
+            {!!filtered.length && (
                 <ProfileEloChart username={username} games={filtered} />
             )}
 

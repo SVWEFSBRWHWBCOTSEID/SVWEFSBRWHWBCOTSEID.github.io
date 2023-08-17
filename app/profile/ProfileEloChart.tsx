@@ -235,7 +235,7 @@ export default function ProfileEloChart(props: ProfileEloChartProps) {
             data: props.games.sort((gameA, gameB) => DateTime.fromSQL(gameA.createdAt).valueOf() - DateTime.fromSQL(gameB.createdAt).valueOf()).map(game => ({
                 x: DateTime.fromSQL(game.createdAt).valueOf(),
                 y: game.first.username === props.username ? game.first.rating : game.second.rating,
-                name: DateTime.fromSQL(game.createdAt).toLocaleString()
+                name: DateTime.fromSQL(game.createdAt).toLocaleString() // TODO: format
             })),
             marker: { enabled: false }
         }],

@@ -16,7 +16,7 @@ export default function ProfileUserPanel() {
     return (
         <Tab.Panel>
             <ProfileHeader />
-            {games.length && (
+            {!!games.length && (
                 <ProfileEloChart username={username} games={games} />
             )}
             <ProfileGames games={games} />
