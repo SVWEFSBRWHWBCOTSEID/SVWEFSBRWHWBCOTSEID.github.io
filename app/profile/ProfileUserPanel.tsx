@@ -11,13 +11,13 @@ import ProfileGames from './ProfileGames';
 
 
 export default function ProfileUserPanel() {
-    const {username, games} = useContext(ProfileContext);
+    const {games} = useContext(ProfileContext);
 
     return (
         <Tab.Panel>
             <ProfileHeader />
             {!!games.length && (
-                <ProfileEloChart username={username} games={games} />
+                <ProfileEloChart games={games} />
             )}
             <ProfileGames games={games} />
         </Tab.Panel>

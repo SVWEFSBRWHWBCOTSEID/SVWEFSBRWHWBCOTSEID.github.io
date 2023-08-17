@@ -1,11 +1,18 @@
 'use client'
 
+import {useContext, useMemo} from 'react';
 import {DateTime} from 'luxon';
+
+// Highcharts
 import Highcharts from 'highcharts/highstock';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
+
+// Util
+import ProfileContext from '../../contexts/ProfileContext';
 import type {GameInfo} from '../game/[id]/page';
+import type {GameKey} from '../../contexts/ProfileContext';
 
 // https://github.com/highcharts/highcharts-react#highcharts-with-nextjs
 if (typeof Highcharts === 'object') {
@@ -43,7 +50,7 @@ Highcharts.setOptions({
         style: {
             font: '13px',
             color: text.strong,
-        },
+        }
     },
     xAxis: {
         gridLineWidth: 0,
@@ -62,9 +69,7 @@ Highcharts.setOptions({
                 font: '12px',
             },
         },
-        crosshair: {
-            color: line.weak,
-        },
+        crosshair: { color: line.weak }
     },
     // @ts-ignore
     yAxis: {
@@ -78,22 +83,18 @@ Highcharts.setOptions({
             style: {
                 color: text.weak,
                 fontSize: '10px',
-            },
+            }
         },
         title: {
             style: {
                 color: text.weak,
                 font: '12px',
-            },
+            }
         },
     },
     legend: {
-        itemStyle: {
-            color: text.strong,
-        },
-        itemHiddenStyle: {
-            color: text.weak,
-        },
+        itemStyle: { color: text.strong },
+        itemHiddenStyle: { color: text.weak }
     },
     /*
     labels: {
@@ -121,8 +122,8 @@ Highcharts.setOptions({
         borderWidth: 0,
         style: {
             fontWeight: 'bold',
-            color: text.strong,
-        },
+            color: text.strong
+        }
     },
     plotOptions: {
         series: {
@@ -130,49 +131,33 @@ Highcharts.setOptions({
             // nullColor: '#444444',
         },
         line: {
-            dataLabels: {
-                color: text.strong,
-            },
-            marker: {
-                lineColor: text.weak,
-            },
+            dataLabels: { color: text.strong },
+            marker: { lineColor: text.weak }
         },
         spline: {
-            marker: {
-                lineColor: text.weak,
-            },
+            marker: { lineColor: text.weak }
         },
         scatter: {
-            marker: {
-                lineColor: text.weak,
-            },
+            marker: { lineColor: text.weak }
         },
-        candlestick: {
-            lineColor: text.strong,
-        },
+        candlestick: { lineColor: text.strong }
     },
 
     rangeSelector: {
         buttonTheme: {
             fill: '#505053',
             stroke: '#000000',
-            style: {
-                color: '#CCC',
-            },
+            style: { color: '#CCC' },
             states: {
                 hover: {
                     fill: '#707073',
                     stroke: '#000000',
-                    style: {
-                        color: 'white',
-                    },
+                    style: { color: 'white' }
                 },
                 select: {
                     fill: '#000003',
                     stroke: '#000000',
-                    style: {
-                        color: 'white',
-                    },
+                    style: { color: 'white' },
                 },
             },
         },
@@ -204,8 +189,22 @@ Highcharts.setOptions({
 })
 
 
-type ProfileEloChartProps = {username: string, games: GameInfo[]}
+type ProfileEloChartProps = {games: GameInfo[]}
 export default function ProfileEloChart(props: ProfileEloChartProps) {
+    const {username, perfs} = useContext(ProfileContext);
+
+    // TODO: skip this for charts with only one game type?
+    const grouped = useMemo(() => {
+        const grouped: {[P: string]: GameInfo[]} = {};
+
+        for (const info of props.games) {
+            if (!grouped[info.game.key]) grouped[info.game.key] = [];
+            grouped[info.game.key].push(info);
+        }
+
+        return grouped;
+    }, [props.games]);
+
     const options: Highcharts.Options = {
         legend: { enabled: false },
         credits: { enabled: false },
@@ -230,15 +229,16 @@ export default function ProfileEloChart(props: ProfileEloChartProps) {
         tooltip: {
             valueDecimals: 0,
         },
-        series: [{
+        series: Object.entries(grouped).map(([key, games]) => ({
             type: 'line',
-            data: props.games.sort((gameA, gameB) => DateTime.fromSQL(gameA.createdAt).valueOf() - DateTime.fromSQL(gameB.createdAt).valueOf()).map(game => ({
-                x: DateTime.fromSQL(game.createdAt).valueOf(),
-                y: game.first.username === props.username ? game.first.rating : game.second.rating,
-                name: DateTime.fromSQL(game.createdAt).toLocaleString() // TODO: format
-            })),
+            name: games[0].game.name, // TODO?
+            data: processDates(
+                games.sort((gameA, gameB) => DateTime.fromSQL(gameA.createdAt).valueOf() - DateTime.fromSQL(gameB.createdAt).valueOf()),
+                username,
+                perfs[key as GameKey].rating
+            ),
             marker: { enabled: false }
-        }],
+        })),
     }
 
     return (
@@ -249,4 +249,32 @@ export default function ProfileEloChart(props: ProfileEloChartProps) {
             options={options}
         />
     )
+}
+
+function processDates(games: GameInfo[], username: string, currRating: number) {
+    const processed: Highcharts.PointOptionsObject[] = [];
+    let i = 0;
+
+    for (
+        let date = DateTime.fromSQL(games[0].createdAt).startOf('day');
+        date < DateTime.fromSQL(games.at(-1)!.createdAt);
+        date = date.plus({day: 1})
+    ) {
+        // Increment pointer to the first game on a different date after the current one.
+        while (i !== games.length && date.valueOf() === DateTime.fromSQL(games[i].createdAt).startOf('day').valueOf()) i++;
+
+        // Display the rating of the next game (ie. rating *after* this game was finished). If the game was the last
+        // one played, use the user's current rating instead.
+        const rating = i == games.length
+            ? currRating
+            : games[i].first.username === username ? games[i].first.rating : games[i].second.rating;
+
+        processed.push({
+            x: date.valueOf(),
+            y: Math.floor(rating),
+            name: date.toLocaleString() // TODO: format
+        });
+    }
+
+    return processed;
 }

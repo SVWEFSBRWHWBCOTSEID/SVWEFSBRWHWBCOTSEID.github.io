@@ -26,7 +26,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
             </h1>
 
             {!!filtered.length && (
-                <ProfileEloChart username={username} games={filtered} />
+                <ProfileEloChart games={filtered} />
             )}
 
             <section className="px-8 py-6">
