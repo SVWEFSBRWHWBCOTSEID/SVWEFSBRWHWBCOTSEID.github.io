@@ -2,13 +2,15 @@
 
 import {DateTime} from 'luxon';
 import Highcharts from 'highcharts/highstock';
+import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 import type {GameInfo} from '../game/[id]/page';
 
 // https://github.com/highcharts/highcharts-react#highcharts-with-nextjs
 if (typeof Highcharts === 'object') {
-    HighchartsExporting(Highcharts)
+    HighchartsAccessibility(Highcharts);
+    HighchartsExporting(Highcharts);
 }
 
 
@@ -230,7 +232,7 @@ export default function ProfileEloChart(props: ProfileEloChartProps) {
         },
         series: [{
             type: 'line',
-            data: props.games.map(game => ({
+            data: props.games.sort((gameA, gameB) => DateTime.fromSQL(gameA.createdAt).valueOf() - DateTime.fromSQL(gameB.createdAt).valueOf()).map(game => ({
                 x: DateTime.fromSQL(game.createdAt).valueOf(),
                 y: game.first.username === props.username ? game.first.rating : game.second.rating,
                 name: DateTime.fromSQL(game.createdAt).toLocaleString()
