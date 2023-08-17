@@ -1,8 +1,10 @@
 'use client'
 
+import {DateTime} from 'luxon';
 import Highcharts from 'highcharts/highstock';
-import HighchartsExporting from 'highcharts/modules/exporting'
+import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
+import type {GameInfo} from '../game/[id]/page';
 
 // https://github.com/highcharts/highcharts-react#highcharts-with-nextjs
 if (typeof Highcharts === 'object') {
@@ -200,7 +202,8 @@ Highcharts.setOptions({
 })
 
 
-export default function ProfileEloChart() {
+type ProfileEloChartProps = {username: string, games: GameInfo[]}
+export default function ProfileEloChart(props: ProfileEloChartProps) {
     const options: Highcharts.Options = {
         legend: { enabled: false },
         credits: { enabled: false },
@@ -227,7 +230,11 @@ export default function ProfileEloChart() {
         },
         series: [{
             type: 'line',
-            data: [1, 2, 3],
+            data: props.games.map(game => ({
+                x: DateTime.fromSQL(game.createdAt).valueOf(),
+                y: game.first.username === props.username ? game.first.rating : game.second.rating,
+                name: DateTime.fromSQL(game.createdAt).toLocaleString()
+            })),
             marker: { enabled: false }
         }],
     }

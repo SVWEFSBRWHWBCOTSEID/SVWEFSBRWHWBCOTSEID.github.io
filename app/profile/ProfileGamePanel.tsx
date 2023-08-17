@@ -16,6 +16,7 @@ import {keyToName} from './ProfileContent';
 
 export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
     const {username, games} = useContext(ProfileContext);
+    const filtered = games.filter(info => info.game.key === props.game);
 
     return (
         <Tab.Panel>
@@ -24,7 +25,9 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
                 {keyToName(props.game)} stats
             </h1>
 
-            <ProfileEloChart />
+            {filtered.length && (
+                <ProfileEloChart username={username} games={filtered} />
+            )}
 
             <section className="px-8 py-6">
                 <p className="text-2xl mb-3 font-light">
