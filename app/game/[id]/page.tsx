@@ -72,7 +72,7 @@ export type Player = {
     provisional: boolean
 }
 
-export type GameInfo = Omit<GameFullEvent, 'type' | 'chat' | 'state'>;
+export type GameInfo = Omit<GameFullEvent, 'type' | 'chat' | 'state'> & {id: string};
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
     const res = await fetch(`${process.env.API_BASE}/game/${params.id}`, {next: {tags: [`game-${params.id}`]}});
