@@ -25,17 +25,22 @@ type TicTacToeBoardProps = {
     setSquare: (square: number, symbol: TTTSymbol) => void,
     small?: boolean,
     disabled: boolean,
-    over: boolean
+    over: boolean,
+    rows?: number,
+    columns?: number
 };
 export default function TicTacToeBoard(props: TicTacToeBoardProps) {
     const {small, disabled, over} = props;
 
+    const rows = props.rows ?? 3;
+    const columns = props.columns ?? 3;
+
     return (
         <TicTacToeGrid disabled={disabled} over={over} small={small}>
-            {TTTIndices.map(row => (
-                <TicTacToeRow small={small} key={row.join()}>
-                    {row.map(id => (
-                        <TicTacToeCell {...props} id={id} key={id} />
+            {Array(rows).fill(0).map((_, i) => (
+                <TicTacToeRow small={small} key={i}>
+                    {Array(columns).fill(0).map((_, j) => (
+                        <TicTacToeCell {...props} id={rows * i + j} key={rows * i + j} />
                     ))}
                 </TicTacToeRow>
             ))}
@@ -151,9 +156,3 @@ export function checkBoardStatus(move: number, board: TTTBoard, rows = 3, column
 
     return BoardStatus.PLAYING;
 }
-
-export const TTTIndices = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8]
-];
