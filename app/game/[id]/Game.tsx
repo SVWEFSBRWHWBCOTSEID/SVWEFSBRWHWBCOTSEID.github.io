@@ -128,8 +128,21 @@ export default function Game<T>(props: GameProps<T>) {
         setDrawOffer(event.drawOffer);
         setEndType(event.endType);
 
-        setMoves((moves) => moves.concat(event.moves));
         props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex: updateGameStateIndex});
+        setMoves((moves) => {
+            const newMoves = moves.concat(event.moves);
+
+            // Dynamically update tab title if playing the game
+            // TODO: blink favicon as well?
+            if (side !== 'SPECTATOR') {
+                const opponent = side === 'FIRST' ? props.info.second.username : props.info.first.username;
+                const yourMove = (side === 'FIRST' && newMoves.length % 2 === 0) || (side === 'SECOND' && newMoves.length % 2 === 1);
+                const isOver = event.status !== 'WAITING' && event.status !== 'STARTED';
+
+                document.title = `${isOver ? 'Game over' : yourMove ? 'Your move' : 'Waiting for opponent'} - Play ${opponent} | gulpin.games`;
+            }
+            return newMoves;
+        });
 
         setFratingDiff(event.fratingDiff);
         setSratingDiff(event.sratingDiff);
