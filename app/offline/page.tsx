@@ -21,9 +21,15 @@ export default function Home() {
             </p>
 
             <section className="flex flex-wrap justify-center gap-6">
-                {/* TODO: update images after UI changes */}
-                <GameCard href="/offline/ttt" name="Tic-Tac-Toe" src="/examples/ttt.png" />
-                <GameCard href="/offline/uttt" name="Ultimate Tic-Tac-Toe" src="/examples/uttt.png" />
+                <GameCard href="/offline/ttt" name="Tic-Tac-Toe" src="/examples/ttt.png">
+                    Classic, 3x3 Tic-Tac-Toe.
+                </GameCard>
+                <GameCard href="/offline/uttt" name="Ultimate Tic-Tac-Toe" src="/examples/uttt.png">
+                    Tic-Tac-Toe within Tic-Tac-Toe! See <strong>Rules</strong> for more.
+                </GameCard>
+                <GameCard href="/offline/cttt" name="Custom Tic-Tac-Toe" src="/examples/cttt.png">
+                    Custom-sized Tic-Tac-Toe, up to 10x10.
+                </GameCard>
             </section>
         </div>
     )
