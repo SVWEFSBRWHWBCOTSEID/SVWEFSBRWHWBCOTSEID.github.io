@@ -40,7 +40,7 @@ export default function TicTacToeBoard(props: TicTacToeBoardProps) {
             {Array(rows).fill(0).map((_, i) => (
                 <TicTacToeRow small={small} key={i}>
                     {Array(columns).fill(0).map((_, j) => (
-                        <TicTacToeCell {...props} id={rows * i + j} key={rows * i + j} />
+                        <TicTacToeCell {...props} id={columns * i + j} key={columns * i + j} />
                     ))}
                 </TicTacToeRow>
             ))}

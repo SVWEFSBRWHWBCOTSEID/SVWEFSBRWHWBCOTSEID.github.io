@@ -52,7 +52,7 @@ export default function UltimateTicTacToeBoard(props: UltimateTicTacToeBoardProp
             {Array(rows).fill(0).map((_, i) => (
                 <TicTacToeRow key={i}>
                     {Array(columns).fill(0).map((_, j) => (
-                        <UltimateTicTacToeCell {...props} id={rows * i + j} key={rows * i + j} />
+                        <UltimateTicTacToeCell {...props} id={columns * i + j} key={columns * i + j} />
                     ))}
                 </TicTacToeRow>
             ))}
