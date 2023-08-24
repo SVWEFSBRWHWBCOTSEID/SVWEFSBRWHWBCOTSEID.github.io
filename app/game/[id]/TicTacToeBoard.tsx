@@ -20,7 +20,7 @@ export enum BoardStatus {
 }
 
 type TicTacToeBoardProps = {
-    boardState: TTTBoard,
+    boardState: TTTSymbol[],
     playerSymbol: TTTSymbol,
     setSquare: (square: number, symbol: TTTSymbol) => void,
     small?: boolean,
@@ -84,7 +84,7 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
 }
 
 // Checks a board for whether someone has won or the game has tied.
-export function checkBoardStatus(move: number, board: TTTBoard, rows = 3, columns = 3, needed = 3) {
+export function checkBoardStatus(move: number, board: TTTSymbol[], rows = 3, columns = 3, needed = 3) {
     // Row
     const rowStart = move - (move % columns)
     for (
