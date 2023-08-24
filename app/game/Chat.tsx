@@ -44,8 +44,8 @@ export default function Chat() {
     }
 
     return (
-        <div className="flex-none text-sm rounded flex flex-col overflow-clip shadow-lg">
-            <div ref={chatRef} className="px-3 py-2 break-words bg-content h-[30rem] x flex-col gap-2 overflow-auto scrollbar:w-1.5 scrollbar:bg-black/10 scrollbar-thumb:bg-tertiary">
+        <div className="flex-none text-sm rounded flex flex-col overflow-clip shadow-lg flex-grow">
+            <div ref={chatRef} className="px-3 py-2 break-words bg-content h-40 md:h-full lg:h-[30rem] x flex-col gap-2 overflow-auto scrollbar:w-1.5 scrollbar:bg-black/10 scrollbar-thumb:bg-tertiary">
                 {chat.map((data, i) => 'username' in data ? (
                     <ChatMessage {...data} key={data.text + data.username + i} />
                 ) : (

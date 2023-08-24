@@ -151,16 +151,18 @@ export default function Game<T>(props: GameProps<T>) {
 
     return (
         <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, rematchOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime, fratingDiff, sratingDiff}}>
-            <div className="flex flex-col gap-5 w-[21rem]">
+            <div className="flex flex-col md:flex-row-reverse lg:flex-col w-full gap-5 lg:w-80 flex-none">
                 <GameHeader />
                 <Chat />
             </div>
 
-            <ScaledBox>
-                {props.children(gameStates, gameStateIndex, gameStatus, side)}
-            </ScaledBox>
+            <div className="flex flex-col md:flex-row gap-x-8 gap-y-4 min-w-0 w-full">
+                <ScaledBox>
+                    {props.children(gameStates, gameStateIndex, gameStatus, side)}
+                </ScaledBox>
 
-            <GameStateIndicator />
+                <GameStateIndicator />
+            </div>
         </GameContext.Provider>
     )
 }

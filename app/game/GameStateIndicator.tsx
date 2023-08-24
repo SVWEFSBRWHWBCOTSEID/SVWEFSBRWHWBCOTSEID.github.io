@@ -22,7 +22,7 @@ export default function GameStateIndicator() {
     const {info, side, gameStatus, drawOffer, ftime, stime, fratingDiff, sratingDiff} = useContext(GameContext);
 
     return (
-        <div className="flex flex-col w-[25rem] drop-shadow-lg">
+        <div className="flex flex-col flex-shrink lg:flex-shrink-0 w-[25rem] basis-80 drop-shadow-lg max-w-full">
             <GameTimeIndicator time={ftime} top playAlert={side === 'FIRST'} />
 
             {/* TODO: support overflow-clip for time indicator bars without hiding rematch cancel button? */}

@@ -17,7 +17,7 @@ export default function GameHeader() {
     const Icon = keyToIcon(info.game.key);
 
     return (
-        <div className="bg-content rounded p-6 shadow-lg">
+        <div className="bg-content rounded p-6 shadow-lg h-max">
             <div className="flex gap-4 mb-2">
                 <Icon className="text-4xl" />
                 <div>
