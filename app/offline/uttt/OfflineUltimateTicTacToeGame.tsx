@@ -11,6 +11,7 @@ import UltimateTicTacToeBoard, {
     UTTTBoardStatuses
 } from '../../game/[id]/UltimateTicTacToeBoard';
 import TicTacToeScoreIndicator, {TTTScores} from '../ttt/TicTacToeScoreIndicator';
+import ScaledBox from '../../../components/ScaledBox';
 
 // Utilities
 import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
@@ -73,18 +74,20 @@ export default function OfflineUltimateTicTacToeGame() {
     }
 
     return (
-        <main className="flex-grow flex flex-col gap-8 items-center justify-center">
+        <main className="flex-grow flex flex-col gap-4 items-center justify-center px-4 min-h-0 pb-8 sm:pb-12 md:pb-16">
             <TicTacToeScoreIndicator scores={scores} />
 
-            <UltimateTicTacToeBoard
-                gameState={gameState}
-                gameStatuses={gameStatuses}
-                playerSymbol={playerSymbol}
-                activeBoard={activeBoard}
-                setSquare={setSquare}
-                disabled={gameStatus !== BoardStatus.PLAYING}
-                over={gameStatus !== BoardStatus.PLAYING}
-            />
+            <ScaledBox className="w-full">
+                <UltimateTicTacToeBoard
+                    gameState={gameState}
+                    gameStatuses={gameStatuses}
+                    playerSymbol={playerSymbol}
+                    activeBoard={activeBoard}
+                    setSquare={setSquare}
+                    disabled={gameStatus !== BoardStatus.PLAYING}
+                    over={gameStatus !== BoardStatus.PLAYING}
+                />
+            </ScaledBox>
 
             <section className="relative mb-8">
                 {gameStatus === BoardStatus.PLAYING ? (

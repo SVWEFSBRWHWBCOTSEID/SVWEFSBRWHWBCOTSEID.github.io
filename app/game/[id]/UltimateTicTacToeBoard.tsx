@@ -83,7 +83,7 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
                 playerSymbol={playerSymbol}
                 setSquare={(square, symbol) => setSquare(id, square, symbol)}
                 disabled={disabled || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
-                over={props.over || (activeBoard !== ANY_BOARD && id !== activeBoard)}
+                over={props.over || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
             />
         </div>
     )
