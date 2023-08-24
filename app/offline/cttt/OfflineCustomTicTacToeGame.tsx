@@ -12,6 +12,7 @@ import TicTacToeBoard, {
 } from '../../game/[id]/TicTacToeBoard';
 import TicTacToeScoreIndicator, {TTTScores} from '../ttt/TicTacToeScoreIndicator';
 import SecondarySlider from '../../../components/SecondarySlider';
+import ScaledBox from '../../../components/ScaledBox';
 
 
 export default function OfflineCustomTicTacToeGame() {
@@ -57,20 +58,22 @@ export default function OfflineCustomTicTacToeGame() {
     }
 
     return (
-        <main className="flex-grow flex flex-col gap-8 items-center justify-center">
+        <main className="flex-grow flex flex-col gap-4 items-center justify-center px-4 min-h-0 pb-8 sm:pb-12 md:pb-16">
             <TicTacToeScoreIndicator scores={scores} />
 
-            <TicTacToeBoard
-                boardState={gameState}
-                playerSymbol={playerSymbol}
-                setSquare={setSquare}
-                disabled={gameStatus !== BoardStatus.PLAYING}
-                over={gameStatus !== BoardStatus.PLAYING}
-                rows={rows}
-                columns={columns}
-            />
+            <ScaledBox className="w-full" rescale={[rows, columns]}>
+                <TicTacToeBoard
+                    boardState={gameState}
+                    playerSymbol={playerSymbol}
+                    setSquare={setSquare}
+                    disabled={gameStatus !== BoardStatus.PLAYING}
+                    over={gameStatus !== BoardStatus.PLAYING}
+                    rows={rows}
+                    columns={columns}
+                />
+            </ScaledBox>
 
-            <section className="flex gap-4">
+            <section className="flex flex-wrap justify-center gap-x-4 gap-y-2">
                 <div className="w-56">
                     <p className="mb-1.5 text-sm">Rows: <strong>{rows}</strong></p>
                     <SecondarySlider
@@ -105,7 +108,7 @@ export default function OfflineCustomTicTacToeGame() {
                 </div>
             </section>
 
-            <section className="relative pb-16">
+            <section className="relative">
                 {gameStatus === BoardStatus.PLAYING ? (
                     <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
                 ) : gameStatus === BoardStatus.TIED ? (
