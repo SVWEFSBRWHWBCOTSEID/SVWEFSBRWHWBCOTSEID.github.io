@@ -9,6 +9,7 @@ import GameContext from '../../../contexts/GameContext';
 import Chat, {ChatData} from '../Chat';
 import GameHeader from '../GameHeader';
 import GameStateIndicator from '../GameStateIndicator';
+import ScaledBox from '../../../components/ScaledBox';
 
 // Util
 import {revalidate} from '../../../util/actions';
@@ -155,7 +156,9 @@ export default function Game<T>(props: GameProps<T>) {
                 <Chat />
             </div>
 
-            {props.children(gameStates, gameStateIndex, gameStatus, side)}
+            <ScaledBox>
+                {props.children(gameStates, gameStateIndex, gameStatus, side)}
+            </ScaledBox>
 
             <GameStateIndicator />
         </GameContext.Provider>
