@@ -1,5 +1,4 @@
 import {Metadata} from 'next';
-import StickySidebar from '../../../components/StickySidebar';
 import SectionHeader from '../../../components/SectionHeader';
 
 
@@ -10,7 +9,7 @@ export const metadata: Metadata = {
 export default function Rules() {
     return (
         <div className="container flex gap-10 pt-4 pb-12">
-            <StickySidebar>
+            <aside className="sticky flex-none pl-8 py-4 h-max hidden md:block top-6">
                 <h3 className="font-medium text-lg mb-3">Table of contents</h3>
                 <ul className="list-disc list-outside pl-8 flex flex-col gap-1 mb-3 text-secondary">
                     <li>
@@ -26,8 +25,8 @@ export default function Rules() {
                         <a href="#pc" className="hover:underline">Pokemon Chess</a>
                     </li>
                 </ul>
-            </StickySidebar>
-            <div className="md:pl-10 md:border-l border-tertiary py-4">
+            </aside>
+            <div className="md:pl-12 md:border-l border-tertiary py-4">
                 <SectionHeader id="ttt">Tic-Tac-Toe</SectionHeader>
                 <img src="/examples/ttt.png" alt="Tic-Tac-Toe game" className="w-full max-w-lg mx-auto mb-4" />
                 <p className="mb-6">
