@@ -156,7 +156,7 @@ export default function Game<T>(props: GameProps<T>) {
                 <Chat />
             </div>
 
-            <div className="flex flex-col md:flex-row gap-x-8 gap-y-4 min-w-0 w-full">
+            <div className="flex flex-col md:flex-row md:items-center gap-x-8 gap-y-4 min-w-0 w-full">
                 <ScaledBox>
                     {props.children(gameStates, gameStateIndex, gameStatus, side)}
                 </ScaledBox>
