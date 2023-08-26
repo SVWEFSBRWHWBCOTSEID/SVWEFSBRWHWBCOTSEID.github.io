@@ -136,9 +136,8 @@ export function checkBoardStatus(move: number, board: TTTSymbol[], rows = 3, col
         ? ((rowNum + colStart) - (columns - 1)) * columns + (columns - 1)
         : rowNum + colStart
 
-    // TODO: condition for checking antidiag?
-    // if (Math.abs(rowNum + colStart) >= needed)
-    for (
+    // TODO: rows check?
+    if (antiDiagStart >= needed - 1) for (
         let i = antiDiagStart;
         i < Math.min(move + (needed * (columns - 1)) + 1, board.length);
         i += columns - 1
