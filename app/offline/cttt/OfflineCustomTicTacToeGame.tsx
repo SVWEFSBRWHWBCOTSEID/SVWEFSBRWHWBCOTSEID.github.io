@@ -6,22 +6,22 @@ import {useState} from 'react';
 import TicTacToeBoard, {
     defaultTTTBoard,
     BoardStatus,
-    TTTSymbol,
+    PlayerSymbol,
     checkBoardStatus
 } from '../../game/[id]/TicTacToeBoard';
-import TicTacToeScoreIndicator, {TTTScores} from '../ttt/TicTacToeScoreIndicator';
+import OfflineScoreIndicator, {Scores} from '../ttt/OfflineScoreIndicator';
 import SecondarySlider from '../../../components/SecondarySlider';
 import ScaledBox from '../../../components/ScaledBox';
 
 
 export default function OfflineCustomTicTacToeGame() {
-    const [gameState, setGameState] = useState<TTTSymbol[]>(defaultTTTBoard);
+    const [gameState, setGameState] = useState<PlayerSymbol[]>(defaultTTTBoard);
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
 
-    const [scores, setScores] = useState<TTTScores>([0, 0]);
+    const [scores, setScores] = useState<Scores>([0, 0]);
 
-    const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
-    const [nextStartSymbol, setNextStartSymbol] = useState<TTTSymbol>('◯');
+    const [playerSymbol, setPlayerSymbol] = useState<PlayerSymbol>('✕');
+    const [nextStartSymbol, setNextStartSymbol] = useState<PlayerSymbol>('◯');
 
     const [rows, setRows] = useState(3);
     const [columns, setColumns] = useState(3);
@@ -44,7 +44,7 @@ export default function OfflineCustomTicTacToeGame() {
     }
 
     // Makes a move by checking the given square, alternating the player's symbol after each move.
-    function setSquare(square: number, symbol: TTTSymbol) {
+    function setSquare(square: number, symbol: PlayerSymbol) {
         const newGameState = [...gameState]
         newGameState[square] = symbol;
 
@@ -58,8 +58,8 @@ export default function OfflineCustomTicTacToeGame() {
         // Wins are +1 for the winner, ties are +0.5 for both players
         switch (status) {
             case BoardStatus.TIED: setScores([scores[0] + 0.5, scores[1] + 0.5]); break;
-            case BoardStatus.X_VICTORY: setScores([scores[0] + 1, scores[1]]); break;
-            case BoardStatus.O_VICTORY: setScores([scores[0], scores[1] + 1]); break;
+            case BoardStatus.FIRST_VICTORY: setScores([scores[0] + 1, scores[1]]); break;
+            case BoardStatus.SECOND_VICTORY: setScores([scores[0], scores[1] + 1]); break;
         }
     }
 
@@ -74,7 +74,7 @@ export default function OfflineCustomTicTacToeGame() {
 
     return (
         <main className="flex-grow flex flex-col gap-4 items-center justify-center px-4 min-h-0 pb-8 sm:pb-12 md:pb-16">
-            <TicTacToeScoreIndicator scores={scores} />
+            <OfflineScoreIndicator scores={scores} />
 
             <ScaledBox className="w-full" rescale={[rows, columns]}>
                 <TicTacToeBoard
@@ -128,7 +128,7 @@ export default function OfflineCustomTicTacToeGame() {
                     <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
                 ) : gameStatus === BoardStatus.TIED ? (
                     <p className="font-light">The game has tied.</p>
-                ) : gameStatus === BoardStatus.X_VICTORY ? (
+                ) : gameStatus === BoardStatus.FIRST_VICTORY ? (
                     <p className="font-light"><strong>✕</strong> has won!</p>
                 ) : (
                     <p className="font-light"><strong>◯</strong> has won!</p>

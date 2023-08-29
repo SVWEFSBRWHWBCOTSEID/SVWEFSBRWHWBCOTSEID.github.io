@@ -1,8 +1,8 @@
 // Displays a score indicator for offline games. Scores are represented as a tuple of [number, number] for
 // [x wins, o wins].
 // TODO: support online tic-tac-toe with names?
-export type TTTScores = [x: number, o: number];
-export default function TicTacToeScoreIndicator(props: {scores: TTTScores}) {
+export type Scores = [first: number, second: number];
+export default function OfflineScoreIndicator(props: {scores: Scores}) {
     return (
         <section className="flex gap-3 items-center text-3xl font-medium">
             <div className="h-6 w-6 rounded-full bg-red-400" />

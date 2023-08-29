@@ -3,16 +3,17 @@
 import {useState} from 'react';
 
 // Components
-import TicTacToeBoard, {BoardStatus, checkBoardStatus, defaultTTTBoard, PlayerSymbol, TTTBoard} from '../../game/[id]/TicTacToeBoard';
-import OfflineScoreIndicator, {Scores} from './OfflineScoreIndicator';
+import Connect4Board, {getNextUnfilledIndex} from '../../game/[id]/Connect4Board';
+import OfflineScoreIndicator, {Scores} from '../ttt/OfflineScoreIndicator';
 import ScaledBox from '../../../components/ScaledBox';
 
 // Util
+import {BoardStatus, checkBoardStatus, PlayerSymbol} from '../../game/[id]/TicTacToeBoard';
 import {alternatePlayerSymbol} from '../../game/[id]/TicTacToeGame';
 
 
-export default function OfflineTicTacToeGame() {
-    const [gameState, setGameState] = useState<TTTBoard>(defaultTTTBoard);
+export default function OfflineConnect4Game() {
+    const [gameState, setGameState] = useState<PlayerSymbol[]>(Array(42).fill(PlayerSymbol.EMPTY));
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
 
     const [scores, setScores] = useState<Scores>([0, 0]);
@@ -20,16 +21,18 @@ export default function OfflineTicTacToeGame() {
     const [playerSymbol, setPlayerSymbol] = useState<PlayerSymbol>(PlayerSymbol.FIRST);
     const [nextStartSymbol, setNextStartSymbol] = useState<PlayerSymbol>(PlayerSymbol.SECOND);
 
-    // Makes a move by checking the given square, alternating the player's symbol after each move.
-    function setSquare(square: number, symbol: PlayerSymbol) {
-        const newGameState: TTTBoard = [...gameState]
-        newGameState[square] = symbol;
+    // Makes a move by setting the lowest unfilled square in the column, alternating the player's symbol after each move.
+    function setColumn(column: number, symbol: PlayerSymbol) {
+        const newGameState = [...gameState];
+        const index = getNextUnfilledIndex(gameState, column);
+
+        newGameState[index] = symbol;
 
         setGameState(newGameState);
         setPlayerSymbol(alternatePlayerSymbol(playerSymbol));
 
         // Check board status and handle accordingly
-        const status = checkBoardStatus(square, newGameState);
+        const status = checkBoardStatus(index, newGameState, 6, 7, 4);
         setGameStatus(status);
 
         // Wins are +1 for the winner, ties are +0.5 for both players
@@ -43,7 +46,7 @@ export default function OfflineTicTacToeGame() {
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
     // if X started the last game, O starts the next game.
     function resetBoard() {
-        setGameState(defaultTTTBoard);
+        setGameState(Array(42).fill(PlayerSymbol.EMPTY)); // TODO
         setGameStatus(BoardStatus.PLAYING);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(alternatePlayerSymbol(nextStartSymbol));
@@ -54,10 +57,10 @@ export default function OfflineTicTacToeGame() {
             <OfflineScoreIndicator scores={scores} />
 
             <ScaledBox className="w-full">
-                <TicTacToeBoard
+                <Connect4Board
                     boardState={gameState}
                     playerSymbol={playerSymbol}
-                    setSquare={setSquare}
+                    setColumn={setColumn}
                     disabled={gameStatus !== BoardStatus.PLAYING}
                     over={gameStatus !== BoardStatus.PLAYING}
                 />
@@ -69,9 +72,13 @@ export default function OfflineTicTacToeGame() {
                 ) : gameStatus === BoardStatus.TIED ? (
                     <p className="font-light">The game has tied.</p>
                 ) : gameStatus === BoardStatus.FIRST_VICTORY ? (
-                    <p className="font-light"><strong>✕</strong> has won!</p>
+                    <p className="font-light">
+                        <span className="w-4 h-4 rounded-full bg-red-400" /> has won!
+                    </p>
                 ) : (
-                    <p className="font-light"><strong>◯</strong> has won!</p>
+                    <p className="font-light">
+                        <span className="w-4 h-4 rounded-full bg-yellow-400" /> has won!
+                    </p>
                 )}
                 {gameStatus !== BoardStatus.PLAYING && (
                     <button className="absolute top-8 inset-x-0" onClick={resetBoard}>
