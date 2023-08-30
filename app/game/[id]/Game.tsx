@@ -1,6 +1,6 @@
 'use client'
 
-import {Dispatch, ReactNode, SetStateAction, startTransition, useEffect, useState} from 'react';
+import {Dispatch, ReactElement, SetStateAction, startTransition, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Duration} from 'luxon';
 import GameContext from '../../../contexts/GameContext';
@@ -9,6 +9,7 @@ import GameContext from '../../../contexts/GameContext';
 import Chat, {ChatData} from '../Chat';
 import GameHeader from '../GameHeader';
 import GameStateIndicator from '../GameStateIndicator';
+import ScaledBox from '../../../components/ScaledBox';
 
 // Util
 import {revalidate} from '../../../util/actions';
@@ -26,7 +27,7 @@ type GameProps<T> = {
     username?: string,
     defaultBoard: T,
     updateGameStatesFromMoves: (moves: string[], callbacks: UpdateGameStatesCallbacks<T>) => void,
-    children: (gameStates: T[], gameStateIndex: number, gameStatus: Status, side: PlayerSide) => ReactNode
+    children: (gameStates: T[], gameStateIndex: number, gameStatus: Status, side: PlayerSide) => ReactElement
 }
 export default function Game<T>(props: GameProps<T>) {
     const [gameStates, setGameStates] = useState([props.defaultBoard]);
@@ -150,14 +151,18 @@ export default function Game<T>(props: GameProps<T>) {
 
     return (
         <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, rematchOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime, fratingDiff, sratingDiff}}>
-            <div className="flex flex-col gap-5 w-[21rem]">
+            <div className="flex flex-col md:flex-row-reverse xl:flex-col w-full gap-5 xl:w-80 flex-none">
                 <GameHeader />
                 <Chat />
             </div>
 
-            {props.children(gameStates, gameStateIndex, gameStatus, side)}
+            <div className="flex flex-col md:flex-row md:items-center gap-x-8 gap-y-4 min-w-0 w-full">
+                <ScaledBox>
+                    {props.children(gameStates, gameStateIndex, gameStatus, side)}
+                </ScaledBox>
 
-            <GameStateIndicator />
+                <GameStateIndicator />
+            </div>
         </GameContext.Provider>
     )
 }

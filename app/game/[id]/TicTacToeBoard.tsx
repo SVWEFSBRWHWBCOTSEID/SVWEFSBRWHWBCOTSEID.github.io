@@ -20,7 +20,7 @@ export enum BoardStatus {
 }
 
 type TicTacToeBoardProps = {
-    boardState: TTTBoard,
+    boardState: TTTSymbol[],
     playerSymbol: TTTSymbol,
     setSquare: (square: number, symbol: TTTSymbol) => void,
     small?: boolean,
@@ -40,7 +40,7 @@ export default function TicTacToeBoard(props: TicTacToeBoardProps) {
             {Array(rows).fill(0).map((_, i) => (
                 <TicTacToeRow small={small} key={i}>
                     {Array(columns).fill(0).map((_, j) => (
-                        <TicTacToeCell {...props} id={rows * i + j} key={rows * i + j} />
+                        <TicTacToeCell {...props} id={columns * i + j} key={columns * i + j} />
                     ))}
                 </TicTacToeRow>
             ))}
@@ -84,7 +84,7 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
 }
 
 // Checks a board for whether someone has won or the game has tied.
-export function checkBoardStatus(move: number, board: TTTBoard, rows = 3, columns = 3, needed = 3) {
+export function checkBoardStatus(move: number, board: TTTSymbol[], rows = 3, columns = 3, needed = 3) {
     // Row
     const rowStart = move - (move % columns)
     for (
@@ -136,9 +136,8 @@ export function checkBoardStatus(move: number, board: TTTBoard, rows = 3, column
         ? ((rowNum + colStart) - (columns - 1)) * columns + (columns - 1)
         : rowNum + colStart
 
-    // TODO: condition for checking antidiag?
-    // if (Math.abs(rowNum + colStart) >= needed)
-    for (
+    // TODO: rows check?
+    if (antiDiagStart >= needed - 1) for (
         let i = antiDiagStart;
         i < Math.min(move + (needed * (columns - 1)) + 1, board.length);
         i += columns - 1

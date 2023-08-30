@@ -1,8 +1,5 @@
 'use client'
 
-import {useState} from 'react';
-
-// Components
 import Game, {UpdateGameStatesCallbacks} from './Game';
 import UltimateTicTacToeBoard, {
     ANY_BOARD,
@@ -13,15 +10,25 @@ import UltimateTicTacToeBoard, {
 } from './UltimateTicTacToeBoard';
 
 // Utilities
-import {BoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
 import {colToIndex, getTTTSymbolFromSide, indexToCol, rowToIndex} from './TicTacToeGame';
 import type {GameInfo} from './page';
 
 
-export default function UltimateTicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
-    const [gameStatuses, setGameStatuses] = useState(defaultUTTTBoardStatuses);
-    const [activeBoard, setActiveBoard] = useState(4);
+// Stuff all related states into one object to avoid nested `setState()`s when generating game data from moves.
+// TODO: better name?
+type CombinedUTTTBoard = {
+    state: UTTTBoard,
+    statuses: UTTTBoardStatuses,
+    activeBoard: number
+};
+const defaultCombinedUTTTBoard: CombinedUTTTBoard = {
+    state: defaultUTTTBoard,
+    statuses: defaultUTTTBoardStatuses,
+    activeBoard: 4
+}
 
+export default function UltimateTicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
     // Makes a move by checking the given square in the given board.
     async function setSquare(board: number, square: number) {
         const boardCol = board % 3;
@@ -36,23 +43,33 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
             method: 'POST',
             credentials: 'include'
         });
-
-        // TODO: handle active board
-        setActiveBoard(gameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
     }
 
-    function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<UTTTBoard>) {
+    function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<CombinedUTTTBoard>) {
         setGameStates((gameStates) => {
             const arr = gameStates.slice();
             let symbol: TTTSymbol = arr.length % 2 === 0 ? '◯' : '✕';
 
             for (let i = 0; i < moves.length; i++) {
                 const [, boardCol, boardRow, squareCol, squareRow] = moves[i].match(/(\w)(\d)(\w)(\d)/)!;
-                const state = arr.at(-1)!.slice() as UTTTBoard;
+                const outer = rowToIndex(boardRow) + colToIndex(boardCol);
+                const inner = rowToIndex(squareRow) + colToIndex(squareCol);
 
-                state[rowToIndex(boardRow) + colToIndex(boardCol)][rowToIndex(squareRow) + colToIndex(squareCol)] = symbol;
-                arr.push(state);
+                const board = {...arr.at(-1)!};
+                const state = board.state.slice() as UTTTBoard;
+                const statuses = board.statuses.slice() as UTTTBoardStatuses;
 
+                // 1. Set the square on the inner board to the given player symbol
+                const innerState = state[outer].slice() as TTTBoard;
+                innerState[inner] = symbol;
+                state[outer] = innerState;
+
+                // 2. Update the inner board status, and only then
+                // 3. Update the active board
+                statuses[outer] = checkBoardStatus(inner, state[outer]);
+                const activeBoard = statuses[inner] !== BoardStatus.PLAYING ? ANY_BOARD : inner;
+
+                arr.push({state, statuses, activeBoard});
                 symbol = symbol === '✕' ? '◯' : '✕';
             }
 
@@ -65,13 +82,13 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
     }
 
     return (
-        <Game {...props} defaultBoard={defaultUTTTBoard} updateGameStatesFromMoves={updateGameStatesFromMoves}>
+        <Game {...props} defaultBoard={defaultCombinedUTTTBoard} updateGameStatesFromMoves={updateGameStatesFromMoves}>
             {(gameStates, gameStateIndex, gameStatus, side) => (
                 <UltimateTicTacToeBoard
-                    gameState={gameStates[gameStateIndex]}
-                    gameStatuses={gameStatuses}
+                    gameState={gameStates[gameStateIndex].state}
+                    gameStatuses={gameStates[gameStateIndex].statuses}
                     playerSymbol={getTTTSymbolFromSide(side)}
-                    activeBoard={activeBoard}
+                    activeBoard={gameStates[gameStateIndex].activeBoard}
                     setSquare={setSquare}
                     disabled={gameStatus !== 'STARTED' || gameStateIndex !== gameStates.length - 1 || side === 'SPECTATOR'}
                     over={gameStatus !== 'STARTED' && gameStateIndex === gameStates.length - 1}

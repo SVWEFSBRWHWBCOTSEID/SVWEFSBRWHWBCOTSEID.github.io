@@ -11,6 +11,7 @@ import TicTacToeBoard, {
     checkBoardStatus
 } from '../../game/[id]/TicTacToeBoard';
 import TicTacToeScoreIndicator, {TTTScores} from './TicTacToeScoreIndicator';
+import ScaledBox from '../../../components/ScaledBox';
 
 
 export default function OfflineTicTacToeGame() {
@@ -52,16 +53,18 @@ export default function OfflineTicTacToeGame() {
     }
 
     return (
-        <main className="flex-grow flex flex-col gap-8 items-center justify-center">
+        <main className="flex-grow flex flex-col gap-4 items-center justify-center px-4 min-h-0 pb-8 sm:pb-12 md:pb-16">
             <TicTacToeScoreIndicator scores={scores} />
 
-            <TicTacToeBoard
-                boardState={gameState}
-                playerSymbol={playerSymbol}
-                setSquare={setSquare}
-                disabled={gameStatus !== BoardStatus.PLAYING}
-                over={gameStatus !== BoardStatus.PLAYING}
-            />
+            <ScaledBox className="w-full">
+                <TicTacToeBoard
+                    boardState={gameState}
+                    playerSymbol={playerSymbol}
+                    setSquare={setSquare}
+                    disabled={gameStatus !== BoardStatus.PLAYING}
+                    over={gameStatus !== BoardStatus.PLAYING}
+                />
+            </ScaledBox>
 
             <section className="relative">
                 {gameStatus === BoardStatus.PLAYING ? (
