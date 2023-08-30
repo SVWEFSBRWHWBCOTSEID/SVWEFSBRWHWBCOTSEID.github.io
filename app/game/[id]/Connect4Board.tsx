@@ -24,7 +24,7 @@ export default function Connect4Board(props: Connect4BoardProps) {
             {Array(columns).fill(0).map((_, i) => (
                 <Connect4Column {...props} id={i} key={i}>
                     {Array(rows).fill(0).map((_, j) => (
-                        <Connect4Cell {...props} column={i} id={columns * i + j} key={columns * i + j} />
+                        <Connect4Cell {...props} column={i} id={i + columns * j} key={i + columns * j} />
                     ))}
                 </Connect4Column>
             ))}
@@ -34,7 +34,7 @@ export default function Connect4Board(props: Connect4BoardProps) {
 
 export function Connect4Grid(props: {children: ReactNode, disabled: boolean, over: boolean}) {
     return (
-        <div className={'flex divide-white/30 transition-opacity duration-500 divide-x-8 border-white/30 border-8' + (props.over ? ' opacity-30' : '')}>
+        <div className={'flex divide-white/30 transition-opacity duration-500 divide-x-4 border-white/30 border-4' + (props.over ? ' opacity-30' : '')}>
             {props.children}
         </div>
     )
@@ -45,7 +45,7 @@ export function Connect4Column(props: Connect4BoardProps & {id: number, children
 
     return (
         <button
-            className="group flex flex-col divide-white/30 divide-y-8"
+            className="group flex flex-col-reverse divide-white/30 divide-y-4 divide-y-reverse"
             disabled={disabled} // TODO: disable the button if it's not the player's move
             onClick={() => setColumn(id, playerSymbol)}
         >
@@ -62,8 +62,8 @@ function Connect4Cell(props: Connect4BoardProps & {column: number, id: number}) 
     const isHighest = getNextUnfilledIndex(boardState, column) === id;
 
     return (
-        <div className={'font-bold text-center box-content w-36 h-36 text-7xl ' + (displaySymbol === PlayerSymbol.FIRST ? 'text-red-400' : 'text-yellow-400')}>
-            <span className={'w-8 h-8 rounded-full' + (!symbol && isHighest ? ' opacity-0 group-hover:opacity-50 group-disabled:opacity-0' : '')} />
+        <div className="flex items-center justify-center box-content w-24 h-24">
+            <div className={'w-16 h-16 rounded-full '  + (displaySymbol === PlayerSymbol.FIRST ? 'bg-red-400' : 'bg-yellow-400') + (!symbol ? ' opacity-0 group-hover:opacity-50 group-disabled:opacity-0' : '')} />
         </div>
     )
 }

@@ -13,7 +13,7 @@ import {alternatePlayerSymbol} from '../../game/[id]/TicTacToeGame';
 
 
 export default function OfflineConnect4Game() {
-    const [gameState, setGameState] = useState<PlayerSymbol[]>(Array(42).fill(PlayerSymbol.EMPTY));
+    const [gameState, setGameState] = useState<PlayerSymbol[]>(Array(42).fill(PlayerSymbol.EMPTY)); // TODO
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
 
     const [scores, setScores] = useState<Scores>([0, 0]);
@@ -72,12 +72,12 @@ export default function OfflineConnect4Game() {
                 ) : gameStatus === BoardStatus.TIED ? (
                     <p className="font-light">The game has tied.</p>
                 ) : gameStatus === BoardStatus.FIRST_VICTORY ? (
-                    <p className="font-light">
-                        <span className="w-4 h-4 rounded-full bg-red-400" /> has won!
+                    <p className="font-light flex gap-1.5 items-center">
+                        <div className="w-4 h-4 rounded-full bg-red-400" /> has won!
                     </p>
                 ) : (
-                    <p className="font-light">
-                        <span className="w-4 h-4 rounded-full bg-yellow-400" /> has won!
+                    <p className="font-light flex gap-1.5 items-center">
+                        <div className="w-4 h-4 rounded-full bg-yellow-400" /> has won!
                     </p>
                 )}
                 {gameStatus !== BoardStatus.PLAYING && (
