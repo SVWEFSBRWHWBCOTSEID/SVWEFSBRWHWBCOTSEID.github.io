@@ -15,7 +15,7 @@ import ScaledBox from '../../../components/ScaledBox';
 
 // Utilities
 import {BoardStatus, checkBoardStatus, PlayerSymbol, TTTBoard} from '../../game/[id]/TicTacToeBoard';
-import {alternatePlayerSymbol} from '../../game/[id]/TicTacToeGame';
+import {alternatePlayerSymbol, toDisplayTTTSymbol} from '../../game/[id]/TicTacToeGame';
 
 
 export default function OfflineUltimateTicTacToeGame() {
@@ -92,7 +92,9 @@ export default function OfflineUltimateTicTacToeGame() {
 
             <section className="relative mb-8">
                 {gameStatus === BoardStatus.PLAYING ? (
-                    <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
+                    <p className="font-light">
+                        You are playing as <strong>{toDisplayTTTSymbol(playerSymbol)}</strong>. It is your move.
+                    </p>
                 ) : gameStatus === BoardStatus.TIED ? (
                     <p className="font-light">The game has tied.</p>
                 ) : gameStatus === BoardStatus.FIRST_VICTORY ? (

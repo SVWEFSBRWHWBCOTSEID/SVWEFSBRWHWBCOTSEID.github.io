@@ -3,15 +3,13 @@
 import {useState} from 'react';
 
 // Components
-import TicTacToeBoard, {
-    defaultTTTBoard,
-    BoardStatus,
-    PlayerSymbol,
-    checkBoardStatus
-} from '../../game/[id]/TicTacToeBoard';
+import TicTacToeBoard, {BoardStatus, checkBoardStatus, defaultTTTBoard, PlayerSymbol} from '../../game/[id]/TicTacToeBoard';
 import OfflineScoreIndicator, {Scores} from '../ttt/OfflineScoreIndicator';
 import SecondarySlider from '../../../components/SecondarySlider';
 import ScaledBox from '../../../components/ScaledBox';
+
+// Util
+import {alternatePlayerSymbol, toDisplayTTTSymbol} from '../../game/[id]/TicTacToeGame';
 
 
 export default function OfflineCustomTicTacToeGame() {
@@ -20,8 +18,8 @@ export default function OfflineCustomTicTacToeGame() {
 
     const [scores, setScores] = useState<Scores>([0, 0]);
 
-    const [playerSymbol, setPlayerSymbol] = useState<PlayerSymbol>('✕');
-    const [nextStartSymbol, setNextStartSymbol] = useState<PlayerSymbol>('◯');
+    const [playerSymbol, setPlayerSymbol] = useState<PlayerSymbol>(PlayerSymbol.FIRST);
+    const [nextStartSymbol, setNextStartSymbol] = useState<PlayerSymbol>(PlayerSymbol.SECOND);
 
     const [rows, setRows] = useState(3);
     const [columns, setColumns] = useState(3);
@@ -49,7 +47,7 @@ export default function OfflineCustomTicTacToeGame() {
         newGameState[square] = symbol;
 
         setGameState(newGameState);
-        setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
+        setPlayerSymbol(alternatePlayerSymbol(playerSymbol));
 
         // Check board status and handle accordingly
         const status = checkBoardStatus(square, newGameState, rows, columns, needed);
@@ -69,7 +67,7 @@ export default function OfflineCustomTicTacToeGame() {
         setGameState(defaultTTTBoard);
         setGameStatus(BoardStatus.PLAYING);
         setPlayerSymbol(nextStartSymbol);
-        setNextStartSymbol(nextStartSymbol === '✕' ? '◯' : '✕');
+        setNextStartSymbol(alternatePlayerSymbol(nextStartSymbol));
     }
 
     return (
@@ -125,7 +123,9 @@ export default function OfflineCustomTicTacToeGame() {
 
             <section className="relative">
                 {gameStatus === BoardStatus.PLAYING ? (
-                    <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
+                    <p className="font-light">
+                        You are playing as <strong>{toDisplayTTTSymbol(playerSymbol)}</strong>. It is your move.
+                    </p>
                 ) : gameStatus === BoardStatus.TIED ? (
                     <p className="font-light">The game has tied.</p>
                 ) : gameStatus === BoardStatus.FIRST_VICTORY ? (
