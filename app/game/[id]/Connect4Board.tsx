@@ -63,7 +63,7 @@ function Connect4Cell(props: Connect4BoardProps & {column: number, id: number}) 
 
     return (
         <div className="flex items-center justify-center box-content w-24 h-24">
-            <div className={'w-16 h-16 rounded-full '  + (displaySymbol === PlayerSymbol.FIRST ? 'bg-red-400' : 'bg-yellow-400') + (!symbol ? ' opacity-0 group-hover:opacity-50 group-disabled:opacity-0' : '')} />
+            <div className={'w-16 h-16 rounded-full '  + (displaySymbol === PlayerSymbol.FIRST ? 'bg-red-400' : 'bg-yellow-400') + (!symbol ? isHighest ? ' opacity-0 group-hover:opacity-50 group-disabled:opacity-0' : ' opacity-0' : '')} />
         </div>
     )
 }
