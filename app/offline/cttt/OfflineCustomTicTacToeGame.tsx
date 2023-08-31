@@ -5,11 +5,12 @@ import {useState} from 'react';
 // Components
 import TicTacToeBoard, {BoardStatus, checkBoardStatus, defaultTTTBoard, PlayerSymbol} from '../../game/[id]/TicTacToeBoard';
 import OfflineScoreIndicator, {Scores} from '../ttt/OfflineScoreIndicator';
+import OfflineMoveIndicator from '../OfflineMoveIndicator';
 import SecondarySlider from '../../../components/SecondarySlider';
 import ScaledBox from '../../../components/ScaledBox';
 
 // Util
-import {alternatePlayerSymbol, toDisplayTTTSymbol} from '../../game/[id]/TicTacToeGame';
+import {alternatePlayerSymbol} from '../../game/[id]/TicTacToeGame';
 
 
 export default function OfflineCustomTicTacToeGame() {
@@ -121,25 +122,13 @@ export default function OfflineCustomTicTacToeGame() {
                 </div>
             </section>
 
-            <section className="relative">
-                {gameStatus === BoardStatus.PLAYING ? (
-                    <p className="font-light">
-                        You are playing as <strong>{toDisplayTTTSymbol(playerSymbol)}</strong>. It is your move.
-                    </p>
-                ) : gameStatus === BoardStatus.TIED ? (
-                    <p className="font-light">The game has tied.</p>
-                ) : gameStatus === BoardStatus.FIRST_VICTORY ? (
-                    <p className="font-light"><strong>✕</strong> has won!</p>
-                ) : (
-                    <p className="font-light"><strong>◯</strong> has won!</p>
-                )}
-
-                {gameStatus !== BoardStatus.PLAYING && (
-                    <button className="absolute top-8 inset-x-0" onClick={resetBoard}>
-                        Play again
-                    </button>
-                )}
-            </section>
+            <OfflineMoveIndicator
+                status={gameStatus}
+                currPlayer={playerSymbol}
+                first={<strong className="text-red-400">✕</strong>}
+                second={<strong className="text-blue-400">◯</strong>}
+                resetBoard={resetBoard}
+            />
         </main>
     )
 }

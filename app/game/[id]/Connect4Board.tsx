@@ -34,7 +34,7 @@ export default function Connect4Board(props: Connect4BoardProps) {
 
 export function Connect4Grid(props: {children: ReactNode, disabled: boolean, over: boolean}) {
     return (
-        <div className={'flex divide-white/30 transition-opacity duration-500 divide-x-4 border-white/30 border-4' + (props.over ? ' opacity-30' : '')}>
+        <div className={'flex divide-white/30 transition-opacity duration-500 divide-x-2 border-white/30 border-2' + (props.over ? ' opacity-30' : '')}>
             {props.children}
         </div>
     )
@@ -45,7 +45,7 @@ export function Connect4Column(props: Connect4BoardProps & {id: number, children
 
     return (
         <button
-            className="group flex flex-col-reverse divide-white/30 divide-y-4 divide-y-reverse"
+            className="group flex flex-col-reverse divide-white/30 divide-y-2 divide-y-reverse hover:bg-white/5"
             disabled={disabled} // TODO: disable the button if it's not the player's move
             onClick={() => setColumn(id, playerSymbol)}
         >

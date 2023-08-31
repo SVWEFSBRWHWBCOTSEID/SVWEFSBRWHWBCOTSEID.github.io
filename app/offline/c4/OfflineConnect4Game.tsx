@@ -5,6 +5,7 @@ import {useState} from 'react';
 // Components
 import Connect4Board, {getNextUnfilledIndex} from '../../game/[id]/Connect4Board';
 import OfflineScoreIndicator, {Scores} from '../ttt/OfflineScoreIndicator';
+import OfflineMoveIndicator from '../OfflineMoveIndicator';
 import ScaledBox from '../../../components/ScaledBox';
 
 // Util
@@ -66,34 +67,13 @@ export default function OfflineConnect4Game() {
                 />
             </ScaledBox>
 
-            <section className="relative">
-                {gameStatus === BoardStatus.PLAYING ? (
-                    <p className="font-light flex gap-1.5 items-center">
-                        You are playing as
-                        {playerSymbol === PlayerSymbol.FIRST ? (
-                            <div className="w-4 h-4 rounded-full bg-red-400" />
-                        ) : (
-                            <div className="w-4 h-4 rounded-full bg-yellow-400" />
-                        )}.
-                        It is your move.
-                    </p>
-                ) : gameStatus === BoardStatus.TIED ? (
-                    <p className="font-light">The game has tied.</p>
-                ) : gameStatus === BoardStatus.FIRST_VICTORY ? (
-                    <p className="font-light flex gap-1.5 items-center">
-                        <div className="w-4 h-4 rounded-full bg-red-400" /> has won!
-                    </p>
-                ) : (
-                    <p className="font-light flex gap-1.5 items-center">
-                        <div className="w-4 h-4 rounded-full bg-yellow-400" /> has won!
-                    </p>
-                )}
-                {gameStatus !== BoardStatus.PLAYING && (
-                    <button className="absolute top-8 inset-x-0" onClick={resetBoard}>
-                        Play again
-                    </button>
-                )}
-            </section>
+            <OfflineMoveIndicator
+                status={gameStatus}
+                currPlayer={playerSymbol}
+                first={<div className="w-4 h-4 rounded-full bg-red-400" />}
+                second={<div className="w-4 h-4 rounded-full bg-yellow-400" />}
+                resetBoard={resetBoard}
+            />
         </main>
     )
 }
