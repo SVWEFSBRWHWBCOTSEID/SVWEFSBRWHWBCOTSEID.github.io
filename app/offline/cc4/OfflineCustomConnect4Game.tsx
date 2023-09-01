@@ -3,18 +3,19 @@
 import {useState} from 'react';
 
 // Components
-import TicTacToeBoard, {BoardStatus, checkBoardStatus, defaultTTTBoard, PlayerSymbol} from '../../game/[id]/TicTacToeBoard';
+import Connect4Board, {getNextUnfilledIndex} from '../../game/[id]/Connect4Board';
 import OfflineScoreIndicator, {Scores} from '../ttt/OfflineScoreIndicator';
 import OfflineMoveIndicator from '../OfflineMoveIndicator';
 import SecondarySlider from '../../../components/SecondarySlider';
 import ScaledBox from '../../../components/ScaledBox';
 
 // Util
+import {BoardStatus, checkBoardStatus, PlayerSymbol} from '../../game/[id]/TicTacToeBoard';
 import {alternatePlayerSymbol} from '../../game/[id]/TicTacToeGame';
 
 
-export default function OfflineCustomTicTacToeGame() {
-    const [gameState, setGameState] = useState<PlayerSymbol[]>(defaultTTTBoard);
+export default function OfflineCustomConnect4Game() {
+    const [gameState, setGameState] = useState<PlayerSymbol[]>(Array(42).fill(PlayerSymbol.EMPTY)); // TODO
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
 
     const [scores, setScores] = useState<Scores>([0, 0]);
@@ -22,9 +23,9 @@ export default function OfflineCustomTicTacToeGame() {
     const [playerSymbol, setPlayerSymbol] = useState<PlayerSymbol>(PlayerSymbol.FIRST);
     const [nextStartSymbol, setNextStartSymbol] = useState<PlayerSymbol>(PlayerSymbol.SECOND);
 
-    const [rows, setRows] = useState(3);
-    const [columns, setColumns] = useState(3);
-    const [needed, setNeeded] = useState(3);
+    const [rows, setRows] = useState(6);
+    const [columns, setColumns] = useState(7);
+    const [needed, setNeeded] = useState(4);
 
     // Updates the number of rows in the board, resetting the board and constraining `needed` to below
     // the new max dimension.
@@ -42,16 +43,18 @@ export default function OfflineCustomTicTacToeGame() {
         setGameState(Array(rows * columns).fill(PlayerSymbol.EMPTY))
     }
 
-    // Makes a move by checking the given square, alternating the player's symbol after each move.
-    function setSquare(square: number, symbol: PlayerSymbol) {
-        const newGameState = [...gameState]
-        newGameState[square] = symbol;
+    // Makes a move by setting the lowest unfilled square in the column, alternating the player's symbol after each move.
+    function setColumn(column: number, symbol: PlayerSymbol) {
+        const newGameState = [...gameState];
+        const index = getNextUnfilledIndex(gameState, column, columns);
+
+        newGameState[index] = symbol;
 
         setGameState(newGameState);
         setPlayerSymbol(alternatePlayerSymbol(playerSymbol));
 
         // Check board status and handle accordingly
-        const status = checkBoardStatus(square, newGameState, rows, columns, needed);
+        const status = checkBoardStatus(index, newGameState, rows, columns, needed);
         setGameStatus(status);
 
         // Wins are +1 for the winner, ties are +0.5 for both players
@@ -65,7 +68,7 @@ export default function OfflineCustomTicTacToeGame() {
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
     // if X started the last game, O starts the next game.
     function resetBoard() {
-        setGameState(defaultTTTBoard);
+        setGameState(Array(42).fill(PlayerSymbol.EMPTY)); // TODO
         setGameStatus(BoardStatus.PLAYING);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(alternatePlayerSymbol(nextStartSymbol));
@@ -76,10 +79,10 @@ export default function OfflineCustomTicTacToeGame() {
             <OfflineScoreIndicator scores={scores} />
 
             <ScaledBox className="w-full" rescale={[rows, columns]}>
-                <TicTacToeBoard
+                <Connect4Board
                     boardState={gameState}
                     playerSymbol={playerSymbol}
-                    setSquare={setSquare}
+                    setColumn={setColumn}
                     disabled={gameStatus !== BoardStatus.PLAYING}
                     over={gameStatus !== BoardStatus.PLAYING}
                     rows={rows}
@@ -94,7 +97,7 @@ export default function OfflineCustomTicTacToeGame() {
                         value={rows}
                         onChange={updateRows}
                         min={2}
-                        max={10}
+                        max={20}
                         className="h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200"
                     />
                 </div>
@@ -105,7 +108,7 @@ export default function OfflineCustomTicTacToeGame() {
                         value={columns}
                         onChange={updateColumns}
                         min={2}
-                        max={10}
+                        max={20}
                         className="h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200"
                     />
                 </div>
@@ -125,8 +128,8 @@ export default function OfflineCustomTicTacToeGame() {
             <OfflineMoveIndicator
                 status={gameStatus}
                 currPlayer={playerSymbol}
-                first={<strong className="text-red-400">✕</strong>}
-                second={<strong className="text-blue-400">◯</strong>}
+                first={<div className="w-4 h-4 rounded-full bg-red-400" />}
+                second={<div className="w-4 h-4 rounded-full bg-yellow-400" />}
                 resetBoard={resetBoard}
             />
         </main>

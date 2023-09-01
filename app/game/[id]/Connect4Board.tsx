@@ -69,7 +69,7 @@ function Connect4Cell(props: Connect4BoardProps & {column: number, id: number}) 
 }
 
 // Gets the index of the next unfilled cell in a connect 4 column.
-export function getNextUnfilledIndex(board: PlayerSymbol[], column: number, rows: number = 6, columns: number = 7) {
+export function getNextUnfilledIndex(board: PlayerSymbol[], column: number, columns: number = 7) {
     for (let i = column; i < board.length; i += columns) {
         if (board[i] === PlayerSymbol.EMPTY) return i;
     }
