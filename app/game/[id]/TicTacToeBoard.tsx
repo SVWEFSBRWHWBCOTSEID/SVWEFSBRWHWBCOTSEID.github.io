@@ -1,7 +1,6 @@
 'use client'
 
 import {ReactNode} from 'react';
-import {toDisplayTTTSymbol} from './TicTacToeGame';
 
 
 export enum PlayerSymbol {
@@ -84,6 +83,14 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
             </span>
         </button>
     )
+}
+
+function toDisplayTTTSymbol(symbol: PlayerSymbol) {
+    switch (symbol) {
+        case PlayerSymbol.FIRST: return '✕';
+        case PlayerSymbol.SECOND: return '◯';
+        default: return '';
+    }
 }
 
 // Checks a board for whether someone has won or the game has tied.

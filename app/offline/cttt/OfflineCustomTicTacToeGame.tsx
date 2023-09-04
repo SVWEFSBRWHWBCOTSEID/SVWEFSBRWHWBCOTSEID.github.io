@@ -4,7 +4,7 @@ import {useState} from 'react';
 
 // Components
 import TicTacToeBoard, {BoardStatus, checkBoardStatus, defaultTTTBoard, PlayerSymbol} from '../../game/[id]/TicTacToeBoard';
-import OfflineScoreIndicator, {Scores} from '../ttt/OfflineScoreIndicator';
+import OfflineScoreIndicator, {Scores} from '../OfflineScoreIndicator';
 import OfflineMoveIndicator from '../OfflineMoveIndicator';
 import OfflineBoardCustomizationSliders from '../OfflineBoardCustomizationSliders';
 import ScaledBox from '../../../components/ScaledBox';
@@ -64,7 +64,11 @@ export default function OfflineCustomTicTacToeGame() {
 
     return (
         <main className="flex-grow flex flex-col gap-4 items-center justify-center px-4 min-h-0 pb-8 sm:pb-12 md:pb-16">
-            <OfflineScoreIndicator scores={scores} />
+            <OfflineScoreIndicator
+                scores={scores}
+                firstColor="bg-red-400"
+                secondColor="bg-blue-400"
+            />
 
             <ScaledBox className="w-full" rescale={[rows, columns]}>
                 <TicTacToeBoard

@@ -69,14 +69,6 @@ export function alternatePlayerSymbol(symbol: PlayerSymbol) {
     return symbol === PlayerSymbol.FIRST ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
 }
 
-export function toDisplayTTTSymbol(symbol: PlayerSymbol) {
-    switch (symbol) {
-        case PlayerSymbol.FIRST: return '✕';
-        case PlayerSymbol.SECOND: return '◯';
-        default: return '';
-    }
-}
-
 export function rowToIndex(row: string) {
     return (Number(row) - 1) * 3;
 }
