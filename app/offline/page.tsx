@@ -33,6 +33,9 @@ export default function Home() {
                 <GameCard href="/offline/c4" name="Connect 4" src="/examples/c4.png">
                     Connect 4 in a row on a 6x7 board.
                 </GameCard>
+                <GameCard href="/offline/cc4" name="Custom Connect 4" src="/examples/cc4.png">
+                    Custom-sized Connect 4, up to 20x20.
+                </GameCard>
             </section>
         </div>
     )

@@ -55,11 +55,11 @@ export function Connect4Column(props: Connect4BoardProps & {id: number, children
 }
 
 function Connect4Cell(props: Connect4BoardProps & {column: number, id: number}) {
-    const {boardState, playerSymbol, column, id} = props;
+    const {boardState, playerSymbol, column, columns, id} = props;
 
     const symbol = boardState[id]; // The actual state of the cell
     const displaySymbol = symbol || playerSymbol; // The symbol to display in the <span>
-    const isHighest = getNextUnfilledIndex(boardState, column) === id;
+    const isHighest = getNextUnfilledIndex(boardState, column, columns) === id;
 
     return (
         <div className="flex items-center justify-center box-content w-24 h-24">

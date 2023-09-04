@@ -6,7 +6,7 @@ import {useState} from 'react';
 import Connect4Board, {getNextUnfilledIndex} from '../../game/[id]/Connect4Board';
 import OfflineScoreIndicator, {Scores} from '../ttt/OfflineScoreIndicator';
 import OfflineMoveIndicator from '../OfflineMoveIndicator';
-import SecondarySlider from '../../../components/SecondarySlider';
+import OfflineBoardCustomizationSliders from '../OfflineBoardCustomizationSliders';
 import ScaledBox from '../../../components/ScaledBox';
 
 // Util
@@ -26,22 +26,6 @@ export default function OfflineCustomConnect4Game() {
     const [rows, setRows] = useState(6);
     const [columns, setColumns] = useState(7);
     const [needed, setNeeded] = useState(4);
-
-    // Updates the number of rows in the board, resetting the board and constraining `needed` to below
-    // the new max dimension.
-    function updateRows(rows: number) {
-        setRows(rows);
-        setNeeded(Math.min(needed, Math.max(rows, columns)));
-        setGameState(Array(rows * columns).fill(PlayerSymbol.EMPTY))
-    }
-
-    // Updates the number of columns in the board, resetting the board and constraining `needed` to below
-    // the new max dimension.
-    function updateColumns(columns: number) {
-        setColumns(columns);
-        setNeeded(Math.min(needed, Math.max(rows, columns)));
-        setGameState(Array(rows * columns).fill(PlayerSymbol.EMPTY))
-    }
 
     // Makes a move by setting the lowest unfilled square in the column, alternating the player's symbol after each move.
     function setColumn(column: number, symbol: PlayerSymbol) {
@@ -67,11 +51,19 @@ export default function OfflineCustomConnect4Game() {
 
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
     // if X started the last game, O starts the next game.
+    // TODO: abstract with custom ttt game?
     function resetBoard() {
-        setGameState(Array(42).fill(PlayerSymbol.EMPTY)); // TODO
+        setGameState(Array(rows * columns).fill(PlayerSymbol.EMPTY)); // TODO
         setGameStatus(BoardStatus.PLAYING);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(alternatePlayerSymbol(nextStartSymbol));
+    }
+
+    // Resets the current board without starting a new game (alternating player symbols).
+    function resetCurrentBoard() {
+        setGameState(Array(rows * columns).fill(PlayerSymbol.EMPTY));
+        setGameStatus(BoardStatus.PLAYING);
+        setPlayerSymbol(alternatePlayerSymbol(nextStartSymbol));
     }
 
     return (
@@ -90,40 +82,17 @@ export default function OfflineCustomConnect4Game() {
                 />
             </ScaledBox>
 
-            <section className="flex flex-wrap justify-center gap-x-4 gap-y-2">
-                <div className="w-56">
-                    <p className="mb-1.5 text-sm">Rows: <strong>{rows}</strong></p>
-                    <SecondarySlider
-                        value={rows}
-                        onChange={updateRows}
-                        min={2}
-                        max={20}
-                        className="h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200"
-                    />
-                </div>
-
-                <div className="w-56">
-                    <p className="mb-1.5 text-sm">Columns: <strong>{columns}</strong></p>
-                    <SecondarySlider
-                        value={columns}
-                        onChange={updateColumns}
-                        min={2}
-                        max={20}
-                        className="h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200"
-                    />
-                </div>
-
-                <div className="w-56">
-                    <p className="mb-1.5 text-sm"># in a row to win: <strong>{needed}</strong></p>
-                    <SecondarySlider
-                        value={needed}
-                        onChange={setNeeded}
-                        min={2}
-                        max={Math.max(rows, columns)}
-                        className="h-5 slider-thumb:w-8 slider-thumb:h-5 transition duration-200"
-                    />
-                </div>
-            </section>
+            <OfflineBoardCustomizationSliders
+                rows={rows}
+                columns={columns}
+                needed={needed}
+                setRows={setRows}
+                setColumns={setColumns}
+                setNeeded={setNeeded}
+                resetBoard={resetCurrentBoard}
+                maxRows={20}
+                maxColumns={20}
+            />
 
             <OfflineMoveIndicator
                 status={gameStatus}
