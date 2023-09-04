@@ -10,8 +10,8 @@ import UltimateTicTacToeBoard, {
 } from './UltimateTicTacToeBoard';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from './TicTacToeBoard';
-import {colToIndex, getTTTSymbolFromSide, indexToCol, rowToIndex} from './TicTacToeGame';
+import {BoardStatus, checkBoardStatus, TTTBoard, PlayerSymbol} from './TicTacToeBoard';
+import {alternatePlayerSymbol, colToIndex, getPlayerSymbolFromSide, indexToCol, rowToIndex} from './TicTacToeGame';
 import type {GameInfo} from './page';
 
 
@@ -48,7 +48,7 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<CombinedUTTTBoard>) {
         setGameStates((gameStates) => {
             const arr = gameStates.slice();
-            let symbol: TTTSymbol = arr.length % 2 === 0 ? '◯' : '✕';
+            let symbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
 
             for (let i = 0; i < moves.length; i++) {
                 const [, boardCol, boardRow, squareCol, squareRow] = moves[i].match(/(\w)(\d)(\w)(\d)/)!;
@@ -70,7 +70,7 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
                 const activeBoard = statuses[inner] !== BoardStatus.PLAYING ? ANY_BOARD : inner;
 
                 arr.push({state, statuses, activeBoard});
-                symbol = symbol === '✕' ? '◯' : '✕';
+                symbol = alternatePlayerSymbol(symbol);
             }
 
             // If the player is viewing the last move, keep them on the last move when new moves are added
@@ -87,7 +87,7 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
                 <UltimateTicTacToeBoard
                     gameState={gameStates[gameStateIndex].state}
                     gameStatuses={gameStates[gameStateIndex].statuses}
-                    playerSymbol={getTTTSymbolFromSide(side)}
+                    playerSymbol={getPlayerSymbolFromSide(side)}
                     activeBoard={gameStates[gameStateIndex].activeBoard}
                     setSquare={setSquare}
                     disabled={gameStatus !== 'STARTED' || gameStateIndex !== gameStates.length - 1 || side === 'SPECTATOR'}

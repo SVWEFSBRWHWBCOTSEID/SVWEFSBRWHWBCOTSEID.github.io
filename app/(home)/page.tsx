@@ -16,7 +16,7 @@ export default function Home() {
 
     return (
         <main className="container pt-16 pb-20 flex flex-wrap md:flex-nowrap gap-x-8 gap-y-16">
-            <div className="flex-grow">
+            <div className="flex-grow max-w-full min-w-0">
                 {/* <h3 className="text-lg text-center font-medium mb-4">Quick Pairing</h3> */}
                 <QuickPairing />
 

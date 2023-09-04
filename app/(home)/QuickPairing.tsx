@@ -9,7 +9,7 @@ import type {GameNameInfo} from '../game/[id]/page';
 export default function QuickPairing() {
     return (
         <Tab.Group>
-            <Tab.List className="flex gap-2 mb-2">
+            <Tab.List className="flex gap-0.5 md:gap-2 mb-2 overflow-x-auto whitespace-nowrap scrollbar:hidden">
                 {games.map(game => (
                     <QuickPairingTab name={game.name} key={game.key} />
                 ))}

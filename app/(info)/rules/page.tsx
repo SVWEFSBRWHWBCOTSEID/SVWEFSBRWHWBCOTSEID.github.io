@@ -58,6 +58,7 @@ export default function Rules() {
                 </p>
 
                 <SectionHeader id="c4">Connect 4</SectionHeader>
+                <img src="/examples/c4.png" alt="Connect 4 game" className="w-full max-w-2xl mx-auto mb-4" />
                 <p className="mb-16">[...]</p>
 
                 <SectionHeader id="pc">Pokemon Chess</SectionHeader>

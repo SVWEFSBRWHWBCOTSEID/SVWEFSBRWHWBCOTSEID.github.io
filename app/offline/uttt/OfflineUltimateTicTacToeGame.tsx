@@ -10,11 +10,13 @@ import UltimateTicTacToeBoard, {
     UTTTBoard,
     UTTTBoardStatuses
 } from '../../game/[id]/UltimateTicTacToeBoard';
-import TicTacToeScoreIndicator, {TTTScores} from '../ttt/TicTacToeScoreIndicator';
+import OfflineScoreIndicator, {Scores} from '../OfflineScoreIndicator';
+import OfflineMoveIndicator from '../OfflineMoveIndicator';
 import ScaledBox from '../../../components/ScaledBox';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, TTTSymbol} from '../../game/[id]/TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, PlayerSymbol, TTTBoard} from '../../game/[id]/TicTacToeBoard';
+import {alternatePlayerSymbol} from '../../game/[id]/TicTacToeGame';
 
 
 export default function OfflineUltimateTicTacToeGame() {
@@ -23,17 +25,17 @@ export default function OfflineUltimateTicTacToeGame() {
     const [gameStatuses, setGameStatuses] = useState(defaultUTTTBoardStatuses);
     const [activeBoard, setActiveBoard] = useState(4);
 
-    const [scores, setScores] = useState<TTTScores>([0, 0]);
+    const [scores, setScores] = useState<Scores>([0, 0]);
 
-    const [playerSymbol, setPlayerSymbol] = useState<TTTSymbol>('✕');
-    const [nextStartSymbol, setNextStartSymbol] = useState<TTTSymbol>('◯');
+    const [playerSymbol, setPlayerSymbol] = useState<PlayerSymbol>(PlayerSymbol.FIRST);
+    const [nextStartSymbol, setNextStartSymbol] = useState<PlayerSymbol>(PlayerSymbol.SECOND);
 
     // Makes a move by checking the given square in the given board,
     // alternating the player's symbol and setting the new active square after each move.
-    function setSquare(board: number, square: number, symbol: TTTSymbol) {
+    function setSquare(board: number, square: number) {
         const newGameState: UTTTBoard = [...gameState];
         const newBoard: TTTBoard = [...newGameState[board]];
-        newBoard[square] = symbol;
+        newBoard[square] = playerSymbol;
         newGameState[board] = newBoard;
 
         // Check inner board status and update if won
@@ -43,22 +45,22 @@ export default function OfflineUltimateTicTacToeGame() {
         setGameStatuses(newGameStatuses);
 
         setGameState(newGameState);
-        setPlayerSymbol(playerSymbol === '✕' ? '◯' : '✕');
+        setPlayerSymbol(alternatePlayerSymbol(playerSymbol));
         setActiveBoard(newGameStatuses[square] !== BoardStatus.PLAYING ? ANY_BOARD : square);
 
         // Check outer board status and handle accordingly
         const newGameStatus = checkBoardStatus(board, newGameStatuses.map(status => (
-            status === BoardStatus.X_VICTORY ? '✕'
-                : status === BoardStatus.O_VICTORY ? '◯'
-                    : ''
-        )) as TTTBoard)
+            status === BoardStatus.FIRST_VICTORY ? PlayerSymbol.FIRST
+            : status === BoardStatus.SECOND_VICTORY ? PlayerSymbol.SECOND
+            : PlayerSymbol.EMPTY
+        )))
         setGameStatus(newGameStatus);
 
         // Wins are +1 for the winner, ties are +0.5 for both players
         switch (newGameStatus) {
             case BoardStatus.TIED: setScores([scores[0] + 0.5, scores[1] + 0.5]); break;
-            case BoardStatus.X_VICTORY: setScores([scores[0] + 1, scores[1]]); break;
-            case BoardStatus.O_VICTORY: setScores([scores[0], scores[1] + 1]); break;
+            case BoardStatus.FIRST_VICTORY: setScores([scores[0] + 1, scores[1]]); break;
+            case BoardStatus.SECOND_VICTORY: setScores([scores[0], scores[1] + 1]); break;
         }
     }
 
@@ -69,13 +71,17 @@ export default function OfflineUltimateTicTacToeGame() {
         setGameStatus(BoardStatus.PLAYING);
         setGameStatuses(defaultUTTTBoardStatuses);
         setPlayerSymbol(nextStartSymbol);
-        setNextStartSymbol(nextStartSymbol === '✕' ? '◯' : '✕');
+        setNextStartSymbol(alternatePlayerSymbol(nextStartSymbol));
         setActiveBoard(4);
     }
 
     return (
         <main className="flex-grow flex flex-col gap-4 items-center justify-center px-4 min-h-0 pb-8 sm:pb-12 md:pb-16">
-            <TicTacToeScoreIndicator scores={scores} />
+            <OfflineScoreIndicator
+                scores={scores}
+                firstColor="bg-red-400"
+                secondColor="bg-blue-400"
+            />
 
             <ScaledBox className="w-full">
                 <UltimateTicTacToeBoard
@@ -89,22 +95,13 @@ export default function OfflineUltimateTicTacToeGame() {
                 />
             </ScaledBox>
 
-            <section className="relative mb-8">
-                {gameStatus === BoardStatus.PLAYING ? (
-                    <p className="font-light">You are playing as <strong>{playerSymbol}</strong>. It is your move.</p>
-                ) : gameStatus === BoardStatus.TIED ? (
-                    <p className="font-light">The game has tied.</p>
-                ) : gameStatus === BoardStatus.X_VICTORY ? (
-                    <p className="font-light"><strong>✕</strong> has won!</p>
-                ) : (
-                    <p className="font-light"><strong>◯</strong> has won!</p>
-                )}
-                {gameStatus !== BoardStatus.PLAYING && (
-                    <button className="absolute top-8 inset-x-0" onClick={resetBoard}>
-                        Play again
-                    </button>
-                )}
-            </section>
+            <OfflineMoveIndicator
+                status={gameStatus}
+                currPlayer={playerSymbol}
+                first={<strong className="text-red-400">✕</strong>}
+                second={<strong className="text-blue-400">◯</strong>}
+                resetBoard={resetBoard}
+            />
         </main>
     )
 }

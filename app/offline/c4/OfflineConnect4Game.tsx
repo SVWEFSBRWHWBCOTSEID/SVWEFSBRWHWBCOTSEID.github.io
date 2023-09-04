@@ -3,18 +3,18 @@
 import {useState} from 'react';
 
 // Components
-import TicTacToeBoard, {BoardStatus, checkBoardStatus, defaultTTTBoard, PlayerSymbol} from '../../game/[id]/TicTacToeBoard';
+import Connect4Board, {getNextUnfilledIndex} from '../../game/[id]/Connect4Board';
 import OfflineScoreIndicator, {Scores} from '../OfflineScoreIndicator';
 import OfflineMoveIndicator from '../OfflineMoveIndicator';
-import OfflineBoardCustomizationSliders from '../OfflineBoardCustomizationSliders';
 import ScaledBox from '../../../components/ScaledBox';
 
 // Util
+import {BoardStatus, checkBoardStatus, PlayerSymbol} from '../../game/[id]/TicTacToeBoard';
 import {alternatePlayerSymbol} from '../../game/[id]/TicTacToeGame';
 
 
-export default function OfflineCustomTicTacToeGame() {
-    const [gameState, setGameState] = useState<PlayerSymbol[]>(defaultTTTBoard);
+export default function OfflineConnect4Game() {
+    const [gameState, setGameState] = useState<PlayerSymbol[]>(Array(42).fill(PlayerSymbol.EMPTY)); // TODO
     const [gameStatus, setGameStatus] = useState(BoardStatus.PLAYING);
 
     const [scores, setScores] = useState<Scores>([0, 0]);
@@ -22,20 +22,18 @@ export default function OfflineCustomTicTacToeGame() {
     const [playerSymbol, setPlayerSymbol] = useState<PlayerSymbol>(PlayerSymbol.FIRST);
     const [nextStartSymbol, setNextStartSymbol] = useState<PlayerSymbol>(PlayerSymbol.SECOND);
 
-    const [rows, setRows] = useState(3);
-    const [columns, setColumns] = useState(3);
-    const [needed, setNeeded] = useState(3);
+    // Makes a move by setting the lowest unfilled square in the column, alternating the player's symbol after each move.
+    function setColumn(column: number) {
+        const newGameState = [...gameState];
+        const index = getNextUnfilledIndex(gameState, column);
 
-    // Makes a move by checking the given square, alternating the player's symbol after each move.
-    function setSquare(square: number) {
-        const newGameState = [...gameState]
-        newGameState[square] = playerSymbol;
+        newGameState[index] = playerSymbol;
 
         setGameState(newGameState);
         setPlayerSymbol(alternatePlayerSymbol(playerSymbol));
 
         // Check board status and handle accordingly
-        const status = checkBoardStatus(square, newGameState, rows, columns, needed);
+        const status = checkBoardStatus(index, newGameState, 6, 7, 4);
         setGameStatus(status);
 
         // Wins are +1 for the winner, ties are +0.5 for both players
@@ -49,17 +47,10 @@ export default function OfflineCustomTicTacToeGame() {
     // Starts a new game, resetting the board, status, and symbol, alternating start symbols;
     // if X started the last game, O starts the next game.
     function resetBoard() {
-        setGameState(Array(rows * columns).fill(PlayerSymbol.EMPTY));
+        setGameState(Array(42).fill(PlayerSymbol.EMPTY)); // TODO
         setGameStatus(BoardStatus.PLAYING);
         setPlayerSymbol(nextStartSymbol);
         setNextStartSymbol(alternatePlayerSymbol(nextStartSymbol));
-    }
-
-    // Resets the current board without starting a new game (alternating player symbols).
-    function resetCurrentBoard() {
-        setGameState(Array(rows * columns).fill(PlayerSymbol.EMPTY));
-        setGameStatus(BoardStatus.PLAYING);
-        setPlayerSymbol(alternatePlayerSymbol(nextStartSymbol));
     }
 
     return (
@@ -67,36 +58,24 @@ export default function OfflineCustomTicTacToeGame() {
             <OfflineScoreIndicator
                 scores={scores}
                 firstColor="bg-red-400"
-                secondColor="bg-blue-400"
+                secondColor="bg-yellow-400"
             />
 
-            <ScaledBox className="w-full" rescale={[rows, columns]}>
-                <TicTacToeBoard
+            <ScaledBox className="w-full">
+                <Connect4Board
                     boardState={gameState}
                     playerSymbol={playerSymbol}
-                    setSquare={setSquare}
+                    setColumn={setColumn}
                     disabled={gameStatus !== BoardStatus.PLAYING}
                     over={gameStatus !== BoardStatus.PLAYING}
-                    rows={rows}
-                    columns={columns}
                 />
             </ScaledBox>
-
-            <OfflineBoardCustomizationSliders
-                rows={rows}
-                columns={columns}
-                needed={needed}
-                setRows={setRows}
-                setColumns={setColumns}
-                setNeeded={setNeeded}
-                resetBoard={resetCurrentBoard}
-            />
 
             <OfflineMoveIndicator
                 status={gameStatus}
                 currPlayer={playerSymbol}
-                first={<strong className="text-red-400">✕</strong>}
-                second={<strong className="text-blue-400">◯</strong>}
+                first={<div className="w-4 h-4 rounded-full bg-red-400" />}
+                second={<div className="w-4 h-4 rounded-full bg-yellow-400" />}
                 resetBoard={resetBoard}
             />
         </main>

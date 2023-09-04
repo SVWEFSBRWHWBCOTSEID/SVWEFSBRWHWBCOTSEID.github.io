@@ -1,28 +1,30 @@
 'use client'
 
-import {ReactNode, useEffect} from 'react';
+import {ReactNode} from 'react';
 
 
-export type TTTSymbol = '✕' | '◯' | '';
+export enum PlayerSymbol {
+    EMPTY, FIRST, SECOND
+}
 export type TTTBoard = [
-    TTTSymbol, TTTSymbol, TTTSymbol,
-    TTTSymbol, TTTSymbol, TTTSymbol,
-    TTTSymbol, TTTSymbol, TTTSymbol
+    PlayerSymbol, PlayerSymbol, PlayerSymbol,
+    PlayerSymbol, PlayerSymbol, PlayerSymbol,
+    PlayerSymbol, PlayerSymbol, PlayerSymbol
 ];
 export const defaultTTTBoard: TTTBoard = [
-    '', '', '',
-    '', '', '',
-    '', '', ''
+    PlayerSymbol.EMPTY, PlayerSymbol.EMPTY, PlayerSymbol.EMPTY,
+    PlayerSymbol.EMPTY, PlayerSymbol.EMPTY, PlayerSymbol.EMPTY,
+    PlayerSymbol.EMPTY, PlayerSymbol.EMPTY, PlayerSymbol.EMPTY
 ];
 
 export enum BoardStatus {
-    PLAYING, TIED, X_VICTORY, O_VICTORY
+    PLAYING, TIED, FIRST_VICTORY, SECOND_VICTORY
 }
 
 type TicTacToeBoardProps = {
-    boardState: TTTSymbol[],
-    playerSymbol: TTTSymbol,
-    setSquare: (square: number, symbol: TTTSymbol) => void,
+    boardState: PlayerSymbol[],
+    playerSymbol: PlayerSymbol,
+    setSquare: (square: number) => void,
     small?: boolean,
     disabled: boolean,
     over: boolean,
@@ -72,19 +74,27 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
 
     return (
         <button
-            className={'group font-bold text-center box-content ' + (small ? 'w-16 h-16 text-3xl ' : 'w-36 h-36 text-7xl ') + (displaySymbol === '✕' ? 'text-red-400' : 'text-blue-400')}
+            className={'group font-bold text-center box-content ' + (small ? 'w-16 h-16 text-3xl ' : 'w-36 h-36 text-7xl ') + (displaySymbol === PlayerSymbol.FIRST ? 'text-red-400' : 'text-blue-400')}
             disabled={disabled || !!symbol} // TODO: disable the button if it's not the player's move
-            onClick={() => setSquare(id, playerSymbol)}
+            onClick={() => setSquare(id)}
         >
             <span className={(small ? 'p-4' : 'p-8') + (!symbol ? ' opacity-0 hover:opacity-50 group-disabled:opacity-0' : '')}>
-                {displaySymbol}
+                {toDisplayTTTSymbol(displaySymbol)}
             </span>
         </button>
     )
 }
 
+function toDisplayTTTSymbol(symbol: PlayerSymbol) {
+    switch (symbol) {
+        case PlayerSymbol.FIRST: return '✕';
+        case PlayerSymbol.SECOND: return '◯';
+        default: return '';
+    }
+}
+
 // Checks a board for whether someone has won or the game has tied.
-export function checkBoardStatus(move: number, board: TTTSymbol[], rows = 3, columns = 3, needed = 3) {
+export function checkBoardStatus(move: number, board: PlayerSymbol[], rows = 3, columns = 3, needed = 3) {
     // Row
     const rowStart = move - (move % columns)
     for (
@@ -96,7 +106,9 @@ export function checkBoardStatus(move: number, board: TTTSymbol[], rows = 3, col
         for (let j = 1; j < needed; j++)
             cond = cond && board[i] === board[i + j];
 
-        if (cond) return board[i] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+        if (cond) return board[i] === PlayerSymbol.FIRST
+            ? BoardStatus.FIRST_VICTORY
+            : BoardStatus.SECOND_VICTORY;
     }
 
     // Column
@@ -110,7 +122,9 @@ export function checkBoardStatus(move: number, board: TTTSymbol[], rows = 3, col
         for (let j = 1; j < needed; j++)
             cond = cond && board[i] === board[i + (j * columns)];
 
-        if (cond) return board[i] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+        if (cond) return board[i] === PlayerSymbol.FIRST
+            ? BoardStatus.FIRST_VICTORY
+            : BoardStatus.SECOND_VICTORY;
     }
 
     // Diagonal
@@ -128,7 +142,9 @@ export function checkBoardStatus(move: number, board: TTTSymbol[], rows = 3, col
         for (let j = 1; j < needed; j++)
             cond = cond && board[i] === board[i + (j * (columns + 1))];
 
-        if (cond) return board[i] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+        if (cond) return board[i] === PlayerSymbol.FIRST
+            ? BoardStatus.FIRST_VICTORY
+            : BoardStatus.SECOND_VICTORY;
     }
 
     // Anti-diagonal
@@ -146,7 +162,9 @@ export function checkBoardStatus(move: number, board: TTTSymbol[], rows = 3, col
         for (let j = 1; j < needed; j++)
             cond = cond && board[i] === board[i + (j * (columns - 1))];
 
-        if (cond) return board[i] === '✕' ? BoardStatus.X_VICTORY : BoardStatus.O_VICTORY;
+        if (cond) return board[i] === PlayerSymbol.FIRST
+            ? BoardStatus.FIRST_VICTORY
+            : BoardStatus.SECOND_VICTORY;
     }
 
     // If the board is full and no one has won, it's a tie

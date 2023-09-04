@@ -4,7 +4,7 @@ import TicTacToeBoard, {
     TicTacToeGrid,
     TicTacToeRow,
     TTTBoard,
-    TTTSymbol
+    PlayerSymbol
 } from './TicTacToeBoard';
 
 
@@ -35,9 +35,9 @@ export const defaultUTTTBoardStatuses: UTTTBoardStatuses = [
 export type UltimateTicTacToeBoardProps = {
     gameState: UTTTBoard,
     gameStatuses: UTTTBoardStatuses,
-    playerSymbol: TTTSymbol,
+    playerSymbol: PlayerSymbol,
     activeBoard: number,
-    setSquare: (board: number, square: number, symbol: TTTSymbol) => void,
+    setSquare: (board: number, square: number) => void,
     disabled: boolean,
     over: boolean,
     rows?: number,
@@ -66,8 +66,8 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
     const boardState = gameState[id];
     const boardStatus = gameStatuses[id];
 
-    const symbol = boardStatus === BoardStatus.X_VICTORY ? '✕'
-        : boardStatus === BoardStatus.O_VICTORY ? '◯'
+    const symbol = boardStatus === BoardStatus.FIRST_VICTORY ? '✕'
+        : boardStatus === BoardStatus.SECOND_VICTORY ? '◯'
         : '';
 
     return (
@@ -81,7 +81,7 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
                 small
                 boardState={boardState}
                 playerSymbol={playerSymbol}
-                setSquare={(square, symbol) => setSquare(id, square, symbol)}
+                setSquare={(square) => setSquare(id, square)}
                 disabled={disabled || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
                 over={props.over || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
             />
