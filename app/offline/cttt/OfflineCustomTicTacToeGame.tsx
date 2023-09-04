@@ -27,9 +27,9 @@ export default function OfflineCustomTicTacToeGame() {
     const [needed, setNeeded] = useState(3);
 
     // Makes a move by checking the given square, alternating the player's symbol after each move.
-    function setSquare(square: number, symbol: PlayerSymbol) {
+    function setSquare(square: number) {
         const newGameState = [...gameState]
-        newGameState[square] = symbol;
+        newGameState[square] = playerSymbol;
 
         setGameState(newGameState);
         setPlayerSymbol(alternatePlayerSymbol(playerSymbol));

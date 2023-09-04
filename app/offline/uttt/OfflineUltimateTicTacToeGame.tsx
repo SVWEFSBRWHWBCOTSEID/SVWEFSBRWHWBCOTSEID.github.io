@@ -32,10 +32,10 @@ export default function OfflineUltimateTicTacToeGame() {
 
     // Makes a move by checking the given square in the given board,
     // alternating the player's symbol and setting the new active square after each move.
-    function setSquare(board: number, square: number, symbol: PlayerSymbol) {
+    function setSquare(board: number, square: number) {
         const newGameState: UTTTBoard = [...gameState];
         const newBoard: TTTBoard = [...newGameState[board]];
-        newBoard[square] = symbol;
+        newBoard[square] = playerSymbol;
         newGameState[board] = newBoard;
 
         // Check inner board status and update if won

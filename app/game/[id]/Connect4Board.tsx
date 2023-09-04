@@ -7,7 +7,7 @@ import {PlayerSymbol} from './TicTacToeBoard';
 type Connect4BoardProps = {
     boardState: PlayerSymbol[],
     playerSymbol: PlayerSymbol,
-    setColumn: (column: number, symbol: PlayerSymbol) => void,
+    setColumn: (column: number) => void,
     disabled: boolean,
     over: boolean,
     rows?: number,
@@ -41,13 +41,13 @@ export function Connect4Grid(props: {children: ReactNode, disabled: boolean, ove
 }
 
 export function Connect4Column(props: Connect4BoardProps & {id: number, children: ReactNode}) {
-    const {id, disabled, setColumn, playerSymbol} = props;
+    const {id, disabled, setColumn} = props;
 
     return (
         <button
             className="group flex flex-col-reverse divide-white/30 divide-y-2 divide-y-reverse hover:bg-white/5"
             disabled={disabled} // TODO: disable the button if it's not the player's move
-            onClick={() => setColumn(id, playerSymbol)}
+            onClick={() => setColumn(id)}
         >
             {props.children}
         </button>

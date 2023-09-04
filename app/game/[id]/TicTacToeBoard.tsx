@@ -25,7 +25,7 @@ export enum BoardStatus {
 type TicTacToeBoardProps = {
     boardState: PlayerSymbol[],
     playerSymbol: PlayerSymbol,
-    setSquare: (square: number, symbol: PlayerSymbol) => void,
+    setSquare: (square: number) => void,
     small?: boolean,
     disabled: boolean,
     over: boolean,
@@ -77,7 +77,7 @@ function TicTacToeCell(props: TicTacToeBoardProps & {id: number}) {
         <button
             className={'group font-bold text-center box-content ' + (small ? 'w-16 h-16 text-3xl ' : 'w-36 h-36 text-7xl ') + (displaySymbol === PlayerSymbol.FIRST ? 'text-red-400' : 'text-blue-400')}
             disabled={disabled || !!symbol} // TODO: disable the button if it's not the player's move
-            onClick={() => setSquare(id, playerSymbol)}
+            onClick={() => setSquare(id)}
         >
             <span className={(small ? 'p-4' : 'p-8') + (!symbol ? ' opacity-0 hover:opacity-50 group-disabled:opacity-0' : '')}>
                 {toDisplayTTTSymbol(displaySymbol)}

@@ -37,7 +37,7 @@ export type UltimateTicTacToeBoardProps = {
     gameStatuses: UTTTBoardStatuses,
     playerSymbol: PlayerSymbol,
     activeBoard: number,
-    setSquare: (board: number, square: number, symbol: PlayerSymbol) => void,
+    setSquare: (board: number, square: number) => void,
     disabled: boolean,
     over: boolean,
     rows?: number,
@@ -81,7 +81,7 @@ function UltimateTicTacToeCell(props: UltimateTicTacToeBoardProps & {id: number}
                 small
                 boardState={boardState}
                 playerSymbol={playerSymbol}
-                setSquare={(square, symbol) => setSquare(id, square, symbol)}
+                setSquare={(square) => setSquare(id, square)}
                 disabled={disabled || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
                 over={props.over || boardStatus !== BoardStatus.PLAYING || (activeBoard !== ANY_BOARD && id !== activeBoard)}
             />

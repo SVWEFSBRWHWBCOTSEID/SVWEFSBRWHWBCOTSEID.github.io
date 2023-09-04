@@ -28,11 +28,11 @@ export default function OfflineCustomConnect4Game() {
     const [needed, setNeeded] = useState(4);
 
     // Makes a move by setting the lowest unfilled square in the column, alternating the player's symbol after each move.
-    function setColumn(column: number, symbol: PlayerSymbol) {
+    function setColumn(column: number) {
         const newGameState = [...gameState];
         const index = getNextUnfilledIndex(gameState, column, columns);
 
-        newGameState[index] = symbol;
+        newGameState[index] = playerSymbol;
 
         setGameState(newGameState);
         setPlayerSymbol(alternatePlayerSymbol(playerSymbol));
