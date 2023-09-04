@@ -48,7 +48,7 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<CombinedUTTTBoard>) {
         setGameStates((gameStates) => {
             const arr = gameStates.slice();
-            let symbol: PlayerSymbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
+            let symbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
 
             for (let i = 0; i < moves.length; i++) {
                 const [, boardCol, boardRow, squareCol, squareRow] = moves[i].match(/(\w)(\d)(\w)(\d)/)!;

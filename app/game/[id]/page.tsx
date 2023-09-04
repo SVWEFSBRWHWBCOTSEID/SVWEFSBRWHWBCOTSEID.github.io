@@ -5,6 +5,7 @@ import {notFound} from 'next/navigation';
 // Components
 import TicTacToeGame from './TicTacToeGame';
 import UltimateTicTacToeGame from './UltimateTicTacToeGame';
+import Connect4Game from './Connect4Game';
 
 // Util
 import {timeControlToString} from '../../../util/game';
@@ -100,6 +101,7 @@ export default async function GamePage({ params }: { params: { id: string } }) {
     switch (gameInfo.game.key) {
         case 'ttt': return <TicTacToeGame id={params.id} username={username} info={gameInfo} />
         case 'uttt': return <UltimateTicTacToeGame id={params.id} username={username} info={gameInfo} />
+        case 'c4': return <Connect4Game id={params.id} username={username} info={gameInfo} />
         default: return null; // TODO: hacky?
     }
 }

@@ -11,7 +11,7 @@ export default function TicTacToeGame(props: {id: string, username?: string, inf
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<TTTBoard>) {
         setGameStates((gameStates) => {
             const arr = gameStates.slice();
-            let symbol: PlayerSymbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
+            let symbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
 
             for (let i = 0; i < moves.length; i++) {
                 const [, col, row] = moves[i].match(/(\w)(\d)/)!;
