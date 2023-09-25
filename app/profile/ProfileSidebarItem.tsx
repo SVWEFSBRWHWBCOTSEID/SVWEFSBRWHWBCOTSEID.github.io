@@ -33,7 +33,9 @@ export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
                             <ImArrowDownRight className="inline" /> {Math.abs(props.prog).toFixed()}
                         </span>
                     ) : null}
-                    <span className="hidden lg:block">{props.games} games</span>
+                    <span className="hidden lg:block">
+                        {props.games} game{props.games === 1 ? '' : 's'}
+                    </span>
                 </p>
             </div>
             <AiFillCaretRight className="hidden lg:block text-lg text-secondary group-hover:text-blue-500 ml-auto flex-none" />
