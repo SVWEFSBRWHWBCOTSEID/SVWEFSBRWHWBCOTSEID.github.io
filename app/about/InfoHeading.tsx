@@ -8,7 +8,7 @@ type InfoHeadingProps = {
 }
 export default function InfoHeading(props: InfoHeadingProps) {
     return (
-        <a href={`#${props.id}`} className="group flex relative border-b border-theme-yellow mb-6">
+        <a href={`#${props.id}`} className="group flex relative border-b border-theme-yellow mb-6 text-white">
             {/* Floating anchor */}
             <span id={props.id} className="absolute -top-16" />
 

@@ -7,9 +7,9 @@ import InfoHeading from './InfoHeading';
 export default function SourceCodePanel() {
     return (
         <InfoPanel>
-            <h1 className="text-4xl mb-6">Source code</h1>
+            <h1 className="text-4xl mb-6 text-white">Source code</h1>
             <p className="mb-4">
-                All of gulpin.games' source code is open-sourced on our <a href="https://github.com/SVWEFSBRWHWBCOTSEID" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">GitHub organization</a>.
+                All of gulpin.games' code is open-sourced on our <a href="https://github.com/SVWEFSBRWHWBCOTSEID" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">GitHub organization</a>.
             </p>
             <p className="mb-12">
                 Our frontend is built using TypeScript with <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Next.js</a>,

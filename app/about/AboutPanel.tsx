@@ -7,7 +7,7 @@ import InfoHeading from './InfoHeading';
 export default function AboutPanel() {
     return (
         <InfoPanel>
-            <h1 className="text-4xl mb-6">About gulpin.games</h1>
+            <h1 className="text-4xl mb-6 text-white">About gulpin.games</h1>
             <p className="mb-4">
                 gulpin.games is an open-source website for playing silly games online.
             </p>
