@@ -26,6 +26,7 @@ export default function Header() {
                 <HeaderLink href="/">Play</HeaderLink>
                 <HeaderLink href="/offline">Offline</HeaderLink>
                 <HeaderLink href="/rules">Rules</HeaderLink>
+                <HeaderLink href="/about">About</HeaderLink>
             </nav>
             <nav className="flex gap-2 items-center">
                 <Link href="/preferences">

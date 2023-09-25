@@ -16,6 +16,7 @@ export default function HeaderMenu() {
                 <HeaderMenuLink href="/">Play</HeaderMenuLink>
                 <HeaderMenuLink href="/offline">Offline</HeaderMenuLink>
                 <HeaderMenuLink href="/rules">Rules</HeaderMenuLink>
+                <HeaderMenuLink href="/about">About</HeaderMenuLink>
             </Menu.Items>
         </Menu>
     )

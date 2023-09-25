@@ -19,7 +19,8 @@ module.exports = {
         'content-tertiary': '#24221e',
         background: '#161512', // colors.neutral['900'] // '#312e2b' // '#262421'
         'theme-green': '#629924',
-        'theme-orange': 'rgb(214 79 0)'
+        'theme-orange': 'rgb(214 79 0)',
+        'theme-yellow': '#bf811d'
       },
       container: {
         center: true,
