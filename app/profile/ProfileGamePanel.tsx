@@ -1,7 +1,6 @@
 'use client'
 
 import {useContext} from 'react';
-import Link from 'next/link';
 import {Tab} from '@headlessui/react';
 import {ImArrowDownRight, ImArrowUpRight} from 'react-icons/im';
 
@@ -14,15 +13,17 @@ import ProfileContext, {GameKey, GamePerf} from '../../contexts/ProfileContext';
 import {keyToName} from './ProfileContent';
 
 
-export default function ProfileGamePanel(props: GamePerf & {game: GameKey}) {
+export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTab: (tab: number) => void}) {
     const {username, games} = useContext(ProfileContext);
     const filtered = games.filter(info => info.game.key === props.game);
 
     return (
         <Tab.Panel>
             <h1 className="px-8 py-6 text-4xl">
-                <Link href={`/profile/${username}`} className="text-blue-500 hover:underline">{username}</Link>'s{' '}
-                {keyToName(props.game)} stats
+                <button onClick={() => props.setTab(0)} className="text-blue-500 hover:underline">
+                    {username}
+                </button>
+                's {keyToName(props.game)} stats
             </h1>
 
             {!!filtered.length && (
