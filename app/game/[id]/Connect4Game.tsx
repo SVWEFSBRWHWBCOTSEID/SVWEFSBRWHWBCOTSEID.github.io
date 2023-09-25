@@ -10,9 +10,10 @@ import type {GameInfo} from './page';
 
 
 export default function Connect4Game(props: {id: string, username?: string, info: GameInfo}) {
-    function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<PlayerSymbol[]>) {
+    function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex, reset}: UpdateGameStatesCallbacks<PlayerSymbol[]>) {
         setGameStates((gameStates) => {
-            const arr = gameStates.slice();
+            // TODO: create default c4 board?
+            const arr = reset ? [Array<PlayerSymbol>(42).fill(PlayerSymbol.EMPTY)] : gameStates.slice();
             let symbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
 
             for (let i = 0; i < moves.length; i++) {

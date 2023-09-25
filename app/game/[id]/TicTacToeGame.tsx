@@ -8,9 +8,9 @@ import TicTacToeBoard, {defaultTTTBoard, PlayerSymbol, TTTBoard} from './TicTacT
 
 
 export default function TicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
-    function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex}: UpdateGameStatesCallbacks<TTTBoard>) {
+    function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex, reset}: UpdateGameStatesCallbacks<TTTBoard>) {
         setGameStates((gameStates) => {
-            const arr = gameStates.slice();
+            const arr = reset ? [defaultTTTBoard] : gameStates.slice();
             let symbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
 
             for (let i = 0; i < moves.length; i++) {

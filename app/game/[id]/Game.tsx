@@ -19,7 +19,8 @@ import type {Side} from '../../../util/game';
 
 export type UpdateGameStatesCallbacks<T> = {
     setGameStates: Dispatch<SetStateAction<T[]>>,
-    setGameStateIndex: Dispatch<SetStateAction<number>>
+    setGameStateIndex: Dispatch<SetStateAction<number>>,
+    reset?: boolean
 }
 type GameProps<T> = {
     id: string,
@@ -56,10 +57,7 @@ export default function Game<T>(props: GameProps<T>) {
     function updateGameStateIndex(arg: number | ((old: number) => number)) {
         setGameStateIndex((index) => {
             const newIndex = typeof arg === 'number' ? arg : arg(index);
-            if (newIndex > index) {
-                console.log(newIndex) // TODO: called twice?
-                void new Audio('/sound/Move.mp3').play();
-            }
+            if (newIndex > index) void new Audio('/sound/Move.mp3').play();
             return newIndex;
         })
     }
@@ -108,7 +106,7 @@ export default function Game<T>(props: GameProps<T>) {
                     break;
                 case 'GAME_FULL':
                     setChat(event.chat);
-                    handleGameState(event.state);
+                    handleGameState(event.state, true);
                     break;
                 case 'REMATCH':
                     setRematchOffer(event.rematchOffer);
@@ -121,7 +119,9 @@ export default function Game<T>(props: GameProps<T>) {
     }, [])
 
     // Handles a game state event by updating the times and board states.
-    function handleGameState(event: Omit<GameStateEvent, 'type'>) {
+    // TODO: better way to reset states on game full than explicit boolean?
+    // TODO: abstract `[defaultBoard]` to this level?
+    function handleGameState(event: Omit<GameStateEvent, 'type'>, reset?: boolean) {
         setFtime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.ftime}).normalize());
         setStime(Duration.fromObject({minutes: 0, seconds: 0, milliseconds: event.stime}).normalize());
 
@@ -129,7 +129,7 @@ export default function Game<T>(props: GameProps<T>) {
         setDrawOffer(event.drawOffer);
         setEndType(event.endType);
 
-        props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex: updateGameStateIndex});
+        props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex: updateGameStateIndex, reset});
         setMoves((moves) => {
             const newMoves = moves.concat(event.moves);
 
