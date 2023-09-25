@@ -1,20 +1,26 @@
 'use client'
 
-import {ReactNode} from 'react';
+import {ReactNode, useContext} from 'react';
 import {useRouter} from 'next/navigation';
 import {DateTime} from 'luxon';
 import {BiSolidPlusSquare, BiSolidMinusSquare} from 'react-icons/bi';
-import type {GameInfo} from '../game/[id]/page';
+import type {EndType, GameInfo, Status} from '../game/[id]/page';
 
 // Util
 import {keyToIcon} from './ProfileSidebarItem';
 import {timeControlToString} from '../../util/game';
+import ProfileContext from '../../contexts/ProfileContext';
 
 
-export default function ProfileGame(props: GameInfo) {
+export type ProfileGameInfo = GameInfo & {
+    status: Status,
+    endType: EndType
+}
+export default function ProfileGame(props: ProfileGameInfo) {
     const Icon = keyToIcon(props.game.key);
 
     // TODO: not valid as table row, but somehow use `<a>` or `<Link>`?
+    const {username} = useContext(ProfileContext);
     const {push} = useRouter();
 
     return (
@@ -34,9 +40,13 @@ export default function ProfileGame(props: GameInfo) {
                 {timeControlToString(props.timeControl)} | {props.game.key.toUpperCase()}
             </ProfileGameCell>
             <ProfileGameCell>
-                {/* TODO */}
-                <BiSolidPlusSquare className="inline text-theme-green text-lg mr-1.5" />
-                1-0
+                {props.status === 'DRAW' ? (
+                    <><BiSolidMinusSquare className="inline text-primary text-lg mr-1.5" /> 0.5-0.5</>
+                ) : props.status === 'FIRST_WON' && username === props.first.username ? (
+                    <><BiSolidPlusSquare className="inline text-theme-green text-lg mr-1.5" /> 1-0</>
+                ) : (
+                    <><BiSolidMinusSquare className="inline text-red-600 text-lg mr-1.5" /> 0-1</>
+                )}
             </ProfileGameCell>
             <ProfileGameCell className="text-right">
                 {DateTime.fromSQL(props.createdAt).toLocaleString()}

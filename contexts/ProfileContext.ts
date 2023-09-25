@@ -1,6 +1,6 @@
 import {createContext} from 'react';
 import {DateTime} from 'luxon';
-import type {GameInfo} from '../app/game/[id]/page';
+import type {ProfileGameInfo} from '../app/profile/ProfileGame';
 
 
 export type User = {
@@ -16,7 +16,7 @@ export type User = {
     },
     url: string,
     playing?: string,
-    games: GameInfo[]
+    games: ProfileGameInfo[]
     // TODO: following stuff
 }
 
