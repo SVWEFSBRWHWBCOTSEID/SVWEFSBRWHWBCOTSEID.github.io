@@ -3,20 +3,17 @@
 import {Tab} from '@headlessui/react';
 import InfoSidebar from '../../components/InfoSidebar';
 import InfoSidebarItem from '../../components/InfoSidebarItem';
-import AboutPanel from './AboutPanel';
-import SourceCodePanel from './SourceCodePanel';
+import ClockPanel from './ClockPanel';
 
 
-export default function AboutContent() {
+export default function PreferencesContent() {
     return (
         <Tab.Group vertical as="div" className="container flex pt-4 pb-12">
             <InfoSidebar>
-                <InfoSidebarItem>About</InfoSidebarItem>
-                <InfoSidebarItem>Source code</InfoSidebarItem>
+                <InfoSidebarItem>Clock</InfoSidebarItem>
             </InfoSidebar>
             <Tab.Panels className="w-full">
-                <AboutPanel />
-                <SourceCodePanel />
+                <ClockPanel />
             </Tab.Panels>
         </Tab.Group>
     )

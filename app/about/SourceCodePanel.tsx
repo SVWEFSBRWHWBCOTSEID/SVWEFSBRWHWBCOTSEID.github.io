@@ -1,7 +1,7 @@
 'use client'
 
-import InfoPanel from './InfoPanel';
-import InfoHeading from './InfoHeading';
+import InfoPanel from '../../components/InfoPanel';
+import InfoHeading from '../../components/InfoHeading';
 
 
 export default function SourceCodePanel() {
