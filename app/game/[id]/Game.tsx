@@ -1,6 +1,6 @@
 'use client'
 
-import {Dispatch, ReactElement, SetStateAction, WheelEvent, startTransition, useEffect, useState} from 'react';
+import {Dispatch, ReactElement, SetStateAction, startTransition, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Duration} from 'luxon';
 import GameContext from '../../../contexts/GameContext';
@@ -150,7 +150,7 @@ export default function Game<T>(props: GameProps<T>) {
     }
 
     // Handles scrolling within the game board by preventing page scrolling and changing the game state index instead.
-    function handleScrollWithin(e: WheelEvent<HTMLDivElement>) {
+    function handleScrollWithin(e: WheelEvent) {
         e.preventDefault();
         setGameStateIndex(e.deltaY > 0
             ? Math.max(gameStateIndex - 1, 1)
