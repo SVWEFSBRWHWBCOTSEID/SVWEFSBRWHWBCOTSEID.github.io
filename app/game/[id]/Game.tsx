@@ -1,6 +1,6 @@
 'use client'
 
-import {Dispatch, ReactElement, SetStateAction, startTransition, useEffect, useState} from 'react';
+import {Dispatch, ReactElement, SetStateAction, WheelEvent, startTransition, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Duration} from 'luxon';
 import GameContext from '../../../contexts/GameContext';
@@ -149,6 +149,14 @@ export default function Game<T>(props: GameProps<T>) {
         setSratingDiff(event.sratingDiff);
     }
 
+    // Handles scrolling within the game board by preventing page scrolling and changing the game state index instead.
+    function handleScrollWithin(e: WheelEvent<HTMLDivElement>) {
+        e.preventDefault();
+        setGameStateIndex(e.deltaY > 0
+            ? Math.max(gameStateIndex - 1, 1)
+            : Math.min(gameStateIndex + 1, moves.length));
+    }
+
     return (
         <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, rematchOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime, fratingDiff, sratingDiff}}>
             <div className="flex flex-col md:flex-row-reverse xl:flex-col w-full gap-5 xl:w-80 flex-none">
@@ -157,7 +165,7 @@ export default function Game<T>(props: GameProps<T>) {
             </div>
 
             <div className="flex flex-col md:flex-row md:items-center gap-x-8 gap-y-4 min-w-0 w-full">
-                <ScaledBox>
+                <ScaledBox onWheel={handleScrollWithin}>
                     {props.children(gameStates, gameStateIndex, gameStatus, side)}
                 </ScaledBox>
 

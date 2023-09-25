@@ -1,9 +1,15 @@
 'use client'
 
-import {ReactElement, useEffect, useRef} from 'react';
+import {HTMLAttributes, ReactElement, useEffect, useRef} from 'react';
 
 
-export default function ScaledBox(props: {children: ReactElement, className?: string, rescale?: unknown[]}) {
+type ScaledBoxProps = HTMLAttributes<HTMLDivElement> & {
+    children: ReactElement,
+    className?: string,
+    rescale?: unknown[]
+};
+export default function ScaledBox(props: ScaledBoxProps) {
+    const {children, className, rescale, ...divProps} = props;
     const parentRef = useRef<HTMLDivElement>(null);
 
     // Scales the child of this wrapper to fit within the wrapper's bounding box, maintaining the child's aspect ratio.
@@ -25,7 +31,7 @@ export default function ScaledBox(props: {children: ReactElement, className?: st
     }
 
     // Allow rescaling-on-demand when given prop(s) changes
-    useEffect(scaleChildren, props.rescale);
+    useEffect(scaleChildren, rescale);
 
     useEffect(() => {
         window.addEventListener('resize', scaleChildren);
@@ -33,9 +39,12 @@ export default function ScaledBox(props: {children: ReactElement, className?: st
     }, [])
 
     return (
-        // TODO: hacky
-        <div className={'flex-grow min-w-0 min-h-0 flex justify-center items-center' + (props.className ? ` ${props.className}` : '')} ref={parentRef}>
-            {props.children}
+        <div
+            className={'flex-grow min-w-0 min-h-0 flex justify-center items-center' + (className ? ` ${className}` : '')}
+            ref={parentRef}
+            {...divProps}
+        >
+            {children}
         </div>
     )
 }

@@ -97,12 +97,8 @@ function toDisplayTTTSymbol(symbol: PlayerSymbol) {
 export function checkBoardStatus(move: number, board: PlayerSymbol[], rows = 3, columns = 3, needed = 3) {
     // Row
     const rowStart = move - (move % columns)
-    for (
-        let i = Math.max(move - needed, rowStart);
-        i < Math.min(move + needed, rowStart + columns);
-        i++
-    ) {
-        let cond = !!board[i];
+    for (let i = Math.max(move - needed, rowStart); i <= move; i++) {
+        let cond = board[i] !== PlayerSymbol.EMPTY;
         for (let j = 1; j < needed; j++)
             cond = cond && board[i] === board[i + j];
 
@@ -113,12 +109,8 @@ export function checkBoardStatus(move: number, board: PlayerSymbol[], rows = 3, 
 
     // Column
     const colStart = move % columns;
-    for (
-        let i = Math.max(move - (needed * columns), colStart);
-        i < Math.min(move + (needed * columns) + 1, board.length);
-        i += columns
-    ) {
-        let cond = !!board[i];
+    for (let i = Math.max(move - (needed * columns), colStart); i <= move; i += columns) {
+        let cond = board[i] !== PlayerSymbol.EMPTY;
         for (let j = 1; j < needed; j++)
             cond = cond && board[i] === board[i + (j * columns)];
 
@@ -135,10 +127,10 @@ export function checkBoardStatus(move: number, board: PlayerSymbol[], rows = 3, 
 
     if (Math.min(rows, columns) - Math.abs(rowNum - colStart) >= needed) for (
         let i = diagStart;
-        i < Math.min(move + (needed * (columns + 1)) + 1, board.length);
+        i <= move;
         i += columns + 1
     ) {
-        let cond = !!board[i];
+        let cond = board[i] !== PlayerSymbol.EMPTY;
         for (let j = 1; j < needed; j++)
             cond = cond && board[i] === board[i + (j * (columns + 1))];
 
@@ -155,12 +147,19 @@ export function checkBoardStatus(move: number, board: PlayerSymbol[], rows = 3, 
     // TODO: rows check?
     if (antiDiagStart >= needed - 1) for (
         let i = antiDiagStart;
-        i < Math.min(move + (needed * (columns - 1)) + 1, board.length);
+        i <= move;
         i += columns - 1
     ) {
-        let cond = !!board[i];
-        for (let j = 1; j < needed; j++)
-            cond = cond && board[i] === board[i + (j * (columns - 1))];
+        let cond = board[i] !== PlayerSymbol.EMPTY;
+        for (let j = 1; j < needed; j++) {
+            const index = i + (j * (columns - 1));
+            if (index % columns === 0 && j !== needed - 1) { // TODO: hacky?
+                cond = false;
+                break;
+            }
+
+            cond = cond && board[i] === board[index];
+        }
 
         if (cond) return board[i] === PlayerSymbol.FIRST
             ? BoardStatus.FIRST_VICTORY
