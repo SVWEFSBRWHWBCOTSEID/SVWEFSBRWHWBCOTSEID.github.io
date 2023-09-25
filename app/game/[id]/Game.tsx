@@ -152,7 +152,7 @@ export default function Game<T>(props: GameProps<T>) {
     // Handles scrolling within the game board by preventing page scrolling and changing the game state index instead.
     function handleScrollWithin(e: WheelEvent) {
         e.preventDefault();
-        setGameStateIndex((gameStateIndex) => e.deltaY > 0
+        updateGameStateIndex((gameStateIndex) => e.deltaY > 0
             ? Math.max(gameStateIndex - 1, 1)
             : Math.min(gameStateIndex + 1, moves.length));
     }
