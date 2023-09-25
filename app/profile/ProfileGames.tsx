@@ -1,9 +1,8 @@
 import {DateTime} from 'luxon';
-import ProfileGame from './ProfileGame';
-import type {GameInfo} from '../game/[id]/page';
+import ProfileGame, {ProfileGameInfo} from './ProfileGame';
 
 
-export default function ProfileGames(props: {games: GameInfo[]}) {
+export default function ProfileGames(props: {games: ProfileGameInfo[]}) {
     return (
         <section>
             <h3 className="text-lg font-semibold px-6 pt-4 pb-2">Games</h3>
