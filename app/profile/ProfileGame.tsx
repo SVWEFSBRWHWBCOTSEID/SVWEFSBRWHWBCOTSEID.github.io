@@ -38,7 +38,7 @@ export default function ProfileGame(props: ProfileGameInfo) {
             <ProfileGameCell href={href}>
                 {props.status === 'DRAW' ? (
                     <><BiSolidMinusSquare className="inline text-primary text-lg mr-1.5" /> 0.5-0.5</>
-                ) : props.status === 'FIRST_WON' && username === props.first.username ? (
+                ) : (props.status === 'FIRST_WON' && username === props.first.username) || (props.status === 'SECOND_WON' && username === props.second.username) ? (
                     <><BiSolidPlusSquare className="inline text-theme-green text-lg mr-1.5" /> 1-0</>
                 ) : (
                     <><BiSolidMinusSquare className="inline text-red-600 text-lg mr-1.5" /> 0-1</>
