@@ -237,6 +237,12 @@ const flags: {name: string, key: Country}[] = [
     {name: 'Christmas Island', key: 'CX'},
     {name: 'Cyprus', key: 'CY'},
     {name: 'Czechia', key: 'CZ'},
+    {name: 'Germany', key: 'DE'},
+    {name: 'Djibouti', key: 'DJ'},
+    {name: 'Denmark', key: 'DK'},
+    {name: 'Dominica', key: 'DM'},
+    {name: 'Dominican Republic', key: 'DO'},
+    {name: 'Algeria', key: 'DZ'},
     {name: 'United States', key: 'US'},
     {name: 'United Kingdom', key: 'UK'},
     {name: 'Mongolia', key: 'MN'}
