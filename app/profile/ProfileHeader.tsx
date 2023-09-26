@@ -75,10 +75,16 @@ export default function ProfileHeader() {
                                     {country}
                                     <MdOutlineKeyboardArrowDown className="absolute right-2.5 inset-y-0 my-auto text-xl" />
                                 </Listbox.Button>
-                                <AnimatedListbox className="absolute top-[calc(100%_+_6px)] w-48 flex flex-col py-1.5 bg-content-tertiary rounded shadow-lg z-10 focus:outline-none focus-visible:ring-1 focus-visible:ring-white/25">
+                                <AnimatedListbox className="absolute top-[calc(100%_+_6px)] w-max min-w-[12rem] overflow-y-auto max-h-[28rem] flex flex-col py-1.5 bg-content-tertiary rounded shadow-lg z-10 focus:outline-none focus-visible:ring-1 focus-visible:ring-white/25 scrollbar-thumb:bg-secondary scrollbar:w-1">
                                     {flags.map(({name, key}) => (
                                         // https://github.com/tailwindlabs/headlessui/discussions/2366
-                                        <Listbox.Option key={key} value={key} className="cursor-pointer px-4 py-1 hover:!bg-blue-500 hover:text-white ui-open:ui-selected:bg-background">
+                                        <Listbox.Option key={key} value={key} className="flex gap-4 items-center cursor-pointer px-4 py-1 hover:!bg-blue-500 hover:text-white ui-open:ui-selected:bg-background">
+                                            {key !== 'EMPTY' ? (
+                                                <img src={`/flags/${key}.png`} alt={`${name} flag`} className="max-w-[1.25rem]"/>
+                                            ) : (
+                                                // Empty spacer to align "no flag" row with other flags
+                                                <span className="w-[1.25rem]" />
+                                            )}
                                             {name}
                                         </Listbox.Option>
                                     ))}
