@@ -35,6 +35,7 @@ export type Country = 'EMPTY'
     | 'CA' | 'CC' | 'CD' | 'CF' | 'CG' | 'CH' | 'CI' | 'CK' | 'CL' | 'CM' | 'CN' | 'CO' | 'CR' | 'CU' | 'CV' | 'CW' | 'CX' | 'CY' | 'CZ'
     | 'DE' | 'DJ' | 'DK' | 'DM' | 'DO' | 'DZ'
     | 'EC' | 'EE' | 'EG' | 'ER' | 'ES' | 'ET'
+    | 'FI' | 'FJ' | 'FK' | 'FM' | 'FO' | 'FR'
     | 'US' | 'UK' | 'MN'
 
 // TODO: needed?
