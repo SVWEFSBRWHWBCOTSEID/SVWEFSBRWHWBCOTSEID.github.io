@@ -256,6 +256,7 @@ const flags: {name: string, key: Country}[] = [
     {name: 'Faroe Islands', key: 'FO'},
     {name: 'France', key: 'FR'},
     {name: 'Gabon', key: 'GA'},
+    {name: 'United Kingdom', key: 'GB'},
     {name: 'Grenada', key: 'GD'},
     {name: 'Georgia', key: 'GE'},
     {name: 'French Guiana', key: 'GF'},
@@ -272,7 +273,12 @@ const flags: {name: string, key: Country}[] = [
     {name: 'Guam', key: 'GU'},
     {name: 'Guinea-Bissau', key: 'GW'},
     {name: 'Guyana', key: 'GY'},
+    {name: 'Hong Kong', key: 'HK'},
+    {name: 'Heard and McDonald Islands', key: 'HM'},
+    {name: 'Honduras', key: 'HN'},
+    {name: 'Croatia', key: 'HR'},
+    {name: 'Haiti', key: 'HT'},
+    {name: 'Hungary', key: 'HU'},
     {name: 'United States', key: 'US'},
-    {name: 'United Kingdom', key: 'UK'},
     {name: 'Mongolia', key: 'MN'}
 ]
