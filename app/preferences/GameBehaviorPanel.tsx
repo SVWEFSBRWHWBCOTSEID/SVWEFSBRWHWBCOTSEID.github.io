@@ -1,6 +1,6 @@
 'use client'
 
-import {useContext, useState} from 'react';
+import {useContext} from 'react';
 import InfoPanel from '../../components/InfoPanel';
 import PreferencesInputGroup from './PreferencesInputGroup';
 import PreferencesButton from './PreferencesButton';

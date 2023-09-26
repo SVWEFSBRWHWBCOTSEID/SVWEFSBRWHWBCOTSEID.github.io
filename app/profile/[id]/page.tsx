@@ -1,4 +1,4 @@
-import {Metadata} from 'next';
+import type {Metadata} from 'next';
 import {notFound} from 'next/navigation';
 import {DateTime} from 'luxon';
 import ProfileContent from '../ProfileContent';

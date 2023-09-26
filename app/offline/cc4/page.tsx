@@ -1,4 +1,4 @@
-import {Metadata} from 'next';
+import type {Metadata} from 'next';
 import OfflineCustomConnect4Game from './OfflineCustomConnect4Game';
 
 
