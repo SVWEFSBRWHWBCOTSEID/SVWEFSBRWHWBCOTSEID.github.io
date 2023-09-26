@@ -1,5 +1,5 @@
 import {createContext} from 'react';
-import {User} from './ProfileContext';
+import type {User} from './ProfileContext';
 
 
 type UserContext = { user: User | null, setUser: (user: User | null) => void };

@@ -1,15 +1,32 @@
 'use client'
 
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import InfoPanel from '../../components/InfoPanel';
 import PreferencesInputGroup from './PreferencesInputGroup';
 import PreferencesButton from './PreferencesButton';
+import PreferencesContext from '../../contexts/PreferencesContext';
 
 
 export default function ClockPanel() {
-    const [showTenthSeconds, setShowTenthSeconds] = useState('CRITICAL');
-    const [showProgressBars, setShowProgressBars] = useState(true);
-    const [playCriticalSound, setPlayCriticalSound] = useState(true);
+    const {preferences, setPreferences} = useContext(PreferencesContext);
+
+    function updateShowTenthSeconds(value: 'ALWAYS' | 'CRITICAL' | 'NEVER') {
+        const newPreferences = structuredClone(preferences); // TODO: structured clone necessary?
+        newPreferences.clock.showTenthSeconds = value;
+        setPreferences(newPreferences);
+    }
+
+    function updateShowProgressBars(value: boolean) {
+        const newPreferences = structuredClone(preferences);
+        newPreferences.clock.showProgressBars = value;
+        setPreferences(newPreferences);
+    }
+
+    function updatePlayCriticalSound(value: boolean) {
+        const newPreferences = structuredClone(preferences);
+        newPreferences.clock.playCriticalSound = value;
+        setPreferences(newPreferences);
+    }
 
     return (
         <InfoPanel>
@@ -17,42 +34,34 @@ export default function ClockPanel() {
             <p>[...]</p>
 
             <PreferencesInputGroup label="Show tenths of seconds">
-                <PreferencesButton onClick={() => setShowTenthSeconds('ALWAYS')} selected={showTenthSeconds === 'ALWAYS'}>
+                <PreferencesButton onClick={() => updateShowTenthSeconds('ALWAYS')} selected={preferences.clock.showTenthSeconds === 'ALWAYS'}>
                     Always
                 </PreferencesButton>
-                <PreferencesButton onClick={() => setShowTenthSeconds('CRITICAL')} selected={showTenthSeconds === 'CRITICAL'}>
+                <PreferencesButton onClick={() => updateShowTenthSeconds('CRITICAL')} selected={preferences.clock.showTenthSeconds === 'CRITICAL'}>
                     When time remaining {'<'} 10 seconds
                 </PreferencesButton>
-                <PreferencesButton onClick={() => setShowTenthSeconds('NEVER')} selected={showTenthSeconds === 'NEVER'}>
+                <PreferencesButton onClick={() => updateShowTenthSeconds('NEVER')} selected={preferences.clock.showTenthSeconds === 'NEVER'}>
                     Never
                 </PreferencesButton>
             </PreferencesInputGroup>
 
             <PreferencesInputGroup label="Show green progress bars">
-                <PreferencesButton onClick={() => setShowProgressBars(true)} selected={showProgressBars}>
+                <PreferencesButton onClick={() => updateShowProgressBars(true)} selected={preferences.clock.showProgressBars}>
                     Always
                 </PreferencesButton>
-                <PreferencesButton onClick={() => setShowProgressBars(false)} selected={!showProgressBars}>
+                <PreferencesButton onClick={() => updateShowProgressBars(false)} selected={!preferences.clock.showProgressBars}>
                     Never
                 </PreferencesButton>
             </PreferencesInputGroup>
 
             <PreferencesInputGroup label="Play a sound when time gets critical">
-                <PreferencesButton onClick={() => setPlayCriticalSound(true)} selected={playCriticalSound}>
+                <PreferencesButton onClick={() => updatePlayCriticalSound(true)} selected={preferences.clock.playCriticalSound}>
                     Always
                 </PreferencesButton>
-                <PreferencesButton onClick={() => setPlayCriticalSound(false)} selected={!playCriticalSound}>
+                <PreferencesButton onClick={() => updatePlayCriticalSound(false)} selected={!preferences.clock.playCriticalSound}>
                     Never
                 </PreferencesButton>
             </PreferencesInputGroup>
         </InfoPanel>
     )
-}
-
-type Preferences = {
-    clock: {
-        showTenthSeconds: 'NEVER' | 'CRITICAL' | 'ALWAYS',
-        showProgressBars: boolean,
-        playCriticalSound: boolean
-    }
 }

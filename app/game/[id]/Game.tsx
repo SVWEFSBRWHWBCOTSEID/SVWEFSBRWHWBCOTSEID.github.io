@@ -1,9 +1,10 @@
 'use client'
 
-import {Dispatch, ReactElement, SetStateAction, startTransition, useEffect, useState} from 'react';
+import {Dispatch, ReactElement, SetStateAction, startTransition, useContext, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Duration} from 'luxon';
 import GameContext from '../../../contexts/GameContext';
+import PreferencesContext from '../../../contexts/PreferencesContext';
 
 // Components
 import Chat, {ChatData} from '../Chat';
@@ -48,6 +49,7 @@ export default function Game<T>(props: GameProps<T>) {
 
     const [chat, setChat] = useState<ChatData[]>([]);
 
+    const {preferences} = useContext(PreferencesContext);
     const {push} = useRouter();
 
     const side = getSide(props.username, props.info);
@@ -150,7 +152,10 @@ export default function Game<T>(props: GameProps<T>) {
     }
 
     // Handles scrolling within the game board by preventing page scrolling and changing the game state index instead.
+    // TODO: closure issue with `moves.length`
     function handleScrollWithin(e: WheelEvent) {
+        if (!preferences.game.boardScroll) return;
+
         e.preventDefault();
         updateGameStateIndex((gameStateIndex) => e.deltaY > 0
             ? Math.max(gameStateIndex - 1, 1)

@@ -8,6 +8,7 @@ import PreferencesButton from './PreferencesButton';
 
 export default function GameBehaviorPanel() {
     const [confirmResign, setConfirmResign] = useState(true);
+    const [boardScroll, setBoardScroll] = useState(true);
 
     return (
         <InfoPanel>
@@ -20,6 +21,15 @@ export default function GameBehaviorPanel() {
                 </PreferencesButton>
                 <PreferencesButton onClick={() => setConfirmResign(false)} selected={!confirmResign}>
                     Never
+                </PreferencesButton>
+            </PreferencesInputGroup>
+
+            <PreferencesInputGroup label="Scroll on the board to replay moves">
+                <PreferencesButton onClick={() => setBoardScroll(true)} selected={boardScroll}>
+                    Enabled
+                </PreferencesButton>
+                <PreferencesButton onClick={() => setBoardScroll(false)} selected={!boardScroll}>
+                    Disabled
                 </PreferencesButton>
             </PreferencesInputGroup>
         </InfoPanel>

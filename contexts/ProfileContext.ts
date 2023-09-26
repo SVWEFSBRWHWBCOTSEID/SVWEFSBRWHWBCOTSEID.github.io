@@ -60,5 +60,5 @@ export const defaultUser: User = {
     games: []
 }
 
-const ProfileContext = createContext<User>(defaultUser);
+const ProfileContext = createContext(defaultUser);
 export default ProfileContext;

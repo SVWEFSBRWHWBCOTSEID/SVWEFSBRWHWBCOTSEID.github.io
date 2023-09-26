@@ -3,6 +3,7 @@
 import {useContext} from 'react';
 import Link from 'next/link';
 import GameContext from '../../contexts/GameContext';
+import PreferencesContext from '../../contexts/PreferencesContext';
 
 // Components
 import GameTimeIndicator from './GameTimeIndicator';
@@ -20,6 +21,7 @@ import type {Player} from './[id]/page';
 
 export default function GameStateIndicator() {
     const {info, side, gameStatus, drawOffer, ftime, stime, fratingDiff, sratingDiff} = useContext(GameContext);
+    const {preferences} = useContext(PreferencesContext);
 
     return (
         <div className="flex flex-col flex-shrink xl:flex-shrink-0 w-[25rem] basis-80 drop-shadow-lg max-w-full">
@@ -27,7 +29,9 @@ export default function GameStateIndicator() {
 
             {/* TODO: support overflow-clip for time indicator bars without hiding rematch cancel button? */}
             <div className="bg-content rounded-r">
-                <GameTimeProgressBar time={ftime} initial={info.timeControl.initial} />
+                {preferences.clock.showProgressBars && (
+                    <GameTimeProgressBar time={ftime} initial={info.timeControl.initial} />
+                )}
                 <PlayerIndicator user={info.first} ratingDiff={fratingDiff} />
 
                 <div className="h-64 flex flex-col">
@@ -56,7 +60,9 @@ export default function GameStateIndicator() {
                 </div>
 
                 <PlayerIndicator user={info.second} ratingDiff={sratingDiff} />
-                <GameTimeProgressBar time={stime} initial={info.timeControl.initial} />
+                {preferences.clock.showProgressBars && (
+                    <GameTimeProgressBar time={stime} initial={info.timeControl.initial} />
+                )}
             </div>
 
             <GameTimeIndicator time={stime} playAlert={side === 'SECOND'} />
