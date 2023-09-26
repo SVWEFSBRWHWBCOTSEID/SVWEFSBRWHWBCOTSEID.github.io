@@ -180,6 +180,23 @@ function getName(profile: User['profile']) {
 
 const flags: {name: string, key: Country}[] = [
     {name: 'No flag', key: 'EMPTY'},
+    {name: 'Andorra', key: 'AD'},
+    {name: 'United Arab Emirates', key: 'AE'},
+    {name: 'Afghanistan', key: 'AF'},
+    {name: 'Antigua and Barbuda', key: 'AG'},
+    {name: 'Anguilla', key: 'AI'},
+    {name: 'Albania', key: 'AL'},
+    {name: 'Armenia', key: 'AM'},
+    {name: 'Netherlands Antilles', key: 'AN'},
+    {name: 'Angola', key: 'AO'},
+    {name: 'Antarctica', key: 'AQ'},
+    {name: 'Argentina', key: 'AR'},
+    {name: 'American Samoa', key: 'AS'},
+    {name: 'Austria', key: 'AT'},
+    {name: 'Australia', key: 'AU'},
+    {name: 'Aruba', key: 'AW'},
+    {name: 'Aland Islands', key: 'AX'},
+    {name: 'Azerbaijan', key: 'AZ'},
     {name: 'United States', key: 'US'},
     {name: 'United Kingdom', key: 'UK'},
     {name: 'Mongolia', key: 'MN'}
