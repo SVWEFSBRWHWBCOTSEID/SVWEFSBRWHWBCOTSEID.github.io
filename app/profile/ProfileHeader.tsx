@@ -279,6 +279,17 @@ const flags: {name: string, key: Country}[] = [
     {name: 'Croatia', key: 'HR'},
     {name: 'Haiti', key: 'HT'},
     {name: 'Hungary', key: 'HU'},
+    {name: 'Canary Islands', key: 'IC'},
+    {name: 'Indonesia', key: 'ID'},
+    {name: 'Ireland', key: 'IE'},
+    {name: 'Israel', key: 'IL'},
+    {name: 'Isle of Man', key: 'IM'},
+    {name: 'India', key: 'IN'},
+    {name: 'British Indian Ocean Territory', key: 'IO'},
+    {name: 'Iraq', key: 'IQ'},
+    {name: 'Iran', key: 'IR'},
+    {name: 'Iceland', key: 'IS'},
+    {name: 'Italy', key: 'IT'},
     {name: 'United States', key: 'US'},
     {name: 'Mongolia', key: 'MN'}
 ]

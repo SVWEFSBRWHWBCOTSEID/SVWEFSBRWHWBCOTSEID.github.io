@@ -38,6 +38,7 @@ export type Country = 'EMPTY'
     | 'FI' | 'FJ' | 'FK' | 'FM' | 'FO' | 'FR'
     | 'GA' | 'GB' | 'GD' | 'GE' | 'GF' | 'GG' | 'GH' | 'GI' | 'GL' | 'GM' | 'GN' | 'GQ' | 'GR' | 'GS' | 'GT' | 'GU' | 'GW' | 'GY'
     | 'HK' | 'HM' | 'HN' | 'HR' | 'HT' | 'HU'
+    | 'IC' | 'ID' | 'IE' | 'IL' | 'IM' | 'IN' | 'IO' | 'IQ' | 'IR' | 'IS' | 'IT'
     | 'US' | 'MN'
 
 // TODO: needed?
