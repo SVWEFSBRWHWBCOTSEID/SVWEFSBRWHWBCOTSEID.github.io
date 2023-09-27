@@ -1,7 +1,8 @@
 'use client'
 
-import {useEffect} from 'react';
+import {useContext, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
+import PreferencesContext, {Preferences} from '../contexts/PreferencesContext';
 import type {GameKey} from '../contexts/ProfileContext';
 
 
@@ -11,18 +12,27 @@ type GameStartEvent = {
     id: string,
 }
 
-type UserEvent = GameStartEvent;
+type PreferencesUpdateEvent = {
+    type: 'PREFERENCES_UPDATE',
+    preferences: Preferences
+}
+
+type UserEvent = GameStartEvent | PreferencesUpdateEvent;
 
 export default function UserEventHandler() {
     const {push} = useRouter();
+    const {setPreferences} = useContext(PreferencesContext);
 
     useEffect(() => {
         const eventSource = new EventSource(`${process.env.API_BASE}/events`, {withCredentials: true});
         eventSource.onmessage = (m) => {
-            const message: UserEvent = JSON.parse(m.data);
+            const event: UserEvent = JSON.parse(m.data);
 
-            switch (message.type) {
-                case 'GAME_START': push(`/game/${message.id}`)
+            switch (event.type) {
+                case 'GAME_START':
+                    push(`/game/${event.id}`); break;
+                case 'PREFERENCES_UPDATE':
+                    setPreferences(event.preferences); break;
             }
         }
     }, [])

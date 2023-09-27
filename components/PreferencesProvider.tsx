@@ -16,14 +16,15 @@ export default function PreferencesProvider(props: {children: ReactNode}) {
     }, []);
 
     // Update the user's current preferences by setting the context and writing a backup to `localStorage`.
-    function updatePreferences(newPreferences: Preferences) {
+    // TODO: write separate function that fetches backend instead if `id` cookie exists
+    function updateLocalPreferences(newPreferences: Preferences) {
         localStorage.setItem('preferences', JSON.stringify(newPreferences));
         setPreferences(newPreferences);
         console.log(newPreferences)
     }
 
     return (
-        <PreferencesContext.Provider value={{preferences, setPreferences: updatePreferences}}>
+        <PreferencesContext.Provider value={{preferences, setPreferences: updateLocalPreferences}}>
             {props.children}
         </PreferencesContext.Provider>
     )
