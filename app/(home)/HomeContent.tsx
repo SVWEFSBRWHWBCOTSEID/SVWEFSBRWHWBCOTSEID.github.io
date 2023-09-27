@@ -73,8 +73,8 @@ export default function HomeContent(props: {username?: string}) {
                 <CreateGameButton>Play with friend</CreateGameButton>
 
                 <div className="mt-3 text-sm text-secondary">
-                    <p><strong>{players}</strong> players</p>
-                    <p><strong>{games}</strong> games in play</p>
+                    <p><strong>{players}</strong> player{players !== '1' ? 's' : ''}</p>
+                    <p><strong>{games}</strong> game{games !== '1' ? 's' : ''} in play</p>
                 </div>
             </div>
         </main>
