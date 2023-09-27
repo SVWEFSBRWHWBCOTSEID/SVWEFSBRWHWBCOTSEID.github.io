@@ -1,6 +1,6 @@
 'use client'
 
-import {startTransition, useEffect, useLayoutEffect, useState} from 'react';
+import {startTransition, useLayoutEffect, useState} from 'react';
 import LobbyRoom, {LobbyCell} from './LobbyRoom';
 import YouLobbyRoom from './YouLobbyRoom';
 
@@ -22,14 +22,8 @@ export type Lobby = {
     timeControl: TimeControl
 }
 
-type LobbyEvent = {
-    type: 'NEW_LOBBY',
-    lobbies: Lobby[]
-}
-
-export default function Lobbies(props: {username?: string}) {
-    const [lobbies, setLobbies] = useState<Lobby[]>([]);
-
+type LobbiesProps = {lobbies: Lobby[], username?: string}
+export default function Lobbies(props: LobbiesProps) {
     // TODO: hacky?
     const [perfs, setPerfs] = useState(defaultGamePerfs);
     useLayoutEffect(() => {
@@ -39,18 +33,8 @@ export default function Lobbies(props: {username?: string}) {
         })
     }, [])
 
-    useEffect(() => {
-        const eventSource = new EventSource(`${process.env.API_BASE}/lobbies/events`);
-        eventSource.onmessage = (m) => {
-            const event: LobbyEvent = JSON.parse(m.data);
-
-            console.log(event)
-            setLobbies(event.lobbies)
-        };
-    }, [])
-
-    const youLobby = lobbies.find((lobby) => lobby.user.username === props.username);
-    const filteredLobbies = lobbies
+    const youLobby = props.lobbies.find((lobby) => lobby.user.username === props.username);
+    const filteredLobbies = props.lobbies
         .filter((lobby) => lobby.user.username !== props.username)
         .filter((lobby) => {
             const rating = perfs[lobby.game.key].rating;
