@@ -97,7 +97,11 @@ function toDisplayTTTSymbol(symbol: PlayerSymbol) {
 export function checkBoardStatus(move: number, board: PlayerSymbol[], rows = 3, columns = 3, needed = 3) {
     // Row
     const rowStart = move - (move % columns)
-    for (let i = Math.max(move - needed, rowStart); i <= move; i++) {
+    for (
+        let i = Math.max(move - needed, rowStart);
+        i <= Math.min(move, rowStart + columns - needed);
+        i++
+    ) {
         let cond = board[i] !== PlayerSymbol.EMPTY;
         for (let j = 1; j < needed; j++)
             cond = cond && board[i] === board[i + j];
