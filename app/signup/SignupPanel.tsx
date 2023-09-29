@@ -4,16 +4,20 @@ import {startTransition, useContext, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {getUser} from '../../util/user';
 import {revalidate} from '../../util/actions';
-import UserContext from '../../contexts/UserContext';
 import type {User} from '../../contexts/ProfileContext';
 
 // Components
 import BlueButton from '../../components/BlueButton';
 import Input from '../../components/Input';
 
+// Contexts
+import UserContext from '../../contexts/UserContext';
+import PreferencesContext from '../../contexts/PreferencesContext';
+
 
 export default function SignupPanel() {
     const {setUser} = useContext(UserContext);
+    const {preferences} = useContext(PreferencesContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -30,7 +34,7 @@ export default function SignupPanel() {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include',
-            body: JSON.stringify({username, password})
+            body: JSON.stringify({username, password, preferences})
         });
         if (!res.ok) {
             setLoading(false);
