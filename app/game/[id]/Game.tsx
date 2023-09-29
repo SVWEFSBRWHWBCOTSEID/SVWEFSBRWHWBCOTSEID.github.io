@@ -66,8 +66,8 @@ export default function Game<T>(props: GameProps<T>) {
 
     // Update the active timer on client-side on a 100ms interval
     useEffect(() => {
-        // Don't start the timer until the 3rd move, or if the game is over
-        if (gameStates.length <= 3) return;
+        // Don't start the timer until the 2nd move, or if the game is over
+        if (gameStates.length <= 2) return;
         if (gameStatus !== 'STARTED') return;
 
         const intervalID = setInterval(() => {
