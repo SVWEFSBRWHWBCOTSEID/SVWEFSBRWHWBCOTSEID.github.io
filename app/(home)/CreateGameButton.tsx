@@ -1,11 +1,20 @@
 'use client'
 
-import {MouseEventHandler, ReactNode, useState} from 'react';
+import {MouseEventHandler, ReactNode, useEffect, useState} from 'react';
+import {useRouter} from 'next/navigation';
 import CreateGameModal from './CreateGameModal';
 
 
-export default function CreateGameButton(props: {children: ReactNode}) {
-    const [isOpen, setIsOpen] = useState(false);
+export default function CreateGameButton(props: {children: ReactNode, open?: boolean}) {
+    const [isOpen, setIsOpen] = useState(!!props.open);
+    const {replace} = useRouter();
+
+    // Subscribe to rising edges on the modal search param, opening and resetting the param for later navigation.
+    useEffect(() => {
+        if (!props.open) return;
+        setIsOpen(props.open);
+        replace('/');
+    }, [props.open]);
 
     return (
         <>

@@ -1,6 +1,7 @@
 'use client'
 
 import {useEffect, useState} from 'react';
+import {useSearchParams} from 'next/navigation';
 
 // Components
 import QuickPairing from './QuickPairing';
@@ -32,6 +33,8 @@ export default function HomeContent(props: {username?: string}) {
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
     const [players, setPlayers] = useState('-');
     const [games, setGames] = useState('-');
+
+    const params = useSearchParams();
 
     useEffect(() => {
         const eventSource = new EventSource(`${process.env.API_BASE}/lobbies/events`);
@@ -69,7 +72,7 @@ export default function HomeContent(props: {username?: string}) {
                 />
             </div>
             <div className="flex flex-col gap-3.5 sticky top-6 h-max w-full md:w-auto ">
-                <CreateGameButton>Create a game</CreateGameButton>
+                <CreateGameButton open={!!params.get('modal')}>Create a game</CreateGameButton>
                 <CreateGameButton>Play with friend</CreateGameButton>
 
                 <div className="mt-3 text-sm text-secondary">

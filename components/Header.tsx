@@ -24,7 +24,7 @@ export default function Header() {
                 </Link>
 
                 <HeaderHoverDropdown href="/" name="Play">
-                    <HeaderHoverDropdownLink href="/">Create a game</HeaderHoverDropdownLink>
+                    <HeaderHoverDropdownLink href="/?modal=true">Create a game</HeaderHoverDropdownLink>
                     <HeaderHoverDropdownLink href="/offline">Offline</HeaderHoverDropdownLink>
                 </HeaderHoverDropdown>
                 <HeaderLink href="/rules">Rules</HeaderLink>
