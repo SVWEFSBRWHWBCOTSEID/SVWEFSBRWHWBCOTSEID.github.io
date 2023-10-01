@@ -44,7 +44,7 @@ export default function ScaledBox(props: ScaledBoxProps) {
         if (!parentRef.current || !onWheel) return;
         parentRef.current.addEventListener('wheel', onWheel, {passive: false});
         return () => parentRef.current?.removeEventListener('wheel', onWheel);
-    }, [parentRef.current]);
+    }, [parentRef.current, onWheel]);
 
     return (
         <div

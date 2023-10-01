@@ -1,6 +1,6 @@
 'use client'
 
-import {Dispatch, ReactElement, SetStateAction, startTransition, useContext, useEffect, useState} from 'react';
+import {Dispatch, ReactElement, SetStateAction, startTransition, useCallback, useContext, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import {Duration} from 'luxon';
 import GameContext from '../../../contexts/GameContext';
@@ -152,15 +152,15 @@ export default function Game<T>(props: GameProps<T>) {
     }
 
     // Handles scrolling within the game board by preventing page scrolling and changing the game state index instead.
-    // TODO: closure issue with `moves.length`
-    function handleScrollWithin(e: WheelEvent) {
+    // TODO: prevent having to rebind this event listener on every move?
+    const handleScrollWithin = useCallback((e: WheelEvent) => {
         if (!preferences.game.boardScroll) return;
 
         e.preventDefault();
         updateGameStateIndex((gameStateIndex) => e.deltaY > 0
             ? Math.max(gameStateIndex - 1, 1)
             : Math.min(gameStateIndex + 1, moves.length));
-    }
+    }, [moves, preferences.game.boardScroll]);
 
     return (
         <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, rematchOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime, fratingDiff, sratingDiff}}>
