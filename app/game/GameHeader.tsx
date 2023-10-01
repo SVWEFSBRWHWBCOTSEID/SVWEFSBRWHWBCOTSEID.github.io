@@ -2,7 +2,6 @@
 
 import {useContext} from 'react';
 import Link from 'next/link';
-import GameContext from '../../contexts/GameContext';
 import {DateTime} from 'luxon';
 import {BiCircle, BiSolidCircle} from 'react-icons/bi';
 
@@ -12,9 +11,15 @@ import {timeControlToString} from '../../util/game';
 import {winTypeToStr} from './GameOverMessage';
 import type {Player} from './[id]/page';
 
+// Contexts
+import GameContext from '../../contexts/GameContext';
+import CurrentTimeContext from '../../contexts/CurrentTimeContext';
+
 
 export default function GameHeader() {
     const {info, gameStatus, endType, fratingDiff, sratingDiff} = useContext(GameContext);
+    const time = useContext(CurrentTimeContext);
+
     const Icon = keyToIcon(info.game.key);
 
     return (
@@ -35,7 +40,7 @@ export default function GameHeader() {
                         </a>
                     </p>
                     <p className="text-secondary text-sm">
-                        {DateTime.fromSQL(info.createdAt).toRelative()}
+                        {DateTime.fromSQL(info.createdAt).toRelative({base: time})}
                     </p>
                 </div>
             </div>
