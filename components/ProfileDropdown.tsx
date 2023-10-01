@@ -24,10 +24,10 @@ export default function ProfileDropdown() {
 
     return (
         <Menu as="div" className="relative">
-            <Menu.Button className="text-secondary px-3 py-4 ui-open:bg-content-secondary hover:text-primary">
+            <Menu.Button className="text-secondary pl-3 pr-4 py-4 ui-open:bg-[#3c3934] hover:text-primary">
                 {user?.username}
             </Menu.Button>
-            <Menu.Items className="absolute right-0 bg-content-secondary py-1.5 rounded-l rounded-br w-48 shadow-xl z-10">
+            <Menu.Items className="absolute right-0 bg-[#3c3934] py-1 rounded-l text-sm w-48 shadow-xl z-10">
                 <Link href={`/profile/${user?.username}`}>
                     <ProfileDropdownItem>
                         <div className="w-3 h-3 mx-0.5 rounded-full bg-theme-green group-hover:bg-white" /> Profile
@@ -48,7 +48,7 @@ function ProfileDropdownItem(props: {children: ReactNode, onClick?: MouseEventHa
     return (
         <Menu.Item
             as="div"
-            className="flex gap-2.5 items-center px-4 py-1 cursor-pointer text-primary hover:text-white hover:bg-theme-green group"
+            className="flex gap-2 items-center px-3 py-1.5 cursor-pointer text-primary hover:text-white hover:bg-theme-green group"
             onClick={props.onClick}
         >
             {props.children}

@@ -15,7 +15,7 @@ export default function Header() {
     const {user} = useContext(UserContext);
 
     return (
-        <header className="relative pr-4 sm:px-4 md:px-6 lg:px-8 text-md flex justify-between">
+        <header className="relative sm:pl-4 md:pl-6 lg:pl-8 text-md flex justify-between">
             <nav className="flex items-center">
                 <HeaderMenu />
 

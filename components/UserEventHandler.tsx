@@ -27,6 +27,7 @@ export default function UserEventHandler() {
         const eventSource = new EventSource(`${process.env.API_BASE}/events`, {withCredentials: true});
         eventSource.onmessage = (m) => {
             const event: UserEvent = JSON.parse(m.data);
+            console.log(event);
 
             switch (event.type) {
                 case 'GAME_START':
