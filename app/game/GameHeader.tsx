@@ -33,8 +33,9 @@ export default function GameHeader() {
                             {info.game.name}
                         </a>
                     </p>
-                    {/* TODO: parse createdAt timestamp, countdown clock */}
-                    <p className="text-secondary text-sm">39 hours ago</p>
+                    <p className="text-secondary text-sm">
+                        {DateTime.fromSQL(info.createdAt).toRelative()}
+                    </p>
                 </div>
             </div>
 
