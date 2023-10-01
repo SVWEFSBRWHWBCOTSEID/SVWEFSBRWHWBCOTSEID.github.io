@@ -8,7 +8,7 @@ import UserContext from '../contexts/UserContext';
 
 // Icons
 import {FaPowerOff} from 'react-icons/fa';
-import {BsCircleFill} from 'react-icons/bs';
+import {BsEnvelopeFill} from 'react-icons/bs';
 
 
 export default function ProfileDropdown() {
@@ -31,6 +31,11 @@ export default function ProfileDropdown() {
                 <Link href={`/profile/${user?.username}`}>
                     <ProfileDropdownItem>
                         <div className="w-3 h-3 mx-0.5 rounded-full bg-theme-green group-hover:bg-white" /> Profile
+                    </ProfileDropdownItem>
+                </Link>
+                <Link href="/inbox">
+                    <ProfileDropdownItem>
+                        <BsEnvelopeFill /> Inbox
                     </ProfileDropdownItem>
                 </Link>
                 <ProfileDropdownItem onClick={signOut}>
