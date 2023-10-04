@@ -2,9 +2,21 @@
 
 import {useContext, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
-import PreferencesContext, {Preferences} from '../contexts/PreferencesContext';
-import type {GameKey} from '../contexts/ProfileContext';
 
+// Types
+import type {GameKey} from '../contexts/ProfileContext';
+import type {Conversation} from '../app/inbox/InboxSidebarItem';
+
+// Contexts
+import PreferencesContext, {Preferences} from '../contexts/PreferencesContext';
+import ConversationContext from '../contexts/ConversationContext';
+
+
+type UserFullEvent = {
+    type: 'USER_FULL',
+    conversations: Conversation[],
+    preferences: Preferences
+}
 
 type GameStartEvent = {
     type: 'GAME_START',
@@ -17,11 +29,12 @@ type PreferencesUpdateEvent = {
     preferences: Preferences
 }
 
-type UserEvent = GameStartEvent | PreferencesUpdateEvent;
+type UserEvent = UserFullEvent | GameStartEvent | PreferencesUpdateEvent;
 
 export default function UserEventHandler() {
     const {push} = useRouter();
     const {setPreferences} = useContext(PreferencesContext);
+    const {setConversations} = useContext(ConversationContext);
 
     useEffect(() => {
         const eventSource = new EventSource(`${process.env.API_BASE}/events`, {withCredentials: true});
@@ -30,6 +43,10 @@ export default function UserEventHandler() {
             console.log(event);
 
             switch (event.type) {
+                case "USER_FULL":
+                    setConversations(event.conversations);
+                    setPreferences(event.preferences);
+                    break;
                 case 'GAME_START':
                     push(`/game/${event.id}`); break;
                 case 'PREFERENCES_UPDATE':

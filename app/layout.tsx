@@ -6,6 +6,7 @@ import {Inter} from 'next/font/google';
 import Header from '../components/Header';
 import UserProvider from '../components/UserProvider';
 import PreferencesProvider from '../components/PreferencesProvider';
+import ConversationProvider from '../components/ConversationProvider';
 import CurrentTimeProvider from '../components/CurrentTimeProvider';
 
 import '../styles/styles.css'
@@ -33,10 +34,12 @@ export default function Layout(props: {children: ReactNode}) {
             <body className="text-white h-full flex flex-col bg-background bg-gradient-to-b from-[hsl(37,_12%,_16%)] to-[116px] to-[hsl(37,_10%,_8%)] bg-no-repeat" style={inter.style}>
                 <UserProvider>
                     <PreferencesProvider>
-                        <CurrentTimeProvider>
-                            <Header />
-                            {props.children}
-                        </CurrentTimeProvider>
+                        <ConversationProvider>
+                            <CurrentTimeProvider>
+                                <Header />
+                                {props.children}
+                            </CurrentTimeProvider>
+                        </ConversationProvider>
                     </PreferencesProvider>
                 </UserProvider>
             </body>

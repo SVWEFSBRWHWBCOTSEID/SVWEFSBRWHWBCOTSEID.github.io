@@ -26,5 +26,8 @@ export const defaultPreferences: Preferences = {
 }
 
 type PreferencesContext = {preferences: Preferences, setPreferences: (p: Preferences) => void}
-const PreferencesContext = createContext<PreferencesContext>({preferences: defaultPreferences, setPreferences: () => {}});
+const PreferencesContext = createContext<PreferencesContext>({
+    preferences: defaultPreferences,
+    setPreferences: () => {}
+});
 export default PreferencesContext;
