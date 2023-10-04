@@ -1,7 +1,8 @@
 'use client'
 
-import {useContext, useEffect} from 'react';
+import {ReactElement, useContext, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
+import MessageNotification from './MessageNotification';
 
 // Contexts
 import UserContext from '../contexts/UserContext';
@@ -45,6 +46,16 @@ export default function UserEventHandler() {
     const {setPreferences} = useContext(PreferencesContext);
     const {setConversations} = useContext(ConversationContext);
 
+    // Notifications
+    const [notifications, setNotifications] = useState<ReactElement[]>([]);
+    function pushNotification(e: ReactElement) {
+        setNotifications((notifications) => [...notifications, e]);
+        setTimeout(() => setNotifications((notifications) => {
+            notifications.shift();
+            return [...notifications];
+        }), 5000);
+    }
+
     useEffect(() => {
         const eventSource = new EventSource(`${process.env.API_BASE}/events`, {withCredentials: true});
         eventSource.onmessage = (m) => {
@@ -76,7 +87,8 @@ export default function UserEventHandler() {
                         return [...conversations];
                     });
 
-                    // TODO: push notif
+                    if (event.username !== user!.username)
+                        pushNotification(<MessageNotification {...event} />)
                     break;
             }
         }
@@ -84,5 +96,9 @@ export default function UserEventHandler() {
         return () => eventSource.close();
     }, [])
 
-    return null;
+    return (
+        <div className="fixed right-0 bottom-0 flex flex-col p-2 gap-2">
+            {notifications}
+        </div>
+    );
 }
