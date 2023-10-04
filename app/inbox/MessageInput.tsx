@@ -1,6 +1,7 @@
 'use client'
 
 import {useContext, useState} from 'react';
+import ProfileImagePlaceholder from '../../components/ProfileImagePlaceholder';
 import UserContext from '../../contexts/UserContext';
 
 
@@ -32,9 +33,10 @@ export default function MessageInput(props: {otherName: string}) {
                     alt={user?.username}
                 />
             ) : (
-                <div className="w-14 h-14 rounded-full flex-none bg-background flex items-center justify-center text-secondary/50 text-3xl font-medium">
-                    {user?.username[0].toUpperCase()}
-                </div>
+                <ProfileImagePlaceholder
+                    name={user?.username ?? '-'}
+                    className="w-14 h-14 text-3xl"
+                />
             )}
             <div className="flex-grow flex flex-col gap-2">
                 <textarea

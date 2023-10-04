@@ -10,6 +10,7 @@ import Input from '../../components/Input';
 import AutoResizingTextArea from '../../components/AutoResizingTextbox';
 import BlueButton from '../../components/BlueButton';
 import AnimatedListbox from '../../components/AnimatedListbox';
+import ProfileImagePlaceholder from '../../components/ProfileImagePlaceholder';
 
 // Icons
 import {FaLocationDot, FaUser} from 'react-icons/fa6';
@@ -60,9 +61,10 @@ export default function ProfileHeader() {
                     alt={username}
                 />
             ) : (
-                <div className="w-16 h-16 rounded-full flex-none bg-background flex items-center justify-center text-secondary/50 text-3xl font-medium">
-                    {username[0].toUpperCase()}
-                </div>
+                <ProfileImagePlaceholder
+                    name={username}
+                    className="w-16 h-16 text-3xl"
+                />
             )}
             <div className="pt-3 flex flex-grow gap-4 flex-wrap sm:flex-nowrap">
                 <div className="w-full flex-grow flex flex-col relative">

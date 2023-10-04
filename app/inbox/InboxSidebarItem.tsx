@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import {useParams} from 'next/navigation';
+import ProfileImagePlaceholder from '../../components/ProfileImagePlaceholder';
 import type {Message} from './InboxMessage';
 
 
@@ -24,9 +25,10 @@ export default function InboxSidebarItem(props: Conversation & {default?: boolea
                     alt={props.otherName}
                 />
             ) : (
-                <div className="w-10 h-10 rounded-full flex-none bg-background flex items-center justify-center text-secondary/50 text-2xl font-medium">
-                    {props.otherName[0].toUpperCase()}
-                </div>
+                <ProfileImagePlaceholder
+                    name={props.otherName}
+                    className="w-10 h-10 text-2xl"
+                />
             )}
             <div>
                 <h3 className={active ? '' : 'text-primary'}>{props.otherName}</h3>

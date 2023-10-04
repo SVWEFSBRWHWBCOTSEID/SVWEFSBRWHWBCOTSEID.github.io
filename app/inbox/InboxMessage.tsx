@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ProfileImagePlaceholder from '../../components/ProfileImagePlaceholder';
 
 
 export type Message = {
@@ -17,9 +18,10 @@ export default function InboxMessage(props: Message) {
                     alt={props.username}
                 />
             ) : (
-                <div className="w-14 h-14 rounded-full flex-none bg-background flex items-center justify-center text-secondary/50 text-3xl font-medium">
-                    {props.username[0].toUpperCase()}
-                </div>
+                <ProfileImagePlaceholder
+                    name={props.username}
+                    className="w-14 h-14 text-3xl"
+                />
             )}
             <div className="flex-grow">
                 <h5 className="flex justify-between items-center font-medium mb-1.5">
