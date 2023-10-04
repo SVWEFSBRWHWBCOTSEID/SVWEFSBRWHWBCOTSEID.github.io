@@ -3,7 +3,7 @@ import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
 
 // Components
-import Header from '../components/Header';
+import Header from './Header';
 import UserProvider from '../components/UserProvider';
 import PreferencesProvider from '../components/PreferencesProvider';
 import ConversationProvider from '../components/ConversationProvider';

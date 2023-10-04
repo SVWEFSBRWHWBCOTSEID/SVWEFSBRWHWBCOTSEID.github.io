@@ -3,7 +3,7 @@
 import {MouseEventHandler, ReactNode, useContext} from 'react';
 import Link from 'next/link';
 import {Menu} from '@headlessui/react';
-import UserEventHandler from './UserEventHandler';
+import UserEventHandler from '../components/UserEventHandler';
 import UserContext from '../contexts/UserContext';
 
 // Icons
@@ -35,11 +35,11 @@ export default function ProfileDropdown() {
                 </Link>
                 <Link href="/inbox">
                     <ProfileDropdownItem>
-                        <BsEnvelopeFill /> Inbox
+                        <BsEnvelopeFill className="w-4 text-base" /> Inbox
                     </ProfileDropdownItem>
                 </Link>
                 <ProfileDropdownItem onClick={signOut}>
-                    <FaPowerOff /> Sign out
+                    <FaPowerOff className="w-4 text-base" /> Sign out
                 </ProfileDropdownItem>
             </Menu.Items>
 
@@ -53,7 +53,7 @@ function ProfileDropdownItem(props: {children: ReactNode, onClick?: MouseEventHa
     return (
         <Menu.Item
             as="div"
-            className="flex gap-2 items-center px-3 py-1.5 cursor-pointer text-primary hover:text-white hover:bg-theme-green group"
+            className="flex gap-2.5 items-center px-3 py-1.5 cursor-pointer text-primary hover:text-white hover:bg-theme-green group"
             onClick={props.onClick}
         >
             {props.children}
