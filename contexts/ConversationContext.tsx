@@ -1,10 +1,10 @@
-import {createContext} from 'react';
+import {createContext, Dispatch, SetStateAction} from 'react';
 import type {Conversation} from '../app/inbox/InboxSidebarItem';
 
 
 type ConversationContext = {
     conversations: Conversation[],
-    setConversations: (user: Conversation[]) => void
+    setConversations: Dispatch<SetStateAction<Conversation[]>>
 };
 const ConversationContext = createContext<ConversationContext>({
     conversations: [],

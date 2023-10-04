@@ -3,13 +3,15 @@
 import {useContext, useEffect} from 'react';
 import {useRouter} from 'next/navigation';
 
+// Contexts
+import UserContext from '../contexts/UserContext';
+import PreferencesContext, {Preferences} from '../contexts/PreferencesContext';
+import ConversationContext from '../contexts/ConversationContext';
+
 // Types
 import type {GameKey} from '../contexts/ProfileContext';
 import type {Conversation} from '../app/inbox/InboxSidebarItem';
-
-// Contexts
-import PreferencesContext, {Preferences} from '../contexts/PreferencesContext';
-import ConversationContext from '../contexts/ConversationContext';
+import type {Message} from '../app/inbox/InboxMessage';
 
 
 type UserFullEvent = {
@@ -29,10 +31,17 @@ type PreferencesUpdateEvent = {
     preferences: Preferences
 }
 
-type UserEvent = UserFullEvent | GameStartEvent | PreferencesUpdateEvent;
+type UserMessageEvent = Message & {
+    type: 'USER_MESSAGE',
+    otherName: string
+}
+
+type UserEvent = UserFullEvent | GameStartEvent | PreferencesUpdateEvent | UserMessageEvent;
 
 export default function UserEventHandler() {
     const {push} = useRouter();
+
+    const {user} = useContext(UserContext);
     const {setPreferences} = useContext(PreferencesContext);
     const {setConversations} = useContext(ConversationContext);
 
@@ -43,7 +52,7 @@ export default function UserEventHandler() {
             console.log(event);
 
             switch (event.type) {
-                case "USER_FULL":
+                case 'USER_FULL':
                     setConversations(event.conversations);
                     setPreferences(event.preferences);
                     break;
@@ -51,8 +60,28 @@ export default function UserEventHandler() {
                     push(`/game/${event.id}`); break;
                 case 'PREFERENCES_UPDATE':
                     setPreferences(event.preferences); break;
+                case 'USER_MESSAGE':
+                    // Update the conversation corresponding to the given message
+                    setConversations((conversations) => {
+                        const otherName = event.username === user!.username ? event.otherName : event.username;
+
+                        // TODO: cleaner?
+                        let conversation = conversations.find(c => c.otherName === otherName);
+                        if (!conversation) {
+                            conversation = {otherName, messages: []};
+                            conversations.push(conversation);
+                        }
+
+                        conversation.messages = [...conversation.messages, event];
+                        return [...conversations];
+                    });
+
+                    // TODO: push notif
+                    break;
             }
         }
+
+        return () => eventSource.close();
     }, [])
 
     return null;
