@@ -14,6 +14,8 @@ export default function GameDrawOffer() {
         });
     }
 
+    if (side === 'SPECTATOR') return null;
+
     return (
         <div className="flex">
             {side === drawOffer ? (

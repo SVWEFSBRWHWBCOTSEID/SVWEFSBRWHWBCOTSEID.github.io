@@ -7,7 +7,7 @@ import GameContext from '../../contexts/GameContext';
 
 
 export default function GameControls() {
-    const {id} = useContext(GameContext);
+    const {id, side} = useContext(GameContext);
 
     const [confirming, setConfirming] = useState<'' | 'draw' | 'resign'>('');
 
@@ -24,6 +24,8 @@ export default function GameControls() {
             credentials: 'include'
         });
     }
+
+    if (side === 'SPECTATOR') return null;
 
     return (
         <div className="px-4 py-1 text-secondary flex justify-center border-b border-tertiary text-2xl">
