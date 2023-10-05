@@ -133,7 +133,7 @@ export default function Game<T>(props: GameProps<T>) {
 
         props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex: updateGameStateIndex, reset});
         setMoves((moves) => {
-            const newMoves = moves.concat(event.moves);
+            const newMoves = reset ? event.moves : moves.concat(event.moves);
 
             // Dynamically update tab title if playing the game
             // TODO: blink favicon as well?
