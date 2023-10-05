@@ -43,7 +43,7 @@ export default function UserEventHandler() {
     const {push} = useRouter();
 
     const {user} = useContext(UserContext);
-    const {setPreferences} = useContext(PreferencesContext);
+    const {setLocalPreferences} = useContext(PreferencesContext);
     const {setConversations} = useContext(ConversationContext);
 
     // Notifications
@@ -65,12 +65,12 @@ export default function UserEventHandler() {
             switch (event.type) {
                 case 'USER_FULL':
                     setConversations(event.conversations);
-                    setPreferences(event.preferences);
+                    setLocalPreferences(event.preferences);
                     break;
                 case 'GAME_START':
                     push(`/game/${event.id}`); break;
                 case 'PREFERENCES_UPDATE':
-                    setPreferences(event.preferences); break;
+                    setLocalPreferences(event.preferences); break;
                 case 'USER_MESSAGE':
                     // Update the conversation corresponding to the given message
                     setConversations((conversations) => {

@@ -25,9 +25,14 @@ export const defaultPreferences: Preferences = {
     }
 }
 
-type PreferencesContext = {preferences: Preferences, setPreferences: (p: Preferences) => void}
+type PreferencesContext = {
+    preferences: Preferences,
+    setPreferences: (p: Preferences) => void,
+    setLocalPreferences: (p: Preferences) => void
+}
 const PreferencesContext = createContext<PreferencesContext>({
     preferences: defaultPreferences,
-    setPreferences: () => {}
+    setPreferences: () => {},
+    setLocalPreferences: () => {}
 });
 export default PreferencesContext;
