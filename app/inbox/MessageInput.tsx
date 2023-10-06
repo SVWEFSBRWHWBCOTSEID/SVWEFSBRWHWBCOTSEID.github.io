@@ -10,6 +10,7 @@ export default function MessageInput(props: {otherName: string}) {
     const [message, setMessage] = useState('');
 
     async function sendMessage() {
+        if (!message) return;
         await fetch(`${process.env.API_BASE}/message/${props.otherName}`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},

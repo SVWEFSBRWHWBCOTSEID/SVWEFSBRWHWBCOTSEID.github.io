@@ -57,7 +57,7 @@ export default function Chat() {
             <input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && sendChatMessage()}
+                onKeyDown={(e) => e.key === "Enter" && message && sendChatMessage()}
                 placeholder="Please be nice in the chat!"
                 className="px-2 py-1 bg-content border-t border-tertiary focus:outline-none focus:border-blue-500 placeholder:text-secondary"
             />
