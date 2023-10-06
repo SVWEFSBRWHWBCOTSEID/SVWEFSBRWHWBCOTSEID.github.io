@@ -10,7 +10,8 @@ export type Conversation = {
 }
 export default function InboxSidebarItem(props: Conversation & {default?: boolean}) {
     const {username} = useParams();
-    const active = props.default && !username || props.otherName === username;
+    const active = props.default && !username
+        || typeof username === 'string' && props.otherName === decodeURIComponent(username);
 
     return (
         <Link

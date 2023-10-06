@@ -30,9 +30,9 @@ export default function Header() {
                 <HeaderLink href="/rules">Rules</HeaderLink>
                 <HeaderLink href="/about">About</HeaderLink>
             </nav>
-            <nav className="flex items-center">
+            <nav className="flex items-center text-[#bababa]">
                 <Link href="/preferences" className="px-2">
-                    <BsGearFill className="text-secondary" />
+                    <BsGearFill />
                 </Link>
                 {user ? (
                     <ProfileDropdown />

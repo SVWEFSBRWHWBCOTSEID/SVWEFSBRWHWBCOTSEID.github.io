@@ -12,5 +12,5 @@ export async function generateMetadata({ params }: { params: { username: string 
 }
 
 export default async function InboxPage({ params }: { params: { username: string } }) {
-    return <InboxContent username={params.username} />
+    return <InboxContent username={decodeURIComponent(params.username)} />
 }
