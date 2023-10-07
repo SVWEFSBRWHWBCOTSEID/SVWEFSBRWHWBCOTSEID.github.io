@@ -36,20 +36,17 @@ export default function InboxContent(props: {username?: string}) {
             </aside>
             <div className="bg-content flex-grow rounded-r overflow-clip flex flex-col">
                 <div className="flex items-center bg-content-secondary py-3 px-4 text-lg h-14 flex-none">
-                    {conversation?.otherName}
+                    {props.username ?? conversation!.otherName}
                 </div>
                 <div className="flex-grow overflow-y-auto scrollbar:w-1 scrollbar-thumb:bg-secondary pt-2 flex flex-col">
-                    {conversation ? (
+                    {conversation && (
                         <>
                             {conversation.messages.map((message) => (
                                 <InboxMessage {...message} key={message.username + message.createdAt} />
                             ))}
-                            <MessageInput otherName={conversation.otherName} />
                         </>
-                    ) : (
-                        // TODO: better no messages page
-                        <p>No messages yet...</p>
                     )}
+                    <MessageInput otherName={props.username ?? conversation!.otherName} />
                 </div>
             </div>
         </div>

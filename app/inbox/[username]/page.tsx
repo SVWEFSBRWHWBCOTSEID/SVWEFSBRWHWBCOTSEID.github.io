@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
-import {notFound} from 'next/navigation';
+import {notFound, redirect} from 'next/navigation';
 import InboxContent from '../InboxContent';
+import {getUser} from '../../../util/user';
 
 
 // TODO: dynamic tab name?
@@ -12,5 +13,8 @@ export async function generateMetadata({ params }: { params: { username: string 
 }
 
 export default async function InboxPage({ params }: { params: { username: string } }) {
+    const user = await getUser(params.username);
+    if (!user) redirect('/inbox');
+
     return <InboxContent username={decodeURIComponent(params.username)} />
 }
