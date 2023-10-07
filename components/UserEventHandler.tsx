@@ -8,6 +8,7 @@ import MessageNotification from './MessageNotification';
 import UserContext from '../contexts/UserContext';
 import PreferencesContext, {Preferences} from '../contexts/PreferencesContext';
 import ConversationContext from '../contexts/ConversationContext';
+import ChallengesContext, {Challenge} from '../contexts/ChallengesContext';
 
 // Types
 import type {GameKey} from '../contexts/ProfileContext';
@@ -37,7 +38,12 @@ type UserMessageEvent = Message & {
     otherName: string
 }
 
-type UserEvent = UserFullEvent | GameStartEvent | PreferencesUpdateEvent | UserMessageEvent;
+type ChallengeEvent = {
+    type: 'CHALLENGE',
+    challenge: Challenge
+}
+
+type UserEvent = UserFullEvent | GameStartEvent | PreferencesUpdateEvent | UserMessageEvent | ChallengeEvent;
 
 export default function UserEventHandler() {
     const {push} = useRouter();
@@ -45,6 +51,7 @@ export default function UserEventHandler() {
     const {user} = useContext(UserContext);
     const {setLocalPreferences} = useContext(PreferencesContext);
     const {setConversations} = useContext(ConversationContext);
+    const {setChallenges} = useContext(ChallengesContext);
 
     // Notifications
     const [notifications, setNotifications] = useState<ReactElement[]>([]);
@@ -89,6 +96,10 @@ export default function UserEventHandler() {
 
                     if (event.username !== user!.username)
                         pushNotification(<MessageNotification {...event} />)
+                    break;
+                case 'CHALLENGE':
+                    setChallenges((challenges) => challenges.concat(event.challenge));
+                    pushNotification(<p>bruv</p>)
                     break;
             }
         }

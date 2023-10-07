@@ -10,6 +10,7 @@ import Connect4Game from './Connect4Game';
 // Util
 import {timeControlToString} from '../../../util/game';
 import type {GameKey} from '../../../contexts/ProfileContext';
+import type {ChatData} from '../Chat';
 
 
 export type ChatMessageEvent = {
@@ -60,7 +61,7 @@ export type GameFullEvent = {
     createdAt: string, // SQL date
     first: Player,
     second: Player,
-    chat: Omit<ChatMessageEvent, 'type'>[],
+    chat: ChatData[],
     // TODO: startpos?
     state: Omit<GameStateEvent, 'type'>
 }

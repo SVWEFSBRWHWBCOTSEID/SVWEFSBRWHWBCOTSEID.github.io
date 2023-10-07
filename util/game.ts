@@ -16,6 +16,10 @@ type CreateGameBody = {
     ratingMax: number
 }
 
+type CreateChallengeBody = Omit<CreateGameBody, 'ratingMin' | 'ratingMax'> & {
+    gameKey: GameKey
+}
+
 type CreateGameResponse = Omit<GameFullEvent, 'type' | 'chat'> & {id: string} // TODO: remove cross-type reliance?
 
 export async function createGame(
@@ -39,6 +43,37 @@ export async function createGame(
     }
 
     const res: CreateGameResponse = await (await fetch(`${process.env.API_BASE}/game/new/${game}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+        body: JSON.stringify(body)
+    })).json();
+
+    // Revalidate cached game object
+    // TODO: proper?
+    startTransition(() => void revalidate(`game-${res.id}`));
+
+    return res;
+}
+
+export async function createChallenge(
+    opponent: string,
+    game: GameKey,
+    minutes: number,
+    increment: number,
+    rated: boolean = true,
+    timed: boolean = true,
+    side: Side = 'RANDOM'
+) {
+    const body: CreateChallengeBody = {
+        gameKey: game,
+        rated,
+        time: timed ? minutes * 60 * 1000 : undefined,
+        increment: timed ? increment * 1000 : undefined,
+        side
+    }
+
+    const res: CreateGameResponse = await (await fetch(`${process.env.API_BASE}/challenge/${opponent}/true`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         credentials: 'include',

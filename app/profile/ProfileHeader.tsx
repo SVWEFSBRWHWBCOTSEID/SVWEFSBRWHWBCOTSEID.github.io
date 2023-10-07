@@ -1,6 +1,7 @@
 'use client'
 
 import {startTransition, useContext, useState} from 'react';
+import Link from 'next/link';
 import {Listbox} from '@headlessui/react';
 import {DateTime} from 'luxon';
 import {revalidate} from '../../util/actions';
@@ -17,6 +18,8 @@ import {FaLocationDot, FaUser} from 'react-icons/fa6';
 import {BsGearFill} from 'react-icons/bs';
 import {ImCheckmark} from 'react-icons/im';
 import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
+import {RiSwordFill} from 'react-icons/ri';
+import {BiMessageRounded} from 'react-icons/bi';
 
 // Contexts
 import ProfileContext, {Country, User} from '../../contexts/ProfileContext';
@@ -66,7 +69,7 @@ export default function ProfileHeader() {
                     className="w-16 h-16 text-3xl"
                 />
             )}
-            <div className="pt-3 flex flex-grow gap-4 flex-wrap sm:flex-nowrap">
+            <div className="pt-3 flex flex-grow gap-x-5 gap-y-4 flex-wrap sm:flex-nowrap">
                 <div className="w-full flex-grow flex flex-col relative">
                     <h1 className="text-4xl flex gap-3 items-center mb-2">
                         {username}
@@ -142,17 +145,17 @@ export default function ProfileHeader() {
                     ) : (
                         <>
                             {profile.bio && (
-                                <div className="bg-content text-secondary border-l-[3px] border-tertiary px-4 py-2 mb-2 -ml-2 rounded-sm whitespace-pre-wrap">
+                                <div className="text-sm bg-content text-secondary border-l-[3px] border-tertiary px-4 py-2 mb-2 -ml-2 rounded-sm whitespace-pre-wrap">
                                     {profile.bio}
                                 </div>
                             )}
                             {getName(profile) && (
-                                <p className="flex gap-2.5 items-center text-secondary">
+                                <p className="text-sm flex gap-2.5 items-center text-secondary">
                                     <FaUser /> {getName(profile)}
                                 </p>
                             )}
                             {profile.location && (
-                                <p className="flex gap-2.5 items-center text-secondary mt-0.5">
+                                <p className="text-sm flex gap-2.5 items-center text-secondary mt-0.5">
                                     <FaLocationDot /> {profile.location}
                                 </p>
                             )}
@@ -169,13 +172,24 @@ export default function ProfileHeader() {
                     )}
                 </div>
 
-                <div className="flex-none xl:pr-6">
+                <div className="flex-none xl:pr-6 text-sm">
                     <p className="text-secondary">
                         <strong>Joined:</strong> {DateTime.fromSQL(createdAt).toLocaleString()}
                     </p>
                     <p className="text-secondary">
                         <strong>Friends:</strong> 0 {/* TODO: followers */}
                     </p>
+
+                    <div className="w-max rounded-sm overflow-clip flex divide-x divide-tertiary border border-tertiary mt-2 text-[#bababa]">
+                        <button className="px-2 py-1 bg-gradient-to-b from-[hsl(37,_7%,_22%)] to-[hsl(37,_5%,_19%)] hover:from-[hsl(37,_7%,_25%)] hover:to-[hsl(37,_5%,_22%)]">
+                            <RiSwordFill className="text-lg" />
+                        </button>
+                        <Link href={`/inbox/${username}`} className="flex">
+                            <button className="px-2 py-1 bg-gradient-to-b from-[hsl(37,_7%,_22%)] to-[hsl(37,_5%,_19%)] hover:from-[hsl(37,_7%,_25%)] hover:to-[hsl(37,_5%,_22%)]">
+                                <BiMessageRounded className="text-lg" />
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </section>

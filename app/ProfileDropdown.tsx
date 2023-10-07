@@ -8,7 +8,7 @@ import UserContext from '../contexts/UserContext';
 
 // Icons
 import {FaPowerOff} from 'react-icons/fa';
-import {BsEnvelopeFill} from 'react-icons/bs';
+import {BsEnvelopeFill, BsGearFill} from 'react-icons/bs';
 
 
 export default function ProfileDropdown() {
@@ -23,7 +23,7 @@ export default function ProfileDropdown() {
     }
 
     return (
-        <Menu as="div" className="relative">
+        <Menu as="div">
             <Menu.Button className="pl-3 pr-4 py-4 ui-open:bg-[#3c3934] hover:text-primary">
                 {user?.username}
             </Menu.Button>
@@ -36,6 +36,11 @@ export default function ProfileDropdown() {
                 <Link href="/inbox">
                     <ProfileDropdownItem>
                         <BsEnvelopeFill className="w-4 text-base" /> Inbox
+                    </ProfileDropdownItem>
+                </Link>
+                <Link href="/preferences">
+                    <ProfileDropdownItem>
+                        <BsGearFill className="w-4 text-base" /> Preferences
                     </ProfileDropdownItem>
                 </Link>
                 <ProfileDropdownItem onClick={signOut}>

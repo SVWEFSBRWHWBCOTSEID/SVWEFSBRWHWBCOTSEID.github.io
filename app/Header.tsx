@@ -9,6 +9,7 @@ import {BsGear, BsGearFill} from 'react-icons/bs';
 import ProfileDropdown from './ProfileDropdown';
 import SignInLink from './SignInLink';
 import HeaderMenu from './HeaderMenu';
+import ChallengeDropdown from './ChallengeDropdown';
 
 
 export default function Header() {
@@ -31,13 +32,18 @@ export default function Header() {
                 <HeaderLink href="/about">About</HeaderLink>
             </nav>
             <nav className="flex items-center text-[#bababa]">
-                <Link href="/preferences" className="px-2">
-                    <BsGearFill />
-                </Link>
                 {user ? (
-                    <ProfileDropdown />
+                    <>
+                        <ChallengeDropdown />
+                        <ProfileDropdown />
+                    </>
                 ) : (
-                    <SignInLink />
+                    <>
+                        <Link href="/preferences" className="px-2">
+                            <BsGearFill />
+                        </Link>
+                        <SignInLink />
+                    </>
                 )}
             </nav>
         </header>
