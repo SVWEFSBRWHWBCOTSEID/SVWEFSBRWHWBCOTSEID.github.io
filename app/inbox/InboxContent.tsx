@@ -1,6 +1,7 @@
 'use client'
 
 import {useContext} from 'react';
+import Link from 'next/link';
 import ConversationContext from '../../contexts/ConversationContext';
 
 // Components
@@ -36,7 +37,9 @@ export default function InboxContent(props: {username?: string}) {
             </aside>
             <div className="bg-content flex-grow rounded-r overflow-clip flex flex-col">
                 <div className="flex items-center bg-content-secondary py-3 px-4 text-lg h-14 flex-none">
-                    {props.username ?? conversation!.otherName}
+                    <Link href={`/profile/${props.username ?? conversation!.otherName}`} className="hover:text-blue-500">
+                        {props.username ?? conversation!.otherName}
+                    </Link>
                 </div>
                 <div className="flex-grow overflow-y-auto scrollbar:w-1 scrollbar-thumb:bg-secondary pt-2 flex flex-col">
                     {conversation && (
