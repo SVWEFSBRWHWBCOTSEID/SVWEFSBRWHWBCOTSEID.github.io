@@ -1,12 +1,13 @@
 'use client'
 
-import {useEffect, useState} from 'react';
-import {useSearchParams} from 'next/navigation';
+import {MouseEventHandler, ReactNode, useEffect, useState} from 'react';
+import {useRouter, useSearchParams} from 'next/navigation';
 
 // Components
 import QuickPairing from './QuickPairing';
 import Lobbies, {Lobby} from './Lobbies';
-import CreateGameButton from './CreateGameButton';
+import CreateGameModal from './CreateGameModal';
+import CreateChallengeModal from './CreateChallengeModal';
 
 
 type LobbyFullEvent = {
@@ -34,7 +35,23 @@ export default function HomeContent(props: {username?: string}) {
     const [players, setPlayers] = useState('-');
     const [games, setGames] = useState('-');
 
+    const [gameOpen, setGameOpen] = useState(false);
+    const [challengeOpen, setChallengeOpen] = useState(false);
+    const [challengeUsername, setChallengeUsername] = useState('bbb'); // TODO
+
     const params = useSearchParams();
+    const {replace} = useRouter();
+
+    // Subscribe to rising edges on the modal search param, opening and resetting the param for later navigation.
+    useEffect(() => {
+        if (!params.get('modal') && !params.get('challenge')) return;
+
+        setGameOpen(!!params.get('modal'));
+        setChallengeOpen(!!params.get('challenge'));
+        setChallengeUsername(params.get('challenge') ?? 'bbb'); // TODO
+
+        replace('/');
+    }, [params.get('modal'), params.get('challenge')]);
 
     useEffect(() => {
         const eventSource = new EventSource(`${process.env.API_BASE}/lobbies/events`);
@@ -72,8 +89,22 @@ export default function HomeContent(props: {username?: string}) {
                 />
             </div>
             <div className="flex flex-col gap-3.5 sticky top-6 h-max w-full md:w-auto ">
-                <CreateGameButton open={!!params.get('modal')}>Create a game</CreateGameButton>
-                <CreateGameButton>Play with friend</CreateGameButton>
+                <SecondaryButton onClick={() => setGameOpen(true)}>
+                    Create a game
+                </SecondaryButton>
+                <SecondaryButton onClick={() => setChallengeOpen(true)}>
+                    Play with friend
+                </SecondaryButton>
+
+                <CreateGameModal
+                    isOpen={gameOpen}
+                    setIsOpen={setGameOpen}
+                />
+                <CreateChallengeModal
+                    username={challengeUsername}
+                    isOpen={challengeOpen}
+                    setIsOpen={setChallengeOpen}
+                />
 
                 <div className="mt-3 text-sm text-secondary">
                     <p><strong>{players}</strong> player{players !== '1' ? 's' : ''}</p>
@@ -81,5 +112,17 @@ export default function HomeContent(props: {username?: string}) {
                 </div>
             </div>
         </main>
+    )
+}
+
+// TODO: move to own file?
+function SecondaryButton(props: {children: ReactNode, onClick?: MouseEventHandler<HTMLButtonElement>}) {
+    return (
+        <button
+            className="px-16 py-3 bg-[#302e2c] hover:bg-[hsl(37,_7%,_25%)] text-secondary hover:text-primary transition duration-200 rounded uppercase"
+            onClick={props.onClick}
+        >
+            {props.children}
+        </button>
     )
 }

@@ -181,9 +181,11 @@ export default function ProfileHeader() {
                     </p>
 
                     <div className="w-max rounded-sm overflow-clip flex divide-x divide-tertiary border border-tertiary mt-2 text-[#bababa]">
-                        <button className="px-2 py-1 bg-gradient-to-b from-[hsl(37,_7%,_22%)] to-[hsl(37,_5%,_19%)] hover:from-[hsl(37,_7%,_25%)] hover:to-[hsl(37,_5%,_22%)]">
-                            <RiSwordFill className="text-lg" />
-                        </button>
+                        <Link href={`/?challenge=${username}`} className="flex">
+                            <button className="px-2 py-1 bg-gradient-to-b from-[hsl(37,_7%,_22%)] to-[hsl(37,_5%,_19%)] hover:from-[hsl(37,_7%,_25%)] hover:to-[hsl(37,_5%,_22%)]">
+                                <RiSwordFill className="text-lg" />
+                            </button>
+                        </Link>
                         <Link href={`/inbox/${username}`} className="flex">
                             <button className="px-2 py-1 bg-gradient-to-b from-[hsl(37,_7%,_22%)] to-[hsl(37,_5%,_19%)] hover:from-[hsl(37,_7%,_25%)] hover:to-[hsl(37,_5%,_22%)]">
                                 <BiMessageRounded className="text-lg" />
