@@ -16,7 +16,7 @@ export default function InboxSidebarItem(props: Conversation & {default?: boolea
     return (
         <Link
             href={`/inbox/${props.otherName}`}
-            className={'flex items-center px-4 py-2 gap-3 transition duration-100 ' + (active ? 'bg-theme-green/50' : 'hover:bg-content')}
+            className={'flex items-center px-4 py-2 gap-3 transition duration-100 ' + (active ? 'bg-theme-green/30' : 'hover:bg-content')}
         >
             {false ? (
                 // TODO
