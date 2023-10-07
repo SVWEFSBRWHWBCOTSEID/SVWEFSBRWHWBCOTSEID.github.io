@@ -1,5 +1,8 @@
+import {useContext} from 'react';
 import Link from 'next/link';
+import {DateTime} from 'luxon';
 import ProfileImagePlaceholder from '../../components/ProfileImagePlaceholder';
+import CurrentTimeContext from '../../contexts/CurrentTimeContext';
 
 
 export type Message = {
@@ -8,6 +11,15 @@ export type Message = {
     createdAt: string // SQL date
 }
 export default function InboxMessage(props: Message) {
+    const currDate = useContext(CurrentTimeContext);
+    const messageDate = DateTime.fromSQL(props.createdAt);
+
+    // Display "Yesterday at {...}" or "Today at {...}" if the message was recent,
+    // defaulting to "10/26/2023 {...}" otherwise.
+    const relativeStr = currDate.diff(messageDate, 'days').days < 2
+        ? capitalize(messageDate.toRelativeCalendar({base: currDate})!) + ' at'
+        : messageDate.toLocaleString(DateTime.DATE_SHORT)
+
     return (
         <div className="px-6 py-3 flex gap-4">
             {false ? (
@@ -25,10 +37,12 @@ export default function InboxMessage(props: Message) {
             )}
             <div className="flex-grow">
                 <h5 className="flex justify-between items-center font-medium mb-1.5">
-                    <Link href={`/profile/${props.username}`}>
+                    <Link href={`/profile/${props.username}`} className="hover:underline">
                         {props.username}
                     </Link>
-                    <span className="text-xs font-normal text-secondary">Today at 12:45 PM</span> {/* TODO */}
+                    <span className="text-xs font-normal text-secondary cursor-default">
+                        {relativeStr} {messageDate.toLocaleString(DateTime.TIME_SIMPLE)}
+                    </span>
                 </h5>
                 <p className="text-sm text-primary">
                     {props.text}
@@ -36,4 +50,9 @@ export default function InboxMessage(props: Message) {
             </div>
         </div>
     )
+}
+
+// TODO: move this?
+function capitalize(str: string) {
+    return str[0].toUpperCase() + str.slice(1);
 }

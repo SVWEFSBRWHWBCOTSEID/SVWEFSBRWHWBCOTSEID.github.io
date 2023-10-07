@@ -1,12 +1,13 @@
 'use client'
 
-import {useContext} from 'react';
+import {useContext, useMemo} from 'react';
 import Link from 'next/link';
+import {DateTime} from 'luxon';
 import ConversationContext from '../../contexts/ConversationContext';
 
 // Components
 import InboxSidebarItem from './InboxSidebarItem';
-import InboxMessage from './InboxMessage';
+import InboxMessage, {Message} from './InboxMessage';
 import MessageInput from './MessageInput';
 import Input from '../../components/Input';
 
@@ -17,6 +18,20 @@ export default function InboxContent(props: {username?: string}) {
     const conversation = props.username
         ? conversations.find(c => c.otherName === props.username)
         : conversations[0];
+
+    // Group conversation messages by date
+    const grouped = useMemo(() => {
+        const res: {[key: string]: Message[]} = {};
+        if (!conversation) return res;
+
+        for (const message of conversation.messages) {
+            const date = DateTime.fromSQL(message.createdAt).toLocaleString(DateTime.DATE_FULL);
+            if (!res[date]) res[date] = [];
+            res[date].push(message);
+        }
+
+        return res;
+    }, [conversation?.messages])
 
     return (
         // TODO: hacky?
@@ -42,13 +57,19 @@ export default function InboxContent(props: {username?: string}) {
                     </Link>
                 </div>
                 <div className="flex-grow overflow-y-auto scrollbar:w-1 scrollbar-thumb:bg-secondary pt-2 flex flex-col">
-                    {conversation && (
-                        <>
-                            {conversation.messages.map((message) => (
+                    {Object.entries(grouped).map(([date, messages]) => (
+                        <div>
+                            <h3 className="flex items-center text-xs text-secondary pt-3 pb-2 px-4 select-none">
+                                <hr className="flex-grow border-tertiary" />
+                                <span className="px-2">{date}</span>
+                                <hr className="flex-grow border-tertiary" />
+                            </h3>
+
+                            {messages.map((message) => (
                                 <InboxMessage {...message} key={message.username + message.createdAt} />
                             ))}
-                        </>
-                    )}
+                        </div>
+                    ))}
                     <MessageInput otherName={props.username ?? conversation!.otherName} />
                 </div>
             </div>
