@@ -7,6 +7,7 @@ import Header from './Header';
 import UserProvider from '../components/UserProvider';
 import PreferencesProvider from '../components/PreferencesProvider';
 import ConversationProvider from '../components/ConversationProvider';
+import ChallengesProvider from '../components/ChallengesProvider';
 import CurrentTimeProvider from '../components/CurrentTimeProvider';
 
 import '../styles/styles.css'
@@ -35,10 +36,12 @@ export default function Layout(props: {children: ReactNode}) {
                 <UserProvider>
                     <PreferencesProvider>
                         <ConversationProvider>
-                            <CurrentTimeProvider>
-                                <Header />
-                                {props.children}
-                            </CurrentTimeProvider>
+                            <ChallengesProvider>
+                                <CurrentTimeProvider>
+                                    <Header />
+                                    {props.children}
+                                </CurrentTimeProvider>
+                            </ChallengesProvider>
                         </ConversationProvider>
                     </PreferencesProvider>
                 </UserProvider>

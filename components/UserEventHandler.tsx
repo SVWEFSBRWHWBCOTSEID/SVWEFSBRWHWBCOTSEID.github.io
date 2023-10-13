@@ -19,6 +19,7 @@ import type {Message} from '../app/inbox/InboxMessage';
 type UserFullEvent = {
     type: 'USER_FULL',
     conversations: Conversation[],
+    challenges: Challenge[],
     preferences: Preferences
 }
 
@@ -72,6 +73,7 @@ export default function UserEventHandler() {
             switch (event.type) {
                 case 'USER_FULL':
                     setConversations(event.conversations);
+                    setChallenges(event.challenges);
                     setLocalPreferences(event.preferences);
                     break;
                 case 'GAME_START':
