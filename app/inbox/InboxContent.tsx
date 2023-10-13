@@ -4,6 +4,7 @@ import {useContext, useMemo} from 'react';
 import Link from 'next/link';
 import {DateTime} from 'luxon';
 import ConversationContext from '../../contexts/ConversationContext';
+import {RiSwordFill} from 'react-icons/ri';
 
 // Components
 import InboxSidebarItem from './InboxSidebarItem';
@@ -52,11 +53,16 @@ export default function InboxContent(props: {username?: string}) {
                 </div>
             </aside>
             <div className="bg-content flex-grow rounded-r overflow-clip flex flex-col">
-                <div className="flex items-center bg-content-secondary py-3 pl-6 pr-4 text-lg h-14 flex-none">
+                <div className="flex items-center justify-between bg-content-secondary py-3 px-6 text-lg h-14 flex-none">
                     {name && (
-                        <Link href={`/profile/${name}`} className="hover:text-blue-500">
-                            {name}
-                        </Link>
+                        <>
+                            <Link href={`/profile/${name}`} className="hover:text-blue-500">
+                                {name}
+                            </Link>
+                            <Link href={`/?challenge=${name}`} className="text-secondary hover:text-blue-500">
+                                <RiSwordFill />
+                            </Link>
+                        </>
                     )}
                 </div>
                 <div className="flex-grow overflow-y-auto scrollbar:w-1 scrollbar-thumb:bg-secondary pt-2 flex flex-col">
