@@ -20,7 +20,7 @@ export default function GameTimeIndicator(props: GameTimeIndicatorProps) {
     }, [emergency])
 
     return (
-        <div className={'w-max text-5xl px-5 py-2 ' + (props.top ? 'rounded-t ' : 'rounded-b ') + (emergency ? 'bg-[#502826]' : 'bg-content')}>
+        <div className={'w-max text-5xl px-5 py-2 select-none ' + (props.top ? 'rounded-t ' : 'rounded-b ') + (emergency ? 'bg-[#502826]' : 'bg-content')}>
             {padNumber(props.time.minutes)}<span className="text-secondary">:</span>{padNumber(props.time.seconds)}
             {(preferences.clock.showTenthSeconds === 'ALWAYS' || (preferences.clock.showTenthSeconds === 'CRITICAL' && emergency)) && (
                 // Display tenths-of-seconds when set to always display or when total time < 20s

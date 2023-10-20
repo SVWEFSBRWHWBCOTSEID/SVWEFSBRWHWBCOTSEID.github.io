@@ -24,7 +24,7 @@ export default function GameStateIndicator() {
     const {preferences} = useContext(PreferencesContext);
 
     return (
-        <div className="flex flex-col flex-shrink xl:flex-shrink-0 w-[25rem] basis-80 drop-shadow-lg max-w-full">
+        <div className="flex flex-col flex-shrink basis-[400px] min-w-[320px] drop-shadow-lg max-w-full">
             <GameTimeIndicator time={ftime} top playAlert={side === 'FIRST'} />
 
             {/* TODO: support overflow-clip for time indicator bars without hiding rematch cancel button? */}
@@ -74,7 +74,7 @@ function PlayerIndicator(props: { user: Player, ratingDiff: number }) {
     return (
         <div className="px-4 py-2 text-lg flex justify-between">
             <Link
-                className="flex-grow hover:text-blue-500"
+                className="flex-grow text-primary hover:text-blue-500"
                 href={`/profile/${props.user.username}`}
             >
                 {props.user.username}

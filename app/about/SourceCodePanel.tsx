@@ -15,7 +15,7 @@ export default function SourceCodePanel() {
                 Our frontend is built using TypeScript with <a href="https://nextjs.org/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Next.js</a>,
                 and our backend is built using Rust and <a href="https://actix.rs/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Actix Web</a>.
                 For more specific info on client/server architecture, contributing, and running the website locally, check out the
-                READMEs of each repository linked below.
+                READMEs of the repositories linked below.
             </p>
 
             <InfoHeading id="links">Links</InfoHeading>

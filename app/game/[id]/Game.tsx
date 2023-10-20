@@ -164,12 +164,12 @@ export default function Game<T>(props: GameProps<T>) {
 
     return (
         <GameContext.Provider value={{info: props.info, id: props.id, username: props.username, side, gameStatus, drawOffer, rematchOffer, endType, chat, moves, gameStateIndex, setGameStateIndex: updateGameStateIndex, ftime, stime, fratingDiff, sratingDiff}}>
-            <div className="flex flex-col md:flex-row-reverse xl:flex-col w-full gap-5 xl:w-80 flex-none">
+            <div className="flex flex-col md:flex-row-reverse xl:flex-col w-full gap-5 xl:w-auto xl:basis-[350px] xl:min-w-[250px] flex-shrink">
                 <GameHeader />
                 <Chat />
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center gap-x-8 gap-y-4 min-w-0 w-full">
+            <div className="flex flex-col flex-grow md:flex-row md:items-center gap-x-5 gap-y-4 min-w-0 w-full xl:w-auto">
                 <ScaledBox onWheel={handleScrollWithin}>
                     {props.children(gameStates, gameStateIndex, gameStatus, side)}
                 </ScaledBox>

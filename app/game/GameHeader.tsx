@@ -24,10 +24,10 @@ export default function GameHeader() {
 
     return (
         <div className="bg-content rounded p-6 shadow-lg h-max">
-            <div className="flex gap-4 mb-2">
-                <Icon className="text-4xl" />
+            <div className="flex gap-3 mb-2 text-primary">
+                <Icon className="text-4xl flex-none" />
                 <div>
-                    <p>
+                    <p className="text-sm">
                         {timeControlToString(info.timeControl)} •{' '}
                         {info.rated ? 'Rated' : 'Casual'} •{' '}
                         <a
@@ -39,7 +39,7 @@ export default function GameHeader() {
                             {info.game.name}
                         </a>
                     </p>
-                    <p className="text-secondary text-sm">
+                    <p className="text-secondary text-xs">
                         {DateTime.fromSQL(info.createdAt).toRelative({base: time})}
                     </p>
                 </div>
@@ -51,7 +51,7 @@ export default function GameHeader() {
             {gameStatus !== 'WAITING' && gameStatus !== 'STARTED' && (
                 <>
                     <hr className="border-tertiary my-3.5" />
-                    <p className="text-secondary text-center">
+                    <p className="text-[#BABABA] text-center text-sm leading-none">
                         {gameStatus === 'DRAW' ? (
                             endType === 'STALEMATE' ? 'Stalemate' : 'Draw by mutual agreement'
                         ) : (
@@ -66,7 +66,7 @@ export default function GameHeader() {
 
 function PlayerIndicator(props: { user: Player, first?: boolean, ratingDiff: number }) {
     return (
-        <div className="flex gap-2 items-center text-sm text-secondary">
+        <div className="flex gap-2 items-center text-[13px] text-[#BABABA]">
             {props.first ? <BiSolidCircle /> : <BiCircle />}
             <Link
                 className="flex-grow hover:text-blue-500"

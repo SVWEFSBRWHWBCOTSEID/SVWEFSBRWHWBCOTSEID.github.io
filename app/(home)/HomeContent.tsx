@@ -77,7 +77,7 @@ export default function HomeContent(props: {username?: string}) {
     }, [])
 
     return (
-        <main className="container pt-16 pb-20 flex flex-wrap md:flex-nowrap gap-x-8 gap-y-16">
+        <main className="container pt-4 pb-20 flex flex-wrap md:flex-nowrap gap-x-8 gap-y-16">
             <div className="flex-grow max-w-full min-w-0">
                 {/* <h3 className="text-lg text-center font-medium mb-4">Quick Pairing</h3> */}
                 <QuickPairing />
@@ -88,11 +88,11 @@ export default function HomeContent(props: {username?: string}) {
                     lobbies={lobbies}
                 />
             </div>
-            <div className="flex flex-col gap-3.5 sticky top-6 h-max w-full md:w-auto ">
-                <SecondaryButton onClick={() => setGameOpen(true)}>
+            <div className="flex flex-col gap-3.5 sticky top-6 h-max w-full md:w-auto md:mt-16">
+                <SecondaryButton open={gameOpen} onClick={() => setGameOpen(true)}>
                     Create a game
                 </SecondaryButton>
-                <SecondaryButton onClick={() => setChallengeOpen(true)}>
+                <SecondaryButton open={challengeOpen} onClick={() => setChallengeOpen(true)}>
                     Play with friend
                 </SecondaryButton>
 
@@ -116,10 +116,11 @@ export default function HomeContent(props: {username?: string}) {
 }
 
 // TODO: move to own file?
-function SecondaryButton(props: {children: ReactNode, onClick?: MouseEventHandler<HTMLButtonElement>}) {
+// TODO: `props.open` maybe a bit hacky
+function SecondaryButton(props: {children: ReactNode, open?: boolean, onClick?: MouseEventHandler<HTMLButtonElement>}) {
     return (
         <button
-            className="px-16 py-3 bg-[#302e2c] hover:bg-[hsl(37,_7%,_25%)] text-secondary hover:text-primary transition duration-200 rounded uppercase"
+            className={'px-16 py-3 transition duration-200 rounded uppercase ' + (props.open ? 'bg-theme-orange text-white' : 'bg-[#302e2c] hover:bg-[hsl(37,_7%,_25%)] text-secondary hover:text-primary')}
             onClick={props.onClick}
         >
             {props.children}

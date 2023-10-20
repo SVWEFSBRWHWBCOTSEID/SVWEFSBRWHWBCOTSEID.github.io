@@ -16,17 +16,17 @@ export default function Header() {
     const {user} = useContext(UserContext);
 
     return (
-        <header className="relative sm:pl-4 md:pl-6 lg:pl-8 text-md flex justify-between">
+        <header className="relative sm:pl-4 md:pl-6 text-md flex justify-between">
             <nav className="flex items-center">
                 <HeaderMenu />
 
-                <Link href="/" className="text-2xl pb-1 mr-4 group hover:text-blue-500">
+                <Link href="/" className="text-2xl md:text-3xl pb-1 mr-4 group text-[#BABABA] hover:text-blue-500">
                     gulpin<span className="text-secondary group-hover:text-blue-600">.games</span>
                 </Link>
 
                 <HeaderHoverDropdown href="/" name="Play">
                     <HeaderHoverDropdownLink href="/?modal=true">Create a game</HeaderHoverDropdownLink>
-                    <HeaderHoverDropdownLink href="/offline">Offline</HeaderHoverDropdownLink>
+                    <HeaderHoverDropdownLink href="/offline">Play offline</HeaderHoverDropdownLink>
                 </HeaderHoverDropdown>
                 <HeaderLink href="/rules">Rules</HeaderLink>
                 <HeaderLink href="/about">About</HeaderLink>
