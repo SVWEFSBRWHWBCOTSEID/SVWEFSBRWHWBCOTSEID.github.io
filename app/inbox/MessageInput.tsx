@@ -1,7 +1,7 @@
 'use client'
 
 import {useContext, useState} from 'react';
-import ProfileImagePlaceholder from '../../components/ProfileImagePlaceholder';
+import ProfilePicture from '../../components/ProfilePicture';
 import UserContext from '../../contexts/UserContext';
 
 
@@ -26,16 +26,10 @@ export default function MessageInput(props: {otherName: string}) {
 
     return (
         <div className="flex gap-4 mt-auto px-6 pt-12 pb-6" ref={scrollIntoView}>
-            {false ? (
-                // TODO
-                <img
-                    src="/pfp.png"
-                    className="w-14 h-14 rounded-full object-cover object-center"
-                    alt={user?.username}
-                />
-            ) : (
-                <ProfileImagePlaceholder
-                    name={user?.username ?? '-'}
+            {user && (
+                // TODO: loading UI
+                <ProfilePicture
+                    user={user}
                     className="w-14 h-14 text-3xl"
                 />
             )}

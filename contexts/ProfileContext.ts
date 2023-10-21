@@ -12,7 +12,8 @@ export type User = {
         location: string,
         bio: string,
         firstName: string,
-        lastName: string
+        lastName: string,
+        imageUrl?: string,
     },
     url: string,
     playing?: string,

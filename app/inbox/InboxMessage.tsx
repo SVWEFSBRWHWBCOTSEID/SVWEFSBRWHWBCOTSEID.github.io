@@ -1,8 +1,14 @@
-import {useContext} from 'react';
+'use client'
+
+import {startTransition, useContext, useLayoutEffect, useState} from 'react';
 import Link from 'next/link';
 import {DateTime} from 'luxon';
-import ProfileImagePlaceholder from '../../components/ProfileImagePlaceholder';
+import ProfilePicture from '../../components/ProfilePicture';
 import CurrentTimeContext from '../../contexts/CurrentTimeContext';
+
+// Utils
+import {getUser} from '../../util/user';
+import type {User} from '../../contexts/ProfileContext';
 
 
 export type Message = {
@@ -20,18 +26,18 @@ export default function InboxMessage(props: Message) {
         ? capitalize(messageDate.toRelativeCalendar({base: currDate})!) + ' at'
         : messageDate.toLocaleString(DateTime.DATE_SHORT)
 
+    // TODO: better way of loading this?
+    const [user, setUser] = useState<User | null>(null);
+    useLayoutEffect(() => {
+        startTransition(() => void getUser(props.username).then(user => setUser(user)))
+    }, []);
+
     return (
         <div className="px-6 py-3 flex gap-4">
-            {false ? (
-                // TODO
-                <img
-                    src="/pfp.png"
-                    className="w-14 h-14 rounded-full object-cover object-center"
-                    alt={props.username}
-                />
-            ) : (
-                <ProfileImagePlaceholder
-                    name={props.username}
+            {user && (
+                // TODO: loading UI
+                <ProfilePicture
+                    user={user}
                     className="w-14 h-14 text-3xl"
                 />
             )}
