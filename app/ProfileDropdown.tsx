@@ -43,7 +43,7 @@ export default function ProfileDropdown() {
                         <BsGearFill className="w-4 text-base" /> Preferences
                     </ProfileDropdownItem>
                 </Link>
-                <ProfileDropdownItem onClick={signOut}>
+                <ProfileDropdownItem danger onClick={signOut}>
                     <FaPowerOff className="w-4 text-base" /> Sign out
                 </ProfileDropdownItem>
             </Menu.Items>
@@ -54,11 +54,11 @@ export default function ProfileDropdown() {
     )
 }
 
-function ProfileDropdownItem(props: {children: ReactNode, onClick?: MouseEventHandler<HTMLDivElement>}) {
+function ProfileDropdownItem(props: {children: ReactNode, onClick?: MouseEventHandler<HTMLDivElement>, danger?: boolean}) {
     return (
         <Menu.Item
             as="div"
-            className="flex gap-2.5 items-center px-4 py-1.5 cursor-pointer text-primary hover:text-white hover:bg-theme-green group"
+            className={'flex gap-2.5 items-center px-4 py-1.5 cursor-pointer text-primary hover:text-white group ' + (props.danger ? 'hover:bg-red-600' : 'hover:bg-theme-green')}
             onClick={props.onClick}
         >
             {props.children}

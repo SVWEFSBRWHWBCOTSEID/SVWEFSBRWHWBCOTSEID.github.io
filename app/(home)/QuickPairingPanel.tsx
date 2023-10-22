@@ -14,7 +14,7 @@ export default function QuickPairingPanel(props: {game: GameNameInfo}) {
 
     return (
         // TODO: create own gulpin SVG
-        <Tab.Panel className="grid grid-cols-3 gap-3 p-2 bg-center bg-no-repeat bg-[#262422] bg-[url('/lichess.svg')] mb-8">
+        <Tab.Panel className="grid grid-cols-3 gap-3 p-2 bg-center bg-no-repeat bg-[#262422] bg-[url('/lichess.svg')] mb-8 rounded-b">
             <QuickPairingPresetButton game={props.game} minutes={1} increment={0} />
             <QuickPairingPresetButton game={props.game} minutes={2} increment={1} />
             <QuickPairingPresetButton game={props.game} minutes={3} increment={0} />
