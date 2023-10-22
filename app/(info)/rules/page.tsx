@@ -44,9 +44,9 @@ export default function Rules() {
                     Tic-Tac-Toe, except each square of the board contains an inner game of Tic-Tac-Toe.
                 </p>
                 <p className="mb-4">
-                    Players start in the middle square{/* TODO: was this a lie?? */}, and their move in the inner
-                    Tic-Tac-Toe board determines the square the next player must move in: eg. if X takes the top right
-                    square of the middle board, O must now make a move in the top right <em>Tic-Tac-Toe board</em>.
+                    Players start in the middle square, and their move in the inner Tic-Tac-Toe board determines the
+                    square the next player must move in: eg. if X takes the top right square of the middle board, O must
+                    now make a move in the top right <em>Tic-Tac-Toe board</em>.
                 </p>
                 <p className="mb-6">
                     When a player wins an inner Tic-Tac-Toe game, they take the corresponding square on the outer board.

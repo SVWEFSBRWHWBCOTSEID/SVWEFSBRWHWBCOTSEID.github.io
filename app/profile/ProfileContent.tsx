@@ -9,16 +9,15 @@ import ProfileUserPanel from './ProfileUserPanel';
 import ProfileGamePanel from './ProfileGamePanel';
 
 // Util
-import ProfileContext, {defaultUser, GameKey, User} from '../../contexts/ProfileContext';
+import ProfileContext, {GameKey, User} from '../../contexts/ProfileContext';
 
 
-export default function ProfileContent(props: {user?: User}) {
+export default function ProfileContent(props: {user: User}) {
     const [tab, setTab] = useState(0);
 
     return (
         // TODO: vertical tab group on mobile?
-        // TODO: hacky defaultUser implementation here due to profile page shenanigans; eventually make props non-nullable
-        <ProfileContext.Provider value={props.user ?? defaultUser}>
+        <ProfileContext.Provider value={props.user}>
             <Tab.Group
                 selectedIndex={tab}
                 onChange={setTab}
@@ -30,7 +29,7 @@ export default function ProfileContent(props: {user?: User}) {
                 <Tab.Panels className="md:flex-grow bg-content md:rounded-lg overflow-clip">
                     <ProfileUserPanel />
 
-                    {Object.entries((props.user ?? defaultUser).perfs).map(([key, value]) => (
+                    {Object.entries(props.user.perfs).map(([key, value]) => (
                         <ProfileGamePanel
                             game={key as GameKey}
                             setTab={setTab}
