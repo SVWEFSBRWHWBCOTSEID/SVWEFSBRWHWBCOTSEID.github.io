@@ -80,11 +80,18 @@ export default function ProfileHeader() {
         <section className="flex gap-6 px-8 py-6 bg-content-secondary">
             {editing ? (
                 <div className="w-20 h-20 group flex-none rounded-full overflow-clip relative hover:ring-4 hover:ring-content/60">
-                    <img
-                        src={imageUrl}
-                        alt={profileUser.username}
-                        className="absolute inset-0 w-full h-full object-cover object-center"
-                    />
+                    {imageUrl ? (
+                        // TODO: abstract with <ProfilePicture />?
+                        <img
+                            src={imageUrl}
+                            alt={profileUser.username}
+                            className="absolute inset-0 w-full h-full object-cover object-center"
+                        />
+                    ) : (
+                        <div className="absolute inset-0 w-full h-full bg-background flex items-center justify-center text-4xl text-secondary/50 font-medium">
+                            {profileUser.username[0].toUpperCase()}
+                        </div>
+                    )}
                     <label htmlFor="image" className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 text-xs flex items-center text-center cursor-pointer">
                         Choose an image
                     </label>
@@ -100,7 +107,7 @@ export default function ProfileHeader() {
             ) : (
                 <ProfilePicture
                     user={profileUser}
-                    className="w-20 h-20 text-3xl"
+                    className="w-20 h-20 text-4xl"
                 />
             )}
 
