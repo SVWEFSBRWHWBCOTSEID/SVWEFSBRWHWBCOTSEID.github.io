@@ -1,6 +1,6 @@
 'use client'
 
-import {startTransition, useContext, useState} from 'react';
+import {ChangeEvent, startTransition, useContext, useState} from 'react';
 import Link from 'next/link';
 import {Listbox} from '@headlessui/react';
 import {DateTime} from 'luxon';
@@ -38,7 +38,19 @@ export default function ProfileHeader() {
     const [bio, setBio] = useState(profileUser.profile.bio);
     const [country, setCountry] = useState(profileUser.profile.country);
 
-    const [image, setImage] = useState<File | undefined>(undefined);
+    const [imageUrl, setImageUrl] = useState(profileUser.profile.imageUrl);
+    const [file, setFile] = useState<File | undefined>(undefined);
+
+    // Handle a user file upload by setting the file to be uploaded in the backend request
+    // and displaying the preview image URI.
+    function handleFileSubmission(e: ChangeEvent<HTMLInputElement>) {
+        setFile(e.target.files?.[0]);
+
+        if (!e.target.files?.[0]) return;
+        const fileReader = new FileReader();
+        fileReader.addEventListener('load', ev => setImageUrl(ev.target?.result as string | null ?? undefined));
+        fileReader.readAsDataURL(e.target.files[0]);
+    }
 
     async function updateProfile() {
         const formData = new FormData();
@@ -48,7 +60,7 @@ export default function ProfileHeader() {
         formData.append('lastName', lastName);
         formData.append('location', location);
         formData.append('bio', bio);
-        if (image) formData.append('pfp', image);
+        if (file) formData.append('pfp', file);
 
         const res = await fetch(`${process.env.API_BASE}/profile/update`, {
             method: 'POST',
@@ -67,17 +79,28 @@ export default function ProfileHeader() {
     return (
         <section className="flex gap-6 px-8 py-6 bg-content-secondary">
             {editing ? (
-                <input
-                    type="file"
-                    name="image"
-                    id="image"
-                    accept="image/*"
-                    onChange={(e) => setImage(e.target.files?.[0])}
-                />
+                <div className="w-20 h-20 group flex-none rounded-full overflow-clip relative hover:ring-4 hover:ring-content/60">
+                    <img
+                        src={imageUrl}
+                        alt={profileUser.username}
+                        className="absolute inset-0 w-full h-full object-cover object-center"
+                    />
+                    <label htmlFor="image" className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 text-xs flex items-center text-center cursor-pointer">
+                        Choose an image
+                    </label>
+                    <input
+                        type="file"
+                        name="image"
+                        id="image"
+                        accept="image/*"
+                        className="absolute inset-0 opacity-0 cursor-pointer"
+                        onChange={handleFileSubmission}
+                    />
+                </div>
             ) : (
                 <ProfilePicture
                     user={profileUser}
-                    className="w-16 h-16 text-3xl"
+                    className="w-20 h-20 text-3xl"
                 />
             )}
 
