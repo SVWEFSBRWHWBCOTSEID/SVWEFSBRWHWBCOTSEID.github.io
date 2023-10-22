@@ -56,7 +56,7 @@ function HeaderHoverDropdown(props: {href: string, name: string, children: React
             <Link href={props.href} className="uppercase text-sm h-full flex items-center text-secondary px-3.5 py-4 group-hover:text-primary group-hover:bg-[#3c3934] border-l-2 border-transparent group-hover:border-blue-500">
                 {props.name}
             </Link>
-            <div className="hidden group-hover:block absolute top-full border-l-2 border-blue-500 bg-[#3c3934] rounded-r overflow-clip w-max">
+            <div className="hidden group-hover:block absolute top-full border-l-2 border-blue-500 bg-[#3c3934] rounded-r overflow-clip w-max z-20">
                 {props.children}
             </div>
         </div>

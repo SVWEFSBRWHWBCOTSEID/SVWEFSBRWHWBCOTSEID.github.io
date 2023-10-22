@@ -49,7 +49,7 @@ export default function InboxContent(props: {username?: string}) {
             </div>
             <div className="flex-grow overflow-y-auto scrollbar:w-1 scrollbar-thumb:bg-secondary pt-2 flex flex-col">
                 {Object.entries(grouped).map(([date, messages]) => (
-                    <div>
+                    <div key={date}>
                         <h3 className="flex items-center text-xs text-secondary pt-3 pb-2 px-4 select-none">
                             <hr className="flex-grow border-tertiary" />
                             <span className="px-2">{date}</span>
