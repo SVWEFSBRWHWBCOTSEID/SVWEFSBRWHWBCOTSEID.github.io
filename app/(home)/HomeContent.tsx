@@ -83,10 +83,7 @@ export default function HomeContent(props: {username?: string}) {
                 <QuickPairing />
 
                 <h3 className="text-lg text-center font-medium mb-2">Lobbies</h3>
-                <Lobbies
-                    username={props.username}
-                    lobbies={lobbies}
-                />
+                <Lobbies lobbies={lobbies} />
             </div>
             <div className="flex flex-col gap-3.5 sticky top-6 h-max w-full md:w-auto md:mt-16">
                 <SecondaryButton open={gameOpen} onClick={() => setGameOpen(true)}>

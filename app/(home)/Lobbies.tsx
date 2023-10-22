@@ -1,12 +1,13 @@
 'use client'
 
-import {startTransition, useLayoutEffect, useState} from 'react';
+import {useContext} from 'react';
+import UserContext from '../../contexts/UserContext';
+
+// Components
 import LobbyRoom, {LobbyCell} from './LobbyRoom';
 import YouLobbyRoom from './YouLobbyRoom';
 
 // Util
-import {getUser} from '../../util/user';
-import {defaultGamePerfs} from '../../contexts/ProfileContext';
 import type {GameNameInfo, Player, TimeControl} from '../game/[id]/page';
 import type {Side} from '../../util/game';
 
@@ -22,22 +23,15 @@ export type Lobby = {
     timeControl: TimeControl
 }
 
-type LobbiesProps = {lobbies: Lobby[], username?: string}
+type LobbiesProps = {lobbies: Lobby[]}
 export default function Lobbies(props: LobbiesProps) {
-    // TODO: hacky?
-    const [perfs, setPerfs] = useState(defaultGamePerfs);
-    useLayoutEffect(() => {
-        startTransition(() => {
-            if (!props.username) return;
-            void getUser(props.username).then(user => user && setPerfs(user.perfs));
-        })
-    }, [])
+    const {user} = useContext(UserContext);
 
-    const youLobby = props.lobbies.find((lobby) => lobby.user.username === props.username);
+    const youLobby = props.lobbies.find((lobby) => lobby.user.username === user?.username);
     const filteredLobbies = props.lobbies
-        .filter((lobby) => lobby.user.username !== props.username)
+        .filter((lobby) => lobby.user.username !== user?.username)
         .filter((lobby) => {
-            const rating = perfs[lobby.game.key].rating;
+            const rating = user?.perfs[lobby.game.key].rating ?? 1500; // TODO?
             return !lobby.rated || (lobby.ratingMin <= rating && lobby.ratingMax >= rating)
         })
 
