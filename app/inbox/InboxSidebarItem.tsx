@@ -31,13 +31,10 @@ export default function InboxSidebarItem(props: Conversation & {default?: boolea
             href={`/inbox/${props.otherName}`}
             className={'flex items-center px-4 py-2 gap-3 transition duration-100 ' + (active ? 'bg-theme-green/30' : 'hover:bg-content')}
         >
-            {user && (
-                // TODO: loading UI
-                <ProfilePicture
-                    user={user}
-                    className="w-10 h-10 text-2xl"
-                />
-            )}
+            <ProfilePicture
+                user={user}
+                className="w-10 h-10 text-2xl"
+            />
             <div>
                 <h3 className={active ? '' : 'text-primary'}>{props.otherName}</h3>
                 <p className={'text-sm line-clamp-1 ' + (active ? 'text-primary' : 'text-secondary')}>

@@ -34,13 +34,10 @@ export default function InboxMessage(props: Message) {
 
     return (
         <div className="px-6 py-3 flex gap-4">
-            {user && (
-                // TODO: loading UI
-                <ProfilePicture
-                    user={user}
-                    className="w-14 h-14 text-3xl"
-                />
-            )}
+            <ProfilePicture
+                user={user}
+                className="w-14 h-14 text-3xl"
+            />
             <div className="flex-grow">
                 <h5 className="flex justify-between items-center font-medium mb-1.5">
                     <Link href={`/profile/${props.username}`} className="hover:underline">
