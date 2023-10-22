@@ -4,7 +4,7 @@ import {useContext, useMemo} from 'react';
 import {DateTime} from 'luxon';
 
 // Highcharts
-import Highcharts from 'highcharts/highstock';
+import Highcharts, { DashStyleValue } from 'highcharts/highstock';
 import HighchartsAccessibility from 'highcharts/modules/accessibility';
 import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
@@ -237,6 +237,8 @@ export default function ProfileEloChart(props: ProfileEloChartProps) {
                 username,
                 perfs[key as GameKey].rating
             ),
+            color: keyToChartColor(games[0].game.key), // TODO?
+            dashStyle: keyToDashStyle(games[0].game.key), // TODO?
             marker: { enabled: false }
         })),
     }
@@ -277,4 +279,37 @@ function processDates(games: GameInfo[], username: string, currRating: number) {
     }
 
     return processed;
+}
+
+function keyToChartColor(key: GameKey) {
+    // const colors = [
+    //     '#459F3B',
+    //     '#F0E442',
+    //     '#E69F00',
+    //     '#D55E00',
+    //     '#CC79A7',
+    //     '#DF5353',
+    //     '#99E699',
+    //     '#FFAEAA',
+    //     '#56B4E9',
+    //     '#0072B2',
+    // ]
+
+    switch (key) {
+        case 'ttt': return '#56B4E9';
+        case 'uttt': return '#0072B2';
+        case 'c4': return '#66558C';
+        case 'pc': return '#009E73';
+        default: return '#009E73';
+    }
+}
+
+function keyToDashStyle(key: GameKey): DashStyleValue {
+    switch (key) {
+        case 'ttt':
+        case 'uttt':
+        case 'c4':
+        case 'pc':
+        default: return 'Solid';
+    }
 }
