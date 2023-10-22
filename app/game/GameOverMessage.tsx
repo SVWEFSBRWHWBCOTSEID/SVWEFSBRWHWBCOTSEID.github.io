@@ -3,10 +3,12 @@
 import {useContext} from 'react';
 import GameContext from '../../contexts/GameContext';
 import type {EndType} from './[id]/page';
+import type {GameKey} from '../../contexts/ProfileContext';
 
 
 export default function GameOverMessage() {
-    const {gameStatus, endType} = useContext(GameContext);
+    const {info, gameStatus, endType} = useContext(GameContext);
+    const sides = keyToSideNames(info.game.key);
 
     // Scroll the moves panel to bottom when the game ends
     function scrollToBottom(ref: HTMLDivElement | null) {
@@ -28,11 +30,21 @@ export default function GameOverMessage() {
                 {gameStatus === 'DRAW' ? (
                     endType === 'STALEMATE' ? 'Stalemate' : 'Draw by mutual agreement'
                 ) : (
-                    `${gameStatus === 'FIRST_WON' ? 'O' : 'X'} ${winTypeToStr(endType)} • ${gameStatus === 'FIRST_WON' ? 'X' : 'O'} is victorious`
+                    `${gameStatus === 'FIRST_WON' ? sides[1] : sides[0]} ${winTypeToStr(endType)} • ${gameStatus === 'FIRST_WON' ? sides[0] : sides[1]} is victorious`
                 )}
             </p>
         </div>
     )
+}
+
+// Returns the side names of a given game as a tuple of [first, second].
+function keyToSideNames(key: GameKey) {
+    switch (key) {
+        case "ttt":
+        case "uttt": return ['X', 'O'];
+        case "c4": return ['Red', 'Yellow'];
+        case "pc": return ['White', 'Black'];
+    }
 }
 
 export function winTypeToStr(type: EndType | null) {
