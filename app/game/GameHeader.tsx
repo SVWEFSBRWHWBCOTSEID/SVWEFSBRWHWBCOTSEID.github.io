@@ -8,7 +8,7 @@ import {BiCircle, BiSolidCircle} from 'react-icons/bi';
 // Util
 import {keyToIcon} from '../profile/ProfileSidebarItem';
 import {timeControlToString} from '../../util/game';
-import {winTypeToStr} from './GameOverMessage';
+import {gameEndMessage} from './GameOverMessage';
 import type {Player} from './[id]/page';
 
 // Contexts
@@ -52,11 +52,7 @@ export default function GameHeader() {
                 <>
                     <hr className="border-tertiary my-3.5" />
                     <p className="text-[#BABABA] text-center text-sm leading-none">
-                        {gameStatus === 'DRAW' ? (
-                            endType === 'STALEMATE' ? 'Stalemate' : 'Draw by mutual agreement'
-                        ) : (
-                            `${gameStatus === 'FIRST_WON' ? 'O' : 'X'} ${winTypeToStr(endType)} • ${gameStatus === 'FIRST_WON' ? 'X' : 'O'} is victorious`
-                        )}
+                        {gameEndMessage(info.game.key, gameStatus, endType)}
                     </p>
                 </>
             )}

@@ -2,13 +2,12 @@
 
 import {useContext} from 'react';
 import GameContext from '../../contexts/GameContext';
-import type {EndType} from './[id]/page';
+import type {EndType, Status} from './[id]/page';
 import type {GameKey} from '../../contexts/ProfileContext';
 
 
 export default function GameOverMessage() {
     const {info, gameStatus, endType} = useContext(GameContext);
-    const sides = keyToSideNames(info.game.key);
 
     // Scroll the moves panel to bottom when the game ends
     function scrollToBottom(ref: HTMLDivElement | null) {
@@ -27,14 +26,20 @@ export default function GameOverMessage() {
                 )}
             </strong>
             <p className="italic">
-                {gameStatus === 'DRAW' ? (
-                    endType === 'STALEMATE' ? 'Stalemate' : 'Draw by mutual agreement'
-                ) : (
-                    `${gameStatus === 'FIRST_WON' ? sides[1] : sides[0]} ${winTypeToStr(endType)} • ${gameStatus === 'FIRST_WON' ? sides[0] : sides[1]} is victorious`
-                )}
+                {gameEndMessage(info.game.key, gameStatus, endType)}
             </p>
         </div>
     )
+}
+
+export function gameEndMessage(key: GameKey, status: Status, endType: EndType | null) {
+    if (status === 'DRAW') return endType === 'STALEMATE' ? 'Stalemate' : 'Draw by mutual agreement';
+
+    const sides = keyToSideNames(key);
+    const winner = status === 'FIRST_WON' ? sides[0] : sides[1];
+    const loser = status === 'FIRST_WON' ? sides[1] : sides[0];
+
+    return `${loser} ${winTypeToStr(endType)} • ${winner} is victorious`;
 }
 
 // Returns the side names of a given game as a tuple of [first, second].
@@ -47,7 +52,7 @@ function keyToSideNames(key: GameKey) {
     }
 }
 
-export function winTypeToStr(type: EndType | null) {
+function winTypeToStr(type: EndType | null) {
     switch (type) {
         case 'RESIGN': return 'resigned';
         case 'TIMEOUT': return 'timed out';
