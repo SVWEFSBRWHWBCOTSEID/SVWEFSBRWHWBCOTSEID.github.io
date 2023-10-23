@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import PreferencesContent from './PreferencesContent';
+import ClockContent from './ClockContent';
 
 
 export const metadata: Metadata = {
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 }
 
 export default function Preferences() {
-    return <PreferencesContent />
+    return <ClockContent />
 }

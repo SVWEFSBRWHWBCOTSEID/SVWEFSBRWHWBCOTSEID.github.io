@@ -4,12 +4,12 @@ import InfoSidebar from '../../components/InfoSidebar';
 import InfoPanel from '../../components/InfoPanel';
 
 
-export default function Layout(props: {children: ReactNode}) {
+export default function Layout(props:{children: ReactNode}) {
     return (
-        <div className="container flex pt-4 pb-12">
+        <div className="container flex pt-4 pb-12 w-full">
             <InfoSidebar>
-                <InfoSidebarItem href="/about">About</InfoSidebarItem>
-                <InfoSidebarItem href="/about/source">Source code</InfoSidebarItem>
+                <InfoSidebarItem href="/preferences">Clock</InfoSidebarItem>
+                <InfoSidebarItem href="/preferences/game-behavior">Game behavior</InfoSidebarItem>
             </InfoSidebar>
             <InfoPanel>
                 {props.children}

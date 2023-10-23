@@ -1,13 +1,12 @@
 'use client'
 
 import {useContext} from 'react';
-import InfoPanel from '../../components/InfoPanel';
 import PreferencesInputGroup from './PreferencesInputGroup';
 import PreferencesButton from './PreferencesButton';
 import PreferencesContext from '../../contexts/PreferencesContext';
 
 
-export default function ClockPanel() {
+export default function ClockContent() {
     const {preferences, setPreferences} = useContext(PreferencesContext);
 
     function updateShowTenthSeconds(value: 'ALWAYS' | 'CRITICAL' | 'NEVER') {
@@ -29,7 +28,7 @@ export default function ClockPanel() {
     }
 
     return (
-        <InfoPanel>
+        <>
             <h1 className="text-4xl mb-6 text-theme-orange">Clock</h1>
             <p>[...]</p>
 
@@ -62,6 +61,6 @@ export default function ClockPanel() {
                     Never
                 </PreferencesButton>
             </PreferencesInputGroup>
-        </InfoPanel>
+        </>
     )
 }

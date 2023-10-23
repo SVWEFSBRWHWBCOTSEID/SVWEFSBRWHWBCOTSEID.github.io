@@ -1,13 +1,12 @@
 'use client'
 
 import {useContext} from 'react';
-import InfoPanel from '../../components/InfoPanel';
-import PreferencesInputGroup from './PreferencesInputGroup';
-import PreferencesButton from './PreferencesButton';
-import PreferencesContext from '../../contexts/PreferencesContext';
+import PreferencesInputGroup from '../PreferencesInputGroup';
+import PreferencesButton from '../PreferencesButton';
+import PreferencesContext from '../../../contexts/PreferencesContext';
 
 
-export default function GameBehaviorPanel() {
+export default function GameBehaviorContent() {
     const {preferences, setPreferences} = useContext(PreferencesContext)
 
     function updateConfirmResign(value: boolean) {
@@ -23,7 +22,7 @@ export default function GameBehaviorPanel() {
     }
 
     return (
-        <InfoPanel>
+        <>
             <h1 className="text-4xl mb-6 text-theme-orange">Game behavior</h1>
             <p>[...]</p>
 
@@ -44,6 +43,6 @@ export default function GameBehaviorPanel() {
                     Disabled
                 </PreferencesButton>
             </PreferencesInputGroup>
-        </InfoPanel>
+        </>
     )
 }
