@@ -14,13 +14,20 @@ module.exports = {
         primary: '#ccc',
         secondary: '#999999',
         tertiary: '#404040',
+
         content: '#262421',
         'content-secondary': '#302e2c',
         'content-tertiary': '#24221e',
         background: '#161512', // colors.neutral['900'] // '#312e2b' // '#262421'
-        'theme-green': '#629924',
+
+        'theme-red': colors.red['600'],
         'theme-orange': 'rgb(214 79 0)',
-        'theme-yellow': '#bf811d'
+        'theme-yellow': '#bf811d',
+        'theme-green': '#629924',
+
+        'board-light': '#f0d9b5',
+        'board-dark': '#b58863',
+        'last-move': 'rgba(155, 199, 0, 0.41)'
       },
       container: {
         center: true,

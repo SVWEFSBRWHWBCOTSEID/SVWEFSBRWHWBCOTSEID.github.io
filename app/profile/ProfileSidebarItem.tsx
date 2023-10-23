@@ -29,7 +29,7 @@ export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
                             <ImArrowUpRight className="inline" /> {props.prog.toFixed()}
                         </span>
                     ) : props.prog < 0 ? (
-                        <span className="text-red-600 hidden lg:block">
+                        <span className="text-theme-red hidden lg:block">
                             <ImArrowDownRight className="inline" /> {Math.abs(props.prog).toFixed()}
                         </span>
                     ) : null}

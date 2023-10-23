@@ -28,7 +28,7 @@ export default function RematchButton() {
             {rematchOffer !== 'NONE' && rematchOffer !== side && (
                 // TODO: blue pulsing?
                 <button
-                    className="text-white text-xl font-bold px-1 bg-red-600 opacity-50 hover:opacity-75 transition duration-100 border-l border-background absolute inset-y-0 left-full rounded-r-sm"
+                    className="text-white text-xl font-bold px-1 bg-theme-red opacity-50 hover:opacity-75 transition duration-100 border-l border-background absolute inset-y-0 left-full rounded-r-sm"
                     onClick={() => handleRematch(false)}
                 >
                     ×
