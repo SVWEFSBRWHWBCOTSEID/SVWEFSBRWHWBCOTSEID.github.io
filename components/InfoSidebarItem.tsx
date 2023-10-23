@@ -1,13 +1,17 @@
 'use client'
 
 import {ReactNode} from 'react';
-import {Tab} from '@headlessui/react';
+import Link from 'next/link';
+import {usePathname} from 'next/navigation';
 
 
-export default function InfoSidebarItem(props: {children: ReactNode}) {
+export default function InfoSidebarItem(props: {children: ReactNode, href: string}) {
+    const pathname = usePathname();
+    const active = pathname === props.href;
+
     return (
-        <Tab className="text-left py-2 border-r-2 border-transparent hover:border-theme-orange ui-selected:border-theme-orange ui-selected:text-theme-orange pr-10 transition duration-100">
+        <Link href={props.href} className={'text-left py-2 border-r-2 pr-10 transition duration-100 ' + (active ? 'border-theme-orange text-theme-orange' : 'border-transparent hover:border-theme-orange')}>
             {props.children}
-        </Tab>
+        </Link>
     )
 }

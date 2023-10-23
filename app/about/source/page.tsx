@@ -1,12 +1,14 @@
-'use client'
-
-import InfoPanel from '../../components/InfoPanel';
-import InfoHeading from '../../components/InfoHeading';
+import type {Metadata} from 'next';
+import InfoHeading from '../../../components/InfoHeading';
 
 
-export default function SourceCodePanel() {
+export const metadata: Metadata = {
+    title: 'Source Code'
+}
+
+export default function SourceCode() {
     return (
-        <InfoPanel>
+        <>
             <h1 className="text-4xl mb-6 text-white">Source code</h1>
             <p className="mb-4">
                 All of gulpin.games' code is open-sourced on our <a href="https://github.com/SVWEFSBRWHWBCOTSEID" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">GitHub organization</a>.
@@ -33,6 +35,6 @@ export default function SourceCodePanel() {
                     — the Rust backend, written in Actix Web and deployed on Fly.io.
                 </li>
             </ul>
-        </InfoPanel>
+        </>
     )
 }

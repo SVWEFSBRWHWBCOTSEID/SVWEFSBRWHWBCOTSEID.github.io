@@ -74,7 +74,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
 
     return (
         <Tab.Panel>
-            <h1 className="px-8 py-6 text-4xl">
+            <h1 className="px-12 pt-8 pb-6 text-4xl font-light text-primary">
                 <button onClick={() => props.setTab(0)} className="text-blue-500 hover:underline">
                     {username}
                 </button>
@@ -85,7 +85,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
                 <ProfileEloChart games={filtered} />
             )}
 
-            <section className="px-8 py-6">
+            <section className="px-12 py-6">
                 <p className="text-2xl mb-3 font-light">
                     Rating: <strong className="font-semibold">{props.rating.toFixed(2)}</strong>.{' '}
                     {props.prov ? (
