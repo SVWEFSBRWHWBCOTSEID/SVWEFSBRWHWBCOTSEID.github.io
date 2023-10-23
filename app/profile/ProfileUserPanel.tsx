@@ -2,6 +2,7 @@
 
 import {useContext} from 'react';
 import {Tab} from '@headlessui/react';
+import {DateTime} from 'luxon';
 import ProfileContext from '../../contexts/ProfileContext';
 
 // Components
@@ -12,12 +13,13 @@ import ProfileGames from './ProfileGames';
 
 export default function ProfileUserPanel() {
     const {games} = useContext(ProfileContext);
+    const sorted = games.sort((gameA, gameB) => DateTime.fromSQL(gameA.createdAt).valueOf() - DateTime.fromSQL(gameB.createdAt).valueOf());
 
     return (
         <Tab.Panel>
             <ProfileHeader />
             {!!games.length && (
-                <ProfileEloChart games={games} />
+                <ProfileEloChart games={sorted} />
             )}
             <ProfileGames games={games} />
         </Tab.Panel>

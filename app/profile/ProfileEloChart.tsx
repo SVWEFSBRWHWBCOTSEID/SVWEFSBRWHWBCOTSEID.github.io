@@ -232,11 +232,7 @@ export default function ProfileEloChart(props: ProfileEloChartProps) {
         series: Object.entries(grouped).map(([key, games]) => ({
             type: 'line',
             name: games[0].game.name, // TODO?
-            data: processDates(
-                games.sort((gameA, gameB) => DateTime.fromSQL(gameA.createdAt).valueOf() - DateTime.fromSQL(gameB.createdAt).valueOf()),
-                username,
-                perfs[key as GameKey].rating
-            ),
+            data: processDates(games, username, perfs[key as GameKey].rating),
             color: keyToChartColor(games[0].game.key), // TODO?
             dashStyle: keyToDashStyle(games[0].game.key), // TODO?
             marker: { enabled: false }

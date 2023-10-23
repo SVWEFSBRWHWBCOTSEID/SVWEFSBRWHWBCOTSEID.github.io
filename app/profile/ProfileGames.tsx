@@ -1,4 +1,3 @@
-import {DateTime} from 'luxon';
 import ProfileGame, {ProfileGameInfo} from './ProfileGame';
 
 
@@ -24,8 +23,8 @@ export default function ProfileGames(props: {games: ProfileGameInfo[]}) {
                         </span>
                     </div>
                 )}
-                {/* TODO: is this datetime sort inefficient? */}
-                {props.games.length > 0 && props.games.sort((gameA, gameB) => DateTime.fromSQL(gameB.createdAt).valueOf() - DateTime.fromSQL(gameA.createdAt).valueOf()).map((game) => (
+                {/* TODO: `.toReversed()` a bit hacky? */}
+                {props.games.length > 0 && props.games.toReversed().map((game) => (
                     <ProfileGame {...game} key={game.createdAt + game.first.username} />
                 ))}
             </div>
