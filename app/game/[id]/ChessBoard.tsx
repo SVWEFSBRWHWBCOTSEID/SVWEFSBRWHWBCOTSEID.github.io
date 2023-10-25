@@ -15,7 +15,7 @@ type ChessBoardProps = {
     over: boolean
 }
 export default function ChessBoard(props: ChessBoardProps) {
-    const {chess} = props;
+    const {chess, over} = props;
     const [activeSquare, setActiveSquare] = useState<ChessSquare | null>(null);
 
     function makeMove(square: ChessSquare) {
@@ -25,11 +25,10 @@ export default function ChessBoard(props: ChessBoardProps) {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <div className="grid grid-cols-8 w-max bg-[url('https://lichess1.org/assets/_dyH7V1/images/board/svg/brown.svg')]">
+            <div className={"grid grid-cols-8 w-max bg-[url('https://lichess1.org/assets/_dyH7V1/images/board/svg/brown.svg')] transition-opacity duration-300" + (over ? ' opacity-50' : '')}>
                 {props.boardState.map((row, i) => {
                     return row.map((value, j) => {
                         const san = indexToCol(j) + (8 - i) as ChessSquare;
-                        const dark = (i + j) % 2 === 1;
 
                         return (
                             <ChessBoardSquare
@@ -37,11 +36,12 @@ export default function ChessBoard(props: ChessBoardProps) {
                                 move={makeMove}
                                 chess={chess}
                                 activeSquare={activeSquare}
-                                dark={dark}
+                                over={over}
                                 key={i + j}
                             >
                                 {value && (
                                     <Piece
+                                        chess={chess}
                                         piece={value}
                                         square={san}
                                         activeSquare={activeSquare}
@@ -62,11 +62,11 @@ type ChessBoardSquareProps = {
     square: ChessSquare,
     move: (square: ChessSquare) => void;
     activeSquare: ChessSquare | null,
-    dark: boolean,
-    children: ReactNode
+    children: ReactNode,
+    over: boolean
 }
 function ChessBoardSquare(props: ChessBoardSquareProps) {
-    const {chess, square, move, activeSquare, dark} = props;
+    const {chess, square, move, activeSquare, over} = props;
     const active = canMove(chess, activeSquare, square);
 
     const [{canDrop, isOver}, drop] = useDrop(() => ({
@@ -85,7 +85,7 @@ function ChessBoardSquare(props: ChessBoardSquareProps) {
             ref={drop}
             onClick={() => active && move(square)}
             onMouseDown={(e) => active && e.stopPropagation()}
-            disabled={!active && !props.children}
+            disabled={over || !active && !props.children}
             className={'w-24 h-24' + (square === activeSquare ? ' bg-[rgba(20,_85,_30,_0.5)]' : !active ? '' : canDrop && isOver ? ' bg-[rgba(20,_85,_30,_0.3)]' : props.children ? ' bg-[radial-gradient(transparent_0%,_transparent_79%,_rgba(20,_85,_0,_0.3)_80%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]' : ' bg-[radial-gradient(rgba(20,_85,_30,_0.5)_19%,_rgba(0,_0,_0,_0)_20%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]')}
         >
             {props.children}
@@ -103,6 +103,7 @@ function canMove(chess: Chess, activeSquare: ChessSquare | null, square: ChessSq
 }
 
 type PieceProps = {
+    chess: Chess,
     piece: ChessPiece,
     square: ChessSquare,
     activeSquare: ChessSquare | null,
@@ -120,6 +121,7 @@ function Piece(props: PieceProps) {
     //     preview(getEmptyImage(), { captureDraggingState: true });
     // });
 
+    const isCheck = props.piece.type === 'k' && props.chess.isAttacked(props.square, props.piece.color === 'w' ? 'b' : 'w');
     const pieceWithSide = props.piece.color + props.piece.type.toUpperCase();
 
     return (
@@ -129,7 +131,7 @@ function Piece(props: PieceProps) {
             alt={pieceWithSide}
             onMouseDown={() => props.setActiveSquare(props.square)}
             // onBlur={() => props.setActivePiece(-1)}
-            className={'w-full h-full' + (isDragging ? ' opacity-50' : '')}
+            className={'w-full h-full' + (isDragging ? ' opacity-50' : '') + (isCheck ? ' bg-[radial-gradient(ellipse_at_center,_rgb(255,_0,_0)_0%,_rgb(231,_0,_0)_25%,_rgba(169,_0,_0,_0)_89%,_rgba(158,_0,_0,_0)_100%)]' : '')}
         />
     )
 }
