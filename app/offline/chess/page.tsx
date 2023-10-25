@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import ChessBoard from '../../game/[id]/ChessBoard';
+import OfflineChessGame from './OfflineChessGame';
 
 
 export const metadata: Metadata = {
@@ -7,6 +7,6 @@ export const metadata: Metadata = {
     description: 'Offline Chess for single-device games.'
 }
 
-export default function OfflineConnect4() {
-    return <ChessBoard />;
+export default function OfflineChess() {
+    return <OfflineChessGame />;
 }

@@ -1,27 +1,32 @@
 'use client'
 
-import {useState, ReactNode, useMemo, useEffect} from 'react';
+import {useState, ReactNode, useEffect} from 'react';
 import {DndProvider, DragPreviewImage, useDrag, useDrop} from 'react-dnd';
 import {HTML5Backend, getEmptyImage} from 'react-dnd-html5-backend';
 import {Chess, Square as ChessSquare, Piece as ChessPiece} from 'chess.js';
 import {indexToCol} from './TicTacToeGame';
 
 
-export default function ChessBoard() {
-    const chess = useMemo(() => new Chess(), []);
+type ChessBoardProps = {
+    chess: Chess,
+    boardState: ReturnType<Chess['board']>,
+    makeMove: (from: ChessSquare, to: ChessSquare) => void,
+    disabled: boolean,
+    over: boolean
+}
+export default function ChessBoard(props: ChessBoardProps) {
+    const {chess} = props;
     const [activeSquare, setActiveSquare] = useState<ChessSquare | null>(null);
-    const [boardState, setBoardState] = useState(chess.board());
 
     function makeMove(square: ChessSquare) {
-        chess.move({from: activeSquare!, to: square});
-        setBoardState(chess.board());
+        props.makeMove(activeSquare!, square);
         setActiveSquare(null);
     }
 
     return (
         <DndProvider backend={HTML5Backend}>
             <div className="grid grid-cols-8 w-max bg-[url('https://lichess1.org/assets/_dyH7V1/images/board/svg/brown.svg')]">
-                {boardState.map((row, i) => {
+                {props.boardState.map((row, i) => {
                     return row.map((value, j) => {
                         const san = indexToCol(j) + (8 - i) as ChessSquare;
                         const dark = (i + j) % 2 === 1;
@@ -73,8 +78,6 @@ function ChessBoardSquare(props: ChessBoardSquareProps) {
             isOver: monitor.isOver()
         })
     }), [square, active])
-
-    console.log(square, activeSquare, chess.moves({square: activeSquare!}))
 
     // TODO: disable if no moves
     return (
