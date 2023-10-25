@@ -25,7 +25,7 @@ export default function ChessBoard(props: ChessBoardProps) {
 
     return (
         <DndProvider backend={HTML5Backend}>
-            <div className={"grid grid-cols-8 w-max bg-[url('https://lichess1.org/assets/_dyH7V1/images/board/svg/brown.svg')] transition-opacity duration-300" + (over ? ' opacity-50' : '')}>
+            <div className={"grid grid-cols-[repeat(8,_8rem)] grid-rows-[repeat(8,_8rem)] w-max bg-[url('https://lichess1.org/assets/_dyH7V1/images/board/svg/brown.svg')] transition-opacity duration-300" + (over ? ' opacity-50' : '')}>
                 {props.boardState.map((row, i) => {
                     return row.map((value, j) => {
                         const san = indexToCol(j) + (8 - i) as ChessSquare;
@@ -102,7 +102,7 @@ function ChessBoardSquare(props: ChessBoardSquareProps) {
             onClick={() => active && move(square)}
             onMouseDown={(e) => active && e.stopPropagation()}
             disabled={over || !active && disabled}
-            className={'w-24 h-24 ' + getSquareBackground()}
+            className={'w-full h-full ' + getSquareBackground()}
         >
             {props.children}
         </button>
