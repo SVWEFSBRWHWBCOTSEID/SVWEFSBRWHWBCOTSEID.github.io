@@ -67,7 +67,9 @@ type ChessBoardSquareProps = {
 }
 function ChessBoardSquare(props: ChessBoardSquareProps) {
     const {chess, square, move, activeSquare, over} = props;
+
     const active = canMove(chess, activeSquare, square);
+    const disabled = chess.moves({square}).length === 0;
 
     const [{canDrop, isOver}, drop] = useDrop(() => ({
         accept: 'piece',
@@ -82,15 +84,25 @@ function ChessBoardSquare(props: ChessBoardSquareProps) {
     const lastMove = chess.history({verbose: true}).at(-1);
     const isLastMove = lastMove?.from === square || lastMove?.to === square;
 
-    // TODO: disable if no moves
-    // TODO: lastMove background overrides active dots
+    // Gets the background tailwind class for the square based on whether it's active, or is a move option
+    // for the active square
+    function getSquareBackground() {
+        if (square === activeSquare) return 'bg-active-square'; // Current square is the piece being moved
+        const base = isLastMove ? 'bg-last-move' : ''; // Current square was part of the last move
+
+        if (!active) return base;
+        if (canDrop && isOver) return base + ' bg-move-option'; // Current square is being hovered via drag -> solid bg
+        if (props.children) return base + ' bg-[radial-gradient(transparent_0%,_transparent_79%,_rgba(20,_85,_0,_0.3)_80%)] hover:bg-none hover:bg-move-option'; // Piece in current square -> bg at corners
+        return base + ' bg-[radial-gradient(rgba(20,_85,_30,_0.5)_19%,_rgba(0,_0,_0,_0)_20%)] hover:bg-none hover:bg-move-option' // No piece -> dot
+    }
+
     return (
         <button
             ref={drop}
             onClick={() => active && move(square)}
             onMouseDown={(e) => active && e.stopPropagation()}
-            disabled={over || !active && !props.children}
-            className={'w-24 h-24' + (square === activeSquare ? ' bg-[rgba(20,_85,_30,_0.5)]' : isLastMove ? ' bg-last-move' : !active ? '' : canDrop && isOver ? ' bg-[rgba(20,_85,_30,_0.3)]' : props.children ? ' bg-[radial-gradient(transparent_0%,_transparent_79%,_rgba(20,_85,_0,_0.3)_80%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]' : ' bg-[radial-gradient(rgba(20,_85,_30,_0.5)_19%,_rgba(0,_0,_0,_0)_20%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]')}
+            disabled={over || !active && disabled}
+            className={'w-24 h-24 ' + getSquareBackground()}
         >
             {props.children}
         </button>

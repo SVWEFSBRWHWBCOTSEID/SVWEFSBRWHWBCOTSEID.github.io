@@ -27,7 +27,9 @@ module.exports = {
 
         'board-light': '#f0d9b5',
         'board-dark': '#b58863',
-        'last-move': 'rgba(155, 199, 0, 0.41)'
+        'last-move': 'rgba(155, 199, 0, 0.41)',
+        'active-square': 'rgba(20, 85, 30, 0.5)',
+        'move-option': 'rgba(20, 85, 30, 0.3)'
       },
       container: {
         center: true,
