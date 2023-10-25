@@ -1,7 +1,7 @@
 'use client'
 
 import {useState, ReactNode, useMemo, useEffect} from 'react';
-import {DndProvider, useDrag, useDrop} from 'react-dnd';
+import {DndProvider, DragPreviewImage, useDrag, useDrop} from 'react-dnd';
 import {HTML5Backend, getEmptyImage} from 'react-dnd-html5-backend';
 import {Chess, Square as ChessSquare, Piece as ChessPiece} from 'chess.js';
 import {indexToCol} from './TicTacToeGame';
@@ -64,24 +64,26 @@ function ChessBoardSquare(props: ChessBoardSquareProps) {
     const {chess, square, move, activeSquare, dark} = props;
     const active = canMove(chess, activeSquare, square);
 
-    const [{canDrop}, drop] = useDrop(() => ({
+    const [{canDrop, isOver}, drop] = useDrop(() => ({
         accept: 'piece',
         canDrop: () => active,
         drop: () => move(square),
         collect: (monitor) => ({
             canDrop: monitor.canDrop(),
+            isOver: monitor.isOver()
         })
     }), [square, active])
 
-    console.log(activeSquare, chess.moves({square: activeSquare!}))
+    console.log(square, activeSquare, chess.moves({square: activeSquare!}))
 
+    // TODO: disable if no moves
     return (
         <button
             ref={drop}
             onClick={() => active && move(square)}
             onMouseDown={(e) => active && e.stopPropagation()}
             disabled={!active && !props.children}
-            className={'w-24 h-24 ' + (!active ? '' : props.children ? ' bg-[radial-gradient(transparent_0%,_transparent_79%,_rgba(20,_85,_0,_0.3)_80%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]' : ' bg-[radial-gradient(rgba(20,_85,_30,_0.5)_19%,_rgba(0,_0,_0,_0)_20%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]')}
+            className={'w-24 h-24' + (square === activeSquare ? ' bg-[rgba(20,_85,_30,_0.5)]' : !active ? '' : canDrop && isOver ? ' bg-[rgba(20,_85,_30,_0.3)]' : props.children ? ' bg-[radial-gradient(transparent_0%,_transparent_79%,_rgba(20,_85,_0,_0.3)_80%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]' : ' bg-[radial-gradient(rgba(20,_85,_30,_0.5)_19%,_rgba(0,_0,_0,_0)_20%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]')}
         >
             {props.children}
         </button>
@@ -124,7 +126,7 @@ function Piece(props: PieceProps) {
             alt={pieceWithSide}
             onMouseDown={() => props.setActiveSquare(props.square)}
             // onBlur={() => props.setActivePiece(-1)}
-            className="w-full h-full"
+            className={'w-full h-full' + (isDragging ? ' opacity-50' : '')}
         />
     )
 }
