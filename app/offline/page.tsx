@@ -36,6 +36,9 @@ export default function Home() {
                 <GameCard href="/offline/cc4" name="Custom Connect 4" src="/examples/cc4.png">
                     Custom-sized Connect 4, up to 20x20.
                 </GameCard>
+                <GameCard href="/offline/chess" name="Chess" src="/examples/chess.png">
+                    Unlimited time, standard rules chess.
+                </GameCard>
             </section>
         </div>
     )

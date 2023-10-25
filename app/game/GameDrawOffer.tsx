@@ -41,7 +41,7 @@ export default function GameDrawOffer() {
 function DeclineButton(props: {onClick?: MouseEventHandler<HTMLButtonElement>}) {
     return (
         <button
-            className="flex-none text-red-600 text-4xl w-20 flex items-center justify-center border border-tertiary font-bold hover:border-none hover:text-white hover:bg-red-600 transition duration-150"
+            className="flex-none text-theme-red text-4xl w-20 flex items-center justify-center border border-tertiary font-bold hover:border-none hover:text-white hover:bg-theme-red transition duration-150"
             onClick={props.onClick}
         >
             ×

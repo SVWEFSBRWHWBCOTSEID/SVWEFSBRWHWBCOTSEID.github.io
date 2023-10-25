@@ -110,7 +110,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
                             <ImArrowUpRight className="inline" /> {props.prog.toFixed()}
                         </span>
                     ) : props.prog < 0 ? (
-                        <span className="text-red-600">
+                        <span className="text-theme-red">
                             <ImArrowDownRight className="inline" /> {Math.abs(props.prog).toFixed()}
                         </span>
                     ) : (
@@ -186,10 +186,10 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
                         <ProfileStatsTableCell>
                             Defeats
                         </ProfileStatsTableCell>
-                        <ProfileStatsTableCell className="text-base font-semibold text-red-600">
+                        <ProfileStatsTableCell className="text-base font-semibold text-theme-red">
                             {losses.length}
                         </ProfileStatsTableCell>
-                        <ProfileStatsTableCell className="text-base font-semibold text-red-600 bg-content-secondary">
+                        <ProfileStatsTableCell className="text-base font-semibold text-theme-red bg-content-secondary">
                             {toPercent(losses.length, filtered.length)}%
                         </ProfileStatsTableCell>
                     </div>
@@ -219,7 +219,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
                     <h5 className="text-2xl text-primary font-light">
                         Lowest rating:{' '}
                         {lowestRated ? (
-                            <span className="text-red-600 font-medium">
+                            <span className="text-theme-red font-medium">
                                 {Math.floor(lowestRating)}
                             </span>
                         ) : (

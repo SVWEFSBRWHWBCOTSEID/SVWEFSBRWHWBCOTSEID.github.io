@@ -10,7 +10,7 @@ import UltimateTicTacToeBoard, {
 } from './UltimateTicTacToeBoard';
 
 // Utilities
-import {BoardStatus, checkBoardStatus, TTTBoard, PlayerSymbol} from './TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, PlayerSymbol, TTTBoard} from './TicTacToeBoard';
 import {alternatePlayerSymbol, colToIndex, getPlayerSymbolFromSide, indexToCol, rowToIndex} from './TicTacToeGame';
 import type {GameInfo} from './page';
 
@@ -46,9 +46,12 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
     }
 
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex, reset}: UpdateGameStatesCallbacks<CombinedUTTTBoard>) {
+        const styledMoves: string[] = [];
+
         setGameStates((gameStates) => {
             const arr = reset ? [defaultCombinedUTTTBoard] : gameStates.slice();
             let symbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
+            let anyBoard = false;
 
             for (let i = 0; i < moves.length; i++) {
                 const [, boardCol, boardRow, squareCol, squareRow] = moves[i].match(/(\w)(\d)(\w)(\d)/)!;
@@ -66,8 +69,24 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
 
                 // 2. Update the inner board status, and only then
                 // 3. Update the active board
-                statuses[outer] = checkBoardStatus(inner, state[outer]);
+                const innerStatus = checkBoardStatus(inner, state[outer]);
+                statuses[outer] = innerStatus;
                 const activeBoard = statuses[inner] !== BoardStatus.PLAYING ? ANY_BOARD : inner;
+
+                // Style moves based on whether an inner board was taken, whether it's a checkmate or not, and whether
+                // the first set of coordinates is needed to disambiguate the currently active board
+                const outerStatus = checkBoardStatus(outer, statuses.map(status => (
+                    status === BoardStatus.FIRST_VICTORY ? PlayerSymbol.FIRST
+                    : status === BoardStatus.SECOND_VICTORY ? PlayerSymbol.SECOND
+                    : PlayerSymbol.EMPTY
+                )))
+                const moveBase = anyBoard ? moves[i] : moves[i].slice(2);
+                styledMoves.push(
+                    outerStatus === BoardStatus.FIRST_VICTORY || outerStatus === BoardStatus.SECOND_VICTORY ? moveBase + '#'
+                    : innerStatus === BoardStatus.FIRST_VICTORY || innerStatus === BoardStatus.SECOND_VICTORY ? moveBase + '!'
+                    : moveBase
+                );
+                anyBoard = statuses[inner] !== BoardStatus.PLAYING;
 
                 arr.push({state, statuses, activeBoard});
                 symbol = alternatePlayerSymbol(symbol);
@@ -79,6 +98,8 @@ export default function UltimateTicTacToeGame(props: {id: string, username?: str
             console.log(arr);
             return arr;
         });
+
+        return styledMoves;
     }
 
     return (

@@ -58,7 +58,7 @@ function ProfileDropdownItem(props: {children: ReactNode, onClick?: MouseEventHa
     return (
         <Menu.Item
             as="div"
-            className={'flex gap-2.5 items-center px-4 py-1.5 cursor-pointer text-primary hover:text-white group ' + (props.danger ? 'hover:bg-red-600' : 'hover:bg-theme-green')}
+            className={'flex gap-2.5 items-center px-4 py-1.5 cursor-pointer text-primary hover:text-white group ' + (props.danger ? 'hover:bg-theme-red' : 'hover:bg-theme-green')}
             onClick={props.onClick}
         >
             {props.children}

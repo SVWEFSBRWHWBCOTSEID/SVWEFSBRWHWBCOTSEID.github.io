@@ -5,12 +5,14 @@ import Connect4Board, {getNextUnfilledIndex} from './Connect4Board';
 
 // Util
 import {alternatePlayerSymbol, colToIndex, getPlayerSymbolFromSide, indexToCol} from './TicTacToeGame';
-import {PlayerSymbol} from './TicTacToeBoard';
+import {BoardStatus, checkBoardStatus, PlayerSymbol} from './TicTacToeBoard';
 import type {GameInfo} from './page';
 
 
 export default function Connect4Game(props: {id: string, username?: string, info: GameInfo}) {
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex, reset}: UpdateGameStatesCallbacks<PlayerSymbol[]>) {
+        const styledMoves: string[] = [];
+
         setGameStates((gameStates) => {
             // TODO: create default c4 board?
             const arr = reset ? [Array<PlayerSymbol>(42).fill(PlayerSymbol.EMPTY)] : gameStates.slice();
@@ -26,6 +28,12 @@ export default function Connect4Game(props: {id: string, username?: string, info
                 state[index] = symbol;
                 arr.push(state);
 
+                // Style moves based on whether it's a checkmate or not
+                const status = checkBoardStatus(index, state, 6, 7, 4);
+                styledMoves.push(status === BoardStatus.FIRST_VICTORY || status === BoardStatus.SECOND_VICTORY
+                    ? moves[i] + '#'
+                    : moves[i])
+
                 symbol = alternatePlayerSymbol(symbol);
             }
 
@@ -35,6 +43,8 @@ export default function Connect4Game(props: {id: string, username?: string, info
             console.log(arr);
             return arr;
         });
+
+        return styledMoves;
     }
 
     // Makes a move by checking the given square.

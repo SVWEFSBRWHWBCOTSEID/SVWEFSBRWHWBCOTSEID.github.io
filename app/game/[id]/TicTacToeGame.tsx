@@ -4,11 +4,13 @@ import type {GameInfo} from './page';
 
 // Components
 import Game, {PlayerSide, UpdateGameStatesCallbacks} from './Game';
-import TicTacToeBoard, {defaultTTTBoard, PlayerSymbol, TTTBoard} from './TicTacToeBoard';
+import TicTacToeBoard, {BoardStatus, checkBoardStatus, defaultTTTBoard, PlayerSymbol, TTTBoard} from './TicTacToeBoard';
 
 
 export default function TicTacToeGame(props: {id: string, username?: string, info: GameInfo}) {
     function updateGameStatesFromMoves(moves: string[], {setGameStates, setGameStateIndex, reset}: UpdateGameStatesCallbacks<TTTBoard>) {
+        const styledMoves: string[] = [];
+
         setGameStates((gameStates) => {
             const arr = reset ? [defaultTTTBoard] : gameStates.slice();
             let symbol = arr.length % 2 === 0 ? PlayerSymbol.SECOND : PlayerSymbol.FIRST;
@@ -17,8 +19,15 @@ export default function TicTacToeGame(props: {id: string, username?: string, inf
                 const [, col, row] = moves[i].match(/(\w)(\d)/)!;
                 const state = arr.at(-1)!.slice() as TTTBoard;
 
-                state[rowToIndex(row) + colToIndex(col)] = symbol;
+                const index = rowToIndex(row) + colToIndex(col);
+                state[index] = symbol;
                 arr.push(state);
+
+                // Style moves based on whether it's a checkmate or not
+                const status = checkBoardStatus(index, state);
+                styledMoves.push(status === BoardStatus.FIRST_VICTORY || status === BoardStatus.SECOND_VICTORY
+                    ? moves[i] + '#'
+                    : moves[i])
 
                 symbol = alternatePlayerSymbol(symbol);
             }
@@ -29,6 +38,8 @@ export default function TicTacToeGame(props: {id: string, username?: string, inf
             console.log(arr);
             return arr;
         });
+
+        return styledMoves;
     }
 
     // Makes a move by checking the given square.

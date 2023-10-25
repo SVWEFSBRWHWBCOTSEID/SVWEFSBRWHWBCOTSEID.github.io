@@ -79,7 +79,7 @@ function PlayerIndicator(props: { user: Player, first?: boolean, ratingDiff: num
                     ` (${props.user.rating})`
                 )}
                 {props.ratingDiff !== 0 && (
-                    <span className={props.ratingDiff > 0 ? 'text-theme-green' : 'text-red-600'}>
+                    <span className={props.ratingDiff > 0 ? 'text-theme-green' : 'text-theme-red'}>
                         {' '}{props.ratingDiff > 0 && '+'}{props.ratingDiff}
                     </span>
                 )}

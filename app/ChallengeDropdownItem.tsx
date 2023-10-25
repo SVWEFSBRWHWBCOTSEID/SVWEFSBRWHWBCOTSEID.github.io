@@ -50,7 +50,7 @@ export default function ChallengeDropdownItem(props: Challenge) {
 function DeclineButton(props: {onClick?: MouseEventHandler<HTMLButtonElement>}) {
     return (
         <button
-            className="flex-none text-red-600 text-4xl w-16 h-10 flex items-center justify-center hover:border-none hover:text-white hover:bg-red-600 transition duration-150 pb-2"
+            className="flex-none text-theme-red text-4xl w-16 h-10 flex items-center justify-center hover:border-none hover:text-white hover:bg-theme-red transition duration-150 pb-2"
             onClick={props.onClick}
         >
             ×

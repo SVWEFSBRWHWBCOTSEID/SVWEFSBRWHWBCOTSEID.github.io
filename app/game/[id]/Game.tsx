@@ -28,7 +28,7 @@ type GameProps<T> = {
     info: GameInfo,
     username?: string,
     defaultBoard: T,
-    updateGameStatesFromMoves: (moves: string[], callbacks: UpdateGameStatesCallbacks<T>) => void,
+    updateGameStatesFromMoves: (moves: string[], callbacks: UpdateGameStatesCallbacks<T>) => string[],
     children: (gameStates: T[], gameStateIndex: number, gameStatus: Status, side: PlayerSide) => ReactElement
 }
 export default function Game<T>(props: GameProps<T>) {
@@ -131,9 +131,13 @@ export default function Game<T>(props: GameProps<T>) {
         setDrawOffer(event.drawOffer);
         setEndType(event.endType);
 
-        props.updateGameStatesFromMoves(event.moves, {setGameStates, setGameStateIndex: updateGameStateIndex, reset});
+        const styledMoves = props.updateGameStatesFromMoves(event.moves, {
+            setGameStates,
+            setGameStateIndex: updateGameStateIndex,
+            reset
+        });
         setMoves((moves) => {
-            const newMoves = reset ? event.moves : moves.concat(event.moves);
+            const newMoves = reset ? styledMoves : moves.concat(styledMoves);
 
             // Dynamically update tab title if playing the game
             // TODO: blink favicon as well?
