@@ -79,14 +79,18 @@ function ChessBoardSquare(props: ChessBoardSquareProps) {
         })
     }), [square, active])
 
+    const lastMove = chess.history({verbose: true}).at(-1);
+    const isLastMove = lastMove?.from === square || lastMove?.to === square;
+
     // TODO: disable if no moves
+    // TODO: lastMove background overrides active dots
     return (
         <button
             ref={drop}
             onClick={() => active && move(square)}
             onMouseDown={(e) => active && e.stopPropagation()}
             disabled={over || !active && !props.children}
-            className={'w-24 h-24' + (square === activeSquare ? ' bg-[rgba(20,_85,_30,_0.5)]' : !active ? '' : canDrop && isOver ? ' bg-[rgba(20,_85,_30,_0.3)]' : props.children ? ' bg-[radial-gradient(transparent_0%,_transparent_79%,_rgba(20,_85,_0,_0.3)_80%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]' : ' bg-[radial-gradient(rgba(20,_85,_30,_0.5)_19%,_rgba(0,_0,_0,_0)_20%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]')}
+            className={'w-24 h-24' + (square === activeSquare ? ' bg-[rgba(20,_85,_30,_0.5)]' : isLastMove ? ' bg-last-move' : !active ? '' : canDrop && isOver ? ' bg-[rgba(20,_85,_30,_0.3)]' : props.children ? ' bg-[radial-gradient(transparent_0%,_transparent_79%,_rgba(20,_85,_0,_0.3)_80%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]' : ' bg-[radial-gradient(rgba(20,_85,_30,_0.5)_19%,_rgba(0,_0,_0,_0)_20%)] hover:bg-none hover:bg-[rgba(20,_85,_30,_0.3)]')}
         >
             {props.children}
         </button>
