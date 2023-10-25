@@ -62,7 +62,7 @@ type ChessBoardSquareProps = {
 }
 function ChessBoardSquare(props: ChessBoardSquareProps) {
     const {chess, square, move, activeSquare, dark} = props;
-    const active = !!activeSquare && chess.moves({square: activeSquare}).some(m => m.includes(square));
+    const active = canMove(chess, activeSquare, square);
 
     const [{canDrop}, drop] = useDrop(() => ({
         accept: 'piece',
@@ -86,6 +86,15 @@ function ChessBoardSquare(props: ChessBoardSquareProps) {
             {props.children}
         </button>
     )
+}
+
+function canMove(chess: Chess, activeSquare: ChessSquare | null, square: ChessSquare) {
+    if (!activeSquare) return false;
+    const moves = chess.moves({square: activeSquare});
+
+    if (activeSquare === 'e1' && (moves.includes('O-O') && square === 'g1' || moves.includes('O-O-O') && square === 'c1')) return true;
+    if (activeSquare === 'e8' && (moves.includes('O-O') && square === 'g8' || moves.includes('O-O-O') && square === 'c8')) return true;
+    return moves.some(m => m.includes(square));
 }
 
 type PieceProps = {
