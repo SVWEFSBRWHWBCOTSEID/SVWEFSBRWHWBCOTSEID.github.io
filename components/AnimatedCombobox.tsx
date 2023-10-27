@@ -1,11 +1,11 @@
 'use client'
 
 import {Fragment, ReactNode} from 'react';
-import {Listbox, Transition} from '@headlessui/react';
+import {Combobox, Transition} from '@headlessui/react';
 
 
-// A reusable component to wrap a dropdown animation around a `Listbox.Options`.
-export default function AnimatedListbox(props: {children: ReactNode, className?: string}) {
+// A reusable component to wrap a dropdown animation around a `Combobox.Options`.
+export default function AnimatedCombobox(props: {children: ReactNode, className?: string}) {
     return (
         <Transition
             as={Fragment}
@@ -16,9 +16,9 @@ export default function AnimatedListbox(props: {children: ReactNode, className?:
             leaveFrom="scale-100 opacity-100"
             leaveTo="scale-95 opacity-0"
         >
-            <Listbox.Options className={props.className}>
+            <Combobox.Options className={props.className}>
                 {props.children}
-            </Listbox.Options>
+            </Combobox.Options>
         </Transition>
     )
 }
