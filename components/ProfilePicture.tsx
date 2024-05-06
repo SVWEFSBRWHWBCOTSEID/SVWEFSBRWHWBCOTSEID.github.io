@@ -1,7 +1,11 @@
-import type {User} from '../contexts/ProfileContext';
+import type { User } from '../contexts/ProfileContext';
 
 
-export default function ProfilePicture(props: {user: User | null, className?: string}) {
+type ProfilePictureProps = {
+    user: User | null,
+    className?: string
+}
+export default function ProfilePicture(props: ProfilePictureProps) {
     return !props.user ? (
         <div className={'rounded-full flex-none bg-background animate-pulse' + (props.className ? ` ${props.className}` : '')} />
     ) : props.user.profile.imageUrl ? (

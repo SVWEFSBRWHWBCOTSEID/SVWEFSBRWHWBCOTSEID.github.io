@@ -1,8 +1,8 @@
-import {ButtonHTMLAttributes} from 'react';
+import { ButtonHTMLAttributes } from 'react';
 
 
 export default function BlueButton(props: ButtonHTMLAttributes<HTMLButtonElement>) {
-    const {className, ...buttonProps} = props;
+    const { className, ...buttonProps } = props;
 
     return (
         <button

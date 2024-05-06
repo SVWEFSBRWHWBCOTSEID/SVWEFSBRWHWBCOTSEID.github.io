@@ -1,9 +1,9 @@
 'use client'
 
-import {ReactNode, useContext} from 'react';
+import { ReactNode, useContext } from 'react';
 import Link from 'next/link';
 import UserContext from '../contexts/UserContext';
-import {BsGear, BsGearFill} from 'react-icons/bs';
+import { BsGear, BsGearFill } from 'react-icons/bs';
 
 // Components
 import ProfileDropdown from './ProfileDropdown';
@@ -13,7 +13,7 @@ import ChallengeDropdown from './ChallengeDropdown';
 
 
 export default function Header() {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     return (
         <header className="relative sm:pl-4 md:pl-6 text-md flex justify-between">
@@ -50,30 +50,40 @@ export default function Header() {
     )
 }
 
-function HeaderHoverDropdown(props: {href: string, name: string, children: ReactNode}) {
+function HeaderHoverDropdown(props: { href: string, name: string, children: ReactNode }) {
     return (
         <div className="hidden sm:flex flex-col h-full relative group">
-            <Link href={props.href} className="uppercase text-sm h-full flex items-center text-secondary px-3.5 py-4 group-hover:text-primary group-hover:bg-[#3c3934] border-l-2 border-transparent group-hover:border-blue-500">
+            <Link
+                className="uppercase text-sm h-full flex items-center text-secondary px-3.5 py-4 group-hover:text-primary group-hover:bg-[#3c3934] border-l-2 border-transparent group-hover:border-blue-500"
+                href={props.href}
+            >
                 {props.name}
             </Link>
-            <div className="hidden group-hover:block absolute top-full border-l-2 border-blue-500 bg-[#3c3934] rounded-r overflow-clip w-max z-20">
+            <div
+                className="hidden group-hover:block absolute top-full border-l-2 border-blue-500 bg-[#3c3934] rounded-r overflow-clip w-max z-20">
                 {props.children}
             </div>
         </div>
     )
 }
 
-function HeaderHoverDropdownLink(props: {href: string, children: ReactNode}) {
+function HeaderHoverDropdownLink(props: { href: string, children: ReactNode }) {
     return (
-        <Link href={props.href} className="block text-sm text-primary pl-3.5 pr-5 py-2.5 hover:text-white hover:bg-blue-500">
+        <Link
+            className="block text-sm text-primary pl-3.5 pr-5 py-2.5 hover:text-white hover:bg-blue-500"
+            href={props.href}
+        >
             {props.children}
         </Link>
     )
 }
 
-function HeaderLink(props: {href: string, children: ReactNode}) {
+function HeaderLink(props: { href: string, children: ReactNode }) {
     return (
-        <Link href={props.href} className="hidden sm:block uppercase text-sm text-secondary px-3.5 py-4 hover:text-primary">
+        <Link
+            className="hidden sm:block uppercase text-sm text-secondary px-3.5 py-4 hover:text-primary"
+            href={props.href}
+        >
             {props.children}
         </Link>
     )

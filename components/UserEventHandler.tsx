@@ -1,19 +1,21 @@
 'use client'
 
-import {ReactElement, useContext, useEffect, useState} from 'react';
-import {useRouter} from 'next/navigation';
+import { ReactElement, useContext, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+// Components
 import MessageNotification from './MessageNotification';
 
 // Contexts
 import UserContext from '../contexts/UserContext';
-import PreferencesContext, {Preferences} from '../contexts/PreferencesContext';
+import PreferencesContext, { Preferences } from '../contexts/PreferencesContext';
 import ConversationContext from '../contexts/ConversationContext';
-import ChallengesContext, {Challenge} from '../contexts/ChallengesContext';
+import ChallengesContext, { Challenge } from '../contexts/ChallengesContext';
 
 // Types
-import type {GameKey} from '../contexts/ProfileContext';
-import type {Conversation} from '../app/inbox/InboxSidebarItem';
-import type {Message} from '../app/inbox/InboxMessage';
+import type { GameKey } from '../contexts/ProfileContext';
+import type { Conversation } from '../app/inbox/InboxSidebarItem';
+import type { Message } from '../app/inbox/InboxMessage';
 
 
 type UserFullEvent = {
@@ -47,15 +49,16 @@ type ChallengeEvent = {
 type UserEvent = UserFullEvent | GameStartEvent | PreferencesUpdateEvent | UserMessageEvent | ChallengeEvent;
 
 export default function UserEventHandler() {
-    const {push} = useRouter();
+    const router = useRouter();
 
-    const {user} = useContext(UserContext);
-    const {setLocalPreferences} = useContext(PreferencesContext);
-    const {setConversations} = useContext(ConversationContext);
-    const {setChallenges} = useContext(ChallengesContext);
+    const { user } = useContext(UserContext);
+    const { setLocalPreferences } = useContext(PreferencesContext);
+    const { setConversations } = useContext(ConversationContext);
+    const { setChallenges } = useContext(ChallengesContext);
 
     // Notifications
     const [notifications, setNotifications] = useState<ReactElement[]>([]);
+
     function pushNotification(e: ReactElement) {
         setNotifications((notifications) => [...notifications, e]);
         setTimeout(() => setNotifications((notifications) => {
@@ -65,7 +68,7 @@ export default function UserEventHandler() {
     }
 
     useEffect(() => {
-        const eventSource = new EventSource(`${process.env.API_BASE}/events`, {withCredentials: true});
+        const eventSource = new EventSource(`${process.env.API_BASE}/events`, { withCredentials: true });
         eventSource.onmessage = (m) => {
             const event: UserEvent = JSON.parse(m.data);
             console.log(event);
@@ -77,9 +80,11 @@ export default function UserEventHandler() {
                     setLocalPreferences(event.preferences);
                     break;
                 case 'GAME_START':
-                    push(`/game/${event.id}`); break;
+                    router.push(`/game/${event.id}`);
+                    break;
                 case 'PREFERENCES_UPDATE':
-                    setLocalPreferences(event.preferences); break;
+                    setLocalPreferences(event.preferences);
+                    break;
                 case 'USER_MESSAGE':
                     // Update the conversation corresponding to the given message
                     setConversations((conversations) => {
@@ -88,7 +93,7 @@ export default function UserEventHandler() {
                         // TODO: cleaner?
                         let conversation = conversations.find(c => c.otherName === otherName);
                         if (!conversation) {
-                            conversation = {otherName, messages: []};
+                            conversation = { otherName, messages: [] };
                             conversations.push(conversation);
                         }
 

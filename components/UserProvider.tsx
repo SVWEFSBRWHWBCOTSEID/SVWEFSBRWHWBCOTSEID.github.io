@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, startTransition, useLayoutEffect, useState } from 'react';
+import { ReactNode, useLayoutEffect, useState } from 'react';
 import UserContext from '../contexts/UserContext';
 import { getUser } from '../util/user';
 import type { User } from '../contexts/ProfileContext';
@@ -14,7 +14,7 @@ export default function UserProvider(props: { children: ReactNode }) {
     useLayoutEffect(() => {
         const username = document.cookie.match(/username=(.+?)(?:;|$)/)?.[1];
         if (!username) return;
-        startTransition(() => void getUser(username).then((user) => setUser(user)));
+        void getUser(username).then((user) => setUser(user));
     }, [])
 
     return (

@@ -1,9 +1,9 @@
 'use client'
 
-import {ReactNode} from 'react';
+import { ReactNode } from 'react';
 import Link from 'next/link';
-import {Menu} from '@headlessui/react';
-import {FiMenu} from 'react-icons/fi';
+import { Menu } from '@headlessui/react';
+import { FiMenu } from 'react-icons/fi';
 
 
 export default function HeaderMenu() {
@@ -22,7 +22,7 @@ export default function HeaderMenu() {
     )
 }
 
-function HeaderMenuLink(props: {href: string, children: ReactNode}) {
+function HeaderMenuLink(props: { href: string, children: ReactNode }) {
     return (
         <Menu.Item>
             <Link href={props.href}>

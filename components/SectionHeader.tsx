@@ -1,8 +1,8 @@
-import {ReactNode} from 'react';
-import {FiLink} from 'react-icons/fi';
+import { ReactNode } from 'react';
+import { FiLink } from 'react-icons/fi';
 
 
-export default function SectionHeader(props: {id: string, children: ReactNode}) {
+export default function SectionHeader(props: { id: string, children: ReactNode }) {
     return (
         <div className="relative">
             <span id={props.id} className="absolute -top-16" />

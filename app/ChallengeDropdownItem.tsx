@@ -1,11 +1,11 @@
-import type {MouseEventHandler} from 'react';
-import {Menu} from '@headlessui/react';
-import {BiCheck} from 'react-icons/bi';
+import type { MouseEventHandler } from 'react';
+import { Menu } from '@headlessui/react';
+import { BiCheck } from 'react-icons/bi';
 
 // Utils
-import type {Challenge} from '../contexts/ChallengesContext';
-import {keyToIcon} from './profile/ProfileSidebarItem';
-import {timeControlToString} from '../util/game';
+import type { Challenge } from '../contexts/ChallengesContext';
+import { keyToIcon } from './profile/ProfileSidebarItem';
+import { timeControlToString } from '../util/game';
 
 
 export default function ChallengeDropdownItem(props: Challenge) {
@@ -47,7 +47,7 @@ export default function ChallengeDropdownItem(props: Challenge) {
     )
 }
 
-function DeclineButton(props: {onClick?: MouseEventHandler<HTMLButtonElement>}) {
+function DeclineButton(props: { onClick?: MouseEventHandler<HTMLButtonElement> }) {
     return (
         <button
             className="flex-none text-theme-red text-4xl w-16 h-10 flex items-center justify-center hover:border-none hover:text-white hover:bg-theme-red transition duration-150 pb-2"
@@ -58,7 +58,7 @@ function DeclineButton(props: {onClick?: MouseEventHandler<HTMLButtonElement>}) 
     )
 }
 
-function AcceptButton(props: {onClick?: MouseEventHandler<HTMLButtonElement>}) {
+function AcceptButton(props: { onClick?: MouseEventHandler<HTMLButtonElement> }) {
     return (
         <button
             className="flex-none text-theme-green text-4xl w-16 h-10 flex items-center justify-center font-bold hover:border-none hover:text-white hover:bg-theme-green transition duration-150"

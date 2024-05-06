@@ -1,6 +1,6 @@
 'use client'
 
-import {useLayoutEffect, useState} from 'react';
+import { useLayoutEffect, useState } from 'react';
 import Link from 'next/link';
 
 

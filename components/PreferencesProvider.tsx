@@ -1,12 +1,14 @@
 'use client'
 
-import {ReactNode, useContext, useLayoutEffect, useState} from 'react';
-import PreferencesContext, {defaultPreferences, Preferences} from '../contexts/PreferencesContext';
+import { ReactNode, useContext, useLayoutEffect, useState } from 'react';
+
+// Contexts
+import PreferencesContext, { defaultPreferences, Preferences } from '../contexts/PreferencesContext';
 import UserContext from '../contexts/UserContext';
 
 
-export default function PreferencesProvider(props: {children: ReactNode}) {
-    const {user} = useContext(UserContext);
+export default function PreferencesProvider(props: { children: ReactNode }) {
+    const { user } = useContext(UserContext);
     const [preferences, setPreferences] = useState(defaultPreferences);
 
     // Load saved preferences from `localStorage` on mount
@@ -24,7 +26,7 @@ export default function PreferencesProvider(props: {children: ReactNode}) {
         if (!user) return setLocalPreferences(newPreferences);
         await fetch(`${process.env.API_BASE}/preferences/update`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify(newPreferences)
         })
@@ -38,7 +40,7 @@ export default function PreferencesProvider(props: {children: ReactNode}) {
     }
 
     return (
-        <PreferencesContext.Provider value={{preferences, setPreferences: updatePreferences, setLocalPreferences}}>
+        <PreferencesContext.Provider value={{ preferences, setPreferences: updatePreferences, setLocalPreferences }}>
             {props.children}
         </PreferencesContext.Provider>
     )

@@ -1,11 +1,11 @@
 'use client'
 
-import {Fragment, ReactNode} from 'react';
-import {Combobox, Transition} from '@headlessui/react';
+import { Fragment, ReactNode } from 'react';
+import { Combobox, Transition } from '@headlessui/react';
 
 
 // A reusable component to wrap a dropdown animation around a `Combobox.Options`.
-export default function AnimatedCombobox(props: {children: ReactNode, className?: string}) {
+export default function AnimatedCombobox(props: { children: ReactNode, className?: string }) {
     return (
         <Transition
             as={Fragment}

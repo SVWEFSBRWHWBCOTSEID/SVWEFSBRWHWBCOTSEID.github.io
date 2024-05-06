@@ -1,6 +1,6 @@
-import type {ReactNode} from 'react';
-import type {Metadata} from 'next';
-import {Inter} from 'next/font/google';
+import type { ReactNode } from 'react';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 
 // Components
 import Header from './Header';
@@ -25,7 +25,7 @@ const inter = Inter({
     subsets: ['latin']
 });
 
-export default function Layout(props: {children: ReactNode}) {
+export default function Layout(props: { children: ReactNode }) {
     return (
         <html className="dark h-full scroll-smooth">
             <head>

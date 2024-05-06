@@ -1,18 +1,22 @@
 'use client'
 
-import {MouseEventHandler, ReactNode, useContext} from 'react';
+import { MouseEventHandler, ReactNode, useContext } from 'react';
 import Link from 'next/link';
-import {Menu} from '@headlessui/react';
+import { Menu } from '@headlessui/react';
+
+// Components
 import UserEventHandler from '../components/UserEventHandler';
+
+// Contexts
 import UserContext from '../contexts/UserContext';
 
 // Icons
-import {FaPowerOff} from 'react-icons/fa';
-import {BsEnvelopeFill, BsGearFill} from 'react-icons/bs';
+import { FaPowerOff } from 'react-icons/fa';
+import { BsEnvelopeFill, BsGearFill } from 'react-icons/bs';
 
 
 export default function ProfileDropdown() {
-    const {user, setUser} = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     async function signOut() {
         await fetch(`${process.env.API_BASE}/logout`, {
@@ -54,7 +58,11 @@ export default function ProfileDropdown() {
     )
 }
 
-function ProfileDropdownItem(props: {children: ReactNode, onClick?: MouseEventHandler<HTMLDivElement>, danger?: boolean}) {
+function ProfileDropdownItem(props: {
+    children: ReactNode,
+    onClick?: MouseEventHandler<HTMLDivElement>,
+    danger?: boolean
+}) {
     return (
         <Menu.Item
             as="div"

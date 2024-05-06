@@ -1,6 +1,6 @@
 'use client'
 
-import {HTMLAttributes, ReactElement, useEffect, useRef} from 'react';
+import { HTMLAttributes, ReactElement, useEffect, useRef } from 'react';
 
 
 type ScaledBoxProps = Omit<HTMLAttributes<HTMLDivElement>, 'onWheel'> & {
@@ -9,7 +9,7 @@ type ScaledBoxProps = Omit<HTMLAttributes<HTMLDivElement>, 'onWheel'> & {
     onWheel?: (e: WheelEvent) => void // Redeclare `onWheel` to be a native listener callback
 };
 export default function ScaledBox(props: ScaledBoxProps) {
-    const {children, className, rescale, onWheel, ...divProps} = props;
+    const { children, className, rescale, onWheel, ...divProps } = props;
     const parentRef = useRef<HTMLDivElement>(null);
 
     // Scales the child of this wrapper to fit within the wrapper's bounding box, maintaining the child's aspect ratio.
@@ -42,7 +42,7 @@ export default function ScaledBox(props: ScaledBoxProps) {
     // TODO: better?
     useEffect(() => {
         if (!parentRef.current || !onWheel) return;
-        parentRef.current.addEventListener('wheel', onWheel, {passive: false});
+        parentRef.current.addEventListener('wheel', onWheel, { passive: false });
         return () => parentRef.current?.removeEventListener('wheel', onWheel);
     }, [parentRef.current, onWheel]);
 

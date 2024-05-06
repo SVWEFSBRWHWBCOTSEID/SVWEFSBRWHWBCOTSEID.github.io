@@ -1,19 +1,21 @@
 'use client'
 
-import {useContext} from 'react';
-import {Menu} from '@headlessui/react';
+import { useContext } from 'react';
+import { Menu } from '@headlessui/react';
+
+// Components
 import ChallengeDropdownItem from './ChallengeDropdownItem';
 
 // Contexts
 import ChallengesContext from '../contexts/ChallengesContext';
 
 // Icons
-import {RiSwordFill} from 'react-icons/ri';
-import {BsInfoCircleFill} from 'react-icons/bs';
+import { RiSwordFill } from 'react-icons/ri';
+import { BsInfoCircleFill } from 'react-icons/bs';
 
 
 export default function ChallengeDropdown() {
-    const {challenges} = useContext(ChallengesContext);
+    const { challenges } = useContext(ChallengesContext);
 
     return (
         <Menu as="div" className="h-full">

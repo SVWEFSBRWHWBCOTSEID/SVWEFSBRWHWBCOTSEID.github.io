@@ -1,11 +1,11 @@
-import {startTransition, useLayoutEffect, useState} from 'react';
+import { startTransition, useLayoutEffect, useState } from 'react';
 import ProfilePicture from './ProfilePicture';
 import Link from 'next/link';
 
 // Utils
-import type {User} from '../contexts/ProfileContext';
-import type {Message} from '../app/inbox/InboxMessage';
-import {getUser} from '../util/user';
+import type { User } from '../contexts/ProfileContext';
+import type { Message } from '../app/inbox/InboxMessage';
+import { getUser } from '../util/user';
 
 
 // TODO: transition?

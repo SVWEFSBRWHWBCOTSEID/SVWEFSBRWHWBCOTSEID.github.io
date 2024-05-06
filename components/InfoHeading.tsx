@@ -1,5 +1,5 @@
-import {ReactNode} from 'react';
-import {FiLink} from 'react-icons/fi';
+import { ReactNode } from 'react';
+import { FiLink } from 'react-icons/fi';
 
 
 type InfoHeadingProps = {
