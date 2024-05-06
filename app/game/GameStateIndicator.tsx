@@ -1,6 +1,6 @@
 'use client'
 
-import {useContext} from 'react';
+import { useContext } from 'react';
 import Link from 'next/link';
 import GameContext from '../../contexts/GameContext';
 import PreferencesContext from '../../contexts/PreferencesContext';
@@ -16,12 +16,12 @@ import GameOverMessage from './GameOverMessage';
 import RematchButton from './RematchButton';
 
 // Types
-import type {Player} from './[id]/page';
+import type { Player } from './[id]/page';
 
 
 export default function GameStateIndicator() {
-    const {info, side, gameStatus, drawOffer, ftime, stime, fratingDiff, sratingDiff} = useContext(GameContext);
-    const {preferences} = useContext(PreferencesContext);
+    const { info, side, gameStatus, drawOffer, ftime, stime, fratingDiff, sratingDiff } = useContext(GameContext);
+    const { preferences } = useContext(PreferencesContext);
 
     return (
         <div className="flex flex-col flex-shrink basis-[400px] min-w-[320px] drop-shadow-lg max-w-full">

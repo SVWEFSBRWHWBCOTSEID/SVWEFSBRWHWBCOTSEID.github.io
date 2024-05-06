@@ -1,13 +1,13 @@
 'use client'
 
-import {useContext} from 'react';
+import { useContext } from 'react';
 import GameContext from '../../contexts/GameContext';
-import type {EndType, Status} from './[id]/page';
-import type {GameKey} from '../../contexts/ProfileContext';
+import type { EndType, Status } from './[id]/page';
+import type { GameKey } from '../../contexts/ProfileContext';
 
 
 export default function GameOverMessage() {
-    const {info, gameStatus, endType} = useContext(GameContext);
+    const { info, gameStatus, endType } = useContext(GameContext);
 
     // Scroll the moves panel to bottom when the game ends
     function scrollToBottom(ref: HTMLDivElement | null) {

@@ -1,11 +1,11 @@
-import {MouseEventHandler, ReactNode, useContext} from 'react';
-import {useHotkeys} from 'react-hotkeys-hook';
-import {MdFastForward, MdFastRewind, MdSkipNext, MdSkipPrevious} from 'react-icons/md';
+import { MouseEventHandler, ReactNode, useContext } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
+import { MdFastForward, MdFastRewind, MdSkipNext, MdSkipPrevious } from 'react-icons/md';
 import GameContext from '../../contexts/GameContext';
 
 
 export default function GameMoveHistoryHeader() {
-    const {moves, gameStateIndex, setGameStateIndex} = useContext(GameContext);
+    const { moves, gameStateIndex, setGameStateIndex } = useContext(GameContext);
 
     useHotkeys('left', () => gameStateIndex > 0 && setGameStateIndex(Math.max(gameStateIndex - 1, 1)), [gameStateIndex]);
     useHotkeys('right', () => setGameStateIndex(Math.min(gameStateIndex + 1, moves.length)), [gameStateIndex]);
@@ -40,7 +40,11 @@ export default function GameMoveHistoryHeader() {
     )
 }
 
-function HeaderButton(props: {onClick: MouseEventHandler<HTMLButtonElement>, disabled?: boolean, children: ReactNode}) {
+function HeaderButton(props: {
+    onClick: MouseEventHandler<HTMLButtonElement>,
+    disabled?: boolean,
+    children: ReactNode
+}) {
     return (
         <button
             className="px-4 py-1.5 hover:bg-theme-green hover:text-white transition duration-150 disabled:opacity-30 disabled:hover:text-inherit disabled:hover:bg-transparent"

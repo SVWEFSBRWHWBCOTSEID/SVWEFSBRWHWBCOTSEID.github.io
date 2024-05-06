@@ -1,8 +1,8 @@
 'use client'
 
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import Link from 'next/link';
-import {Combobox} from '@headlessui/react';
+import { Combobox } from '@headlessui/react';
 import ConversationContext from '../../contexts/ConversationContext';
 
 
@@ -10,7 +10,7 @@ import ConversationContext from '../../contexts/ConversationContext';
 export default function InboxSearchInput() {
     const [query, setQuery] = useState('');
 
-    const {conversations} = useContext(ConversationContext);
+    const { conversations } = useContext(ConversationContext);
     const filteredConversations = query === ''
         ? conversations
         : conversations.filter((c) => c.otherName.toLowerCase().includes(query.toLowerCase()));

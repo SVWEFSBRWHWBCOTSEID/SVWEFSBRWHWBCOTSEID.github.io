@@ -1,18 +1,20 @@
 'use client'
 
-import {useContext, useMemo} from 'react';
+import { useContext, useMemo } from 'react';
 import Link from 'next/link';
-import {DateTime} from 'luxon';
+import { DateTime } from 'luxon';
 import ConversationContext from '../../contexts/ConversationContext';
-import {RiSwordFill} from 'react-icons/ri';
 
 // Components
-import InboxMessage, {Message} from './InboxMessage';
+import InboxMessage, { Message } from './InboxMessage';
 import MessageInput from './MessageInput';
 
+// Icons
+import { RiSwordFill } from 'react-icons/ri';
 
-export default function InboxContent(props: {username?: string}) {
-    const {conversations} = useContext(ConversationContext);
+
+export default function InboxContent(props: { username?: string }) {
+    const { conversations } = useContext(ConversationContext);
 
     const conversation = props.username
         ? conversations.find(c => c.otherName === props.username)
@@ -21,7 +23,7 @@ export default function InboxContent(props: {username?: string}) {
 
     // Group conversation messages by date
     const grouped = useMemo(() => {
-        const res: {[key: string]: Message[]} = {};
+        const res: { [key: string]: Message[] } = {};
         if (!conversation) return res;
 
         for (const message of conversation.messages) {

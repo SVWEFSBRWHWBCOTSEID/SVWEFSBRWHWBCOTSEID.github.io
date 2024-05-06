@@ -1,11 +1,11 @@
 'use client'
 
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import GameContext from '../../contexts/GameContext';
 
 
 export default function RematchButton() {
-    const {id, rematchOffer, side} = useContext(GameContext);
+    const { id, rematchOffer, side } = useContext(GameContext);
     const [offered, setOffered] = useState(false);
 
     async function handleRematch(rematch: boolean) {

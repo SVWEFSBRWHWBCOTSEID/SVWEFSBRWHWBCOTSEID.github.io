@@ -1,15 +1,15 @@
 'use client'
 
-import {useContext} from 'react';
+import { useContext } from 'react';
 import Link from 'next/link';
-import {DateTime} from 'luxon';
-import {BiCircle, BiSolidCircle} from 'react-icons/bi';
+import { DateTime } from 'luxon';
+import { BiCircle, BiSolidCircle } from 'react-icons/bi';
 
-// Util
-import {keyToIcon} from '../profile/ProfileSidebarItem';
-import {timeControlToString} from '../../util/game';
-import {gameEndMessage} from './GameOverMessage';
-import type {Player} from './[id]/page';
+// Utils
+import { keyToIcon } from '../profile/ProfileSidebarItem';
+import { timeControlToString } from '../../util/game';
+import { gameEndMessage } from './GameOverMessage';
+import type { Player } from './[id]/page';
 
 // Contexts
 import GameContext from '../../contexts/GameContext';
@@ -17,7 +17,7 @@ import CurrentTimeContext from '../../contexts/CurrentTimeContext';
 
 
 export default function GameHeader() {
-    const {info, gameStatus, endType, fratingDiff, sratingDiff} = useContext(GameContext);
+    const { info, gameStatus, endType, fratingDiff, sratingDiff } = useContext(GameContext);
     const time = useContext(CurrentTimeContext);
 
     const Icon = keyToIcon(info.game.key);
@@ -40,7 +40,7 @@ export default function GameHeader() {
                         </a>
                     </p>
                     <p className="text-secondary text-xs">
-                        {DateTime.fromSQL(info.createdAt).toRelative({base: time})}
+                        {DateTime.fromSQL(info.createdAt).toRelative({ base: time })}
                     </p>
                 </div>
             </div>
@@ -71,7 +71,10 @@ function PlayerIndicator(props: { user: Player, first?: boolean, ratingDiff: num
                 {props.user.username}
                 {props.user.provisional ? (
                     <> (
-                        <span className="text-blue-400" title="Not enough rated games have been played to establish a reliable rating.">
+                        <span
+                            className="text-blue-400"
+                            title="Not enough rated games have been played to establish a reliable rating."
+                        >
                             {props.user.rating}?
                         </span>
                     )</>

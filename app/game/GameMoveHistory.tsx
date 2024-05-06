@@ -1,9 +1,9 @@
-import {Fragment, ReactNode, useContext} from 'react';
+import { Fragment, ReactNode, useContext } from 'react';
 import GameContext from '../../contexts/GameContext';
 
 
 export default function GameMoveHistory() {
-    const {moves, gameStateIndex, setGameStateIndex} = useContext(GameContext);
+    const { moves, gameStateIndex, setGameStateIndex } = useContext(GameContext);
 
     return (
         <div className="grid grid-cols-[4rem_1fr_1fr] h-max">
@@ -13,7 +13,12 @@ export default function GameMoveHistory() {
                         {i + 1}
                     </div>
                     {chunk.map((move, j) => (
-                        <GameMove index={i * 2 + j + 1} currentIndex={gameStateIndex} setIndex={setGameStateIndex} key={i * 2 + j + 1}>
+                        <GameMove
+                            index={i * 2 + j + 1}
+                            currentIndex={gameStateIndex}
+                            setIndex={setGameStateIndex}
+                            key={i * 2 + j + 1}
+                        >
                             {move}
                         </GameMove>
                     ))}
@@ -23,7 +28,7 @@ export default function GameMoveHistory() {
     )
 }
 
-function GameMove(props: {index: number, currentIndex: number, setIndex: (i: number) => void, children: ReactNode}) {
+function GameMove(props: { index: number, currentIndex: number, setIndex: (i: number) => void, children: ReactNode }) {
     const active = props.index === props.currentIndex;
 
     return (

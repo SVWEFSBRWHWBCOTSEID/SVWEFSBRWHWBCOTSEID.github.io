@@ -1,18 +1,20 @@
 'use client'
 
-import {useContext, useState} from 'react';
-import {useRouter, useSearchParams} from 'next/navigation';
+import { useContext, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import UserContext from '../../contexts/UserContext';
-import type {User} from '../../contexts/ProfileContext';
 
 // Components
 import BlueButton from '../../components/BlueButton';
 import Input from '../../components/Input';
 
+// Utils
+import type { User } from '../../contexts/ProfileContext';
+
 
 export default function LoginPanel() {
-    const {setUser} = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +23,7 @@ export default function LoginPanel() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const {replace, refresh} = useRouter();
+    const router = useRouter();
     const params = useSearchParams();
 
     async function signIn() {
@@ -29,9 +31,9 @@ export default function LoginPanel() {
 
         const res = await fetch(`${process.env.API_BASE}/login`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({username, password})
+            body: JSON.stringify({ username, password })
         });
         if (!res.ok) {
             setLoading(false);
@@ -41,7 +43,7 @@ export default function LoginPanel() {
         const user: User = await res.json();
 
         setUser(user);
-        replace(params.get('callbackUrl') ?? '/');
+        router.replace(params.get('callbackUrl') ?? '/');
     }
 
     return (

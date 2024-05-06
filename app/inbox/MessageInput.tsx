@@ -1,21 +1,21 @@
 'use client'
 
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import ProfilePicture from '../../components/ProfilePicture';
 import UserContext from '../../contexts/UserContext';
 
 
-export default function MessageInput(props: {otherName: string}) {
-    const {user} = useContext(UserContext);
+export default function MessageInput(props: { otherName: string }) {
+    const { user } = useContext(UserContext);
     const [message, setMessage] = useState('');
 
     async function sendMessage() {
         if (!message) return;
         await fetch(`${process.env.API_BASE}/message/${props.otherName}`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({message})
+            body: JSON.stringify({ message })
         });
         setMessage('');
     }

@@ -1,7 +1,11 @@
-import type {Metadata} from 'next';
-import {notFound, redirect} from 'next/navigation';
+import type { Metadata } from 'next';
+import { notFound, redirect } from 'next/navigation';
+
+// Components
 import InboxContent from '../InboxContent';
-import {getUser} from '../../../util/user';
+
+// Utils
+import { getUser } from '../../../util/user';
 
 
 // TODO: dynamic tab name?

@@ -1,13 +1,13 @@
 'use client'
 
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import CloseButton from '../../components/CloseButton';
-import {FaRegFlag} from 'react-icons/fa';
+import { FaRegFlag } from 'react-icons/fa';
 import GameContext from '../../contexts/GameContext';
 
 
 export default function GameControls() {
-    const {id, side} = useContext(GameContext);
+    const { id, side } = useContext(GameContext);
 
     const [confirming, setConfirming] = useState<'' | 'draw' | 'resign'>('');
 

@@ -1,14 +1,16 @@
 'use client'
 
-import {startTransition, useContext, useLayoutEffect, useState} from 'react';
+import { startTransition, useContext, useLayoutEffect, useState } from 'react';
 import Link from 'next/link';
-import {DateTime} from 'luxon';
-import ProfilePicture from '../../components/ProfilePicture';
+import { DateTime } from 'luxon';
 import CurrentTimeContext from '../../contexts/CurrentTimeContext';
 
+// Components
+import ProfilePicture from '../../components/ProfilePicture';
+
 // Utils
-import {getUser} from '../../util/user';
-import type {User} from '../../contexts/ProfileContext';
+import { getUser } from '../../util/user';
+import type { User } from '../../contexts/ProfileContext';
 
 
 export type Message = {
@@ -23,7 +25,7 @@ export default function InboxMessage(props: Message) {
     // Display "Yesterday at {...}" or "Today at {...}" if the message was recent,
     // defaulting to "10/26/2023 {...}" otherwise.
     const relativeStr = currDate.diff(messageDate, 'days').days < 2
-        ? capitalize(messageDate.toRelativeCalendar({base: currDate})!) + ' at'
+        ? capitalize(messageDate.toRelativeCalendar({ base: currDate })!) + ' at'
         : messageDate.toLocaleString(DateTime.DATE_SHORT)
 
     // TODO: better way of loading this?

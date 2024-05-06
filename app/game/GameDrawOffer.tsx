@@ -1,11 +1,11 @@
 'use client'
 
-import {MouseEventHandler, useContext} from 'react';
+import { MouseEventHandler, useContext } from 'react';
 import GameContext from '../../contexts/GameContext';
 
 
 export default function GameDrawOffer() {
-    const {id, drawOffer, side} = useContext(GameContext);
+    const { id, drawOffer, side } = useContext(GameContext);
 
     async function handleDrawOffer(draw: boolean) {
         await fetch(`${process.env.API_BASE}/game/${id}/draw/${draw}`, {
@@ -38,7 +38,7 @@ export default function GameDrawOffer() {
     )
 }
 
-function DeclineButton(props: {onClick?: MouseEventHandler<HTMLButtonElement>}) {
+function DeclineButton(props: { onClick?: MouseEventHandler<HTMLButtonElement> }) {
     return (
         <button
             className="flex-none text-theme-red text-4xl w-20 flex items-center justify-center border border-tertiary font-bold hover:border-none hover:text-white hover:bg-theme-red transition duration-150"
@@ -49,7 +49,7 @@ function DeclineButton(props: {onClick?: MouseEventHandler<HTMLButtonElement>}) 
     )
 }
 
-function AcceptButton(props: {onClick?: MouseEventHandler<HTMLButtonElement>}) {
+function AcceptButton(props: { onClick?: MouseEventHandler<HTMLButtonElement> }) {
     return (
         <button
             className="flex-none text-theme-green text-4xl w-20 flex items-center justify-center border border-tertiary font-bold hover:border-none hover:text-white hover:bg-theme-green transition duration-150"

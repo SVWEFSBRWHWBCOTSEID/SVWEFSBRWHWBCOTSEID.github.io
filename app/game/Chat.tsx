@@ -1,17 +1,17 @@
 'use client'
 
-import {useContext, useLayoutEffect, useRef, useState} from 'react';
+import { useContext, useLayoutEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import GameContext from '../../contexts/GameContext';
-import type {ChatAlertEvent, ChatMessageEvent} from './[id]/page';
+import type { ChatAlertEvent, ChatMessageEvent } from './[id]/page';
 
 
 type ChatMessage = Omit<ChatMessageEvent, 'type'>
 type ChatAlert = Omit<ChatAlertEvent, 'type'>
-export type ChatData = ChatMessage | ChatAlert
+export type ChatData = ChatMessage | ChatAlert;
 
 export default function Chat() {
-    const {id, username, info, chat, side} = useContext(GameContext);
+    const { id, username, info, chat, side } = useContext(GameContext);
 
     const [message, setMessage] = useState('');
 
@@ -36,9 +36,9 @@ export default function Chat() {
 
         await fetch(`${process.env.API_BASE}/game/${id}/chat/${visibility}`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({message})
+            body: JSON.stringify({ message })
         });
         setMessage('');
     }

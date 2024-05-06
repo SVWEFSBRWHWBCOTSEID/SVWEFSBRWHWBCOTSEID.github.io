@@ -1,13 +1,17 @@
 'use client'
 
-import {ReactNode, useContext} from 'react';
+import { ReactNode, useContext } from 'react';
+
+// Components
 import InboxSearchInput from './InboxSearchInput';
 import InboxSidebarItem from './InboxSidebarItem';
+
+// Contexts
 import ConversationContext from '../../contexts/ConversationContext';
 
 
-export default function Layout(props: {children: ReactNode}) {
-    const {conversations} = useContext(ConversationContext);
+export default function Layout(props: { children: ReactNode }) {
+    const { conversations } = useContext(ConversationContext);
 
     return (
         <div className="container flex pt-4 pb-12 h-[calc(100%_-_56px)]">
