@@ -1,7 +1,7 @@
 'use client'
 
 import { useContext, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import UserContext from '../../contexts/UserContext';
 
@@ -13,7 +13,7 @@ import Input from '../../components/Input';
 import type { User } from '../../contexts/ProfileContext';
 
 
-export default function LoginPanel() {
+export default function LoginPanel(props: { callbackUrl?: string }) {
     const { setUser } = useContext(UserContext);
 
     const [username, setUsername] = useState('');
@@ -24,7 +24,6 @@ export default function LoginPanel() {
     const [error, setError] = useState(false);
 
     const router = useRouter();
-    const params = useSearchParams();
 
     async function signIn() {
         setLoading(true);
@@ -43,7 +42,7 @@ export default function LoginPanel() {
         const user: User = await res.json();
 
         setUser(user);
-        router.replace(params.get('callbackUrl') ?? '/');
+        router.replace(props.callbackUrl ?? '/');
     }
 
     return (

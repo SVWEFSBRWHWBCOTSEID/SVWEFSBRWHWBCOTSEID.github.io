@@ -6,10 +6,10 @@ export const metadata: Metadata = {
     title: 'Sign in'
 }
 
-export default function Login() {
+export default function Login({ searchParams }: { searchParams: { callbackUrl?: string }}) {
     return (
         <div className="flex-grow flex items-center justify-center pb-20">
-            <LoginPanel />
+            <LoginPanel callbackUrl={searchParams.callbackUrl} />
         </div>
     )
 }
