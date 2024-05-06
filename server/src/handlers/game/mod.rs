@@ -1,0 +1,21 @@
+mod create_game;
+mod cancel_game;
+mod join_game;
+mod get_game;
+mod get_lobbies;
+mod add_move;
+mod resign;
+mod offer_draw;
+mod offer_rematch;
+mod send_chat;
+
+pub use create_game::*;
+pub use cancel_game::*;
+pub use join_game::*;
+pub use get_game::*;
+pub use get_lobbies::*;
+pub use add_move::*;
+pub use resign::*;
+pub use offer_draw::*;
+pub use offer_rematch::*;
+pub use send_chat::*;
