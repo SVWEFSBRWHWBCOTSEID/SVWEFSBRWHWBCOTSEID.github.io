@@ -1,5 +1,5 @@
-import type {Metadata} from 'next';
-import {cookies} from 'next/headers';
+import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import HomeContent from './HomeContent';
 
 

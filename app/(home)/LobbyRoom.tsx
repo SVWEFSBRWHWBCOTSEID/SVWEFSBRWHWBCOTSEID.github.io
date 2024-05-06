@@ -1,9 +1,9 @@
 'use client'
 
-import {ReactNode, useState} from 'react';
-import {timeControlToString} from '../../util/game';
-import type {Lobby} from './Lobbies';
-import {BiCircle, BiSolidCircle, BiSolidCircleHalf} from 'react-icons/bi';
+import { ReactNode, useState } from 'react';
+import { timeControlToString } from '../../util/game';
+import type { Lobby } from './Lobbies';
+import { BiCircle, BiSolidCircle, BiSolidCircleHalf } from 'react-icons/bi';
 
 
 export default function LobbyRoom(props: Lobby) {
@@ -42,7 +42,7 @@ export default function LobbyRoom(props: Lobby) {
     )
 }
 
-export function LobbyCell(props: {className?: string, children?: ReactNode}) {
+export function LobbyCell(props: { className?: string, children?: ReactNode }) {
     return (
         <span className={'table-cell align-middle border-t border-tertiary px-4 py-1 group-hover:text-white group-hover:bg-theme-orange/50' + (props.className ? ` ${props.className}` : '')}>
             {props.children}

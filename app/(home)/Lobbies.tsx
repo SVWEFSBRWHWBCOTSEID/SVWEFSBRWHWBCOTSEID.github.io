@@ -1,15 +1,15 @@
 'use client'
 
-import {useContext} from 'react';
+import { useContext } from 'react';
 import UserContext from '../../contexts/UserContext';
 
 // Components
-import LobbyRoom, {LobbyCell} from './LobbyRoom';
+import LobbyRoom, { LobbyCell } from './LobbyRoom';
 import YouLobbyRoom from './YouLobbyRoom';
 
-// Util
-import type {GameNameInfo, Player, TimeControl} from '../game/[id]/page';
-import type {Side} from '../../util/game';
+// Utils
+import type { GameNameInfo, Player, TimeControl } from '../game/[id]/page';
+import type { Side } from '../../util/game';
 
 
 export type Lobby = {
@@ -23,9 +23,9 @@ export type Lobby = {
     timeControl: TimeControl
 }
 
-type LobbiesProps = {lobbies: Lobby[]}
+type LobbiesProps = { lobbies: Lobby[] }
 export default function Lobbies(props: LobbiesProps) {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     const youLobby = props.lobbies.find((lobby) => lobby.user.username === user?.username);
     const filteredLobbies = props.lobbies

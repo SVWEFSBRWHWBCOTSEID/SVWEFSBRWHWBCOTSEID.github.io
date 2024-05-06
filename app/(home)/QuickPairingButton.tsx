@@ -1,12 +1,16 @@
 'use client'
 
-import {MouseEventHandler, ReactNode, useContext} from 'react';
-import {createGame} from '../../util/game';
+import { MouseEventHandler, ReactNode, useContext } from 'react';
+import { createGame } from '../../util/game';
 import UserContext from '../../contexts/UserContext';
-import type {GameNameInfo} from '../game/[id]/page';
+import type { GameNameInfo } from '../game/[id]/page';
 
 
-type QuickPairingButtonProps = {game: string, children?: ReactNode, onClick?: MouseEventHandler<HTMLButtonElement>}
+type QuickPairingButtonProps = {
+    game: string,
+    children?: ReactNode,
+    onClick?: MouseEventHandler<HTMLButtonElement>
+}
 export default function QuickPairingButton(props: QuickPairingButtonProps) {
     return (
         <button
@@ -19,9 +23,13 @@ export default function QuickPairingButton(props: QuickPairingButtonProps) {
     )
 }
 
-type QuickPairingPresetButtonProps = {game: GameNameInfo, minutes: number, increment: number};
+type QuickPairingPresetButtonProps = {
+    game: GameNameInfo,
+    minutes: number,
+    increment: number
+}
 export function QuickPairingPresetButton(props: QuickPairingPresetButtonProps) {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const rating = user?.perfs[props.game.key].rating ?? 1500;
 
     return (

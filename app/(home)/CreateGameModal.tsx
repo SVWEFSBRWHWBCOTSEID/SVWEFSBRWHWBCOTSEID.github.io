@@ -1,7 +1,7 @@
 'use client'
 
-import {ReactNode, useContext, useState} from 'react';
-import {Listbox} from '@headlessui/react';
+import { ReactNode, useContext, useState } from 'react';
+import { Listbox } from '@headlessui/react';
 import UserContext from '../../contexts/UserContext';
 
 // Components
@@ -11,20 +11,20 @@ import SecondarySlider from '../../components/SecondarySlider';
 import CloseButton from '../../components/CloseButton';
 
 // Icons
-import {IoDice} from 'react-icons/io5';
-import {PiNumberCircleOneFill, PiNumberCircleTwoFill} from 'react-icons/pi';
-import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
+import { IoDice } from 'react-icons/io5';
+import { PiNumberCircleOneFill, PiNumberCircleTwoFill } from 'react-icons/pi';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 // Util
-import {games} from './QuickPairing';
-import {createGame, Side} from '../../util/game';
-import {keyToIcon} from '../profile/ProfileSidebarItem';
-import type {GameNameInfo} from '../game/[id]/page';
+import { games } from './QuickPairing';
+import { createGame, Side } from '../../util/game';
+import { keyToIcon } from '../profile/ProfileSidebarItem';
+import type { GameNameInfo } from '../game/[id]/page';
 
 
-type CreateGameModalProps = {isOpen: boolean, setIsOpen: (open: boolean) => void, game?: GameNameInfo};
+type CreateGameModalProps = { isOpen: boolean, setIsOpen: (open: boolean) => void, game?: GameNameInfo };
 export default function CreateGameModal(props: CreateGameModalProps) {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     const [game, setGame] = useState(props.game ?? games[0]);
     const [rated, setRated] = useState(true);
@@ -83,7 +83,12 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             </section>
 
             <section className="bg-content-secondary border-y border-tertiary px-8 py-3">
-                <ModalDropdown title="Time control" selected={timed ? 'Real time' : 'Unlimited'} value={timed} onChange={setTimeControl}>
+                <ModalDropdown
+                    title="Time control"
+                    selected={timed ? 'Real time' : 'Unlimited'}
+                    value={timed}
+                    onChange={setTimeControl}
+                >
                     <ModalDropdownItem value={true}>Real time</ModalDropdownItem>
                     <ModalDropdownItem value={false}>Unlimited</ModalDropdownItem>
                 </ModalDropdown>
@@ -91,7 +96,10 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                 {timed && (
                     <div className="mt-2.5 text-center text-secondary">
                         {/* TODO: monospace */}
-                        <p className="mb-1.5 text-sm">Minutes per side: <strong>{parseMinutes(minutesSlider)}</strong></p>
+                        <p className="mb-1.5 text-sm">
+                            Minutes per side: <strong>{parseMinutes(minutesSlider)}
+                        </strong>
+                        </p>
                         <SecondarySlider
                             value={minutesSlider}
                             onChange={setMinutesSlider}
@@ -101,7 +109,9 @@ export default function CreateGameModal(props: CreateGameModalProps) {
                         />
 
                         {/* TODO: monospace */}
-                        <p className="mt-1.5 mb-1.5 text-sm">Increment in seconds: <strong>{parseIncrement(incrementSlider)}</strong></p>
+                        <p className="mt-1.5 mb-1.5 text-sm">
+                            Increment in seconds: <strong>{parseIncrement(incrementSlider)}</strong>
+                        </p>
                         <SecondarySlider
                             value={incrementSlider}
                             onChange={setIncrementSlider}
@@ -114,7 +124,10 @@ export default function CreateGameModal(props: CreateGameModalProps) {
             </section>
 
             <section className="px-8 py-6 flex justify-center">
-                <button onClick={() => setRated(false)} className={'px-12 py-2 rounded-l shadow-lg ' + (!rated ? 'bg-theme-green' : 'bg-content-secondary text-secondary')}>
+                <button
+                    onClick={() => setRated(false)}
+                    className={'px-12 py-2 rounded-l shadow-lg ' + (!rated ? 'bg-theme-green' : 'bg-content-secondary text-secondary')}
+                >
                     Casual
                 </button>
                 <button
@@ -190,10 +203,21 @@ export default function CreateGameModal(props: CreateGameModalProps) {
     )
 }
 
-type ModalDropdownProps<T> = {title: string, selected: string, value: T, onChange: (value: T) => void, children: ReactNode}
+type ModalDropdownProps<T> = {
+    title: string,
+    selected: string,
+    value: T,
+    onChange: (value: T) => void,
+    children: ReactNode
+}
 export function ModalDropdown<T>(props: ModalDropdownProps<T>) {
     return (
-        <Listbox value={props.value} onChange={props.onChange} as="div" className="flex gap-3 text-secondary items-center justify-center">
+        <Listbox
+            className="flex gap-3 text-secondary items-center justify-center"
+            value={props.value}
+            onChange={props.onChange}
+            as="div"
+        >
             <Listbox.Label className="w-24 text-right">{props.title}</Listbox.Label>
 
             <div className="relative">
@@ -209,9 +233,12 @@ export function ModalDropdown<T>(props: ModalDropdownProps<T>) {
     )
 }
 
-export function ModalDropdownItem<T>(props: {value: T, children: ReactNode}) {
+export function ModalDropdownItem<T>(props: { value: T, children: ReactNode }) {
     return (
-        <Listbox.Option value={props.value} className="cursor-pointer px-4 py-1 hover:!bg-blue-500 hover:text-white ui-selected:bg-background">
+        <Listbox.Option
+            className="cursor-pointer px-4 py-1 hover:!bg-blue-500 hover:text-white ui-selected:bg-background"
+            value={props.value}
+        >
             {props.children}
         </Listbox.Option>
     )

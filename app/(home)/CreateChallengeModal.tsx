@@ -1,22 +1,22 @@
 'use client'
 
-import {useContext, useState} from 'react';
+import { useContext, useState } from 'react';
 import UserContext from '../../contexts/UserContext';
 
 // Components
 import CenteredModal from '../../components/CenteredModal';
 import SecondarySlider from '../../components/SecondarySlider';
 import CloseButton from '../../components/CloseButton';
-import {ModalDropdown, ModalDropdownItem, parseIncrement, parseMinutes} from './CreateGameModal';
+import { ModalDropdown, ModalDropdownItem, parseIncrement, parseMinutes } from './CreateGameModal';
+
+// Utils
+import { games } from './QuickPairing';
+import { createChallenge, Side } from '../../util/game';
+import { keyToIcon } from '../profile/ProfileSidebarItem';
 
 // Icons
-import {IoDice} from 'react-icons/io5';
-import {PiNumberCircleOneFill, PiNumberCircleTwoFill} from 'react-icons/pi';
-
-// Util
-import {games} from './QuickPairing';
-import {createChallenge, Side} from '../../util/game';
-import {keyToIcon} from '../profile/ProfileSidebarItem';
+import { IoDice } from 'react-icons/io5';
+import { PiNumberCircleOneFill, PiNumberCircleTwoFill } from 'react-icons/pi';
 
 
 type CreateGameModalProps = {
@@ -25,7 +25,7 @@ type CreateGameModalProps = {
     username: string,
 };
 export default function CreateChallengeModal(props: CreateGameModalProps) {
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     const [game, setGame] = useState(games[0]);
     const [rated, setRated] = useState(true);
@@ -82,7 +82,12 @@ export default function CreateChallengeModal(props: CreateGameModalProps) {
             </section>
 
             <section className="bg-content-secondary border-y border-tertiary px-8 py-3">
-                <ModalDropdown title="Time control" selected={timed ? 'Real time' : 'Unlimited'} value={timed} onChange={setTimeControl}>
+                <ModalDropdown
+                    title="Time control"
+                    selected={timed ? 'Real time' : 'Unlimited'}
+                    value={timed}
+                    onChange={setTimeControl}
+                >
                     <ModalDropdownItem value={true}>Real time</ModalDropdownItem>
                     <ModalDropdownItem value={false}>Unlimited</ModalDropdownItem>
                 </ModalDropdown>
@@ -90,7 +95,10 @@ export default function CreateChallengeModal(props: CreateGameModalProps) {
                 {timed && (
                     <div className="mt-2.5 text-center text-secondary">
                         {/* TODO: monospace */}
-                        <p className="mb-1.5 text-sm">Minutes per side: <strong>{parseMinutes(minutesSlider)}</strong></p>
+                        <p className="mb-1.5 text-sm">
+                            Minutes per side: <strong>{parseMinutes(minutesSlider)}
+                        </strong>
+                        </p>
                         <SecondarySlider
                             value={minutesSlider}
                             onChange={setMinutesSlider}
@@ -100,7 +108,9 @@ export default function CreateChallengeModal(props: CreateGameModalProps) {
                         />
 
                         {/* TODO: monospace */}
-                        <p className="mt-1.5 mb-1.5 text-sm">Increment in seconds: <strong>{parseIncrement(incrementSlider)}</strong></p>
+                        <p className="mt-1.5 mb-1.5 text-sm">
+                            Increment in seconds: <strong>{parseIncrement(incrementSlider)}</strong>
+                        </p>
                         <SecondarySlider
                             value={incrementSlider}
                             onChange={setIncrementSlider}
@@ -113,7 +123,10 @@ export default function CreateChallengeModal(props: CreateGameModalProps) {
             </section>
 
             <section className="px-8 py-6 flex justify-center">
-                <button onClick={() => setRated(false)} className={'px-12 py-2 rounded-l shadow-lg ' + (!rated ? 'bg-theme-green' : 'bg-content-secondary text-secondary')}>
+                <button
+                    onClick={() => setRated(false)}
+                    className={'px-12 py-2 rounded-l shadow-lg ' + (!rated ? 'bg-theme-green' : 'bg-content-secondary text-secondary')}
+                >
                     Casual
                 </button>
                 <button

@@ -1,11 +1,11 @@
 'use client'
 
-import {MouseEventHandler, ReactNode, useEffect, useState} from 'react';
-import {useRouter, useSearchParams} from 'next/navigation';
+import { MouseEventHandler, ReactNode, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 // Components
 import QuickPairing from './QuickPairing';
-import Lobbies, {Lobby} from './Lobbies';
+import Lobbies, { Lobby } from './Lobbies';
 import CreateGameModal from './CreateGameModal';
 import CreateChallengeModal from './CreateChallengeModal';
 
@@ -30,7 +30,7 @@ type PlayerStatsEvent = {
 
 type LobbyEvent = LobbyFullEvent | AllLobbiesEvent | PlayerStatsEvent;
 
-export default function HomeContent(props: {username?: string}) {
+export default function HomeContent(props: { username?: string }) {
     const [lobbies, setLobbies] = useState<Lobby[]>([]);
     const [players, setPlayers] = useState('-');
     const [games, setGames] = useState('-');
@@ -40,7 +40,7 @@ export default function HomeContent(props: {username?: string}) {
     const [challengeUsername, setChallengeUsername] = useState('bbb'); // TODO
 
     const params = useSearchParams();
-    const {replace} = useRouter();
+    const { replace } = useRouter();
 
     // Subscribe to rising edges on the modal search param, opening and resetting the param for later navigation.
     useEffect(() => {
@@ -114,7 +114,11 @@ export default function HomeContent(props: {username?: string}) {
 
 // TODO: move to own file?
 // TODO: `props.open` maybe a bit hacky
-function SecondaryButton(props: {children: ReactNode, open?: boolean, onClick?: MouseEventHandler<HTMLButtonElement>}) {
+function SecondaryButton(props: {
+    children: ReactNode,
+    open?: boolean,
+    onClick?: MouseEventHandler<HTMLButtonElement>
+}) {
     return (
         <button
             className={'px-16 py-3 transition duration-200 rounded uppercase ' + (props.open ? 'bg-theme-orange text-white' : 'bg-[#302e2c] hover:bg-[hsl(37,_7%,_25%)] text-secondary hover:text-primary')}
