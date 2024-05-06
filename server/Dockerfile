@@ -1,9 +1,12 @@
-FROM ubuntu:latest
-RUN apt-get -y update; apt-get -y install curl
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --default-toolchain 1.70.0 -y
+FROM rust:1.70.0
 
 WORKDIR /app
 COPY . .
+
+RUN cargo build -p prisma-cli --release && \
+    ./target/release/prisma-cli generate && \
+    ./scripts/fix_prisma_str.sh && \
+    cargo build --release
 
 EXPOSE 8080
 EXPOSE 5432

@@ -7,3 +7,12 @@ services:
       context: ./client
     ports:
       - "3000:3000"
+  server:
+    container_name: gulpin_server
+    build:
+      dockerfile: ./Dockerfile
+      context: ./server
+    ports:
+      - "8080:8080"
+      - "5432:5432"
+      - "6379:6379"
