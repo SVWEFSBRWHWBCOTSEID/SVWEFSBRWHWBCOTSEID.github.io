@@ -98,6 +98,7 @@ function ChessBoardSquare(props: ChessBoardSquareProps) {
 
     return (
         <button
+            // @ts-ignore
             ref={drop}
             onClick={() => active && move(square)}
             onMouseDown={(e) => active && e.stopPropagation()}
@@ -142,12 +143,13 @@ function Piece(props: PieceProps) {
 
     return (
         <img
+            // @ts-ignore
             ref={drag}
             src={`/pieces/${pieceWithSide}.svg`}
             alt={pieceWithSide}
             onMouseDown={() => props.setActiveSquare(props.square)}
             // onBlur={() => props.setActivePiece(-1)}
-            className={'w-full h-full' + (isDragging ? ' opacity-50' : '') + (isCheck ? ' bg-[radial-gradient(ellipse_at_center,_rgb(255,_0,_0)_0%,_rgb(231,_0,_0)_25%,_rgba(169,_0,_0,_0)_89%,_rgba(158,_0,_0,_0)_100%)]' : '')}
+            className={'w-full h-full translate-x-0 translate-y-0' + (isDragging ? ' opacity-50' : '') + (isCheck ? ' bg-[radial-gradient(ellipse_at_center,_rgb(255,_0,_0)_0%,_rgb(231,_0,_0)_25%,_rgba(169,_0,_0,_0)_89%,_rgba(158,_0,_0,_0)_100%)]' : '')}
         />
     )
 }
