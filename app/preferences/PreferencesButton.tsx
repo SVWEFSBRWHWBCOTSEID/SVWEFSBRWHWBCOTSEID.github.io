@@ -1,9 +1,13 @@
 'use client'
 
-import {MouseEventHandler, ReactNode} from 'react';
+import type { MouseEventHandler, ReactNode } from 'react';
 
 
-export default function PreferencesButton(props: {onClick: MouseEventHandler<HTMLButtonElement>, selected: boolean, children: ReactNode}) {
+export default function PreferencesButton(props: {
+    onClick: MouseEventHandler<HTMLButtonElement>,
+    selected: boolean,
+    children: ReactNode
+}) {
     return (
         <button
             onClick={props.onClick}
