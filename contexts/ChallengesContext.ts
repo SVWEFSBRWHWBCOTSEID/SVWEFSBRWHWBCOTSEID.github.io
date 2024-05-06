@@ -1,6 +1,6 @@
-import {createContext, Dispatch, SetStateAction} from 'react';
-import type {GameNameInfo, Player, TimeControl} from '../app/game/[id]/page';
-import type {Side} from '../util/game';
+import { createContext, Dispatch, SetStateAction } from 'react';
+import type { GameNameInfo, Player, TimeControl } from '../app/game/[id]/page';
+import type { Side } from '../util/game';
 
 
 export type Challenge = {
