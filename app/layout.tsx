@@ -5,6 +5,7 @@ import { Inter } from 'next/font/google';
 // Components
 import Header from './Header';
 import UserProvider from '../components/UserProvider';
+import PlayingBanner from './PlayingBanner';
 import PreferencesProvider from '../components/PreferencesProvider';
 import ConversationProvider from '../components/ConversationProvider';
 import ChallengesProvider from '../components/ChallengesProvider';
@@ -39,6 +40,8 @@ export default function Layout(props: { children: ReactNode }) {
                             <ChallengesProvider>
                                 <CurrentTimeProvider>
                                     <Header />
+                                    <PlayingBanner />
+
                                     {props.children}
                                 </CurrentTimeProvider>
                             </ChallengesProvider>
