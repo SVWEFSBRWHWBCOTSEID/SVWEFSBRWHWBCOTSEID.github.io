@@ -36,7 +36,7 @@ export default function ProfileDropdown() {
                 />
                 {user?.username}
             </Menu.Button>
-            <Menu.Items className="absolute right-0 bg-[#3c3934] py-1.5 rounded-l text-sm w-56 shadow-xl z-10">
+            <Menu.Items className="absolute right-0 bg-[#3c3934] py-1.5 rounded-l text-sm w-56 shadow-xl z-50">
                 <Link href={`/profile/${user?.username}`}>
                     <ProfileDropdownItem>
                         <div className="w-2.5 h-2.5 mx-[0.1875rem] rounded-full bg-theme-green group-hover:bg-white" /> Profile
