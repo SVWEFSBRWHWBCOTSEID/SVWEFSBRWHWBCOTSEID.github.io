@@ -75,7 +75,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
     return (
         <Tab.Panel>
             <h1 className="px-12 pt-8 pb-6 text-4xl font-light text-primary">
-                <button onClick={() => props.setTab(0)} className="text-blue-500 hover:underline">
+                <button onClick={() => props.setTab(0)} className="text-theme-blue hover:underline">
                     {username}
                 </button>
                 's {keyToName(props.game)} stats
@@ -90,7 +90,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
                     Rating: <strong className="font-semibold">{props.rating.toFixed(2)}</strong>.{' '}
                     {props.prov ? (
                         <span
-                            className="text-secondary cursor-help underline decoration-dashed decoration-blue-500 decoration-1 underline-offset-4"
+                            className="text-secondary cursor-help underline decoration-dashed decoration-theme-blue decoration-1 underline-offset-4"
                             title="Not enough rated games have been played to establish a reliable rating."
                         >
                             (provisional)
@@ -118,7 +118,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
                     )}
                     . Rating deviation:{' '}
                     <strong
-                        className="cursor-help underline decoration-dashed decoration-blue-500 underline-offset-[3px]"
+                        className="cursor-help underline decoration-dashed decoration-theme-blue underline-offset-[3px]"
                         title="A lower value means the rating is more stable. Above 110, the rating is considered provisional."
                     >
                         {props.rd.toFixed(2)}
@@ -207,7 +207,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
                         )}
                     </h5>
                     {highestRated ? (
-                        <Link href={`/game/${highestRated.id}`} className="ml-6 text-sm text-blue-500">
+                        <Link href={`/game/${highestRated.id}`} className="ml-6 text-sm text-theme-blue">
                             {DateTime.fromSQL(highestRated.createdAt).toLocaleString(DateTime.DATETIME_MED)}
                         </Link>
                     ) : (
@@ -227,7 +227,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
                         )}
                     </h5>
                     {lowestRated ? (
-                        <Link href={`/game/${lowestRated.id}`} className="ml-6 text-sm text-blue-500">
+                        <Link href={`/game/${lowestRated.id}`} className="ml-6 text-sm text-theme-blue">
                             {DateTime.fromSQL(lowestRated.createdAt).toLocaleString(DateTime.DATETIME_MED)}
                         </Link>
                     ) : (

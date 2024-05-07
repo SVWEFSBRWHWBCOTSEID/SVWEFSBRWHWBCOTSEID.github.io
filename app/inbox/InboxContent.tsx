@@ -40,10 +40,10 @@ export default function InboxContent(props: { username?: string }) {
             <div className="flex items-center justify-between bg-content-secondary py-3 px-6 text-lg h-14 flex-none">
                 {name && (
                     <>
-                        <Link href={`/profile/${name}`} className="hover:text-blue-500">
+                        <Link href={`/profile/${name}`} className="hover:text-theme-blue">
                             {name}
                         </Link>
-                        <Link href={`/?challenge=${name}`} className="text-secondary hover:text-blue-500">
+                        <Link href={`/?challenge=${name}`} className="text-secondary hover:text-theme-blue">
                             <RiSwordFill />
                         </Link>
                     </>

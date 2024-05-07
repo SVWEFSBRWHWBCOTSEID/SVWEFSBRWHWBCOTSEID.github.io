@@ -74,7 +74,7 @@ function PlayerIndicator(props: { user: Player, ratingDiff: number }) {
     return (
         <div className="px-4 py-2 text-lg flex justify-between">
             <Link
-                className="flex-grow text-primary hover:text-blue-500"
+                className="flex-grow text-primary hover:text-theme-blue"
                 href={`/profile/${props.user.username}`}
             >
                 {props.user.username}

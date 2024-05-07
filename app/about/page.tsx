@@ -17,7 +17,7 @@ export default function About() {
 
             <InfoHeading id="links">Links</InfoHeading>
             <ul className="list-disc list-outside pl-6">
-                <li><a href="https://github.com/SVWEFSBRWHWBCOTSEID" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">GitHub</a></li>
+                <li><a href="https://github.com/SVWEFSBRWHWBCOTSEID" target="_blank" rel="noopener noreferrer" className="text-theme-blue hover:underline">GitHub</a></li>
             </ul>
         </>
     )

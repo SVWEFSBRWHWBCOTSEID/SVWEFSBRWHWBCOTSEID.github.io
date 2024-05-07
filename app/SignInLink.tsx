@@ -13,7 +13,7 @@ export default function SignInLink() {
     return (
         <Link
             href={`/login?callbackUrl=${encodeURIComponent(url)}`}
-            className="text-blue-500 uppercase pl-3 pr-8 py-4"
+            className="text-theme-blue uppercase pl-3 pr-8 py-4"
         >
             Sign in
         </Link>

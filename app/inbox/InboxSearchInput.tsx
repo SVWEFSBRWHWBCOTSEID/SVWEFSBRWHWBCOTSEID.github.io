@@ -34,7 +34,7 @@ export default function InboxSearchInput() {
                     <Link
                         href={`/inbox/${c.otherName}`}
                         key={c.otherName}
-                        className="hover:bg-blue-500 hover:text-white"
+                        className="hover:bg-theme-blue hover:text-white"
                     >
                         <Combobox.Option value="" className="px-4 py-1">
                             {c.otherName}

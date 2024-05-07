@@ -28,7 +28,7 @@ export default function ChallengeDropdownItem(props: Challenge) {
     return (
         <Menu.Item
             as="div"
-            className="flex gap-2.5 items-center pl-4 text-primary hover:text-white hover:bg-blue-500/20 group transition duration-100"
+            className="flex gap-2.5 items-center pl-4 text-primary hover:text-white hover:bg-theme-blue/20 group transition duration-100"
         >
             <Icon className="text-4xl" />
             <div>

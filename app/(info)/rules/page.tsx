@@ -35,7 +35,7 @@ export default function Rules() {
                     won, the game ends in a tie.
                 </p>
                 <p className="text-sm text-secondary mb-16">
-                    See also: <a href="https://en.wikipedia.org/wiki/Tic-tac-toe" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Wikipedia</a>
+                    See also: <a href="https://en.wikipedia.org/wiki/Tic-tac-toe" target="_blank" rel="noopener noreferrer" className="text-theme-blue hover:underline">Wikipedia</a>
                 </p>
 
                 <SectionHeader id="uttt">Ultimate Tic-Tac-Toe</SectionHeader>
@@ -54,7 +54,7 @@ export default function Rules() {
                     the outer board wins the game.
                 </p>
                 <p className="text-sm text-secondary mb-16">
-                    See also: <a href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Wikipedia</a>
+                    See also: <a href="https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe" target="_blank" rel="noopener noreferrer" className="text-theme-blue hover:underline">Wikipedia</a>
                 </p>
 
                 <SectionHeader id="c4">Connect 4</SectionHeader>
@@ -62,10 +62,10 @@ export default function Rules() {
                 <p className="mb-16">[...]</p>
 
                 <SectionHeader id="pc">Pokemon Chess</SectionHeader>
-                <p className="mb-4">Inspired by <a href="https://pokemonchess.com/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">pokemonchess.com</a>.</p>
+                <p className="mb-4">Inspired by <a href="https://pokemonchess.com/" target="_blank" rel="noopener noreferrer" className="text-theme-blue hover:underline">pokemonchess.com</a>.</p>
                 <p className="mb-4">
                     Pokemon chess is like chess, except at the start of the game each player secretly assigns each piece
-                    a unique <a href="https://pokemondb.net/type" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Pokemon type</a>.
+                    a unique <a href="https://pokemondb.net/type" target="_blank" rel="noopener noreferrer" className="text-theme-blue hover:underline">Pokemon type</a>.
                     When a piece attempts to capture another piece, the following happens based on the type matchup between
                     the two pieces:
                 </p>
@@ -101,7 +101,7 @@ export default function Rules() {
                     <sup>1</sup> Consequently, the king is not prevented from castling through, into, or out of check.
                 </p>
                 <p className="text-sm text-secondary">
-                    See also: <a href="https://www.reddit.com/r/PokemonChess/comments/12jaqu7/a_starter_guide_to_pokemon_chess/" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">Reddit post explaining Pokemon chess</a>
+                    See also: <a href="https://www.reddit.com/r/PokemonChess/comments/12jaqu7/a_starter_guide_to_pokemon_chess/" target="_blank" rel="noopener noreferrer" className="text-theme-blue hover:underline">Reddit post explaining Pokemon chess</a>
                 </p>
             </div>
         </div>

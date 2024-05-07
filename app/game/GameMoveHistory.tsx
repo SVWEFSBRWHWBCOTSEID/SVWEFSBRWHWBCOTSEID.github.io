@@ -33,7 +33,7 @@ function GameMove(props: { index: number, currentIndex: number, setIndex: (i: nu
 
     return (
         <button
-            className={'px-4 py-1 text-sm ' + (active ? 'text-primary bg-[#293a49] font-semibold' : 'text-[#BABABA] hover:bg-blue-500 hover:text-white')}
+            className={'px-4 py-1 text-sm ' + (active ? 'text-primary bg-[#293a49] font-semibold' : 'text-[#BABABA] hover:bg-theme-blue hover:text-white')}
             onClick={() => props.setIndex(props.index)}
         >
             {props.children}

@@ -39,7 +39,7 @@ export default function FlagSelector(props: FlagSelectorProps) {
             </div>
 
             <AnimatedCombobox className="absolute top-[calc(100%_+_6px)] w-max min-w-[12rem] overflow-y-auto max-h-[28rem] flex flex-col py-1.5 bg-content-tertiary rounded shadow-lg z-10 text-secondary text-sm focus:outline-none focus-visible:ring-1 focus-visible:ring-white/25 scrollbar-thumb:bg-secondary scrollbar:w-1">
-                <Combobox.Option key="EMPTY" value="EMPTY" className="flex gap-4 items-center cursor-pointer px-4 py-1 hover:!bg-blue-500 hover:text-white ui-open:ui-selected:bg-background">
+                <Combobox.Option key="EMPTY" value="EMPTY" className="flex gap-4 items-center cursor-pointer px-4 py-1 hover:!bg-theme-blue hover:text-white ui-open:ui-selected:bg-background">
                     {/* Empty spacer to align "no flag" row with other flags */}
                     <span className="w-[1.25rem]" />
                     No flag
@@ -47,7 +47,7 @@ export default function FlagSelector(props: FlagSelectorProps) {
 
                 {filtered.map(({name, key}) => (
                     // https://github.com/tailwindlabs/headlessui/discussions/2366
-                    <Combobox.Option key={key} value={key} className="flex gap-4 items-center cursor-pointer px-4 py-1 hover:!bg-blue-500 hover:text-white ui-open:ui-selected:bg-background">
+                    <Combobox.Option key={key} value={key} className="flex gap-4 items-center cursor-pointer px-4 py-1 hover:!bg-theme-blue hover:text-white ui-open:ui-selected:bg-background">
                         <img src={`/flags/${key}.png`} alt={`${name} flag`} className="max-w-[1.25rem]"/>
                         {name}
                     </Combobox.Option>

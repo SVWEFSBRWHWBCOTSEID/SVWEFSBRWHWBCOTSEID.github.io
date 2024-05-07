@@ -15,7 +15,7 @@ export default function ProfileSidebar() {
             {/* TODO: styling? */}
             <Tab className="group text-secondary flex gap-3 items-center hover:bg-content-secondary/50 ui-selected:bg-content rounded-t md:rounded-r-none md:rounded-l pl-4 pr-4 md:pr-8 py-2 md:py-3 transition duration-150">
                 <h5 className="text-sm md:text-base uppercase font-light text-left">Profile</h5>
-                <AiFillCaretRight className="hidden lg:block text-lg text-secondary group-hover:text-blue-500 ml-auto" />
+                <AiFillCaretRight className="hidden lg:block text-lg text-secondary group-hover:text-theme-blue ml-auto" />
             </Tab>
 
             <hr className="hidden md:block my-4 mx-6 border-t border-tertiary" />

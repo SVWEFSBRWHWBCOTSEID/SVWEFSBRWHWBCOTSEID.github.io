@@ -236,7 +236,7 @@ export function ModalDropdown<T>(props: ModalDropdownProps<T>) {
 export function ModalDropdownItem<T>(props: { value: T, children: ReactNode }) {
     return (
         <Listbox.Option
-            className="cursor-pointer px-4 py-1 hover:!bg-blue-500 hover:text-white ui-selected:bg-background"
+            className="cursor-pointer px-4 py-1 hover:!bg-theme-blue hover:text-white ui-selected:bg-background"
             value={props.value}
         >
             {props.children}

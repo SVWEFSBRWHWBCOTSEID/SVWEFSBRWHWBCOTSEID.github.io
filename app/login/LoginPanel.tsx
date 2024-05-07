@@ -102,7 +102,7 @@ export default function LoginPanel(props: { callbackUrl?: string }) {
             </div>
 
             <p className="mt-4 text-secondary text-sm">
-                Don't have an account? <Link href="/signup" className="text-blue-500 hover:underline">Create one.</Link>
+                Don't have an account? <Link href="/signup" className="text-theme-blue hover:underline">Create one.</Link>
             </p>
         </form>
     )

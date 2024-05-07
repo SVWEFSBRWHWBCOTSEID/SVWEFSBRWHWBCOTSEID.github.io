@@ -59,7 +59,7 @@ export default function Chat() {
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && message && sendChatMessage()}
                 placeholder="Please be nice in the chat!"
-                className="px-2 py-1 bg-content border-t border-tertiary focus:outline-none focus:border-blue-500 placeholder:text-secondary"
+                className="px-2 py-1 bg-content border-t border-tertiary focus:outline-none focus:border-theme-blue placeholder:text-secondary"
             />
         </div>
     )
@@ -70,7 +70,7 @@ function ChatMessage(props: ChatMessage) {
         <div>
             <Link
                 href={`/profile/${props.username}`}
-                className="font-medium text-secondary hover:text-blue-500"
+                className="font-medium text-secondary hover:text-theme-blue"
             >
                 {props.username}:
             </Link>

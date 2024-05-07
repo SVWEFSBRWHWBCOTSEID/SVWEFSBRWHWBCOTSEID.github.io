@@ -20,7 +20,7 @@ export default function Header() {
             <nav className="flex items-center">
                 <HeaderMenu />
 
-                <Link href="/" className="text-2xl md:text-3xl pb-1 mr-4 group text-[#BABABA] hover:text-blue-500">
+                <Link href="/" className="text-2xl md:text-3xl pb-1 mr-4 group text-[#BABABA] hover:text-theme-blue">
                     gulpin<span className="text-secondary group-hover:text-blue-600">.games</span>
                 </Link>
 
@@ -54,13 +54,13 @@ function HeaderHoverDropdown(props: { href: string, name: string, children: Reac
     return (
         <div className="hidden sm:flex flex-col h-full relative group">
             <Link
-                className="uppercase text-sm h-full flex items-center text-secondary px-3.5 py-4 group-hover:text-primary group-hover:bg-[#3c3934] border-l-2 border-transparent group-hover:border-blue-500"
+                className="uppercase text-sm h-full flex items-center text-secondary px-3.5 py-4 group-hover:text-primary group-hover:bg-[#3c3934] border-l-2 border-transparent group-hover:border-theme-blue"
                 href={props.href}
             >
                 {props.name}
             </Link>
             <div
-                className="hidden group-hover:block absolute top-full border-l-2 border-blue-500 bg-[#3c3934] rounded-r overflow-clip w-max z-20">
+                className="hidden group-hover:block absolute top-full border-l-2 border-theme-blue bg-[#3c3934] rounded-r overflow-clip w-max z-20">
                 {props.children}
             </div>
         </div>
@@ -70,7 +70,7 @@ function HeaderHoverDropdown(props: { href: string, name: string, children: Reac
 function HeaderHoverDropdownLink(props: { href: string, children: ReactNode }) {
     return (
         <Link
-            className="block text-sm text-primary pl-3.5 pr-5 py-2.5 hover:text-white hover:bg-blue-500"
+            className="block text-sm text-primary pl-3.5 pr-5 py-2.5 hover:text-white hover:bg-theme-blue"
             href={props.href}
         >
             {props.children}

@@ -23,7 +23,7 @@ export default function ProfileGame(props: ProfileGameInfo) {
     const href = `/game/${props.id}`;
 
     return (
-        <div className="table-row text-sm text-primary cursor-pointer hover:bg-blue-500/20">
+        <div className="table-row text-sm text-primary cursor-pointer hover:bg-theme-blue/20">
             <ProfileGameCell href={href}>
                 <Icon className="text-4xl" />
             </ProfileGameCell>

@@ -29,6 +29,7 @@ const config: Config = {
                 'theme-orange': 'rgb(214 79 0)',
                 'theme-yellow': '#bf811d',
                 'theme-green': '#629924',
+                'theme-blue': colors.blue['500'],
 
                 'board-light': '#f0d9b5',
                 'board-dark': '#b58863',

@@ -34,7 +34,7 @@ export default function GameHeader() {
                             href={`/rules#${info.game.key}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-blue-500 uppercase"
+                            className="text-theme-blue uppercase"
                         >
                             {info.game.name}
                         </a>
@@ -65,7 +65,7 @@ function PlayerIndicator(props: { user: Player, first?: boolean, ratingDiff: num
         <div className="flex gap-2 items-center text-[13px] text-[#BABABA]">
             {props.first ? <BiSolidCircle /> : <BiCircle />}
             <Link
-                className="flex-grow hover:text-blue-500"
+                className="flex-grow hover:text-theme-blue"
                 href={`/profile/${props.user.username}`}
             >
                 {props.user.username}
