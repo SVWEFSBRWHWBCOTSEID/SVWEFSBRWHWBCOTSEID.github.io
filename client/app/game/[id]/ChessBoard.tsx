@@ -119,6 +119,98 @@ function canMove(chess: Chess, activeSquare: ChessSquare | null, square: ChessSq
     return moves.some(m => m.includes(square));
 }
 
+type Side = 'w' | 'b';
+type Piece = 'P' | 'B' | 'N' | 'R' | 'K' | 'Q';
+type ChessPieceWithSide = `${Side}${Piece}` | '';
+
+function getActiveIndices(board: ChessPieceWithSide[], activeIndex: number | null, side: Side) {
+    const activeIndices: number[] = [];
+    if (activeIndex === null) return activeIndices;
+
+    function moveOrCapture(index: number) {
+    }
+
+    function capture(index: number) {
+        const piece = board[index];
+        if (!piece) return;
+        if (piece[0] === side) return; // TODO: premoves?
+        activeIndices.push(index);
+    }
+
+    function getBishopMoves() {
+        for (let i = activeIndex!; i < board.length; i += 9) {
+            if (board[i]) {
+                capture(i);
+                break;
+            }
+            activeIndices.push(i);
+        }
+        for (let i = activeIndex!; i >= 0; i -= 9) {
+            if (board[i]) {
+                capture(i);
+                break;
+            }
+            activeIndices.push(i);
+        }
+        // TODO: anti-diag
+    }
+
+    function getRookMoves() {
+        const rowNum = activeIndex! % 8;
+        for (let i = activeIndex!; i < activeIndex! + (8 - rowNum); i++) {
+            if (board[i]) {
+                capture(i);
+                break;
+            }
+            activeIndices.push(i);
+        }
+        for (let i = activeIndex!; i >= activeIndex! - rowNum; i--) {
+            if (board[i]) {
+                capture(i);
+                break;
+            }
+            activeIndices.push(i);
+        }
+        for (let i = activeIndex!; i < board.length; i += 8) {
+            if (board[i]) {
+                capture(i);
+                break;
+            }
+            activeIndices.push(i);
+        }
+        for (let i = activeIndex!; i >= 0; i -= 8) {
+            if (board[i]) {
+                capture(i);
+                break;
+            }
+            activeIndices.push(i);
+        }
+    }
+
+    switch (board[activeIndex][1]) {
+        case 'P':
+            const row = side === 'w' ? 8 : -8;
+            if (!board[activeIndex + row]) activeIndices.push(activeIndex + row); // Move 1 forwards
+            capture(activeIndex + row - 1); // Capture left
+            capture(activeIndex + row + 1); // Capture right
+            // TODO: move 2 spaces if first move
+            // TODO: en passant
+            break;
+        case 'B':
+            getBishopMoves();
+            break;
+        case 'R':
+            getRookMoves();
+            break;
+        case 'Q':
+            getBishopMoves();
+            getRookMoves();
+            break;
+    }
+
+    return activeIndices;
+}
+
 type PieceProps = {
     chess: Chess,
     piece: ChessPiece,
