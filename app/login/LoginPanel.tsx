@@ -1,6 +1,6 @@
 'use client'
 
-import { useContext, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import UserContext from '../../contexts/UserContext';
@@ -25,7 +25,8 @@ export default function LoginPanel(props: { callbackUrl?: string }) {
 
     const router = useRouter();
 
-    async function signIn() {
+    async function signIn(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
         setLoading(true);
 
         const res = await fetch(`${process.env.API_BASE}/login`, {
@@ -46,7 +47,10 @@ export default function LoginPanel(props: { callbackUrl?: string }) {
     }
 
     return (
-        <main className="bg-content rounded py-10 px-12 w-96 flex flex-col">
+        <form
+            className="bg-content rounded py-10 px-12 w-96 flex flex-col"
+            onSubmit={signIn}
+        >
             <h1 className="text-4xl font-light mb-6">Sign in</h1>
 
             <label htmlFor="username" className="mb-1 text-secondary font-semibold text-sm">
@@ -82,7 +86,7 @@ export default function LoginPanel(props: { callbackUrl?: string }) {
             <BlueButton
                 className="mt-8 mb-2"
                 disabled={!username || !password || loading}
-                onClick={signIn}
+                type="submit"
             >
                 Sign in
             </BlueButton>
@@ -100,6 +104,6 @@ export default function LoginPanel(props: { callbackUrl?: string }) {
             <p className="mt-4 text-secondary text-sm">
                 Don't have an account? <Link href="/signup" className="text-blue-500 hover:underline">Create one.</Link>
             </p>
-        </main>
+        </form>
     )
 }
