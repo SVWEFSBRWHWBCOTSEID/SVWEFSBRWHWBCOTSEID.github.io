@@ -1,15 +1,19 @@
 'use client'
 
-import {ReactNode, useContext} from 'react';
+import { ReactNode, useContext } from 'react';
 import Link from 'next/link';
-import {DateTime} from 'luxon';
-import {BiSolidPlusSquare, BiSolidMinusSquare} from 'react-icons/bi';
-import type {EndType, GameInfo, Status} from '../game/[id]/page';
+import { DateTime } from 'luxon';
 
-// Util
-import {keyToIcon} from './ProfileSidebarItem';
-import {timeControlToString} from '../../util/game';
+// Contexts
 import ProfileContext from '../../contexts/ProfileContext';
+
+// Utils
+import type { EndType, GameInfo, Status } from '../game/[id]/page';
+import { keyToIcon } from './ProfileSidebarItem';
+import { timeControlToString } from '../../util/game';
+
+// Icons
+import { BiSolidPlusSquare, BiSolidMinusSquare } from 'react-icons/bi';
 
 
 export type ProfileGameInfo = GameInfo & {
@@ -18,7 +22,7 @@ export type ProfileGameInfo = GameInfo & {
 }
 export default function ProfileGame(props: ProfileGameInfo) {
     const Icon = keyToIcon(props.game.key);
-    const {username} = useContext(ProfileContext);
+    const { username } = useContext(ProfileContext);
 
     const href = `/game/${props.id}`;
 
@@ -51,7 +55,12 @@ export default function ProfileGame(props: ProfileGameInfo) {
     )
 }
 
-function ProfileGameCell(props: {children: ReactNode, href: string, className?: string}) {
+type ProfileGameCellProps = {
+    children: ReactNode,
+    href: string,
+    className?: string
+}
+function ProfileGameCell(props: ProfileGameCellProps) {
     return (
         <Link
             href={props.href}

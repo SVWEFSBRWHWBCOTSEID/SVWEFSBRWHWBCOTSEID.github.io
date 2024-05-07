@@ -1,18 +1,20 @@
 'use client'
 
-import {Tab} from '@headlessui/react';
-import {keyToName} from './ProfileContent';
-import type {GameKey, GamePerf} from '../../contexts/ProfileContext';
+import { Tab } from '@headlessui/react';
 
 // Icons
-import {GiPotato} from 'react-icons/gi';
-import {MdCatchingPokemon, MdGrid3X3, MdGrid4X4} from 'react-icons/md';
-import {PiNumberCircleFourFill} from 'react-icons/pi';
-import {AiFillCaretRight} from 'react-icons/ai';
-import {ImArrowDownRight, ImArrowUpRight} from 'react-icons/im';
+import { GiPotato } from 'react-icons/gi';
+import { MdCatchingPokemon, MdGrid3X3, MdGrid4X4 } from 'react-icons/md';
+import { PiNumberCircleFourFill } from 'react-icons/pi';
+import { AiFillCaretRight } from 'react-icons/ai';
+import { ImArrowDownRight, ImArrowUpRight } from 'react-icons/im';
+
+// Utils
+import type { GameKey, GamePerf } from '../../contexts/ProfileContext';
+import { keyToName } from './ProfileContent';
 
 
-export default function ProfileSidebarItem(props: GamePerf & {game: GameKey}) {
+export default function ProfileSidebarItem(props: GamePerf & { game: GameKey }) {
     const Icon = keyToIcon(props.game);
 
     return (

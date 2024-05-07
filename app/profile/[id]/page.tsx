@@ -1,8 +1,12 @@
-import type {Metadata} from 'next';
-import {notFound} from 'next/navigation';
-import {DateTime} from 'luxon';
+import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
+import { DateTime } from 'luxon';
+
+// Components
 import ProfileContent from '../ProfileContent';
-import {getUser} from '../../../util/user';
+
+// Utils
+import { getUser } from '../../../util/user';
 
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
@@ -19,12 +23,17 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     const ratedGames = user.games
         .filter((g) => g.rated)
         .sort((gameA, gameB) => DateTime.fromSQL(gameA.createdAt).valueOf() - DateTime.fromSQL(gameB.createdAt).valueOf());
-    const lastRatedGameInfo = ratedGames[ratedGames.length - 1].game;
-    const rating = Math.floor(user.perfs[lastRatedGameInfo.key].rating);
+    const lastRatedGameInfo = ratedGames[ratedGames.length - 1]?.game;
+    const rating = Math.floor(user.perfs[lastRatedGameInfo?.key ?? 'ttt'].rating); // TODO?
+
+    // Only display the "Current game rating:" message if the user has actually played a rated game.
+    const ratingMsg = lastRatedGameInfo
+        ? ` Current ${lastRatedGameInfo.name} rating: ${rating}.`
+        : ''
 
     return {
         title: `${params.id} (${rating})`,
-        description: `${params.id} joined on ${joinedAtDate.toLocaleString()} and has played ${games} games. Current ${lastRatedGameInfo.name} rating: ${rating}.`
+        description: `${params.id} joined on ${joinedAtDate.toLocaleString()} and has played ${games} games.${ratingMsg}`
     }
 }
 

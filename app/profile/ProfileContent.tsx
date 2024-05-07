@@ -1,18 +1,18 @@
 'use client'
 
-import {useState} from 'react';
-import {Tab} from '@headlessui/react';
+import { useState } from 'react';
+import { Tab } from '@headlessui/react';
 
 // Components
 import ProfileSidebar from './ProfileSidebar';
 import ProfileUserPanel from './ProfileUserPanel';
 import ProfileGamePanel from './ProfileGamePanel';
 
-// Util
-import ProfileContext, {GameKey, User} from '../../contexts/ProfileContext';
+// Contexts
+import ProfileContext, { GameKey, User } from '../../contexts/ProfileContext';
 
 
-export default function ProfileContent(props: {user: User}) {
+export default function ProfileContent(props: { user: User }) {
     const [tab, setTab] = useState(0);
 
     return (

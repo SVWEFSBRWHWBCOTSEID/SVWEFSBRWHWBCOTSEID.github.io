@@ -1,10 +1,10 @@
 'use client'
 
-import {ChangeEvent, startTransition, useContext, useState} from 'react';
+import { ChangeEvent, startTransition, useContext, useState } from 'react';
 import Link from 'next/link';
-import {Listbox} from '@headlessui/react';
-import {DateTime} from 'luxon';
-import {revalidate} from '../../util/actions';
+import { Listbox } from '@headlessui/react';
+import { DateTime } from 'luxon';
+import { revalidate } from '../../util/actions';
 
 // Components
 import Input from '../../components/Input';
@@ -14,22 +14,22 @@ import AnimatedListbox from '../../components/AnimatedListbox';
 import ProfilePicture from '../../components/ProfilePicture';
 
 // Icons
-import {FaLocationDot, FaUser} from 'react-icons/fa6';
-import {BsGearFill} from 'react-icons/bs';
-import {ImCheckmark} from 'react-icons/im';
-import {MdOutlineKeyboardArrowDown} from 'react-icons/md';
-import {RiSwordFill} from 'react-icons/ri';
-import {BiMessageRounded} from 'react-icons/bi';
+import { FaLocationDot, FaUser } from 'react-icons/fa6';
+import { BsGearFill } from 'react-icons/bs';
+import { ImCheckmark } from 'react-icons/im';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { RiSwordFill } from 'react-icons/ri';
+import { BiMessageRounded } from 'react-icons/bi';
 
 // Contexts
-import ProfileContext, {Country, User} from '../../contexts/ProfileContext';
+import ProfileContext, { Country, User } from '../../contexts/ProfileContext';
 import UserContext from '../../contexts/UserContext';
 import FlagSelector from './FlagSelector';
 
 
 export default function ProfileHeader() {
     const profileUser = useContext(ProfileContext);
-    const {user, setUser} = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const [editing, setEditing] = useState(false);
 
@@ -175,9 +175,9 @@ export default function ProfileHeader() {
                                     {profileUser.profile.bio}
                                 </div>
                             )}
-                            {getName(profileUser.profile) && (
+                            {getFullName(profileUser.profile) && (
                                 <p className="text-sm flex gap-2.5 items-center text-secondary">
-                                    <FaUser /> {getName(profileUser.profile)}
+                                    <FaUser /> {getFullName(profileUser.profile)}
                                 </p>
                             )}
                             {profileUser.profile.location && (
@@ -224,7 +224,7 @@ export default function ProfileHeader() {
     )
 }
 
-function getName(profile: User['profile']) {
+function getFullName(profile: User['profile']) {
     if (profile.firstName && profile.lastName) return `${profile.firstName} ${profile.lastName}`
     return profile.firstName || profile.lastName;
 }

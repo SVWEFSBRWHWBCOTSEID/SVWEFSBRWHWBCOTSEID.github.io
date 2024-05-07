@@ -1,14 +1,18 @@
 'use client'
 
-import {useContext} from 'react';
-import {Tab} from '@headlessui/react';
+import { useContext } from 'react';
+import { Tab } from '@headlessui/react';
+import { AiFillCaretRight } from 'react-icons/ai';
+
+// Components
 import ProfileSidebarItem from './ProfileSidebarItem';
-import {AiFillCaretRight} from 'react-icons/ai';
-import ProfileContext, {GameKey} from '../../contexts/ProfileContext';
+
+// Contexts
+import ProfileContext, { GameKey } from '../../contexts/ProfileContext';
 
 
 export default function ProfileSidebar() {
-    const {perfs} = useContext(ProfileContext);
+    const { perfs } = useContext(ProfileContext);
 
     return (
         <Tab.List as="aside" className="flex md:flex-col flex-wrap md:flex-nowrap flex-none pt-1 md:w-32 lg:w-64 xl:w-72 transition-[width] duration-200">

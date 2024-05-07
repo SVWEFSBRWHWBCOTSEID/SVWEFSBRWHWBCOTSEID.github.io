@@ -1,7 +1,7 @@
-import ProfileGame, {ProfileGameInfo} from './ProfileGame';
+import ProfileGame, { ProfileGameInfo } from './ProfileGame';
 
 
-export default function ProfileGames(props: {games: ProfileGameInfo[]}) {
+export default function ProfileGames(props: { games: ProfileGameInfo[] }) {
     return (
         <section>
             <h3 className="text-lg font-semibold px-6 pt-4 pb-2">Games</h3>
