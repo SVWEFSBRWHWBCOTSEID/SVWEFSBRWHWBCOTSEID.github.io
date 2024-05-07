@@ -5,7 +5,12 @@ const nextConfig = {
         API_BASE: process.env.NODE_ENV === 'development'
             ? 'http://127.0.0.1:8080/api'
             : 'https://api.gulpin.games/api'
-    }
+    },
+    logging: {
+        fetches: {
+            fullUrl: true,
+        },
+    },
 }
 
 module.exports = nextConfig;
