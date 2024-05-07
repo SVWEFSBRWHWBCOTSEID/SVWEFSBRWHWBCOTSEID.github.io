@@ -8,9 +8,9 @@ import { DateTime } from 'luxon';
 import ProfileContext from '../../contexts/ProfileContext';
 
 // Utils
-import type { EndType, GameInfo, Status } from '../game/[id]/page';
+import type { EndType, GameInfo, Status } from '@/app/game/[id]/page';
 import { keyToIcon } from './ProfileSidebarItem';
-import { timeControlToString } from '../../util/game';
+import { timeControlToString } from '@/util/game';
 
 // Icons
 import { BiSolidPlusSquare, BiSolidMinusSquare } from 'react-icons/bi';

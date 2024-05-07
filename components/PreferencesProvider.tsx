@@ -3,8 +3,8 @@
 import { ReactNode, useContext, useLayoutEffect, useState } from 'react';
 
 // Contexts
-import PreferencesContext, { defaultPreferences, Preferences } from '../contexts/PreferencesContext';
-import UserContext from '../contexts/UserContext';
+import PreferencesContext, { defaultPreferences, Preferences } from '@/contexts/PreferencesContext';
+import UserContext from '@/contexts/UserContext';
 
 
 export default function PreferencesProvider(props: { children: ReactNode }) {

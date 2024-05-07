@@ -4,12 +4,12 @@ import { Inter } from 'next/font/google';
 
 // Components
 import Header from './Header';
-import UserProvider from '../components/UserProvider';
 import PlayingBanner from './PlayingBanner';
-import PreferencesProvider from '../components/PreferencesProvider';
-import ConversationProvider from '../components/ConversationProvider';
-import ChallengesProvider from '../components/ChallengesProvider';
-import CurrentTimeProvider from '../components/CurrentTimeProvider';
+import UserProvider from '@/components/UserProvider';
+import PreferencesProvider from '@/components/PreferencesProvider';
+import ConversationProvider from '@/components/ConversationProvider';
+import ChallengesProvider from '@/components/ChallengesProvider';
+import CurrentTimeProvider from '@/components/CurrentTimeProvider';
 
 import '../styles/styles.css'
 

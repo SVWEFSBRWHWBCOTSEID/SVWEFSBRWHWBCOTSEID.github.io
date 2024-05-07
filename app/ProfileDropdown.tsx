@@ -5,15 +5,15 @@ import Link from 'next/link';
 import { Menu } from '@headlessui/react';
 
 // Components
-import UserEventHandler from '../components/UserEventHandler';
+import UserEventHandler from '@/components/UserEventHandler';
+import ProfilePicture from '@/components/ProfilePicture';
 
 // Contexts
-import UserContext from '../contexts/UserContext';
+import UserContext from '@/contexts/UserContext';
 
 // Icons
 import { FaPowerOff } from 'react-icons/fa';
 import { BsEnvelopeFill, BsGearFill } from 'react-icons/bs';
-import ProfilePicture from '../components/ProfilePicture';
 
 
 export default function ProfileDropdown() {

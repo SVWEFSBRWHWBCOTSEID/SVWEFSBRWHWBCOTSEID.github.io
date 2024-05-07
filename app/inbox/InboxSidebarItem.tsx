@@ -5,12 +5,12 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 // Components
-import ProfilePicture from '../../components/ProfilePicture';
+import ProfilePicture from '@/components/ProfilePicture';
 
 // Utils
-import { getUser } from '../../util/user';
-import type { User } from '../../contexts/ProfileContext';
+import type { User } from '@/contexts/ProfileContext';
 import type { Message } from './InboxMessage';
+import { getUser } from '@/util/user';
 
 
 export type Conversation = {

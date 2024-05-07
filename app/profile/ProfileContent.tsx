@@ -9,7 +9,7 @@ import ProfileUserPanel from './ProfileUserPanel';
 import ProfileGamePanel from './ProfileGamePanel';
 
 // Contexts
-import ProfileContext, { GameKey, User } from '../../contexts/ProfileContext';
+import ProfileContext, { GameKey, User } from '@/contexts/ProfileContext';
 
 
 export default function ProfileContent(props: { user: User }) {

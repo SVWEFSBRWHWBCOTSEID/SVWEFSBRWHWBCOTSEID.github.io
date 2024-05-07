@@ -3,7 +3,7 @@
 import { useContext, useState } from 'react';
 import Link from 'next/link';
 import { Combobox } from '@headlessui/react';
-import ConversationContext from '../../contexts/ConversationContext';
+import ConversationContext from '@/contexts/ConversationContext';
 
 
 // TODO: support lookup of random users

@@ -10,7 +10,7 @@ import { AiFillCaretRight } from 'react-icons/ai';
 import { ImArrowDownRight, ImArrowUpRight } from 'react-icons/im';
 
 // Utils
-import type { GameKey, GamePerf } from '../../contexts/ProfileContext';
+import type { GameKey, GamePerf } from '@/contexts/ProfileContext';
 import { keyToName } from './ProfileContent';
 
 

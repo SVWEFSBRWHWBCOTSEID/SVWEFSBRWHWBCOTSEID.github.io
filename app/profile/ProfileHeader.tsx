@@ -2,29 +2,26 @@
 
 import { ChangeEvent, startTransition, useContext, useState } from 'react';
 import Link from 'next/link';
-import { Listbox } from '@headlessui/react';
 import { DateTime } from 'luxon';
-import { revalidate } from '../../util/actions';
+import { revalidate } from '@/util/actions';
 
 // Components
-import Input from '../../components/Input';
-import AutoResizingTextArea from '../../components/AutoResizingTextbox';
-import BlueButton from '../../components/BlueButton';
-import AnimatedListbox from '../../components/AnimatedListbox';
-import ProfilePicture from '../../components/ProfilePicture';
+import Input from '@/components/Input';
+import AutoResizingTextArea from '@/components/AutoResizingTextbox';
+import BlueButton from '@/components/BlueButton';
+import ProfilePicture from '@/components/ProfilePicture';
+import FlagSelector from './FlagSelector';
+
+// Contexts
+import ProfileContext, { Country, User } from '../../contexts/ProfileContext';
+import UserContext from '../../contexts/UserContext';
 
 // Icons
 import { FaLocationDot, FaUser } from 'react-icons/fa6';
 import { BsGearFill } from 'react-icons/bs';
 import { ImCheckmark } from 'react-icons/im';
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { RiSwordFill } from 'react-icons/ri';
 import { BiMessageRounded } from 'react-icons/bi';
-
-// Contexts
-import ProfileContext, { Country, User } from '../../contexts/ProfileContext';
-import UserContext from '../../contexts/UserContext';
-import FlagSelector from './FlagSelector';
 
 
 export default function ProfileHeader() {

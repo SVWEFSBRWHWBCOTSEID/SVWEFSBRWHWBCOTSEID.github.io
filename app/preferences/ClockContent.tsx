@@ -7,7 +7,7 @@ import PreferencesInputGroup from './PreferencesInputGroup';
 import PreferencesButton from './PreferencesButton';
 
 // Contexts
-import PreferencesContext from '../../contexts/PreferencesContext';
+import PreferencesContext from '@/contexts/PreferencesContext';
 
 
 export default function ClockContent() {

@@ -7,15 +7,15 @@ import { useRouter } from 'next/navigation';
 import MessageNotification from './MessageNotification';
 
 // Contexts
-import UserContext from '../contexts/UserContext';
-import PreferencesContext, { Preferences } from '../contexts/PreferencesContext';
-import ConversationContext from '../contexts/ConversationContext';
-import ChallengesContext, { Challenge } from '../contexts/ChallengesContext';
+import UserContext from '@/contexts/UserContext';
+import PreferencesContext, { Preferences } from '@/contexts/PreferencesContext';
+import ConversationContext from '@/contexts/ConversationContext';
+import ChallengesContext, { Challenge } from '@/contexts/ChallengesContext';
 
-// Types
-import type { GameKey } from '../contexts/ProfileContext';
-import type { Conversation } from '../app/inbox/InboxSidebarItem';
-import type { Message } from '../app/inbox/InboxMessage';
+// Utils
+import type { GameKey } from '@/contexts/ProfileContext';
+import type { Conversation } from '@/app/inbox/InboxSidebarItem';
+import type { Message } from '@/app/inbox/InboxMessage';
 
 
 type UserFullEvent = {

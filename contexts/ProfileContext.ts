@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { DateTime } from 'luxon';
-import type { ProfileGameInfo } from '../app/profile/ProfileGame';
+import type { ProfileGameInfo } from '@/app/profile/ProfileGame';
 
 
 export type User = {

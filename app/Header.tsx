@@ -2,14 +2,18 @@
 
 import { ReactNode, useContext } from 'react';
 import Link from 'next/link';
-import UserContext from '../contexts/UserContext';
-import { BsGear, BsGearFill } from 'react-icons/bs';
 
 // Components
 import ProfileDropdown from './ProfileDropdown';
 import SignInLink from './SignInLink';
 import HeaderMenu from './HeaderMenu';
 import ChallengeDropdown from './ChallengeDropdown';
+
+// Contexts
+import UserContext from '@/contexts/UserContext';
+
+// Icons
+import { BsGear, BsGearFill } from 'react-icons/bs';
 
 
 export default function Header() {

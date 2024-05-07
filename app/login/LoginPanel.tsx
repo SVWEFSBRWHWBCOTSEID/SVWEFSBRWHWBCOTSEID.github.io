@@ -3,14 +3,16 @@
 import { FormEvent, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import UserContext from '../../contexts/UserContext';
 
 // Components
-import BlueButton from '../../components/BlueButton';
-import Input from '../../components/Input';
+import BlueButton from '@/components/BlueButton';
+import Input from '@/components/Input';
+
+// Contexts
+import UserContext from '@/contexts/UserContext';
 
 // Utils
-import type { User } from '../../contexts/ProfileContext';
+import type { User } from '@/contexts/ProfileContext';
 
 
 export default function LoginPanel(props: { callbackUrl?: string }) {

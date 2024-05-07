@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 
 export default function PreferencesInputGroup(props: { label: string, children: ReactNode }) {

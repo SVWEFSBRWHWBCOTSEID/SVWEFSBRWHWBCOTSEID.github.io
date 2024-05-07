@@ -1,8 +1,8 @@
 'use client'
 
 import { useContext, useState } from 'react';
-import ProfilePicture from '../../components/ProfilePicture';
-import UserContext from '../../contexts/UserContext';
+import ProfilePicture from '@/components/ProfilePicture';
+import UserContext from '@/contexts/UserContext';
 
 
 export default function MessageInput(props: { otherName: string }) {

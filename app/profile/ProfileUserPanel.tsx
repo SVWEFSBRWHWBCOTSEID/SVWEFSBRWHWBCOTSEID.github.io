@@ -10,7 +10,7 @@ import ProfileEloChart from './ProfileEloChart';
 import ProfileGames from './ProfileGames';
 
 // Contexts
-import ProfileContext from '../../contexts/ProfileContext';
+import ProfileContext from '@/contexts/ProfileContext';
 
 
 export default function ProfileUserPanel() {

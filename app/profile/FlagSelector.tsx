@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { Combobox } from '@headlessui/react';
-import type { Country } from '../../contexts/ProfileContext';
+import type { Country } from '@/contexts/ProfileContext';
 
 // Components
-import AnimatedCombobox from '../../components/AnimatedCombobox';
+import AnimatedCombobox from '@/components/AnimatedCombobox';
 
 // Icons
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';

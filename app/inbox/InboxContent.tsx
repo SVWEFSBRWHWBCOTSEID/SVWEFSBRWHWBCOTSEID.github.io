@@ -3,11 +3,13 @@
 import { useContext, useMemo } from 'react';
 import Link from 'next/link';
 import { DateTime } from 'luxon';
-import ConversationContext from '../../contexts/ConversationContext';
 
 // Components
 import InboxMessage, { Message } from './InboxMessage';
 import MessageInput from './MessageInput';
+
+// Contexts
+import ConversationContext from '@/contexts/ConversationContext';
 
 // Icons
 import { RiSwordFill } from 'react-icons/ri';

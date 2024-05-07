@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from 'react';
-import type { Conversation } from '../app/inbox/InboxSidebarItem';
+import type { Conversation } from '@/app/inbox/InboxSidebarItem';
 
 
 type ConversationContext = {

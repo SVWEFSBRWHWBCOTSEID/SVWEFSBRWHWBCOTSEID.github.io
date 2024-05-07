@@ -2,7 +2,7 @@
 
 import { ReactNode, useEffect, useState } from 'react';
 import { DateTime } from 'luxon';
-import CurrentTimeContext from '../contexts/CurrentTimeContext';
+import CurrentTimeContext from '@/contexts/CurrentTimeContext';
 
 
 export default function CurrentTimeProvider(props: { children: ReactNode }) {

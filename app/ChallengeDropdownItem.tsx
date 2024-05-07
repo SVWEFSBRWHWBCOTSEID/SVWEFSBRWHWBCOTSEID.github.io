@@ -3,9 +3,9 @@ import { Menu } from '@headlessui/react';
 import { BiCheck } from 'react-icons/bi';
 
 // Utils
-import type { Challenge } from '../contexts/ChallengesContext';
-import { keyToIcon } from './profile/ProfileSidebarItem';
-import { timeControlToString } from '../util/game';
+import type { Challenge } from '@/contexts/ChallengesContext';
+import { keyToIcon } from '@/app/profile/ProfileSidebarItem';
+import { timeControlToString } from '@/util/game';
 
 
 export default function ChallengeDropdownItem(props: Challenge) {

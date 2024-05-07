@@ -1,4 +1,4 @@
-import type { User } from '../contexts/ProfileContext';
+import type { User } from '@/contexts/ProfileContext';
 
 
 type ProfilePictureProps = {

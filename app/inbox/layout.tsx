@@ -7,7 +7,7 @@ import InboxSearchInput from './InboxSearchInput';
 import InboxSidebarItem from './InboxSidebarItem';
 
 // Contexts
-import ConversationContext from '../../contexts/ConversationContext';
+import ConversationContext from '@/contexts/ConversationContext';
 
 
 export default function Layout(props: { children: ReactNode }) {

@@ -1,7 +1,7 @@
 'use client'
 
-import {useContext, useMemo} from 'react';
-import {DateTime} from 'luxon';
+import { useContext, useMemo } from 'react';
+import { DateTime } from 'luxon';
 
 // Highcharts
 import Highcharts, { DashStyleValue } from 'highcharts/highstock';
@@ -10,9 +10,9 @@ import HighchartsExporting from 'highcharts/modules/exporting';
 import HighchartsReact from 'highcharts-react-official';
 
 // Util
-import ProfileContext from '../../contexts/ProfileContext';
-import type {GameInfo} from '../game/[id]/page';
-import type {GameKey} from '../../contexts/ProfileContext';
+import ProfileContext from '@/contexts/ProfileContext';
+import type { GameInfo } from '@/app/game/[id]/page';
+import type { GameKey } from '@/contexts/ProfileContext';
 
 // https://github.com/highcharts/highcharts-react#highcharts-with-nextjs
 if (typeof Highcharts === 'object') {

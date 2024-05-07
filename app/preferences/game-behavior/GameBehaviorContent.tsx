@@ -3,7 +3,7 @@
 import {useContext} from 'react';
 import PreferencesInputGroup from '../PreferencesInputGroup';
 import PreferencesButton from '../PreferencesButton';
-import PreferencesContext from '../../../contexts/PreferencesContext';
+import PreferencesContext from '@/contexts/PreferencesContext';
 
 
 export default function GameBehaviorContent() {

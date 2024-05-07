@@ -7,7 +7,7 @@ import { Menu } from '@headlessui/react';
 import ChallengeDropdownItem from './ChallengeDropdownItem';
 
 // Contexts
-import ChallengesContext from '../contexts/ChallengesContext';
+import ChallengesContext from '@/contexts/ChallengesContext';
 
 // Icons
 import { RiSwordFill } from 'react-icons/ri';

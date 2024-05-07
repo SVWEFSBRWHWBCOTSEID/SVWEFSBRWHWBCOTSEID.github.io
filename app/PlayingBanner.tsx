@@ -1,7 +1,7 @@
 'use client'
 
 import { useContext } from 'react';
-import UserContext from '../contexts/UserContext';
+import UserContext from '@/contexts/UserContext';
 
 // Icons
 import { FaArrowRight } from 'react-icons/fa6';

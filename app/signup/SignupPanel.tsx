@@ -1,25 +1,25 @@
 'use client'
 
 import { FormEvent, startTransition, useContext, useState } from 'react';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 // Components
-import BlueButton from '../../components/BlueButton';
-import Input from '../../components/Input';
+import BlueButton from '@/components/BlueButton';
+import Input from '@/components/Input';
 
 // Contexts
 import UserContext from '../../contexts/UserContext';
 import PreferencesContext from '../../contexts/PreferencesContext';
 
 // Utils
-import type {User} from '../../contexts/ProfileContext';
-import {getUser} from '../../util/user';
-import {revalidate} from '../../util/actions';
+import type { User } from '@/contexts/ProfileContext';
+import { getUser } from '@/util/user';
+import { revalidate } from '@/util/actions';
 
 
 export default function SignupPanel() {
-    const {setUser} = useContext(UserContext);
-    const {preferences} = useContext(PreferencesContext);
+    const { setUser } = useContext(UserContext);
+    const { preferences } = useContext(PreferencesContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -27,7 +27,7 @@ export default function SignupPanel() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(false);
 
-    const {replace} = useRouter();
+    const router = useRouter();
 
     async function register(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -35,9 +35,9 @@ export default function SignupPanel() {
 
         const res = await fetch(`${process.env.API_BASE}/user/new`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
-            body: JSON.stringify({username, password, preferences})
+            body: JSON.stringify({ username, password, preferences })
         });
         if (!res.ok) {
             setLoading(false);
@@ -49,7 +49,7 @@ export default function SignupPanel() {
         // Revalidate cached user object
         startTransition(() => void revalidate(`user-${username}`));
         setUser(user);
-        replace('/');
+        router.replace('/');
     }
 
     async function validateUsername() {

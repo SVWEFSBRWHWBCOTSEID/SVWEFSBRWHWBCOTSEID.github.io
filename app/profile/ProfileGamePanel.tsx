@@ -1,23 +1,31 @@
 'use client'
 
-import {ReactNode, useContext, useMemo} from 'react';
+import { ReactNode, useContext, useMemo } from 'react';
 import Link from 'next/link';
-import {Tab} from '@headlessui/react';
-import {DateTime} from 'luxon';
-import {ImArrowDownRight, ImArrowUpRight} from 'react-icons/im';
+import { Tab } from '@headlessui/react';
+import { DateTime } from 'luxon';
 
 // Components
 import ProfileGames from './ProfileGames';
 import ProfileEloChart from './ProfileEloChart';
 
-// Util
-import ProfileContext, {GameKey, GamePerf} from '../../contexts/ProfileContext';
-import {keyToName} from './ProfileContent';
-import type {ProfileGameInfo} from './ProfileGame';
+// Contexts
+import ProfileContext, { GameKey, GamePerf } from '@/contexts/ProfileContext';
+
+// Utils
+import type { ProfileGameInfo } from './ProfileGame';
+import { keyToName } from './ProfileContent';
+
+// Icons
+import { ImArrowDownRight, ImArrowUpRight } from 'react-icons/im';
 
 
-export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTab: (tab: number) => void}) {
-    const {username, games, perfs} = useContext(ProfileContext);
+type ProfileGamePanelProps = GamePerf & {
+    game: GameKey,
+    setTab: (tab: number) => void
+}
+export default function ProfileGamePanel(props: ProfileGamePanelProps) {
+    const { username, games, perfs } = useContext(ProfileContext);
     const filtered = games.filter(info => info.game.key === props.game)
         .sort((gameA, gameB) => DateTime.fromSQL(gameA.createdAt).valueOf() - DateTime.fromSQL(gameB.createdAt).valueOf());
 
@@ -30,7 +38,7 @@ export default function ProfileGamePanel(props: GamePerf & {game: GameKey, setTa
         return username === g.first.username ? g.status === 'SECOND_WON' : g.status === 'FIRST_WON';
     });
 
-    const {averageOpponent, highestRating, highestRated, lowestRating, lowestRated} = useMemo(() => {
+    const { averageOpponent, highestRating, highestRated, lowestRating, lowestRated } = useMemo(() => {
         let opponentRatingTotal = 0;
 
         let highestRating = 1500;
@@ -246,7 +254,7 @@ function toPercent(a: number, b: number) {
     return Math.floor((a / b) * 100);
 }
 
-function ProfileStatsTable(props: {children: ReactNode}) {
+function ProfileStatsTable(props: { children: ReactNode }) {
     return (
         <div className="table text-sm text-primary h-max">
             {props.children}
@@ -254,7 +262,7 @@ function ProfileStatsTable(props: {children: ReactNode}) {
     )
 }
 
-function ProfileStatsTableCell(props: {children?: ReactNode, className?: string, secondary?: boolean}) {
+function ProfileStatsTableCell(props: { children?: ReactNode, className?: string, secondary?: boolean }) {
     return (
         <div className={'table-cell py-3 px-4' + (props.className ? ` ${props.className}` : '')}>
             {props.children}

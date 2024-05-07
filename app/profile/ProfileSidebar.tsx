@@ -8,7 +8,7 @@ import { AiFillCaretRight } from 'react-icons/ai';
 import ProfileSidebarItem from './ProfileSidebarItem';
 
 // Contexts
-import ProfileContext, { GameKey } from '../../contexts/ProfileContext';
+import ProfileContext, { GameKey } from '@/contexts/ProfileContext';
 
 
 export default function ProfileSidebar() {

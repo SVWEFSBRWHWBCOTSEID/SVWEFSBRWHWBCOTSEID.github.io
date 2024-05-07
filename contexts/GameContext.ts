@@ -2,9 +2,9 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 import { Duration } from 'luxon';
 
 // Types
-import type { GameInfo, Offer, Status, EndType } from '../app/game/[id]/page';
-import type { ChatData } from '../app/game/Chat';
-import type { PlayerSide } from '../app/game/[id]/Game';
+import type { GameInfo, Offer, Status, EndType } from '@/app/game/[id]/page';
+import type { ChatData } from '@/app/game/Chat';
+import type { PlayerSide } from '@/app/game/[id]/Game';
 
 
 type GameContextData = {

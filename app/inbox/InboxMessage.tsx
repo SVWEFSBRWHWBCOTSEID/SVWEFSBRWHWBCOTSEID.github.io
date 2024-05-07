@@ -3,14 +3,16 @@
 import { startTransition, useContext, useLayoutEffect, useState } from 'react';
 import Link from 'next/link';
 import { DateTime } from 'luxon';
-import CurrentTimeContext from '../../contexts/CurrentTimeContext';
 
 // Components
-import ProfilePicture from '../../components/ProfilePicture';
+import ProfilePicture from '@/components/ProfilePicture';
+
+// Contexts
+import CurrentTimeContext from '@/contexts/CurrentTimeContext';
 
 // Utils
-import { getUser } from '../../util/user';
-import type { User } from '../../contexts/ProfileContext';
+import type { User } from '@/contexts/ProfileContext';
+import { getUser } from '@/util/user';
 
 
 export type Message = {

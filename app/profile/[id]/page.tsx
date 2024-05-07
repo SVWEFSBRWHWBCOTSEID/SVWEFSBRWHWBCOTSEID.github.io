@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 import ProfileContent from '../ProfileContent';
 
 // Utils
-import { getUser } from '../../../util/user';
+import { getUser } from '@/util/user';
 
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {

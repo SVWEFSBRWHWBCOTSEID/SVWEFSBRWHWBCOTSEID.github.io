@@ -1,7 +1,7 @@
-import {startTransition} from 'react';
-import {revalidate} from './actions';
-import type {GameKey} from '../contexts/ProfileContext';
-import type {GameFullEvent, TimeControl} from '../app/game/[id]/page';
+import { startTransition } from 'react';
+import { revalidate } from './actions';
+import type { GameKey } from '@/contexts/ProfileContext';
+import type { GameFullEvent, TimeControl } from '@/app/game/[id]/page';
 
 
 export type Side = 'RANDOM' | 'FIRST' | 'SECOND';
@@ -20,7 +20,7 @@ type CreateChallengeBody = Omit<CreateGameBody, 'ratingMin' | 'ratingMax'> & {
     gameKey: GameKey
 }
 
-type CreateGameResponse = Omit<GameFullEvent, 'type' | 'chat'> & {id: string} // TODO: remove cross-type reliance?
+type CreateGameResponse = Omit<GameFullEvent, 'type' | 'chat'> & { id: string } // TODO: remove cross-type reliance?
 
 export async function createGame(
     game: GameKey,
@@ -44,7 +44,7 @@ export async function createGame(
 
     const res: CreateGameResponse = await (await fetch(`${process.env.API_BASE}/game/new/${game}`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(body)
     })).json();
@@ -75,7 +75,7 @@ export async function createChallenge(
 
     const res: CreateGameResponse = await (await fetch(`${process.env.API_BASE}/challenge/${opponent}/true`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify(body)
     })).json();
