@@ -1,10 +1,7 @@
 'use client'
 
-import {startTransition, useContext, useState} from 'react';
+import { FormEvent, startTransition, useContext, useState } from 'react';
 import {useRouter} from 'next/navigation';
-import {getUser} from '../../util/user';
-import {revalidate} from '../../util/actions';
-import type {User} from '../../contexts/ProfileContext';
 
 // Components
 import BlueButton from '../../components/BlueButton';
@@ -13,6 +10,11 @@ import Input from '../../components/Input';
 // Contexts
 import UserContext from '../../contexts/UserContext';
 import PreferencesContext from '../../contexts/PreferencesContext';
+
+// Utils
+import type {User} from '../../contexts/ProfileContext';
+import {getUser} from '../../util/user';
+import {revalidate} from '../../util/actions';
 
 
 export default function SignupPanel() {
@@ -27,7 +29,8 @@ export default function SignupPanel() {
 
     const {replace} = useRouter();
 
-    async function register() {
+    async function register(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
         setLoading(true);
 
         const res = await fetch(`${process.env.API_BASE}/user/new`, {
@@ -54,7 +57,10 @@ export default function SignupPanel() {
     }
 
     return (
-        <main className="bg-content rounded py-10 px-12 w-96 flex flex-col">
+        <form
+            className="bg-content rounded py-10 px-12 w-96 flex flex-col"
+            onSubmit={register}
+        >
             <h1 className="text-4xl font-light mb-6">Register</h1>
 
             <label htmlFor="username" className="mb-1 text-secondary font-semibold text-sm">
@@ -91,10 +97,10 @@ export default function SignupPanel() {
             <BlueButton
                 className="mt-8 mb-2"
                 disabled={!username || !password || loading}
-                onClick={register}
+                type="submit"
             >
                 Register
             </BlueButton>
-        </main>
+        </form>
     )
 }
