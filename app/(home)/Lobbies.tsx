@@ -1,15 +1,15 @@
 'use client'
 
 import { useContext } from 'react';
-import UserContext from '../../contexts/UserContext';
+import UserContext from '@/contexts/UserContext';
 
 // Components
 import LobbyRoom, { LobbyCell } from './LobbyRoom';
 import YouLobbyRoom from './YouLobbyRoom';
 
 // Utils
-import type { GameNameInfo, Player, TimeControl } from '../game/[id]/page';
-import type { Side } from '../../util/game';
+import type { GameNameInfo, Player, TimeControl } from '@/app/game/[id]/page';
+import type { Side } from '@/util/game';
 
 
 export type Lobby = {

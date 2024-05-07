@@ -2,24 +2,24 @@
 
 import { ReactNode, useContext, useState } from 'react';
 import { Listbox } from '@headlessui/react';
-import UserContext from '../../contexts/UserContext';
+import UserContext from '@/contexts/UserContext';
 
 // Components
-import CenteredModal from '../../components/CenteredModal';
-import AnimatedListbox from '../../components/AnimatedListbox';
-import SecondarySlider from '../../components/SecondarySlider';
-import CloseButton from '../../components/CloseButton';
+import CenteredModal from '@/components/CenteredModal';
+import AnimatedListbox from '@/components/AnimatedListbox';
+import SecondarySlider from '@/components/SecondarySlider';
+import CloseButton from '@/components/CloseButton';
+
+// Utils
+import { games } from './QuickPairing';
+import { createGame, Side } from '@/util/game';
+import { keyToIcon } from '../profile/ProfileSidebarItem';
+import type { GameNameInfo } from '../game/[id]/page';
 
 // Icons
 import { IoDice } from 'react-icons/io5';
 import { PiNumberCircleOneFill, PiNumberCircleTwoFill } from 'react-icons/pi';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-
-// Util
-import { games } from './QuickPairing';
-import { createGame, Side } from '../../util/game';
-import { keyToIcon } from '../profile/ProfileSidebarItem';
-import type { GameNameInfo } from '../game/[id]/page';
 
 
 type CreateGameModalProps = { isOpen: boolean, setIsOpen: (open: boolean) => void, game?: GameNameInfo };

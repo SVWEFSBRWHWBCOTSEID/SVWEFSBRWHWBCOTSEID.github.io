@@ -1,8 +1,12 @@
 'use client'
 
 import { ReactNode, useState } from 'react';
-import { timeControlToString } from '../../util/game';
+
+// Utils
 import type { Lobby } from './Lobbies';
+import { timeControlToString } from '@/util/game';
+
+// Icons
 import { BiCircle, BiSolidCircle, BiSolidCircleHalf } from 'react-icons/bi';
 
 

@@ -1,9 +1,11 @@
 'use client'
 
 import { MouseEventHandler, ReactNode, useContext } from 'react';
-import { createGame } from '../../util/game';
 import UserContext from '../../contexts/UserContext';
+
+// Utils
 import type { GameNameInfo } from '../game/[id]/page';
+import { createGame } from '@/util/game';
 
 
 type QuickPairingButtonProps = {

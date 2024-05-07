@@ -1,17 +1,17 @@
 'use client'
 
 import { useContext, useState } from 'react';
-import UserContext from '../../contexts/UserContext';
+import UserContext from '@/contexts/UserContext';
 
 // Components
-import CenteredModal from '../../components/CenteredModal';
-import SecondarySlider from '../../components/SecondarySlider';
-import CloseButton from '../../components/CloseButton';
+import CenteredModal from '@/components/CenteredModal';
+import SecondarySlider from '@/components/SecondarySlider';
+import CloseButton from '@/components/CloseButton';
 import { ModalDropdown, ModalDropdownItem, parseIncrement, parseMinutes } from './CreateGameModal';
 
 // Utils
 import { games } from './QuickPairing';
-import { createChallenge, Side } from '../../util/game';
+import { createChallenge, Side } from '@/util/game';
 import { keyToIcon } from '../profile/ProfileSidebarItem';
 
 // Icons

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Tab } from '@headlessui/react';
-import type { GameNameInfo } from '../game/[id]/page';
+import type { GameNameInfo } from '@/app/game/[id]/page';
 
 // Components
 import QuickPairingButton, { QuickPairingPresetButton } from './QuickPairingButton';

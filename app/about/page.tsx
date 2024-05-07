@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import InfoHeading from '../../components/InfoHeading';
+import InfoHeading from '@/components/InfoHeading';
 
 
 export const metadata: Metadata = {

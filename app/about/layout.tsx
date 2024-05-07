@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
 
 // Components
-import InfoSidebarItem from '../../components/InfoSidebarItem';
-import InfoSidebar from '../../components/InfoSidebar';
-import InfoPanel from '../../components/InfoPanel';
+import InfoSidebarItem from '@/components/InfoSidebarItem';
+import InfoSidebar from '@/components/InfoSidebar';
+import InfoPanel from '@/components/InfoPanel';
 
 
 export default function Layout(props: { children: ReactNode }) {

@@ -3,7 +3,7 @@
 import { Tab } from '@headlessui/react';
 import QuickPairingTab from './QuickPairingTab';
 import QuickPairingPanel from './QuickPairingPanel';
-import type { GameNameInfo } from '../game/[id]/page';
+import type { GameNameInfo } from '@/app/game/[id]/page';
 
 
 export default function QuickPairing() {

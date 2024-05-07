@@ -5,7 +5,7 @@ import { notFound, redirect } from 'next/navigation';
 import InboxContent from '../InboxContent';
 
 // Utils
-import { getUser } from '../../../util/user';
+import { getUser } from '@/util/user';
 
 
 // TODO: dynamic tab name?
